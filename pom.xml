@@ -11,8 +11,8 @@
 	<groupId>it.univaq</groupId>
 	<artifactId>esc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>esc</name>
+	<description>progetto di ingegneria del software</description>
 
 	<properties>
 		<java.version>1.8</java.version>
