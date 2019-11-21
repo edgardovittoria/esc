@@ -1,2 +1,2 @@
 # esc
-progetto ingegneria del software
+progetto ingegneria del software.
