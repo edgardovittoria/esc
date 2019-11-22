@@ -2,18 +2,19 @@ package it.univaq.Model;
 
 import java.util.ArrayList;
 
-public class Calcetto implements Sport{
+public class Calcetto extends Sport{
 
-	private ArrayList<Impianto> impianti;
-	private ArrayList<Istruttore> istruttori;
-	
-	@Override
-	public ArrayList<Impianto> getImpianti(){
-		return this.impianti;
-	}
+	private Calcetto calcettoInstance;
 
-	@Override
-	public ArrayList<Istruttore> getIstruttori() {
-		return this.istruttori;
+	private Calcetto(){
+
+	}		
+
+	public static Tennis getInstance(){
+		if (this.calcettoInstance == null){
+			this.calcettoInstance = new Calcetto();
+		}
+
+		return this.calcettoInstance;
 	}
 }
