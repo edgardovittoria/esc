@@ -9,7 +9,21 @@ public abstract class Sport {
 	private ArrayList<Istruttore> Istruttori; 
 	
 
+	/**
+	 * Restituisce la descrizione dello sport.
+	 */
+	public String getDescription(){
+		return this.sportDescription;
+	}
 
+
+	/**
+	 * Inserisce la descrizione dello sport.
+	 */
+	public void setDescription(String description){
+		this.sportDescription = description;
+	}
+	
 	/**
 	 * Restituisce la lista degli impianti associati allo sport.
 	 */
