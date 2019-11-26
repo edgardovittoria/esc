@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Tennis extends Sport{
 
-	private Tennis tennisInstance;
+	private static Tennis tennisInstance;
 
 	private Tennis(){
 		this.Impianti = new ArrayList<Impianto>();
@@ -12,10 +12,10 @@ public class Tennis extends Sport{
 	}		
 
 	public static Tennis getInstance(){
-		if (this.tennisInstance == null){
-			this.tennisInstance = new Tennis();
+		if (tennisInstance == null){
+			tennisInstance = new Tennis();
 		}
 
-		return this.tennisInstance;
+		return tennisInstance;
 	}
 }

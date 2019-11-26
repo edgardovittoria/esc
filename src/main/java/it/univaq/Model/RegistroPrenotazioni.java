@@ -5,18 +5,18 @@ import java.util.ArrayList;
 public class RegistroPrenotazioni {
 
 	private ArrayList<Prenotazione> prenotazioni;
-	private RegistroPrenotazioni registroPrenotazioniInstance;
+	private static RegistroPrenotazioni registroPrenotazioniInstance;
 
 	private RegistroPrenotazioni(){
 		this.prenotazioni = new ArrayList<Prenotazione>();
 	}
 	
-	public static getInstance() {
-		if (this.registroPrenotazioniInstance == null){
-			this.registroPrenotazioniInstance = new RegistroPrenotazioni();
+	public static RegistroPrenotazioni getInstance() {
+		if (registroPrenotazioniInstance == null){
+			registroPrenotazioniInstance = new RegistroPrenotazioni();
 		}
 
-		return this.registroPrenotazioniInstance;
+		return registroPrenotazioniInstance;
 	}
 
 	public ArrayList<Prenotazione> getPrenotazioni() {

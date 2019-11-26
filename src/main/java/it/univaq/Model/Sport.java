@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public abstract class Sport {
 
-	private String sportDescription;
-	private ArrayList<Impianto> Impianti; 
-	private ArrayList<Istruttore> Istruttori; 
+	protected String sportDescription;
+	protected ArrayList<Impianto> Impianti; 
+	protected ArrayList<Istruttore> Istruttori; 
 	
 
 	/**
@@ -34,8 +34,8 @@ public abstract class Sport {
 	/**
 	 * Restituisce la lista degli istruttori associati allo sport.
 	 */
-	public ArrayList<Impianto> getIstruttori() {
-		return this.Istruttori;
+	public ArrayList<Istruttore> getIstruttori() {
+		return this.Istruttori;	
 	}
 
 	/**
@@ -56,7 +56,7 @@ public abstract class Sport {
 	/**
 	 * Rimuove un impianto tra quelli associati allo sport.
 	 */
-	public bool removeImpianto(Impianto impianto) {
+	public boolean removeImpianto(Impianto impianto) {
 		if (this.Impianti.contains(impianto)){
 			this.Impianti.remove(impianto);
 			return true;	
@@ -67,7 +67,7 @@ public abstract class Sport {
 	/**
 	 * Rimuove un istruttore tra quelli associati allo sport.
 	 */
-	public bool removeIstruttore(Istruttore istruttore) {
+	public boolean removeIstruttore(Istruttore istruttore) {
 		if (this.Istruttori.contains(istruttore)){
 			this.Istruttori.remove(istruttore);
 			return true;	

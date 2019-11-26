@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
 
+
 public class Prenotazione {
 	
 	private int IDPrenotazione;

@@ -5,15 +5,15 @@ import java.util.ArrayList;
 public class RegistroSconti {
 
 	private ArrayList<Sconto> sconti;
-	private RegistroSconti registroScontiInstance;
+	private static RegistroSconti registroScontiInstance;
 
 	public RegistroSconti() {
 		this.sconti = new ArrayList<Sconto>();
 	}
 
 	public static RegistroSconti getInstance(){
-		if (this.registroScontiInstance == null){
-			this.registroScontiInstance = new RegistroSconti();
+		if (registroScontiInstance == null){
+			registroScontiInstance = new RegistroSconti();
 		}
 
 		return registroScontiInstance;
