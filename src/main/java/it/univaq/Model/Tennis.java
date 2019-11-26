@@ -6,14 +6,14 @@ public class Tennis extends Sport{
 
 	private Tennis tennisInstance;
 
-	private Tennis(ArrayList<Impianto> impianti, ArrayList<Istruttore> istruttori){
-		this.Impianti = impianti;
-		this.Istruttori = istruttori;
+	private Tennis(){
+		this.Impianti = new ArrayList<Impianto>();
+		this.Istruttori = new ArrayList<Istruttore>();
 	}		
 
 	public static Tennis getInstance(){
 		if (this.tennisInstance == null){
-			this.tennisInstance = new Tennis(impianti, istruttori);
+			this.tennisInstance = new Tennis();
 		}
 
 		return this.tennisInstance;

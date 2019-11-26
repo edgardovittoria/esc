@@ -6,14 +6,14 @@ public class Calcetto extends Sport{
 
 	private Calcetto calcettoInstance;
 
-	private Calcetto(ArrayList<Impianto> impianti, ArrayList<Istruttore> istruttori){
-		this.Impianti = impianti;
-		this.Istruttori = istruttori;
+	private Calcetto(){
+		this.Impianti = new ArrayList<Impianto>();
+		this.Istruttori = new ArrayList<Istruttore>();
 	}		
 
 	public static Tennis getInstance(){
 		if (this.calcettoInstance == null){
-			this.calcettoInstance = new Calcetto(impianti, istruttori);
+			this.calcettoInstance = new Calcetto();
 		}
 
 		return this.calcettoInstance;

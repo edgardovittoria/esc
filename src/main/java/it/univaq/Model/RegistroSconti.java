@@ -5,9 +5,18 @@ import java.util.ArrayList;
 public class RegistroSconti {
 
 	private ArrayList<Sconto> sconti;
+	private RegistroSconti registroScontiInstance;
 
 	public RegistroSconti() {
-		super();
+		this.sconti = new ArrayList<Sconto>();
+	}
+
+	public static RegistroSconti getInstance(){
+		if (this.registroScontiInstance == null){
+			this.registroScontiInstance = new RegistroSconti();
+		}
+
+		return registroScontiInstance;
 	}
 
 	public ArrayList<Sconto> getSconti() {
