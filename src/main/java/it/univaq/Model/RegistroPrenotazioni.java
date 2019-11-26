@@ -30,9 +30,7 @@ public class RegistroPrenotazioni {
 	public void addPrenotazione(Prenotazione prenotazione) {
 		this.prenotazioni.add(prenotazione);
 	}
-	
-	//public RegistroPrenotazione getIstance(){};
-	
+		
 	public ArrayList<Prenotazione> getPrenotazioniAperte(Sportivo sportivoPrenotante /*, parametro???*/){
 			return null;
 	}

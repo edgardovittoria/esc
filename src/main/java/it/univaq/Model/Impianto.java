@@ -4,20 +4,14 @@ import java.util.ArrayList;
 
 import org.javamoney.moneta.Money;
 
-public class Impianto implements IPrenotabile{
+public abstract class Impianto implements IPrenotabile{
 
-	private int IDImpianto;
-	private boolean indoor;
-	private Money costoImpianto;
-	private Calendario calendario;
-	private IPavimentazione pavimentazione;
-	private ArrayList<Sport> sport;
-	
-	//costruttore
-	public Impianto(IPavimentazione pavimentazione) {
-		super();
-		this.pavimentazione = pavimentazione;
-	}
+	protected int IDImpianto;
+	protected boolean indoor;
+	protected Money costoImpianto;
+	protected Calendario calendario;
+	protected IPavimentazione pavimentazione;
+	protected ArrayList<Sport> sport;
 	
 	
 	public Money getCostoImpianto() {
