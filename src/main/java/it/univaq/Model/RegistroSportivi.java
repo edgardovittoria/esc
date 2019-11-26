@@ -6,5 +6,9 @@ public class RegistroSportivi {
 
 	private ArrayList<Sportivo> sportivi;
 	
+	public Sportivo getSportivo(int IDSportivo){
+		
+	}
+
 	
 }
