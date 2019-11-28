@@ -22,6 +22,8 @@ public class Prenotazione {
 	private IPrenotabile servizioPrenotato;
 	private Calendario calendario;
 	private ArrayList<Sportivo> Partecipanti;
+	private ArrayList<Sportivo> Invitati;
+
 	//costruttore
 	public Prenotazione(int LastIDPrenotazione, Sportivo sportivoPrenotante) {
 		super();
