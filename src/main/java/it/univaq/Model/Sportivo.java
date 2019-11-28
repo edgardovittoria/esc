@@ -13,9 +13,10 @@ public class Sportivo {
 	private ArrayList<CartaCredito> carteCredito;
 	private ArrayList<Sconto> sconti;
 	private ArrayList<QuotaPartecipazione> quotePartecipazione;
+	private SimpleFactory simpleFactory;
 	
 	public Sportivo() {
-		super();
+		
 	}
 
 	public String getNome() {
@@ -75,12 +76,17 @@ public class Sportivo {
 		this.quotePartecipazione = quotePartecipazione;
 	}
 	
-	public Prenotazione creaNuovaPrenotazione(int lastIDPrenotazione, int IDSportivo, String etichetta) {
-		return null;
+	public Prenotazione creaNuovaPrenotazione(int lastIDPrenotazione) {
+		Prenotazione nuovaPrenotazione = simpleFactory.NuovaPrenotazione(lastIDPrenotazione, this);
+		return nuovaPrenotazione;
 	}
 	
 	public void gestisciPagamento(Prenotazione prenotazione) {
 		
+	}
+
+	public void setSimpleFactory(SimpleFactory simpleFactory){
+		this.simpleFactory = simpleFactory;
 	}
 	
 	

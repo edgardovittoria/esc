@@ -17,7 +17,7 @@ public class EffettuaPrenotazioneHandler {
 
 	private RegistroPrenotazioni registroPrenotazioni;
 	private RegistroSportivi registroSportivi;
-	private Sportivo sportivoPrenotanteSportivo;
+	private Sportivo sportivoPrenotante;
 	private Prenotazione nuovaPrenotazione;
 	
 	
@@ -35,7 +35,7 @@ public class EffettuaPrenotazioneHandler {
 		
 		int LastIDPrenotazione = this.registroPrenotazioni.getLastIDPrenotazione();
 		Sportivo sportivoPrenotante = this.registroSportivi.getSportivo(IDSportivo);
-		sportivoPrenotante.creaNuovaPrenotazione(LastIDPrenotazione)
+		nuovaPrenotazione = sportivoPrenotante.creaNuovaPrenotazione(LastIDPrenotazione);
 		
 		return null;
 	}
