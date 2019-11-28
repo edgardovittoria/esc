@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Sport {
 
+	protected int IDSport;
 	protected String sportDescription;
 	protected ArrayList<Impianto> Impianti; 
 	protected ArrayList<Istruttore> Istruttori; 
@@ -22,6 +23,21 @@ public abstract class Sport {
 	 */
 	public void setDescription(String description){
 		this.sportDescription = description;
+	}
+
+	/**
+	 * Restituisce l'ID dello sport.
+	 */
+	public String getIDSport(){
+		return this.IDSport;
+	}
+
+
+	/**
+	 * Imposta l'ID dello sport.
+	 */
+	public void setIDSport(int IDSport){
+		this.IDSport = IDSport;
 	}
 	
 	/**
