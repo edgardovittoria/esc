@@ -3,17 +3,42 @@ package it.univaq.Model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import it.univaq.Utility.SimpleFactory;
 
+@Entity
+@Table(name = "sportivo")
 public class Sportivo {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "IDSportivo", nullable = false)
 	private int IDSportivo;
+	@Column(name = "nome", nullable = false)
 	private String nome;
+	@Column(name = "cognome", nullable = false)
 	private String cognome;
+	@Column(name = "dataNascita", nullable = false)
 	private Date dataNascita;
+	@OneToMany
+	@JoinColumn(name = "IDPrenotazione", nullable = false)
 	private ArrayList<Prenotazione> prenotazioni;
+	@OneToMany
+	@JoinColumn(name = "IDCartaCredito", nullable = false)
 	private ArrayList<CartaCredito> carteCredito;
+	@OneToMany
+	@JoinColumn(name = "IDSconto", nullable = false)
 	private ArrayList<Sconto> sconti;
+	@OneToMany
+	@JoinColumn(name = "IDQuotaPartecipazione", nullable = false)
 	private ArrayList<QuotaPartecipazione> quotePartecipazione;
 	private SimpleFactory simpleFactory;
 	
