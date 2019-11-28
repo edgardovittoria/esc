@@ -23,32 +23,25 @@ public class Prenotazione {
 	private Calendario calendario;
 	private ArrayList<Sportivo> Partecipanti;
 	//costruttore
-	public Prenotazione(int LastIDPrenotazione, int IDSportivoPrenotante, IPrenotabile servizioPrenotato) {
+	public Prenotazione(int LastIDPrenotazione, Sportivo sportivoPrenotante) {
 		super();
 		this.IDPrenotazione = LastIDPrenotazione;
 		this.IDSportivoPrenotante = IDSportivoPrenotante;
-		this.servizioPrenotato = servizioPrenotato;
 	}
 	public int getNumParteciapnti() {
 		return numParteciapnti;
 	}
-	public void setNumParteciapnti(int numParteciapnti) {
-		this.numParteciapnti = numParteciapnti;
-	}
 	public int getNumPostiLiberi() {
 		return numPostiLiberi;
-	}
-	public void setNumPostiLiberi(int numPostiLiberi) {
-		this.numPostiLiberi = numPostiLiberi;
 	}
 	public ArrayList<Sportivo> getPartecipanti(){
 		return this.Partecipanti;
 	}
 	public void aggiornaNumPostiLiberi() {
-		
+		this.numPostiLiberi = this.getNumPostiLiberi() - 1;
 	}
 	public void aggiornaNumPartecipanti() {
-		
+		this.numParteciapnti = this.getNumParteciapnti() + 1;
 	}
 	public void generaQuotaPartecipazione() {
 		

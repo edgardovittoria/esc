@@ -3,6 +3,8 @@ package it.univaq.Model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import it.univaq.Utility.SimpleFactory;
+
 public class Sportivo {
 
 	private int IDSportivo;
@@ -77,7 +79,7 @@ public class Sportivo {
 	}
 	
 	public Prenotazione creaNuovaPrenotazione(int lastIDPrenotazione) {
-		Prenotazione nuovaPrenotazione = simpleFactory.NuovaPrenotazione(lastIDPrenotazione, this);
+		Prenotazione nuovaPrenotazione = simpleFactory.getNuovaPrenotazione(lastIDPrenotazione, this);
 		return nuovaPrenotazione;
 	}
 	
