@@ -9,9 +9,13 @@ import org.springframework.web.servlet.View;
 import it.univaq.Model.Prenotazione;
 import it.univaq.Model.RegistroPrenotazioni;
 import it.univaq.Model.RegistroSportivi;
+import it.univaq.Model.Sport;
 import it.univaq.Model.Sportivo;
 import it.univaq.Model.RegistroSport;
 import it.univaq.Model.Calendario;
+import it.univaq.Model.Impianto;
+import it.univaq.Model.Istruttore;
+
 import java.util.ArrayList;
 @RestController
 @RequestMapping("/esc")
