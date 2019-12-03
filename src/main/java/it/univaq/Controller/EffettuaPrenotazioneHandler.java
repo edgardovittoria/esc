@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.View;
 
-import it.univaq.Model.Prenotazione;
-import it.univaq.Model.RegistroPrenotazioni;
-import it.univaq.Model.RegistroSportivi;
-import it.univaq.Model.Sport;
-import it.univaq.Model.Sportivo;
-import it.univaq.Model.RegistroSport;
-import it.univaq.Model.Impianto;
-import it.univaq.Model.Istruttore;
+import it.univaq.esc.model.Impianto;
+import it.univaq.esc.model.Istruttore;
+import it.univaq.esc.model.Prenotazione;
+import it.univaq.esc.model.RegistroPrenotazioni;
+import it.univaq.esc.model.RegistroSport;
+import it.univaq.esc.model.RegistroSportivi;
+import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.Sportivo;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -1,7 +1,7 @@
 package it.univaq.Utility;
 
-import it.univaq.Model.Prenotazione;
-import it.univaq.Model.Sportivo;
+import it.univaq.esc.model.Prenotazione;
+import it.univaq.esc.model.Sportivo;
 
 public class SimpleFactory {
 
