@@ -1,10 +1,24 @@
 package it.univaq.Model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.javamoney.moneta.Money;
 
+@Entity
+@Table(name = "costoPrenotazione")
 public class CostoPrenotazione {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int IDCostoPrenotazione;
+	@Column
 	private Money costoTotale;
+	@Column
 	private Money costoPerPartecipante;
 	//costruttore
 	public CostoPrenotazione(Money costoTotale, Money costoPerPartecipante) {

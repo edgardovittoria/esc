@@ -2,8 +2,14 @@ package it.univaq.Model;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
 public class Calcetto extends Sport{
 
+	
 	private static Calcetto calcettoInstance;
 
 	private Calcetto(){

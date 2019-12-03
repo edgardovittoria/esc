@@ -2,8 +2,14 @@ package it.univaq.Model;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
 public class Impianto2 extends Impianto{
 	
+
 	private static Impianto2 impianto2Instance;
 	
 	private Impianto2() {

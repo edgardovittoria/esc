@@ -1,6 +1,10 @@
 package it.univaq.Model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import org.javamoney.moneta.Money;
+
 
 public class PavimentazioneSintetica implements IPavimentazione{
 

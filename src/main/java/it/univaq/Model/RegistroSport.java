@@ -1,31 +1,34 @@
 package it.univaq.Model;
 
+import java.util.ArrayList;
+
 public class RegistroSport {
     
     private ArrayList<Sport> sport;
 	private static RegistroSport RegistroSportInstance;
 
-	private RegistroSportivi(){
+	private RegistroSport(){
 		this.sport = new ArrayList<Sport>();
 	}
 
-	public static RegistroSportivi getInstance() {
+	public static RegistroSport getInstance() {
 		if(RegistroSportInstance == null){
-			RegistroSportInstance = new RegistroSportivi();
+			RegistroSportInstance = new RegistroSport();
 		}
 		return RegistroSportInstance;
 		
 	}
 	
-	public Sportivo getAllSport(){
+	public ArrayList<Sport> getAllSport(){
 		return this.sport;
     }
     
     public Sport getSport(int IDSport) {
         for(Sport i : sport){
-            if(i.getIDSport = IDSport){
+            if(i.getIDSport() == IDSport){
 				return i;
 			}
-        }
+		}
+		return null;
     }
 }

@@ -2,15 +2,33 @@ package it.univaq.Model;
 
 import java.util.ArrayList;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import org.javamoney.moneta.Money;
 
+@Entity
+@Table(name = "corsi")
 public class Corso implements IPrenotabile{
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int IDCorso;
+	@Column
 	private int numMaxPartecipanti;
+	@Column
 	private int numMinPartecipanti;
+	@Column
 	private Money costoCorso;
+	@OneToMany(mappedBy = "IDLezione")
 	private ArrayList<Lezione> lezioni;
+	@OneToMany(mappedBy = "IDIstruttore")
 	private ArrayList<Istruttore> istruttori;
 	
 	

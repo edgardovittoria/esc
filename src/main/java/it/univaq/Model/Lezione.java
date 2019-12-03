@@ -1,16 +1,33 @@
 package it.univaq.Model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.javamoney.moneta.Money;
 
+@Entity
+@Table(name = "lezioni")
 public class Lezione implements IPrenotabile{
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int IDLezione;
+	@Column
 	private Money costoLezione;
+	@OneToOne
 	private Impianto impianto;
+	@OneToOne
 	private Istruttore istruttore;
-	private Calendario calendario;
+	@OneToOne
+	private Calendar calendario;
 	
 	
 	
@@ -56,13 +73,13 @@ public class Lezione implements IPrenotabile{
 
 
 
-	public Calendario getCalendario() {
+	public Calendar getCalendario() {
 		return calendario;
 	}
 
 
 
-	public void setCalendario(Calendario calendario) {
+	public void setCalendario(Calendar calendario) {
 		this.calendario = calendario;
 	}
 
