@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import it.univaq.Utility.SimpleFactory;
+import it.univaq.utility.SimpleFactory;
 
 @Entity
 @Table(name = "sportivo")

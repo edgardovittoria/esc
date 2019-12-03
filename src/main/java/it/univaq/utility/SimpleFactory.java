@@ -1,4 +1,4 @@
-package it.univaq.Utility;
+package it.univaq.utility;
 
 import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.Sportivo;
