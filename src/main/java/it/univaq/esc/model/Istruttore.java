@@ -1,5 +1,6 @@
 package it.univaq.esc.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class Istruttore {
 
 	public Istruttore() {
 		super();
+		this.lezioni = new ArrayList<Lezione>();
 	}
 
 	public String getNome() {

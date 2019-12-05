@@ -57,6 +57,10 @@ public abstract class Impianto implements IPrenotabile{
 	public List<Sport> getSport(){
 		return this.sport;
 	}
+	
+	public void addSport(Sport sport) {
+		this.sport.add(sport);
+	}
 
 
 	@Override
