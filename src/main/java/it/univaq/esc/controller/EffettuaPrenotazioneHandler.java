@@ -29,20 +29,20 @@ import java.util.Objects;
 @RequestMapping("/esc")
 public class EffettuaPrenotazioneHandler {
 
-	private RegistroPrenotazioni registroPrenotazioni;
-	private RegistroSportivi registroSportivi;
-	private RegistroSport registroSport;
+	private RegistroPrenotazioni registroPrenotazioni; 
+	private RegistroSportivi registroSportivi ;
+	private RegistroSport registroSport ;
 	private Sportivo sportivoPrenotante;
 	private Prenotazione nuovaPrenotazione;
 	
 	
 	//costruttore
-	/*public EffettuaPrenotazioneHandler(RegistroSport registroSport, RegistroPrenotazioni registroPrenotazioni, RegistroSportivi registroSportivi) {
+	public EffettuaPrenotazioneHandler(/*RegistroSport registroSport, RegistroPrenotazioni registroPrenotazioni, RegistroSportivi registroSportivi*/) {
 		super();
-		this.registroPrenotazioni = registroPrenotazioni;
-		this.registroSportivi = registroSportivi;
-		this.registroSport = registroSport;
-	}*/
+		this.registroPrenotazioni = RegistroPrenotazioni.getInstance();
+		this.registroSportivi = RegistroSportivi.getInstance();
+		this.registroSport = RegistroSport.getInstance();
+	}
 
 
 
