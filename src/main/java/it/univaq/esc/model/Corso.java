@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.javamoney.moneta.Money;
@@ -101,7 +100,7 @@ public class Corso implements IPrenotabile{
 
 	@Override
 	public boolean confermaPrenotazione(List<Object> parametri) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 

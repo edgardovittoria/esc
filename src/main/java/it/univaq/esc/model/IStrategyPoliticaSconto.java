@@ -1,7 +1,5 @@
 package it.univaq.esc.model;
 
-import javax.persistence.MappedSuperclass;
-
 
 public interface IStrategyPoliticaSconto {
 

@@ -1,6 +1,5 @@
 package it.univaq.esc.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

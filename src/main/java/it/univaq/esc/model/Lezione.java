@@ -1,6 +1,5 @@
 package it.univaq.esc.model;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -88,7 +87,7 @@ public class Lezione implements IPrenotabile{
 
 	@Override
 	public boolean confermaPrenotazione(List<Object> parametri) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 

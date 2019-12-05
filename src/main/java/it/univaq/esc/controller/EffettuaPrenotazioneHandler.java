@@ -1,11 +1,9 @@
-package it.univaq.controller;
+package it.univaq.esc.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.View;
-
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Istruttore;
 import it.univaq.esc.model.Prenotazione;
@@ -18,7 +16,6 @@ import it.univaq.esc.model.Sportivo;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Objects;
 @RestController
 @RequestMapping("/esc")
 public class EffettuaPrenotazioneHandler {
@@ -32,7 +29,6 @@ public class EffettuaPrenotazioneHandler {
 	
 	//costruttore
 	public EffettuaPrenotazioneHandler(RegistroSport registroSport, RegistroPrenotazioni registroPrenotazioni, RegistroSportivi registroSportivi) {
-		super();
 		this.registroPrenotazioni = registroPrenotazioni;
 		this.registroSportivi = registroSportivi;
 		this.registroSport = registroSport;
@@ -41,10 +37,10 @@ public class EffettuaPrenotazioneHandler {
 
 
 	@GetMapping("/prenotazione/")
-	public HashMap avviaNuovaPrenotazione(@RequestParam("IDSportivo") int IDSportivo) {
+	public HashMap<String, Object> avviaNuovaPrenotazione(@RequestParam("IDSportivo") int IDSportivo) {
 		
 		int LastIDPrenotazione = this.registroPrenotazioni.getLastIDPrenotazione();
-		Sportivo sportivoPrenotante = this.registroSportivi.getSportivo(IDSportivo);
+		sportivoPrenotante = this.registroSportivi.getSportivo(IDSportivo);
 		nuovaPrenotazione = sportivoPrenotante.creaNuovaPrenotazione(LastIDPrenotazione);
 		
 		/**
@@ -76,13 +72,17 @@ public class EffettuaPrenotazioneHandler {
 				availableIstruttori.add(istr);
 			}
 
-			
 		}
+		return mapOptionsForPrenotazione(availableSport, availableImpianti, availableIstruttori, listaCalendari);
+		
+	}
+
+	private HashMap<String, Object> mapOptionsForPrenotazione(ArrayList<Sport> sport, ArrayList<Impianto> impianti, ArrayList<Istruttore> istruttori, ArrayList<Calendar> calendari) {
 		HashMap<String, Object> map = new HashMap<>();
-			map.put("Sport", availableSport);
-			map.put("Impianti", availableImpianti);
-			map.put("Istruttori", availableIstruttori);
-			map.put("Calendario", listaCalendari);
+			map.put("Sport", sport);
+			map.put("Impianti", impianti);
+			map.put("Istruttori", istruttori);
+			map.put("Calendario", calendari);
 
 		return map;
 	}
