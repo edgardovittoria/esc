@@ -81,4 +81,19 @@ public class Istruttore {
 	}
 	
 	
+
+    /**
+     * @return int return the IDIstruttore
+     */
+    public int getIDIstruttore() {
+        return IDIstruttore;
+    }
+
+    /**
+     * @param IDIstruttore the IDIstruttore to set
+     */
+    public void setIDIstruttore(int IDIstruttore) {
+        this.IDIstruttore = IDIstruttore;
+    }
+
 }
