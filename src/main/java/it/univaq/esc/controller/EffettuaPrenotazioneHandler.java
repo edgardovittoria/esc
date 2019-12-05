@@ -5,12 +5,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-<<<<<<< HEAD
 import org.springframework.web.servlet.View;
 
 import it.univaq.esc.model.Calcetto;
-=======
->>>>>>> d521e5a751ea00a76bac002838e1782fa16f193c
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Impianto1;
 import it.univaq.esc.model.Istruttore;
@@ -27,6 +24,7 @@ import it.univaq.utility.SimpleFactory;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 @RestController
 @RequestMapping("/esc")
 public class EffettuaPrenotazioneHandler {
@@ -39,12 +37,8 @@ public class EffettuaPrenotazioneHandler {
 	
 	
 	//costruttore
-<<<<<<< HEAD
 	/*public EffettuaPrenotazioneHandler(RegistroSport registroSport, RegistroPrenotazioni registroPrenotazioni, RegistroSportivi registroSportivi) {
 		super();
-=======
-	public EffettuaPrenotazioneHandler(RegistroSport registroSport, RegistroPrenotazioni registroPrenotazioni, RegistroSportivi registroSportivi) {
->>>>>>> d521e5a751ea00a76bac002838e1782fa16f193c
 		this.registroPrenotazioni = registroPrenotazioni;
 		this.registroSportivi = registroSportivi;
 		this.registroSport = registroSport;
@@ -63,7 +57,6 @@ public class EffettuaPrenotazioneHandler {
 				Istruttore istruttore = new Istruttore();
 				Istruttore istruttore2 = new Istruttore();
 
-<<<<<<< HEAD
 				this.registroPrenotazioni = RegistroPrenotazioni.getInstance();
 				
 				this.registroSport = RegistroSport.getInstance();
@@ -97,14 +90,6 @@ public class EffettuaPrenotazioneHandler {
 		//int LastIDPrenotazione = this.registroPrenotazioni.getLastIDPrenotazione();
 		Sportivo sportivoPrenotante = this.registroSportivi.getSportivo(IDSportivo);
 		nuovaPrenotazione = sportivoPrenotante.creaNuovaPrenotazione(1);
-=======
-	@GetMapping("/prenotazione/")
-	public HashMap<String, Object> avviaNuovaPrenotazione(@RequestParam("IDSportivo") int IDSportivo) {
-		
-		int LastIDPrenotazione = this.registroPrenotazioni.getLastIDPrenotazione();
-		sportivoPrenotante = this.registroSportivi.getSportivo(IDSportivo);
-		nuovaPrenotazione = sportivoPrenotante.creaNuovaPrenotazione(LastIDPrenotazione);
->>>>>>> d521e5a751ea00a76bac002838e1782fa16f193c
 		
 		/**
 		 * Ricaviamo gli sport disponibili per la prenotazione.
@@ -135,17 +120,13 @@ public class EffettuaPrenotazioneHandler {
 				availableIstruttori.add(istr);
 			}
 
+			
 		}
-		return mapOptionsForPrenotazione(availableSport, availableImpianti, availableIstruttori, listaCalendari);
-		
-	}
-
-	private HashMap<String, Object> mapOptionsForPrenotazione(ArrayList<Sport> sport, ArrayList<Impianto> impianti, ArrayList<Istruttore> istruttori, ArrayList<Calendar> calendari) {
 		HashMap<String, Object> map = new HashMap<>();
-			map.put("Sport", sport);
-			map.put("Impianti", impianti);
-			map.put("Istruttori", istruttori);
-			map.put("Calendario", calendari);
+			map.put("Sport", availableSport);
+			map.put("Impianti", availableImpianti);
+			map.put("Istruttori", availableIstruttori);
+			map.put("Calendario", listaCalendari);
 
 		return map;
 	}
