@@ -1,12 +1,14 @@
 package it.univaq.esc.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -25,7 +27,11 @@ public class Istruttore {
 	private Date dataNascita;
 	@OneToOne
 	private Sport sportInsegnato;
+	@OneToMany(mappedBy = "IDLezione")
+	private List<Lezione> lezioni;
 	
+	
+
 	public Istruttore() {
 		super();
 	}
@@ -60,6 +66,14 @@ public class Istruttore {
 
 	public void setSportInsegnato(Sport sportInsegnato) {
 		this.sportInsegnato = sportInsegnato;
+	}
+	
+	public List<Lezione> getLezioni() {
+		return lezioni;
+	}
+
+	public void setLezioni(List<Lezione> lezioni) {
+		this.lezioni = lezioni;
 	}
 	
 	
