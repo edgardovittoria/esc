@@ -1,8 +1,5 @@
 package it.univaq.esc.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import org.javamoney.moneta.Money;
 
 
