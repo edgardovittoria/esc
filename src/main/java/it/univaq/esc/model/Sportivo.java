@@ -113,6 +113,11 @@ public class Sportivo {
 	public void setSimpleFactory(SimpleFactory simpleFactory){
 		this.simpleFactory = simpleFactory;
 	}
+
+	public void addPrenotazione(Prenotazione prenotazione) {
+		this.prenotazioni.add(prenotazione);
+		
+	}
 	
 	
 }

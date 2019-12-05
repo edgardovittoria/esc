@@ -75,6 +75,10 @@ public class Istruttore {
 	public void setLezioni(List<Lezione> lezioni) {
 		this.lezioni = lezioni;
 	}
+
+	public void addLezione(Lezione lezione){
+		this.lezioni.add(lezione);
+	}
 	
 	
 }
