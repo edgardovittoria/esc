@@ -36,7 +36,10 @@ public class RegistroPrenotazioni {
 	}
 	
 	public int getLastIDPrenotazione() {
-		return this.prenotazioni.lastIndexOf(prenotazioni);
+		if(prenotazioni.size() != 0){
+			return this.prenotazioni.get(prenotazioni.size()-1).getIDPrenotazione();
+		}
+		return 0;
 	}
 	
 }

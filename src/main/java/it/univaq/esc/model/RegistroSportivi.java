@@ -20,8 +20,20 @@ public class RegistroSportivi {
 	}
 	
 	public Sportivo getSportivo(int IDSportivo){
+		for(Sportivo sp : this.sportivi){
+			if(sp.getIDSportivo() == IDSportivo){
+				return sp;
+			}
+		}
 		return null;
 	}
+
+	public void addSportivo(Sportivo sportivo) {
+		sportivi.add(sportivo);
+		
+	}
+
+
 
 	
 }

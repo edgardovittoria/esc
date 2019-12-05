@@ -120,4 +120,26 @@ public class Sportivo {
 	}
 	
 	
+
+    /**
+     * @return Integer return the IDSportivo
+     */
+    public Integer getIDSportivo() {
+        return IDSportivo;
+    }
+
+    /**
+     * @param IDSportivo the IDSportivo to set
+     */
+    public void setIDSportivo(Integer IDSportivo) {
+        this.IDSportivo = IDSportivo;
+    }
+
+    /**
+     * @return SimpleFactory return the simpleFactory
+     */
+    public SimpleFactory getSimpleFactory() {
+        return simpleFactory;
+    }
+
 }

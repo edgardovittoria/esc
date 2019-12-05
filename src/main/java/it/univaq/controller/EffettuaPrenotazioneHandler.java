@@ -17,6 +17,8 @@ import it.univaq.esc.model.Sportivo;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Objects;
 @RestController
 @RequestMapping("/esc")
 public class EffettuaPrenotazioneHandler {
@@ -39,7 +41,7 @@ public class EffettuaPrenotazioneHandler {
 
 
 	@GetMapping("/prenotazione/")
-	public View avviaNuovaPrenotazione(@RequestParam("IDSportivo") int IDSportivo) {
+	public HashMap avviaNuovaPrenotazione(@RequestParam("IDSportivo") int IDSportivo) {
 		
 		int LastIDPrenotazione = this.registroPrenotazioni.getLastIDPrenotazione();
 		Sportivo sportivoPrenotante = this.registroSportivi.getSportivo(IDSportivo);
@@ -74,8 +76,14 @@ public class EffettuaPrenotazioneHandler {
 				availableIstruttori.add(istr);
 			}
 
+			
 		}
+		HashMap<String, Object> map = new HashMap<>();
+			map.put("Sport", availableSport);
+			map.put("Impianti", availableImpianti);
+			map.put("Istruttori", availableIstruttori);
+			map.put("Calendario", listaCalendari);
 
-		return null;
+		return map;
 	}
 }

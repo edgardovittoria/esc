@@ -30,5 +30,10 @@ public class RegistroSport {
 			}
 		}
 		return null;
-    }
+	}
+	
+	public void addSport(Sport sport) {
+		this.sport.add(sport);
+		
+	}
 }
