@@ -37,7 +37,7 @@ public class EffettuaPrenotazioneHandler {
 	
 	
 	//costruttore
-	public EffettuaPrenotazioneHandler() {
+	public EffettuaPrenotazioneHandler(/*RegistroSport registroSport, RegistroPrenotazioni registroPrenotazioni, RegistroSportivi registroSportivi*/) {
 		super();
 		this.registroPrenotazioni = RegistroPrenotazioni.getInstance();
 		this.registroSportivi = RegistroSportivi.getInstance();
