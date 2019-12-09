@@ -2,7 +2,11 @@ package it.univaq.esc.model;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "calcetto")
 public class Calcetto extends Sport{
 
 	
