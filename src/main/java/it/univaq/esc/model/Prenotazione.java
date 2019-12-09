@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class Prenotazione {
 	private int numParteciapnti;
 	@Column
 	private int numPostiLiberi;
-	@ManyToOne
+    @ManyToOne
 	private Sportivo sportivoPrenotante;
 	@OneToOne
 	private CostoPrenotazione costoPrenotazione;
@@ -42,11 +43,9 @@ public class Prenotazione {
 	private IPrenotabile servizioPrenotato;
 	@Column
 	private Calendar calendario;
-	@OneToMany
-	@Column(name = "partecipanti")
+	@ManyToMany
 	private List<Sportivo> Partecipanti;
-	@OneToMany
-	@Column(name = "invitati")
+	@ManyToMany
 	private List<Sportivo> Invitati;
 
 	//costruttore

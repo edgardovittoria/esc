@@ -5,9 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -28,9 +31,15 @@ public class Sportivo {
 	private String cognome;
 	@Column(name = "dataNascita", nullable = true)
 	private Date dataNascita;
-	@OneToMany(mappedBy = "IDPrenotazione")
+	
+	@OneToMany(mappedBy = "sportivoPrenotante")
 	private List<Prenotazione> prenotazioni;
-    @OneToMany(mappedBy = "IDCartaCredito")	
+	@ManyToMany(mappedBy = "Partecipanti")
+	private List<Prenotazione> partecipazioni;
+	@ManyToMany(mappedBy = "Invitati")
+	private List<Prenotazione> inviti;
+	
+	@OneToMany(mappedBy = "IDCartaCredito")	
 	private List<CartaCredito> carteCredito;
     @OneToMany(mappedBy = "IDSconto")
     private List<Sconto> sconti;
