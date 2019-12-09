@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,14 +19,14 @@ import it.univaq.utility.SimpleFactory;
 public class Sportivo {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IDSportivo", nullable = false)
 	private Integer IDSportivo;
 	@Column
 	private String nome;
 	@Column(name = "cognome", nullable = false)
 	private String cognome;
-	@Column(name = "dataNascita", nullable = false)
+	@Column(name = "dataNascita", nullable = true)
 	private Date dataNascita;
 	@OneToMany(mappedBy = "IDPrenotazione")
 	private List<Prenotazione> prenotazioni;
@@ -40,7 +41,7 @@ public class Sportivo {
 	private SimpleFactory simpleFactory;
 	
 	public Sportivo() {
-		this.simpleFactory = SimpleFactory.getInstance();
+		//this.simpleFactory = SimpleFactory.getInstance();
 	}
 
 	public String getNome() {

@@ -29,7 +29,8 @@ public abstract class Impianto implements IPrenotabile{
 	protected Calendar calendario;
 	@Transient
 	protected IPavimentazione pavimentazione;
-	@ManyToMany
+	//@ManyToMany
+	@Transient //soluzione momentanea...DA RIVEDERE
 	protected List<Sport> sport;
 	
 	

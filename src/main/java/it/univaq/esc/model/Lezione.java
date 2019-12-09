@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,9 +23,9 @@ public class Lezione implements IPrenotabile{
 	private int IDLezione;
 	@Column
 	private Money costoLezione;
-	@OneToOne
+	@ManyToOne
 	private Impianto impianto;
-	@OneToOne
+	@ManyToOne
 	private Istruttore istruttore;
 	@Column
 	private Calendar calendario;

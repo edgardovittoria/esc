@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -32,8 +34,7 @@ public class Prenotazione {
 	private int numParteciapnti;
 	@Column
 	private int numPostiLiberi;
-	@OneToOne
-	@JoinColumn(name = "IDSportivo")
+	@ManyToOne
 	private Sportivo sportivoPrenotante;
 	@OneToOne
 	private CostoPrenotazione costoPrenotazione;
@@ -41,9 +42,11 @@ public class Prenotazione {
 	private IPrenotabile servizioPrenotato;
 	@Column
 	private Calendar calendario;
-	@OneToMany(mappedBy = "IDSportivo")
+	@OneToMany
+	@Column(name = "partecipanti")
 	private List<Sportivo> Partecipanti;
-	@OneToMany(mappedBy = "IDSportivo")
+	@OneToMany
+	@Column(name = "invitati")
 	private List<Sportivo> Invitati;
 
 	//costruttore
