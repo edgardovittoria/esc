@@ -19,6 +19,8 @@ public class QuotaPartecipazione {
 	private int IDQuotaPartecipazione;
 	@ManyToOne
 	private Prenotazione prenotazione;
+	@ManyToOne
+	private Sportivo sportivoAssociato;
 	@Column
 	private boolean saldata;
 	@Column
@@ -26,7 +28,6 @@ public class QuotaPartecipazione {
 	
 	
 	public QuotaPartecipazione(Prenotazione prenotazione, Money importo) {
-		super();
 		this.prenotazione = prenotazione;
 		this.importo = importo;
 	}
@@ -64,4 +65,33 @@ public class QuotaPartecipazione {
 	
 	
 	
+
+    /**
+     * @return int return the IDQuotaPartecipazione
+     */
+    public int getIDQuotaPartecipazione() {
+        return IDQuotaPartecipazione;
+    }
+
+    /**
+     * @param IDQuotaPartecipazione the IDQuotaPartecipazione to set
+     */
+    public void setIDQuotaPartecipazione(int IDQuotaPartecipazione) {
+        this.IDQuotaPartecipazione = IDQuotaPartecipazione;
+    }
+
+    /**
+     * @return Sportivo return the sportivoAssociato
+     */
+    public Sportivo getSportivoAssociato() {
+        return sportivoAssociato;
+    }
+
+    /**
+     * @param sportivoAssociato the sportivoAssociato to set
+     */
+    public void setSportivoAssociato(Sportivo sportivoAssociato) {
+        this.sportivoAssociato = sportivoAssociato;
+    }
+
 }

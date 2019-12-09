@@ -39,11 +39,11 @@ public class Sportivo {
 	@ManyToMany(mappedBy = "Invitati")
 	private List<Prenotazione> inviti;
 	
-	@OneToMany(mappedBy = "IDCartaCredito")	
+	@OneToMany(mappedBy = "proprietario")	
 	private List<CartaCredito> carteCredito;
-    @OneToMany(mappedBy = "IDSconto")
+    @OneToMany(mappedBy = "possessore")
     private List<Sconto> sconti;
-	@OneToMany(mappedBy = "IDQuotaPartecipazione")
+	@OneToMany(mappedBy = "sportivoAssociato")
 	private List<QuotaPartecipazione> quotePartecipazione;
 	
 	@Transient

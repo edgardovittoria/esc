@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -20,8 +21,11 @@ public class Sconto {
 	@Transient
 	private IStrategyPoliticaSconto politicaSconto;
 	
+	@ManyToOne
+	private Sportivo possessore;
+
 	public Sconto() {
-		super();
+	
 	}
 
 	public boolean isUsato() {
@@ -36,9 +40,40 @@ public class Sconto {
 		this.politicaSconto = politicaSconto;
 	}
 	
-	
-	
-	
-	
-	
+
+    /**
+     * @return int return the IDSconto
+     */
+    public int getIDSconto() {
+        return IDSconto;
+    }
+
+    /**
+     * @param IDSconto the IDSconto to set
+     */
+    public void setIDSconto(int IDSconto) {
+        this.IDSconto = IDSconto;
+    }
+
+    /**
+     * @return IStrategyPoliticaSconto return the politicaSconto
+     */
+    public IStrategyPoliticaSconto getPoliticaSconto() {
+        return politicaSconto;
+    }
+
+    /**
+     * @return Sportivo return the possessore
+     */
+    public Sportivo getPossessore() {
+        return possessore;
+    }
+
+    /**
+     * @param possessore the possessore to set
+     */
+    public void setPossessore(Sportivo possessore) {
+        this.possessore = possessore;
+    }
+
 }
