@@ -7,4 +7,5 @@ import it.univaq.esc.model.Sport;
 
 public interface SportRepository extends JpaRepository<Sport, Integer>{
 
+	Sport findBySportDescription(String descrizione);
 }

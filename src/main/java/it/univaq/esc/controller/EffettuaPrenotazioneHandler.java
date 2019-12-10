@@ -1,5 +1,8 @@
 package it.univaq.esc.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +22,15 @@ import it.univaq.esc.model.RegistroSportivi;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.Sportivo;
 import it.univaq.esc.model.Tennis;
+import it.univaq.esc.repository.ImpiantoRepository;
+import it.univaq.esc.repository.SportRepository;
 import it.univaq.utility.SimpleFactory;
+import javassist.expr.Instanceof;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 @RestController
 @RequestMapping("/esc")
@@ -35,9 +42,15 @@ public class EffettuaPrenotazioneHandler {
 	private Sportivo sportivoPrenotante;
 	private Prenotazione nuovaPrenotazione;
 	
+	@Autowired
+	private SportRepository sportRepository;
+	
+	@Autowired
+	private ImpiantoRepository impiantoRepository;
+	
 	
 	//costruttore
-	public EffettuaPrenotazioneHandler(/*RegistroSport registroSport, RegistroPrenotazioni registroPrenotazioni, RegistroSportivi registroSportivi*/) {
+	public EffettuaPrenotazioneHandler() {
 		super();
 		this.registroPrenotazioni = RegistroPrenotazioni.getInstance();
 		this.registroSportivi = RegistroSportivi.getInstance();
@@ -49,47 +62,11 @@ public class EffettuaPrenotazioneHandler {
 	@GetMapping("/prenotazione/{IDSportivo}")
 	public Object avviaNuovaPrenotazione(@PathVariable int IDSportivo) {
 		
-		//creazione degli ogetti
-				Sportivo sportivo = new Sportivo();
-				Sport tennis = Tennis.getInstance();
-				Sport calcetto = Calcetto.getInstance();
-				Impianto impianto = Impianto1.getInstance();
-				Istruttore istruttore = new Istruttore();
-				Istruttore istruttore2 = new Istruttore();
-
-				this.registroPrenotazioni = RegistroPrenotazioni.getInstance();
-				
-				this.registroSport = RegistroSport.getInstance();
-				
-			    this.registroSportivi = RegistroSportivi.getInstance();
-				
-				SimpleFactory simpleFactory = SimpleFactory.getInstance();
-				
-				//settaggio degli attributi
-				sportivo.setNome("gino");
-				istruttore.setNome("pippo");
-				istruttore2.setNome("giovanni");
-				//impianto.addSport(tennis);//crea grandi problemi sempre
-				tennis.addImpianto(impianto); //crea grandi problemi se usato insieme  a impianto.addSport
-				tennis.addIstruttore(istruttore);
-				tennis.setDescription("tennis");
-				calcetto.addIstruttore(istruttore2);
-				calcetto.setDescription("calcetto");
-				this.registroSport.addSport(tennis);
-				this.registroSport.addSport(calcetto);
-				sportivo.setIDSportivo(1);
-				this.registroSportivi.addSportivo(sportivo);
-				
-				//creazione e settaggio della lezione
-				Lezione lezione = new Lezione();
-				lezione.setImpianto(impianto);
-				//lezione.setIstruttore(istruttore); //crea grandi problemi...sembra che l'istruttore all'interno di lezione e delle lezioni all'interno dell'istruttore crei conflitti				
-				istruttore.addLezione(lezione);
 		
 		
-		//int LastIDPrenotazione = this.registroPrenotazioni.getLastIDPrenotazione();
+		int LastIDPrenotazione = this.registroPrenotazioni.getLastIDPrenotazione();
 		Sportivo sportivoPrenotante = this.registroSportivi.getSportivo(IDSportivo);
-		nuovaPrenotazione = sportivoPrenotante.creaNuovaPrenotazione(1);
+		Prenotazione nuovaPrenotazione = sportivoPrenotante.creaNuovaPrenotazione(LastIDPrenotazione);
 		
 		/**
 		 * Ricaviamo gli sport disponibili per la prenotazione.
@@ -130,40 +107,23 @@ public class EffettuaPrenotazioneHandler {
 
 		return map;
 	}
-	@GetMapping("/lezione")
-	public Sportivo getLezione() {
-		//creazione degli ogetti
-		Sportivo sportivo = new Sportivo();
-		Sport tennis = Tennis.getInstance();
-		Sport calcetto = Calcetto.getInstance();
-		Impianto impianto = Impianto1.getInstance();
-		Istruttore istruttore = new Istruttore();
-		RegistroPrenotazioni registroPrenotazioni = RegistroPrenotazioni.getInstance();
-		RegistroSport registroSport = RegistroSport.getInstance();
-		RegistroSportivi registroSportivi = RegistroSportivi.getInstance();
-		SimpleFactory simpleFactory = SimpleFactory.getInstance();
+	
+	@GetMapping("/impianti")
+	public List<Impianto> aggiornaOpzioneSport(@RequestParam("etichetta") String etichetta){
 		
-		//settaggio degli attributi
-		sportivo.setNome("gino");
-		sportivo.setIDSportivo(1);
-		istruttore.setNome("pippo");
-		impianto.addSport(tennis);
-		//tennis.addImpianto(impianto); crea grandi problemi
-		tennis.addIstruttore(istruttore);
-		tennis.setDescription("tennis");
-		calcetto.addIstruttore(istruttore);
-		calcetto.setDescription("calcetto");
-		registroSport.addSport(tennis);
-		registroSport.addSport(calcetto);
-		registroSportivi.addSportivo(sportivo);
-		
-		
-		
-		
-		Lezione lezione = new Lezione();
-		lezione.setImpianto(impianto);
-		lezione.setIstruttore(istruttore);
-		return registroSportivi.getSportivo(1);
+		//sfruttando il registro Sport
+		Sport sport = this.registroSport.getSportDes(etichetta);
+		return sport.getImpianti();
 	}
 	
+	@GetMapping("/calendario/{etichetta}")
+	public void aggiornaOpzioneCalendario(@PathVariable String etichetta) {
+		
+	}
+	
+	@GetMapping("/istruttore/{etichetta}")
+	public List<Istruttore> aggiornaOpzioneIstruttore(@PathVariable String etichetta) {
+		Sport sport = this.registroSport.getSportDes(etichetta);
+		return sport.getIstruttori();
+	}
 }

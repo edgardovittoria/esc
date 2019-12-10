@@ -14,6 +14,7 @@ public class Tennis extends Sport{
 	private Tennis(){
 		this.Impianti = new ArrayList<Impianto>();
 		this.Istruttori = new ArrayList<Istruttore>();
+		this.sportDescription = "tennis";
 	}		
 
 	public static Tennis getInstance(){

@@ -3,7 +3,6 @@ package it.univaq.esc.model;
 import java.util.ArrayList;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 @Entity
 public class Calcetto extends Sport{
@@ -14,6 +13,7 @@ public class Calcetto extends Sport{
 	private Calcetto(){
 		this.Impianti = new ArrayList<Impianto>();
 		this.Istruttori = new ArrayList<Istruttore>();
+		this.sportDescription = "calcetto";
 	}		
 
 	public static Calcetto getInstance(){

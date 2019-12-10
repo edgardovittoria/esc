@@ -50,7 +50,7 @@ public class Sportivo {
 	private SimpleFactory simpleFactory;
 	
 	public Sportivo() {
-		//this.simpleFactory = SimpleFactory.getInstance();
+		this.simpleFactory = SimpleFactory.getInstance();
 	}
 
 	public String getNome() {

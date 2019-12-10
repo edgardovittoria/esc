@@ -2,8 +2,12 @@ package it.univaq.esc.model;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
+@Entity
+@Table(name = "impianto1")
 public class Impianto1 extends Impianto{
 	
 	

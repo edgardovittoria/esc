@@ -2,6 +2,10 @@ package it.univaq.esc.model;
 
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class RegistroSport {
     
     private ArrayList<Sport> sport;
@@ -26,6 +30,15 @@ public class RegistroSport {
     public Sport getSport(int IDSport) {
         for(Sport i : sport){
             if(i.getIDSport() == IDSport){
+				return i;
+			}
+		}
+		return null;
+	}
+    
+    public Sport getSportDes(@Autowired String etichetta) {    	
+       for(Sport i : sport){
+            if(i.getDescription().equals(etichetta) ){
 				return i;
 			}
 		}
