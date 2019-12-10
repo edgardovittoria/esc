@@ -2,7 +2,11 @@ package it.univaq.esc.model;
 
 import java.util.ArrayList;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
+@Entity
+@DiscriminatorValue("impianto2")
 public class Impianto2 extends Impianto{
 	
 

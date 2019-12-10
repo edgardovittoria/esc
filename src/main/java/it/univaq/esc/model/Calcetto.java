@@ -2,9 +2,11 @@ package it.univaq.esc.model;
 
 import java.util.ArrayList;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
+@DiscriminatorValue("calcetto")
 public class Calcetto extends Sport{
 
 	

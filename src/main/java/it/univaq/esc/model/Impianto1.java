@@ -2,14 +2,15 @@ package it.univaq.esc.model;
 
 import java.util.ArrayList;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "impianto1")
+@DiscriminatorValue("impianto1")
 public class Impianto1 extends Impianto{
-	
 	
 	private static Impianto1 impianto1Instance;
 	

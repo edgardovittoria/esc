@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Calendar;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +18,8 @@ import javax.persistence.Transient;
 import org.javamoney.moneta.Money;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "nome")
 @Table(name = "impianti")
 public abstract class Impianto implements IPrenotabile{
 
