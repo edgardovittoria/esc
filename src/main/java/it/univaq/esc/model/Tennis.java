@@ -3,10 +3,10 @@ package it.univaq.esc.model;
 import java.util.ArrayList;
 
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tennis")
 public class Tennis extends Sport{
 
 	private static Tennis tennisInstance;

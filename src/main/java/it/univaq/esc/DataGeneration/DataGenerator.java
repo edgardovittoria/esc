@@ -31,7 +31,9 @@ public class DataGenerator {
             /* 
             Inserire qui i vari seed da richiamare.
             */
+            SeedSport.generaDati();
             seedSportivi.generaDati(50);
+            SeedIstruttori.generaDati(10);
 
             logger.info("...generazione totale completata!");
         }

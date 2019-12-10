@@ -30,6 +30,9 @@ public class Lezione implements IPrenotabile{
 	@Column
 	private Calendar calendario;
 	
+	@ManyToOne
+	private Corso corsoAssociato;
+	
 	
 	
 	public Lezione() {

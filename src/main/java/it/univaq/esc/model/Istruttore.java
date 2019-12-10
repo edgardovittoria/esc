@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -29,13 +30,15 @@ public class Istruttore {
 	private Date dataNascita;
 	@ManyToOne
 	private Sport sportInsegnato;
-	@OneToMany(mappedBy = "IDLezione")
+	@OneToMany(mappedBy = "istruttore")
 	private List<Lezione> lezioni;
+	
+	@ManyToMany(mappedBy = "istruttori")
+	private List<Corso> corsiTenuti;
 	
 	
 
 	public Istruttore() {
-		super();
 		this.lezioni = new ArrayList<Lezione>();
 	}
 
