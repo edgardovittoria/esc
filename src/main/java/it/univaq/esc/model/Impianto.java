@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -34,9 +33,7 @@ public abstract class Impianto implements IPrenotabile{
 	protected Calendar calendario;
 	@Transient
 	protected IPavimentazione pavimentazione;
-	//@ManyToMany
-	@Transient //soluzione momentanea...DA RIVEDERE
-	protected List<Sport> sport;
+	
 	
 	
 	public Money getCostoImpianto() {
@@ -56,14 +53,6 @@ public abstract class Impianto implements IPrenotabile{
 
 	public void setCalendario(Calendar calendario) {
 		this.calendario = calendario;
-	}
-	
-	public List<Sport> getSport(){
-		return this.sport;
-	}
-	
-	public void addSport(Sport sport) {
-		this.sport.add(sport);
 	}
 
 

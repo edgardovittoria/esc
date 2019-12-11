@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
 
 @Entity
 @DiscriminatorValue("tennis")

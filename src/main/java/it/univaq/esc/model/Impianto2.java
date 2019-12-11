@@ -1,6 +1,5 @@
 package it.univaq.esc.model;
 
-import java.util.ArrayList;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -12,9 +11,7 @@ public class Impianto2 extends Impianto{
 
 	private static Impianto2 impianto2Instance;
 	
-	private Impianto2() {
-		this.sport = new ArrayList<Sport>();
-	}
+	private Impianto2() {}
 	
 	public static Impianto2 getInstance() {
 		if(impianto2Instance == null) {

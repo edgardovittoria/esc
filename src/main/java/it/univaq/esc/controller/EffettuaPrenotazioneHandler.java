@@ -1,37 +1,28 @@
 package it.univaq.esc.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.View;
 
-import it.univaq.esc.model.Calcetto;
 import it.univaq.esc.model.Impianto;
-import it.univaq.esc.model.Impianto1;
 import it.univaq.esc.model.Istruttore;
-import it.univaq.esc.model.Lezione;
 import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.RegistroPrenotazioni;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.RegistroSportivi;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.Sportivo;
-import it.univaq.esc.model.Tennis;
 import it.univaq.esc.repository.ImpiantoRepository;
 import it.univaq.esc.repository.SportRepository;
-import it.univaq.utility.SimpleFactory;
-import javassist.expr.Instanceof;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+
 @RestController
 @RequestMapping("/esc")
 public class EffettuaPrenotazioneHandler {

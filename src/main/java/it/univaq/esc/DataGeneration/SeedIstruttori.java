@@ -76,7 +76,6 @@ public final class SeedIstruttori {
             is.setNome(factory.getFirstName());
             is.setCognome(factory.getLastName());
             is.setDataNascita(factory.getDateBetween(minData, maxData));
-            is.setSportInsegnato(s);
             istruttoriGenerati.add(is);
         	}
         }

@@ -1,11 +1,8 @@
 package it.univaq.esc.model;
 
-import java.util.ArrayList;
 
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 
 @Entity
@@ -14,10 +11,7 @@ public class Impianto1 extends Impianto{
 	
 	private static Impianto1 impianto1Instance;
 	
-	private Impianto1() {
-		this.sport = new ArrayList<Sport>();
-		//bisogna settare gli altri attributi??
-	}
+	private Impianto1() {}
 	
 	public static Impianto1 getInstance() {
 		if(impianto1Instance == null) {

@@ -10,9 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,8 +26,6 @@ public class Istruttore {
 	private String cognome;
 	@Column
 	private Date dataNascita;
-	@ManyToOne
-	private Sport sportInsegnato;
 	@OneToMany(mappedBy = "istruttore")
 	private List<Lezione> lezioni;
 	
@@ -64,14 +60,6 @@ public class Istruttore {
 
 	public void setDataNascita(Date dataNascita) {
 		this.dataNascita = dataNascita;
-	}
-
-	public Sport getSportInsegnato() {
-		return sportInsegnato;
-	}
-
-	public void setSportInsegnato(Sport sportInsegnato) {
-		this.sportInsegnato = sportInsegnato;
 	}
 	
 	public List<Lezione> getLezioni() {
