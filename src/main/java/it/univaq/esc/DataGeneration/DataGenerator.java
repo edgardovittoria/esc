@@ -34,6 +34,7 @@ public class DataGenerator {
             SeedSport.generaDati();
             seedSportivi.generaDati(50);
             SeedIstruttori.generaDati(10);
+            SeedImpianti.generaDati();
 
             logger.info("...generazione totale completata!");
         }

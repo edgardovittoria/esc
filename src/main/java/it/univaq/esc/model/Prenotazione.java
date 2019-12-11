@@ -24,7 +24,7 @@ public class Prenotazione {
 	private int IDPrenotazione;
 	@Column
 	private Boolean confermata;
-	
+
 	private enum modalita{
 		STANDARD, PENDING
 	}
