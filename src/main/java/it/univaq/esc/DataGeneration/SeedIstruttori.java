@@ -69,16 +69,17 @@ public final class SeedIstruttori {
         
         
 
-        for (Sport s : sport.findAll()) {
+       // for (Sport s : sport.findAll()) {
 			
         	for (int i = 0; i < numeroRecord ; i++){
             Istruttore is = new Istruttore();
             is.setNome(factory.getFirstName());
             is.setCognome(factory.getLastName());
             is.setDataNascita(factory.getDateBetween(minData, maxData));
+           // is.setSportInsegnato(s);
             istruttoriGenerati.add(is);
         	}
-        }
+       // }
 
         try{
             istruttori.saveAll(istruttoriGenerati);

@@ -114,7 +114,8 @@ public class EffettuaPrenotazioneHandler {
 	
 	@GetMapping("/istruttore/{etichetta}")
 	public List<Istruttore> aggiornaOpzioneIstruttore(@PathVariable String etichetta) {
-		Sport sport = this.registroSport.getSportDes(etichetta);
+		//Sport sport = this.registroSport.getSportDes(etichetta);
+		Sport sport = sportRepository.findBySportDescription(etichetta);
 		return sport.getIstruttori();
 	}
 }

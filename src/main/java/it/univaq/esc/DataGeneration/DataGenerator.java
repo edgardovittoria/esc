@@ -31,10 +31,12 @@ public class DataGenerator {
             /* 
             Inserire qui i vari seed da richiamare.
             */
+            SeedImpianti.generaDati();
+            SeedIstruttori.generaDati(20);
             SeedSport.generaDati();
             seedSportivi.generaDati(50);
-            SeedIstruttori.generaDati(10);
-            SeedImpianti.generaDati();
+            
+            
 
             logger.info("...generazione totale completata!");
         }

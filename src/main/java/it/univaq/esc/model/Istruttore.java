@@ -27,8 +27,8 @@ public class Istruttore {
 	private String cognome;
 	@Column
 	private Date dataNascita;
-	@ManyToOne
-	private Sport sportInsegnato;
+	//@ManyToOne
+	//private Sport sportInsegnato;
 	@OneToMany(mappedBy = "istruttore")
 	private List<Lezione> lezioni;
 	
@@ -65,13 +65,13 @@ public class Istruttore {
 		this.dataNascita = dataNascita;
 	}
 
-	public Sport getSportInsegnato() {
+	/*public Sport getSportInsegnato() {
 		return sportInsegnato;
 	}
 
 	public void setSportInsegnato(Sport sportInsegnato) {
 		this.sportInsegnato = sportInsegnato;
-	}
+	}*/
 	
 	public List<Lezione> getLezioni() {
 		return lezioni;

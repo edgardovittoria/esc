@@ -27,7 +27,7 @@ public abstract class Sport {
 	protected String sportDescription;
 	@ManyToMany
 	protected List<Impianto> Impianti;
-	@OneToMany(mappedBy = "sportInsegnato")
+	@OneToMany//(mappedBy = "sportInsegnato")
 	protected List<Istruttore> Istruttori; 
 	
 
