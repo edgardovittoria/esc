@@ -2,6 +2,8 @@ package it.univaq.esc.model;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+@Component
 public class RegistroIstruttori {
 
 	private ArrayList<Istruttore> istruttori;

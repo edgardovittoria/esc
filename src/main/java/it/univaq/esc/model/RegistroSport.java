@@ -1,18 +1,26 @@
 package it.univaq.esc.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import it.univaq.esc.repository.SportRepository;
+
+@Component
 public class RegistroSport {
     
-    private ArrayList<Sport> sport;
+    private List<Sport> sport;
 	private static RegistroSport RegistroSportInstance;
 
+	@Autowired
+	private SportRepository sp;
+
+
 	private RegistroSport(){
-		this.sport = new ArrayList<Sport>();
+		
 	}
 
 	public static RegistroSport getInstance() {
@@ -22,8 +30,14 @@ public class RegistroSport {
 		return RegistroSportInstance;
 		
 	}
+
+	@PostConstruct
+	private void inizializzaSports(){
+		sport = sp.findAll();
+	}
+
 	
-	public ArrayList<Sport> getAllSport(){
+	public List<Sport> getAllSport(){
 		return this.sport;
     }
     
@@ -35,10 +49,20 @@ public class RegistroSport {
 		}
 		return null;
 	}
+
+	public Sport getSport(String description) {
+        for(Sport i : sport){
+            if(i.getSportDescription().equals(description)){
+				return i;
+			}
+		}
+		return null;
+	}
+
     
     public Sport getSportDes(@Autowired String etichetta) {    	
        for(Sport i : sport){
-            if(i.getDescription().equals(etichetta) ){
+            if(i.getSportDescription().equals(etichetta) ){
 				return i;
 			}
 		}

@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.model.Calcetto;
-import it.univaq.esc.model.Impianto;
-import it.univaq.esc.model.Istruttore;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.Tennis;
 import it.univaq.esc.repository.ImpiantoRepository;

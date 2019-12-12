@@ -29,7 +29,7 @@ public class Prenotazione {
 		STANDARD, PENDING
 	}
 	@Column
-	private int numParteciapnti;
+	private int numPartecipanti;
 	@Column
 	private int numPostiLiberi;
     @ManyToOne
@@ -50,8 +50,8 @@ public class Prenotazione {
 		this.IDPrenotazione = LastIDPrenotazione;
 		this.sportivoPrenotante = sportivoPrenotante;
 	}
-	public int getNumParteciapnti() {
-		return numParteciapnti;
+	public int getNumPartecipanti() {
+		return numPartecipanti;
 	}
 	public int getNumPostiLiberi() {
 		return numPostiLiberi;
@@ -63,16 +63,16 @@ public class Prenotazione {
 		this.numPostiLiberi = this.getNumPostiLiberi() - 1;
 	}
 	public void aggiornaNumPartecipanti() {
-		this.numParteciapnti = this.getNumParteciapnti() + 1;
-	}
-	public void generaQuotaPartecipazione() {
-		
-	}
-	public boolean confermaPrenotazione(List<Object> parametri) {
-		return false;
-	}
-	
-	
+		this.numPartecipanti = this.getNumPartecipanti() + 1;
+    }
+
+    public void generaQuotaPartecipazione() {
+
+    }
+
+    public boolean confermaPrenotazione(List<Object> parametri) {
+        return false;
+    }
 
     /**
      * @return int return the IDPrenotazione
@@ -105,8 +105,8 @@ public class Prenotazione {
     /**
      * @param numParteciapnti the numParteciapnti to set
      */
-    public void setNumParteciapnti(int numParteciapnti) {
-        this.numParteciapnti = numParteciapnti;
+    public void setNumParteciapnti(int numPartecipanti) {
+        this.numPartecipanti = numPartecipanti;
     }
 
     /**

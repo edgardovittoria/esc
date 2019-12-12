@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -24,7 +25,7 @@ public abstract class Impianto implements IPrenotabile{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected int IDImpianto;
+	protected int idImpianto;
 	@Column
 	protected boolean indoor;
 	@Column
@@ -33,9 +34,23 @@ public abstract class Impianto implements IPrenotabile{
 	protected Calendar calendario;
 	@Transient
 	protected IPavimentazione pavimentazione;
+	@ManyToMany
+	protected List<Sport> sportPraticabili;
 	
 	
+	public int getIdImpianto(){
+		return this.idImpianto;
+	}
+
+	public boolean getIndoor(){
+		return this.indoor;
+	}
 	
+
+	public IPavimentazione getPavimentazione(){
+		return this.pavimentazione;
+	}
+
 	public Money getCostoImpianto() {
 		return costoImpianto;
 	}
@@ -59,6 +74,10 @@ public abstract class Impianto implements IPrenotabile{
 	@Override
 	public boolean confermaPrenotazione(List<Object> parametri) {
 		return false;
+	}
+
+	public List<Sport> getSportPraticabili(){
+		return this.sportPraticabili;
 	}
 
 	

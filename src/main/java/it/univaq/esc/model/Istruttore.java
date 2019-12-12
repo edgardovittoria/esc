@@ -20,15 +20,15 @@ public class Istruttore {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int IDIstruttore;
+	private int idIstruttore;
 	@Column
 	private String nome;
 	@Column
 	private String cognome;
 	@Column
 	private Date dataNascita;
-	//@ManyToOne
-	//private Sport sportInsegnato;
+	@ManyToOne
+	private Sport sportInsegnato;
 	@OneToMany(mappedBy = "istruttore")
 	private List<Lezione> lezioni;
 	
@@ -38,7 +38,7 @@ public class Istruttore {
 	
 
 	public Istruttore() {
-		this.lezioni = new ArrayList<Lezione>();
+		
 	}
 
 	public String getNome() {
@@ -65,13 +65,13 @@ public class Istruttore {
 		this.dataNascita = dataNascita;
 	}
 
-	/*public Sport getSportInsegnato() {
-		return sportInsegnato;
+	public Sport getSportInsegnato() {
+		return this.sportInsegnato;
 	}
 
 	public void setSportInsegnato(Sport sportInsegnato) {
 		this.sportInsegnato = sportInsegnato;
-	}*/
+	}
 	
 	public List<Lezione> getLezioni() {
 		return lezioni;
@@ -90,15 +90,30 @@ public class Istruttore {
     /**
      * @return int return the IDIstruttore
      */
-    public int getIDIstruttore() {
-        return IDIstruttore;
+    public int getIdIstruttore() {
+        return this.idIstruttore;
+    }
+
+
+    /**
+     * @param idIstruttore the idIstruttore to set
+     */
+    public void setIdIstruttore(int idIstruttore) {
+        this.idIstruttore = idIstruttore;
     }
 
     /**
-     * @param IDIstruttore the IDIstruttore to set
+     * @return List<Corso> return the corsiTenuti
      */
-    public void setIDIstruttore(int IDIstruttore) {
-        this.IDIstruttore = IDIstruttore;
+    public List<Corso> getCorsiTenuti() {
+        return corsiTenuti;
+    }
+
+    /**
+     * @param corsiTenuti the corsiTenuti to set
+     */
+    public void setCorsiTenuti(List<Corso> corsiTenuti) {
+        this.corsiTenuti = corsiTenuti;
     }
 
 }

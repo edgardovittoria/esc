@@ -13,8 +13,8 @@ public class Calcetto extends Sport{
 	private static Calcetto calcettoInstance;
 
 	private Calcetto(){
-		this.Impianti = new ArrayList<Impianto>();
-		this.Istruttori = new ArrayList<Istruttore>();
+		this.impianti = new ArrayList<Impianto>();
+		this.istruttori = new ArrayList<Istruttore>();
 		this.sportDescription = "calcetto";
 	}		
 

@@ -22,19 +22,19 @@ public abstract class Sport {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected int IDSport;
+	protected int idSport;
 	@Column
 	protected String sportDescription;
-	@ManyToMany
-	protected List<Impianto> Impianti;
-	@OneToMany//(mappedBy = "sportInsegnato")
-	protected List<Istruttore> Istruttori; 
+	@ManyToMany(mappedBy = "sportPraticabili")
+	protected List<Impianto> impianti;
+	@OneToMany(mappedBy = "sportInsegnato")
+	protected List<Istruttore> istruttori; 
 	
 
 	/**
 	 * Restituisce la descrizione dello sport.
 	 */
-	public String getDescription(){
+	public String getSportDescription(){
 		return this.sportDescription;
 	}
 
@@ -42,7 +42,7 @@ public abstract class Sport {
 	/**
 	 * Inserisce la descrizione dello sport.
 	 */
-	public void setDescription(String description){
+	public void setSportDescription(String description){
 		this.sportDescription = description;
 	}
 
@@ -50,7 +50,7 @@ public abstract class Sport {
 	 * Restituisce l'ID dello sport.
 	 */
 	public int getIDSport(){
-		return this.IDSport;
+		return this.idSport;
 	}
 
 
@@ -58,35 +58,35 @@ public abstract class Sport {
 	 * Imposta l'ID dello sport.
 	 */
 	public void setIDSport(int IDSport){
-		this.IDSport = IDSport;
+		this.idSport = IDSport;
 	}
 	
 	/**
 	 * Restituisce la lista degli impianti associati allo sport.
 	 */
 	public List<Impianto> getImpianti(){
-		return this.Impianti;
+		return this.impianti;
 	}
 
 	/**
 	 * Restituisce la lista degli istruttori associati allo sport.
 	 */
 	public List<Istruttore> getIstruttori() {
-		return this.Istruttori;	
+		return this.istruttori;	
 	}
 
 	/**
 	 * Associa un impianto allo sport.
 	 */
 	public void addImpianto( Impianto impianto) {
-		this.Impianti.add(impianto);
+		this.impianti.add(impianto);
 	}
 
 	/**
 	 * Associa un istruttore allo sport.
 	 */
 	public void addIstruttore( Istruttore istruttore) {
-		this.Istruttori.add(istruttore);
+		this.istruttori.add(istruttore);
 	}
 
 
@@ -94,8 +94,8 @@ public abstract class Sport {
 	 * Rimuove un impianto tra quelli associati allo sport.
 	 */
 	public boolean removeImpianto(Impianto impianto) {
-		if (this.Impianti.contains(impianto)){
-			this.Impianti.remove(impianto);
+		if (this.impianti.contains(impianto)){
+			this.impianti.remove(impianto);
 			return true;	
 		}
 		return false;
@@ -105,8 +105,8 @@ public abstract class Sport {
 	 * Rimuove un istruttore tra quelli associati allo sport.
 	 */
 	public boolean removeIstruttore(Istruttore istruttore) {
-		if (this.Istruttori.contains(istruttore)){
-			this.Istruttori.remove(istruttore);
+		if (this.istruttori.contains(istruttore)){
+			this.istruttori.remove(istruttore);
 			return true;	
 		}
 		return false;
@@ -116,7 +116,7 @@ public abstract class Sport {
 	 * Restituice il numero di impianti associati allo sport.
 	 */
 	public int numberOfImpianti(){
-		return this.Impianti.size();
+		return this.impianti.size();
 	}
 
 
@@ -124,7 +124,7 @@ public abstract class Sport {
 	 * Restituice il numero di istruttori associati allo sport.
 	 */
 	public int numberOfIstruttori(){
-		return this.Istruttori.size();
+		return this.istruttori.size();
 	}
 	
 }
