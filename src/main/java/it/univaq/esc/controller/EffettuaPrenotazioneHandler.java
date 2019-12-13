@@ -37,6 +37,7 @@ public class EffettuaPrenotazioneHandler {
 	@Autowired
 	private RegistroIstruttori registroIstruttori;
 	
+	
 	private Sportivo sportivoPrenotante;
 	private Prenotazione nuovaPrenotazione;
 	
@@ -52,6 +53,8 @@ public class EffettuaPrenotazioneHandler {
 		//this.registroSport = RegistroSport.getInstance();
 	}
 
+
+	
 
 
 	@GetMapping("/prenotazione/{IDSportivo}")
