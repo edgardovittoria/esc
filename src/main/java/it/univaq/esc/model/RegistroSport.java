@@ -43,7 +43,7 @@ public class RegistroSport {
     
     public Sport getSport(int IDSport) {
         for(Sport i : sport){
-            if(i.getIDSport() == IDSport){
+            if(i.getIdSport() == IDSport){
 				return i;
 			}
 		}

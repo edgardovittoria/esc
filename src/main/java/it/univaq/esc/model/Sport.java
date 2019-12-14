@@ -49,7 +49,7 @@ public abstract class Sport {
 	/**
 	 * Restituisce l'ID dello sport.
 	 */
-	public int getIDSport(){
+	public int getIdSport(){
 		return this.idSport;
 	}
 
