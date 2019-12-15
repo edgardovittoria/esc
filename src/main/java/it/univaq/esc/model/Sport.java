@@ -68,6 +68,10 @@ public abstract class Sport {
 		return this.impianti;
 	}
 
+	public void setImpianti(List<Impianto> impianti){
+		this.impianti = impianti;
+	}
+
 	/**
 	 * Restituisce la lista degli istruttori associati allo sport.
 	 */
@@ -75,56 +79,9 @@ public abstract class Sport {
 		return this.istruttori;	
 	}
 
-	/**
-	 * Associa un impianto allo sport.
-	 */
-	public void addImpianto( Impianto impianto) {
-		this.impianti.add(impianto);
-	}
 
-	/**
-	 * Associa un istruttore allo sport.
-	 */
-	public void addIstruttore( Istruttore istruttore) {
-		this.istruttori.add(istruttore);
-	}
-
-
-	/**
-	 * Rimuove un impianto tra quelli associati allo sport.
-	 */
-	public boolean removeImpianto(Impianto impianto) {
-		if (this.impianti.contains(impianto)){
-			this.impianti.remove(impianto);
-			return true;	
-		}
-		return false;
-	}
-
-	/**
-	 * Rimuove un istruttore tra quelli associati allo sport.
-	 */
-	public boolean removeIstruttore(Istruttore istruttore) {
-		if (this.istruttori.contains(istruttore)){
-			this.istruttori.remove(istruttore);
-			return true;	
-		}
-		return false;
-	}
-
-	/**
-	 * Restituice il numero di impianti associati allo sport.
-	 */
-	public int numberOfImpianti(){
-		return this.impianti.size();
-	}
-
-
-	/**
-	 * Restituice il numero di istruttori associati allo sport.
-	 */
-	public int numberOfIstruttori(){
-		return this.istruttori.size();
+	public void setIstruttori(List<Istruttore> istruttori){
+		this.istruttori = istruttori;
 	}
 	
 }

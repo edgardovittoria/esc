@@ -80,6 +80,10 @@ public abstract class Impianto implements IPrenotabile{
 		return this.sportPraticabili;
 	}
 
+	public void setSportPraticabili(List<Sport> availableSport){
+		this.sportPraticabili = availableSport;
+	}
+
 	
 
 }
