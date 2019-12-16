@@ -141,11 +141,11 @@ public class SportService {
 		
 	}
 
-	private Sport getSport(int sportID){
+	public Sport getSport(int sportID){
 		return sportRepo.findById(sportID).get();
 	}
 
-	private Sport getSport(String description){
+	public Sport getSport(String description){
 		return sportRepo.findBySportDescription(description);
 	}
 
