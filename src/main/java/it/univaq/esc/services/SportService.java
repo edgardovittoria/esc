@@ -3,6 +3,8 @@ package it.univaq.esc.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +20,27 @@ public class SportService {
 	@Autowired
 	private SportRepository sportRepo;
 
-	public SportService() {
+	private List<Sport> listaSport;
 
+
+	private static SportService sportServiceInstance;
+
+
+
+	private SportService() {
+
+	}
+
+	@PostConstruct
+	private void inizializzaListaSport() {
+		this.listaSport = sportRepo.findAll(); 
+	}
+
+	public static SportService getInstance(){
+		if (sportServiceInstance == null) {
+			sportServiceInstance = new SportService();
+		}
+		return sportServiceInstance;
 	}
 
 	/**
@@ -122,6 +143,14 @@ public class SportService {
 
 	private Sport getSport(int sportID){
 		return sportRepo.findById(sportID).get();
+	}
+
+	private Sport getSport(String description){
+		return sportRepo.findBySportDescription(description);
+	}
+
+	public List<Sport> getAllSport(){
+		return this.listaSport;
 	}
 	
 }
