@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import it.univaq.esc.dto.SportDTO;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Istruttore;
 import it.univaq.esc.model.Prenotazione;
@@ -19,6 +21,8 @@ import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.RegistroSportivi;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.Sportivo;
+import it.univaq.esc.services.SportService;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -36,6 +40,8 @@ public class EffettuaPrenotazioneHandler {
 	private RegistroImpianti registroImpianti;
 	@Autowired
 	private RegistroIstruttori registroIstruttori;
+	@Autowired
+	private SportService sportService;
 	
 	
 	private Sportivo sportivoPrenotante;
@@ -72,7 +78,7 @@ public class EffettuaPrenotazioneHandler {
 			/**
 			 * Ricaviamo gli sport disponibili per la prenotazione.
 			 */
-			List<Sport> availableSport = registroSport.getAllSport();
+			List<SportDTO> availableSport = sportService.toDTO(registroSport.getAllSport());
 
 			List<Impianto> availableImpianti = registroImpianti.getAllImpianti();
 			ArrayList<Istruttore> availableIstruttori = registroIstruttori.getIstruttori();

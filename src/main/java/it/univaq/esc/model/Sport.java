@@ -25,6 +25,8 @@ public abstract class Sport {
 	protected int idSport;
 	@Column
 	protected String sportDescription;
+	@Column(name = "nome", insertable = false, updatable = false)
+	protected String nome;
 	@ManyToMany(mappedBy = "sportPraticabili")
 	protected List<Impianto> impianti;
 	@OneToMany(mappedBy = "sportInsegnato")
@@ -82,6 +84,10 @@ public abstract class Sport {
 
 	public void setIstruttori(List<Istruttore> istruttori){
 		this.istruttori = istruttori;
+	}
+
+	public String getNome(){
+		return this.nome;
 	}
 	
 }

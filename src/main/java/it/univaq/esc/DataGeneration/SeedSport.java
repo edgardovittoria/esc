@@ -14,6 +14,7 @@ import it.univaq.esc.model.Tennis;
 import it.univaq.esc.repository.ImpiantoRepository;
 import it.univaq.esc.repository.IstruttoreRepository;
 import it.univaq.esc.repository.SportRepository;
+import it.univaq.esc.services.SportService;
 
 @Component
 public final class SeedSport {
@@ -23,6 +24,7 @@ public final class SeedSport {
     private  static SportRepository sport;
     private static ImpiantoRepository impianti;
     private static IstruttoreRepository istruttori;
+    private static SportService sportService;
 
     @Autowired
     private SportRepository sportInit;
@@ -30,7 +32,8 @@ public final class SeedSport {
     private ImpiantoRepository impiantiInit;
     @Autowired
     private IstruttoreRepository istuttoriInit;
-
+    @Autowired
+    private SportService sportServiceInit;
 
     private static ArrayList<Sport> sportGenerati = new ArrayList<>();
 
@@ -44,6 +47,11 @@ public final class SeedSport {
     @PostConstruct
     private void initializeSportiviRepo(){
         sport = this.sportInit;
+    }
+
+    @PostConstruct
+    private void initializeSportService(){
+        sportService = this.sportServiceInit;
     }
     
     @PostConstruct
@@ -72,17 +80,17 @@ public final class SeedSport {
         Sport tennis = Tennis.getInstance();
         Sport calcetto = Calcetto.getInstance();
         
-        tennis.addImpianto(impianti.getOne(1));
-        tennis.addImpianto(impianti.getOne(3));
+        sportService.addImpianto(tennis, impianti.getOne(1));
+        sportService.addImpianto(tennis, impianti.getOne(3));
         
-        calcetto.addImpianto(impianti.getOne(2));
-        calcetto.addImpianto(impianti.getOne(3));
+        sportService.addImpianto(calcetto, impianti.getOne(2));
+        sportService.addImpianto(calcetto, impianti.getOne(3));
         
         for (int i = 1; i < 11; i++) {
-			tennis.addIstruttore(istruttori.getOne(i));
+			sportService.addIstruttore(tennis, istruttori.getOne(i));
 		}
         for (int i = 11; i < 21; i++) {
-			calcetto.addIstruttore(istruttori.getOne(i));
+			sportService.addIstruttore(calcetto, istruttori.getOne(i));
 		}
         
         
