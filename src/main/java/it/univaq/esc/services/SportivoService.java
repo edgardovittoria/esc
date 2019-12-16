@@ -3,8 +3,6 @@ package it.univaq.esc.services;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.Transient;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +19,22 @@ public class SportivoService {
 	private List<Sportivo> sportivi;
 	private SimpleFactory simpleFactory = SimpleFactory.getInstance();
 	
+	private static SportivoService sportivoServiceInstance;
+    
+
+    private SportivoService(){
+
+    }
+
+    public static SportivoService getInstance(){
+        if (sportivoServiceInstance == null) {
+			sportivoServiceInstance = new SportivoService();
+		}
+		return  sportivoServiceInstance;
+    }
+
+
+
 	public Prenotazione creaNuovaPrenotazione(int lastIDPrenotazione, Sportivo sportivo) {
 		Prenotazione nuovaPrenotazione = this.simpleFactory.getNuovaPrenotazione(lastIDPrenotazione, sportivo); 
 		return nuovaPrenotazione;

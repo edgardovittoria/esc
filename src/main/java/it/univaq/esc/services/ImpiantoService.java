@@ -18,9 +18,22 @@ public class ImpiantoService{
     @Autowired
     private ImpiantoRepository impiantiRepo;
     private List<Impianto> impianti;
+
+    private static ImpiantoService impiantoServiceInstance;
     
 
-    public boolean conferma(IPrenotabile impianto, List<Object> parametri){
+    private ImpiantoService(){
+
+    }
+
+    public static ImpiantoService getInstance(){
+        if (impiantoServiceInstance == null) {
+			impiantoServiceInstance = new ImpiantoService();
+		}
+		return  impiantoServiceInstance;
+    }
+
+    public boolean confermaPrenotazione(IPrenotabile impianto, List<Object> parametri){
         return impianto.confermaPrenotazione(parametri);
     }
 
@@ -37,6 +50,7 @@ public class ImpiantoService{
 
        public void addImpianto(Impianto impianto){
            impianti.add(impianto);
+           impiantiRepo.save(impianto);
        }
 
 }
