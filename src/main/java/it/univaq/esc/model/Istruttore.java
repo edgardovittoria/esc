@@ -1,6 +1,5 @@
 package it.univaq.esc.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,83 +36,92 @@ public class Istruttore {
 	
 	
 
-	public Istruttore() {
-		
+	public Istruttore() {}
+
+
+
+	public int getIdIstruttore() {
+		return idIstruttore;
 	}
+
+
+
+	public void setIdIstruttore(int idIstruttore) {
+		this.idIstruttore = idIstruttore;
+	}
+
+
 
 	public String getNome() {
 		return nome;
 	}
 
+
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+
 
 	public String getCognome() {
 		return cognome;
 	}
 
+
+
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
+
+
 
 	public Date getDataNascita() {
 		return dataNascita;
 	}
 
+
+
 	public void setDataNascita(Date dataNascita) {
 		this.dataNascita = dataNascita;
 	}
 
+
+
 	public Sport getSportInsegnato() {
-		return this.sportInsegnato;
+		return sportInsegnato;
 	}
+
+
 
 	public void setSportInsegnato(Sport sportInsegnato) {
 		this.sportInsegnato = sportInsegnato;
 	}
-	
+
+
+
 	public List<Lezione> getLezioni() {
 		return lezioni;
 	}
+
+
 
 	public void setLezioni(List<Lezione> lezioni) {
 		this.lezioni = lezioni;
 	}
 
-	public void addLezione(Lezione lezione){
-		this.lezioni.add(lezione);
+
+
+	public List<Corso> getCorsiTenuti() {
+		return corsiTenuti;
 	}
+
+
+
+	public void setCorsiTenuti(List<Corso> corsiTenuti) {
+		this.corsiTenuti = corsiTenuti;
+	}
+
 	
-	
-
-    /**
-     * @return int return the IDIstruttore
-     */
-    public int getIdIstruttore() {
-        return this.idIstruttore;
-    }
-
-
-    /**
-     * @param idIstruttore the idIstruttore to set
-     */
-    public void setIdIstruttore(int idIstruttore) {
-        this.idIstruttore = idIstruttore;
-    }
-
-    /**
-     * @return List<Corso> return the corsiTenuti
-     */
-    public List<Corso> getCorsiTenuti() {
-        return corsiTenuti;
-    }
-
-    /**
-     * @param corsiTenuti the corsiTenuti to set
-     */
-    public void setCorsiTenuti(List<Corso> corsiTenuti) {
-        this.corsiTenuti = corsiTenuti;
-    }
 
 }

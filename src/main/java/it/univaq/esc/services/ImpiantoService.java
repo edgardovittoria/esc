@@ -2,6 +2,8 @@ package it.univaq.esc.services;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,18 +17,26 @@ public class ImpiantoService{
     
     @Autowired
     private ImpiantoRepository impiantiRepo;
-
-
-    public ImpiantoService(){
-
-    }
+    private List<Impianto> impianti;
+    
 
     public boolean conferma(IPrenotabile impianto, List<Object> parametri){
         return impianto.confermaPrenotazione(parametri);
     }
 
-    public List<Impianto> getAll(){
-        return impiantiRepo.findAll();
-    }
+    
+    @PostConstruct
+   	private void inizializzaSports(){
+   		impianti = impiantiRepo.findAll();
+       }
+       
+
+       public List<Impianto> getAllImpianti(){
+           return impianti;
+       }
+
+       public void addImpianto(Impianto impianto){
+           impianti.add(impianto);
+       }
 
 }

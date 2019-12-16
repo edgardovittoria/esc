@@ -1,41 +1,43 @@
-package it.univaq.esc.model;
+package it.univaq.esc.services;
 
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.Transient;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import it.univaq.esc.model.Prenotazione;
+import it.univaq.esc.model.Sportivo;
 import it.univaq.esc.repository.SportivoRepository;
-@Component
-public class RegistroSportivi {
+import it.univaq.utility.SimpleFactory;
 
-	private List<Sportivo> sportivi;
-	private static RegistroSportivi RegistroSportiviInstance;
-	
+@Service
+public class SportivoService {
+
 	@Autowired
-	private SportivoRepository sp;
-		
-	// private Logger log = LoggerFactory.getLogger(RegistroSportivi.class);
-
-	private RegistroSportivi(){
+	private SportivoRepository sportivoRepo;
+	private List<Sportivo> sportivi;
+	private SimpleFactory simpleFactory = SimpleFactory.getInstance();
+	
+	public Prenotazione creaNuovaPrenotazione(int lastIDPrenotazione, Sportivo sportivo) {
+		Prenotazione nuovaPrenotazione = this.simpleFactory.getNuovaPrenotazione(lastIDPrenotazione, sportivo); 
+		return nuovaPrenotazione;
+	}
+	
+	public void gestisciPagamento(Prenotazione prenotazione) {
 		
 	}
-
-	public static RegistroSportivi getInstance() {
-		if(RegistroSportiviInstance == null){
-			RegistroSportiviInstance = new RegistroSportivi();
-		}
-		return RegistroSportiviInstance;
+	
+	public void addPrenotazione(Prenotazione prenotazione, Sportivo sportivo) {
+		sportivo.getPrenotazioni().add(prenotazione);
 		
 	}
-
+	
 	@PostConstruct
 	private void inizializzaSports(){
-		sportivi = sp.findAll();
+		sportivi = sportivoRepo.findAll();
 		// log.info(""+sportivi.size());
 	}
 

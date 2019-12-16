@@ -50,148 +50,86 @@ public class Prenotazione {
 		this.IDPrenotazione = LastIDPrenotazione;
 		this.sportivoPrenotante = sportivoPrenotante;
 	}
+
+	public int getIDPrenotazione() {
+		return IDPrenotazione;
+	}
+
+	public void setIDPrenotazione(int iDPrenotazione) {
+		IDPrenotazione = iDPrenotazione;
+	}
+
+	public Boolean getConfermata() {
+		return confermata;
+	}
+
+	public void setConfermata(Boolean confermata) {
+		this.confermata = confermata;
+	}
+
 	public int getNumPartecipanti() {
 		return numPartecipanti;
 	}
+
+	public void setNumPartecipanti(int numPartecipanti) {
+		this.numPartecipanti = numPartecipanti;
+	}
+
 	public int getNumPostiLiberi() {
 		return numPostiLiberi;
 	}
-	public List<Sportivo> getPartecipanti(){
-		return this.Partecipanti;
+
+	public void setNumPostiLiberi(int numPostiLiberi) {
+		this.numPostiLiberi = numPostiLiberi;
 	}
-	public void aggiornaNumPostiLiberi() {
-		this.numPostiLiberi = this.getNumPostiLiberi() - 1;
+
+	public Sportivo getSportivoPrenotante() {
+		return sportivoPrenotante;
 	}
-	public void aggiornaNumPartecipanti() {
-		this.numPartecipanti = this.getNumPartecipanti() + 1;
-    }
 
-    public void generaQuotaPartecipazione() {
+	public void setSportivoPrenotante(Sportivo sportivoPrenotante) {
+		this.sportivoPrenotante = sportivoPrenotante;
+	}
 
-    }
+	public CostoPrenotazione getCostoPrenotazione() {
+		return costoPrenotazione;
+	}
 
-    public boolean confermaPrenotazione(List<Object> parametri) {
-        return false;
-    }
+	public void setCostoPrenotazione(CostoPrenotazione costoPrenotazione) {
+		this.costoPrenotazione = costoPrenotazione;
+	}
 
-    /**
-     * @return int return the IDPrenotazione
-     */
-    public int getIDPrenotazione() {
-        return IDPrenotazione;
-    }
+	public IPrenotabile getServizioPrenotato() {
+		return servizioPrenotato;
+	}
 
-    /**
-     * @param IDPrenotazione the IDPrenotazione to set
-     */
-    public void setIDPrenotazione(int IDPrenotazione) {
-        this.IDPrenotazione = IDPrenotazione;
-    }
+	public void setServizioPrenotato(IPrenotabile servizioPrenotato) {
+		this.servizioPrenotato = servizioPrenotato;
+	}
 
-    /**
-     * @return Boolean return the confermata
-     */
-    public Boolean isConfermata() {
-        return confermata;
-    }
+	public Calendar getCalendario() {
+		return calendario;
+	}
 
-    /**
-     * @param confermata the confermata to set
-     */
-    public void setConfermata(Boolean confermata) {
-        this.confermata = confermata;
-    }
+	public void setCalendario(Calendar calendario) {
+		this.calendario = calendario;
+	}
 
-    /**
-     * @param numParteciapnti the numParteciapnti to set
-     */
-    public void setNumParteciapnti(int numPartecipanti) {
-        this.numPartecipanti = numPartecipanti;
-    }
+	public List<Sportivo> getPartecipanti() {
+		return Partecipanti;
+	}
 
-    /**
-     * @param numPostiLiberi the numPostiLiberi to set
-     */
-    public void setNumPostiLiberi(int numPostiLiberi) {
-        this.numPostiLiberi = numPostiLiberi;
-    }
+	public void setPartecipanti(List<Sportivo> partecipanti) {
+		Partecipanti = partecipanti;
+	}
 
-    /**
-     * @return Sportivo return the sportivoPrenotante
-     */
-    public Sportivo getSportivoPrenotante() {
-        return sportivoPrenotante;
-    }
+	public List<Sportivo> getInvitati() {
+		return Invitati;
+	}
 
-    /**
-     * @param sportivoPrenotante the sportivoPrenotante to set
-     */
-    public void setSportivoPrenotante(Sportivo sportivoPrenotante) {
-        this.sportivoPrenotante = sportivoPrenotante;
-    }
-
-    /**
-     * @return CostoPrenotazione return the costoPrenotazione
-     */
-    public CostoPrenotazione getCostoPrenotazione() {
-        return costoPrenotazione;
-    }
-
-    /**
-     * @param costoPrenotazione the costoPrenotazione to set
-     */
-    public void setCostoPrenotazione(CostoPrenotazione costoPrenotazione) {
-        this.costoPrenotazione = costoPrenotazione;
-    }
-
-    /**
-     * @return IPrenotabile return the servizioPrenotato
-     */
-    public IPrenotabile getServizioPrenotato() {
-        return servizioPrenotato;
-    }
-
-    /**
-     * @param servizioPrenotato the servizioPrenotato to set
-     */
-    public void setServizioPrenotato(IPrenotabile servizioPrenotato) {
-        this.servizioPrenotato = servizioPrenotato;
-    }
-
-    /**
-     * @return Calendar return the calendario
-     */
-    public Calendar getCalendario() {
-        return calendario;
-    }
-
-    /**
-     * @param calendario the calendario to set
-     */
-    public void setCalendario(Calendar calendario) {
-        this.calendario = calendario;
-    }
-
-    /**
-     * @param Partecipanti the Partecipanti to set
-     */
-    public void setPartecipanti(List<Sportivo> Partecipanti) {
-        this.Partecipanti = Partecipanti;
-    }
-
-    /**
-     * @return List<Sportivo> return the Invitati
-     */
-    public List<Sportivo> getInvitati() {
-        return Invitati;
-    }
-
-    /**
-     * @param Invitati the Invitati to set
-     */
-    public void setInvitati(List<Sportivo> Invitati) {
-        this.Invitati = Invitati;
-    }
-
+	public void setInvitati(List<Sportivo> invitati) {
+		Invitati = invitati;
+	}
+	
 }
 

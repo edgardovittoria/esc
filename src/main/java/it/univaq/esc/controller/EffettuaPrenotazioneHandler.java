@@ -14,14 +14,14 @@ import it.univaq.esc.dto.SportDTO;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Istruttore;
 import it.univaq.esc.model.Prenotazione;
-import it.univaq.esc.model.RegistroImpianti;
-import it.univaq.esc.model.RegistroIstruttori;
-import it.univaq.esc.model.RegistroPrenotazioni;
 import it.univaq.esc.model.RegistroSport;
-import it.univaq.esc.model.RegistroSportivi;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.Sportivo;
+import it.univaq.esc.services.ImpiantoService;
+import it.univaq.esc.services.IstruttoreService;
+import it.univaq.esc.services.PrenotazioneService;
 import it.univaq.esc.services.SportService;
+import it.univaq.esc.services.SportivoService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,17 +31,17 @@ import java.util.List;
 public class EffettuaPrenotazioneHandler {
 
 	@Autowired
-	private RegistroPrenotazioni registroPrenotazioni; 
-	@Autowired
-	private RegistroSportivi registroSportivi ;
-	@Autowired
 	private RegistroSport registroSport ;
 	@Autowired
-	private RegistroImpianti registroImpianti;
-	@Autowired
-	private RegistroIstruttori registroIstruttori;
-	@Autowired
 	private SportService sportService;
+	@Autowired
+	private ImpiantoService impiantoService;
+	@Autowired
+	private PrenotazioneService prenotazioneService;
+	@Autowired
+	private SportivoService sportivoService;
+	@Autowired
+	private IstruttoreService istruttoreService;
 	
 	
 	private Sportivo sportivoPrenotante;
@@ -70,18 +70,18 @@ public class EffettuaPrenotazioneHandler {
 		
 		try {
 			// loggerAvviaPren.info(""+registroPrenotazioni.getLastIDPrenotazione());
-			int LastIDPrenotazione = registroPrenotazioni.getLastIDPrenotazione();
-			sportivoPrenotante = registroSportivi.getSportivo(IDSportivo);
+			int LastIDPrenotazione = prenotazioneService.getLastIDPrenotazione();
+			sportivoPrenotante = sportivoService.getSportivo(IDSportivo);
 			// loggerAvviaPren.info(sportivoPrenotante.getNome());
-			nuovaPrenotazione = sportivoPrenotante.creaNuovaPrenotazione(LastIDPrenotazione);
+			nuovaPrenotazione = sportivoService.creaNuovaPrenotazione(LastIDPrenotazione, sportivoPrenotante);
 
 			/**
 			 * Ricaviamo gli sport disponibili per la prenotazione.
 			 */
 			List<SportDTO> availableSport = sportService.toDTO(registroSport.getAllSport());
 
-			List<Impianto> availableImpianti = registroImpianti.getAllImpianti();
-			ArrayList<Istruttore> availableIstruttori = registroIstruttori.getIstruttori();
+			List<Impianto> availableImpianti = impiantoService.getAllImpianti();
+			ArrayList<Istruttore> availableIstruttori = istruttoreService.getIstruttori();
 			ArrayList<Calendar> listaCalendari = new ArrayList<Calendar>();
 
 			for (Impianto imp : availableImpianti) {

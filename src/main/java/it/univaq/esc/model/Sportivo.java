@@ -44,109 +44,109 @@ public class Sportivo {
 	@OneToMany(mappedBy = "sportivoAssociato")
 	private List<QuotaPartecipazione> quotePartecipazione;
 	
-	@Transient
-	private SimpleFactory simpleFactory;
 	
-	public Sportivo() {
-		this.simpleFactory = SimpleFactory.getInstance();
+	public Sportivo() {}
+
+
+	public Integer getIDSportivo() {
+		return IDSportivo;
 	}
+
+
+	public void setIDSportivo(Integer iDSportivo) {
+		IDSportivo = iDSportivo;
+	}
+
 
 	public String getNome() {
 		return nome;
 	}
 
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 
 	public String getCognome() {
 		return cognome;
 	}
 
+
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
+
 
 	public Date getDataNascita() {
 		return dataNascita;
 	}
 
+
 	public void setDataNascita(Date dataNascita) {
 		this.dataNascita = dataNascita;
 	}
-	
+
 
 	public List<Prenotazione> getPrenotazioni() {
 		return prenotazioni;
 	}
 
+
 	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
 		this.prenotazioni = prenotazioni;
 	}
+
+
+	public List<Prenotazione> getPartecipazioni() {
+		return partecipazioni;
+	}
+
+
+	public void setPartecipazioni(List<Prenotazione> partecipazioni) {
+		this.partecipazioni = partecipazioni;
+	}
+
+
+	public List<Prenotazione> getInviti() {
+		return inviti;
+	}
+
+
+	public void setInviti(List<Prenotazione> inviti) {
+		this.inviti = inviti;
+	}
+
 
 	public List<CartaCredito> getCarteCredito() {
 		return carteCredito;
 	}
 
+
 	public void setCarteCredito(List<CartaCredito> carteCredito) {
 		this.carteCredito = carteCredito;
 	}
+
 
 	public List<Sconto> getSconti() {
 		return sconti;
 	}
 
+
 	public void setSconti(List<Sconto> sconti) {
 		this.sconti = sconti;
 	}
+
 
 	public List<QuotaPartecipazione> getQuotePartecipazione() {
 		return quotePartecipazione;
 	}
 
+
 	public void setQuotePartecipazione(List<QuotaPartecipazione> quotePartecipazione) {
 		this.quotePartecipazione = quotePartecipazione;
 	}
+
 	
-	public Prenotazione creaNuovaPrenotazione(int lastIDPrenotazione) {
-		Prenotazione nuovaPrenotazione = this.simpleFactory.getNuovaPrenotazione(lastIDPrenotazione, this); 
-		return nuovaPrenotazione;
-	}
-	
-	public void gestisciPagamento(Prenotazione prenotazione) {
-		
-	}
-
-	public void setSimpleFactory(SimpleFactory simpleFactory){
-		this.simpleFactory = simpleFactory;
-	}
-
-	public void addPrenotazione(Prenotazione prenotazione) {
-		this.prenotazioni.add(prenotazione);
-		
-	}
-	
-	
-
-    /**
-     * @return Integer return the IDSportivo
-     */
-    public Integer getIDSportivo() {
-        return IDSportivo;
-    }
-
-    /**
-     * @param IDSportivo the IDSportivo to set
-     */
-    public void setIDSportivo(Integer IDSportivo) {
-        this.IDSportivo = IDSportivo;
-    }
-
-    /**
-     * @return SimpleFactory return the simpleFactory
-     */
-    public SimpleFactory getSimpleFactory() {
-        return simpleFactory;
-    }
 
 }
