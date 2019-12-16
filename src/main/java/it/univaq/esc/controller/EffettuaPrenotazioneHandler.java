@@ -14,7 +14,6 @@ import it.univaq.esc.dto.SportDTO;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Istruttore;
 import it.univaq.esc.model.Prenotazione;
-import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.Sportivo;
 import it.univaq.esc.services.ImpiantoService;
@@ -30,8 +29,6 @@ import java.util.List;
 @RequestMapping("/esc")
 public class EffettuaPrenotazioneHandler {
 
-	@Autowired
-	private RegistroSport registroSport ;
 	@Autowired
 	private SportService sportService;
 	@Autowired
@@ -78,7 +75,7 @@ public class EffettuaPrenotazioneHandler {
 			/**
 			 * Ricaviamo gli sport disponibili per la prenotazione.
 			 */
-			List<SportDTO> availableSport = sportService.toDTO(registroSport.getAllSport());
+			List<SportDTO> availableSport = sportService.toDTO(sportService.getAllSport());
 
 			List<Impianto> availableImpianti = impiantoService.getAllImpianti();
 			ArrayList<Istruttore> availableIstruttori = istruttoreService.getIstruttori();
@@ -104,7 +101,7 @@ public class EffettuaPrenotazioneHandler {
 	public List<Impianto> aggiornaOpzioneSport(@RequestParam("etichetta") String etichetta){
 		
 		//sfruttando il registro Sport
-		Sport sport = this.registroSport.getSportDes(etichetta);
+		Sport sport = sportService.getSport(etichetta);
 		return sport.getImpianti();
 	}
 	
@@ -116,7 +113,7 @@ public class EffettuaPrenotazioneHandler {
 	@GetMapping("/istruttore/{etichetta}")
 	public List<Istruttore> aggiornaOpzioneIstruttore(@PathVariable String etichetta) {
 		//Sport sport = this.registroSport.getSportDes(etichetta);
-		Sport sport = registroSport.getSport(etichetta);
+		Sport sport = sportService.getSport(etichetta);
 		return sport.getIstruttori();
 	}
 }

@@ -1,6 +1,8 @@
 package it.univaq.esc.model;
 
 
+import java.util.List;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -20,5 +22,7 @@ public class Impianto1 extends Impianto{
 		
 		return impianto1Instance;
 	}
+
+	
 
 }

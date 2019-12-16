@@ -37,53 +37,50 @@ public abstract class Impianto implements IPrenotabile{
 	@ManyToMany
 	protected List<Sport> sportPraticabili;
 	
-	
-	public int getIdImpianto(){
-		return this.idImpianto;
+	public int getIdImpianto() {
+		return idImpianto;
 	}
-
-	public boolean getIndoor(){
-		return this.indoor;
+	public void setIdImpianto(int idImpianto) {
+		this.idImpianto = idImpianto;
 	}
-	
-
-	public IPavimentazione getPavimentazione(){
-		return this.pavimentazione;
+	public boolean isIndoor() {
+		return indoor;
 	}
-
+	public void setIndoor(boolean indoor) {
+		this.indoor = indoor;
+	}
 	public Money getCostoImpianto() {
 		return costoImpianto;
 	}
-
-
 	public void setCostoImpianto(Money costoImpianto) {
 		this.costoImpianto = costoImpianto;
 	}
-
-
 	public Calendar getCalendario() {
 		return calendario;
 	}
-
-
 	public void setCalendario(Calendar calendario) {
 		this.calendario = calendario;
 	}
-
-
+	public IPavimentazione getPavimentazione() {
+		return pavimentazione;
+	}
+	public void setPavimentazione(IPavimentazione pavimentazione) {
+		this.pavimentazione = pavimentazione;
+	}
+	public List<Sport> getSportPraticabili() {
+		return sportPraticabili;
+	}
+	public void setSportPraticabili(List<Sport> sportPraticabili) {
+		this.sportPraticabili = sportPraticabili;
+	}
+	
 	@Override
 	public boolean confermaPrenotazione(List<Object> parametri) {
+		// TODO Auto-generated method stub
 		return false;
 	}
-
-	public List<Sport> getSportPraticabili(){
-		return this.sportPraticabili;
-	}
-
-	public void setSportPraticabili(List<Sport> availableSport){
-		this.sportPraticabili = availableSport;
-	}
-
+	
+	
 	
 
 }
