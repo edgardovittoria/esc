@@ -45,12 +45,7 @@ public class ImpiantoDTO {
 	public void setPavimentazione(IPavimentazione pavimentazione) {
 		this.pavimentazione = pavimentazione;
 	}
-	public List<Sport> getSportPraticabi() {
-		return sportPraticabi;
-	}
-	public void setSportPraticabi(List<Sport> sportPraticabi) {
-		this.sportPraticabi = sportPraticabi;
-	}
+	
 	
 	
 }
