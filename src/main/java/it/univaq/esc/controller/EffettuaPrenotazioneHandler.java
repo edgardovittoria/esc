@@ -16,6 +16,7 @@ import it.univaq.esc.model.Istruttore;
 import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.Sportivo;
+import it.univaq.esc.services.IOpzioniPrenotazione;
 import it.univaq.esc.services.ImpiantoService;
 import it.univaq.esc.services.IstruttoreService;
 import it.univaq.esc.services.PrenotazioneService;
@@ -61,7 +62,7 @@ public class EffettuaPrenotazioneHandler {
 
 
 	@GetMapping("/prenotazione/{IDSportivo}")
-	public Model avviaNuovaPrenotazione(@PathVariable int IDSportivo, Model results) throws Exception {		
+	public IOpzioniPrenotazione avviaNuovaPrenotazione(@PathVariable int IDSportivo, Model results) throws Exception {		
 		try {
 			
 			int LastIDPrenotazione = prenotazioneService.getLastIDPrenotazione();

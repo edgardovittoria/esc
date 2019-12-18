@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.repository.SportRepository;
+import it.univaq.esc.services.IOpzioniPrenotazione;
 import it.univaq.esc.services.ImpiantoService;
 import it.univaq.esc.services.IstruttoreService;
 import it.univaq.esc.services.PrenotazioneService;
@@ -43,7 +44,7 @@ public class CRestProva {
 
 
     @GetMapping("/sports")
-	public Model index(Model results){
+	public IOpzioniPrenotazione index(Model results){
         return this.simpleFactory.getOpzioni(impiantoService, sportivoService, sportService, istruttoreService, prenotazioneService, results);
 
 	}
