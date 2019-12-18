@@ -17,7 +17,7 @@ public class ImpiantoDTO {
 	private Money costoImpianto;
 	private Calendar calendario;
 	private IPavimentazione pavimentazione;
-	private List<Sport> sportPraticabi;
+	
 	
 	public ImpiantoDTO() {}
 	

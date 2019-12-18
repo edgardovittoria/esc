@@ -34,8 +34,6 @@ public abstract class Impianto implements IPrenotabile{
 	protected Calendar calendario;
 	@Transient
 	protected IPavimentazione pavimentazione;
-	@ManyToMany
-	protected List<Sport> sportPraticabili;
 	
 	public int getIdImpianto() {
 		return idImpianto;

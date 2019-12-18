@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.javamoney.moneta.Money;
 
@@ -17,18 +18,21 @@ public class QuotaPartecipazione {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int IDQuotaPartecipazione;
-	@ManyToOne
-	private Prenotazione prenotazione;
-	@ManyToOne
-	private Sportivo sportivoAssociato;
+	// @ManyToOne
+	// private Prenotazione prenotazione;
+	// @ManyToOne
+	// private Sportivo sportivoAssociato;
 	@Column
 	private boolean saldata;
 	@Column
 	private Money importo;
+
+	@Transient
+	private int idPrenotazione;
 	
 	
-	public QuotaPartecipazione(Prenotazione prenotazione, Money importo) {
-		this.prenotazione = prenotazione;
+	public QuotaPartecipazione(int idPrenotazione, Money importo) {
+		this.idPrenotazione = idPrenotazione;
 		this.importo = importo;
 	}
 

@@ -1,15 +1,17 @@
 package it.univaq.esc.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.univaq.esc.dto.SportivoDTO;
 import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.Sportivo;
 import it.univaq.esc.repository.SportivoRepository;
-import it.univaq.esc.utility.SimpleFactory;
+
 
 @Service
 public class SportivoService {
@@ -50,7 +52,7 @@ public class SportivoService {
 	}
 	
 	@PostConstruct
-	private void inizializzaSports(){
+	private void inizializzaSportivi(){
 		sportivi = sportivoRepo.findAll();
 		// log.info(""+sportivi.size());
 	}
@@ -84,6 +86,52 @@ public class SportivoService {
      */
     public void setSportivi(List<Sportivo> sportivi) {
         this.sportivi = sportivi;
-    }
+	}
+	
+
+	public SportivoDTO toDTO(Sportivo sportivo){
+		SportivoDTO sportivoDTO = new SportivoDTO();
+		setOptionDTO(sportivo, sportivoDTO);
+
+		return sportivoDTO;
+		
+	}
+
+	public SportivoDTO toDTO(int IDSportivo){
+		Sportivo sportivo = sportivoRepo.findById(IDSportivo).get();
+		SportivoDTO sportivoDTO = new SportivoDTO();
+		setOptionDTO(sportivo, sportivoDTO);
+
+		return sportivoDTO;
+		
+	}
+
+	public List<SportivoDTO> toDTO(List<Sportivo> sportivi){
+		List<SportivoDTO> listaSportivi = new ArrayList<SportivoDTO>();
+		for (Sportivo sportivo : sportivi) {
+			SportivoDTO sportivoDTO = new SportivoDTO();
+			setOptionDTO(sportivo, sportivoDTO);
+			listaSportivi.add(sportivoDTO);
+		}
+		return listaSportivi;
+		
+	}
+
+
+
+
+	
+
+	private void setOptionDTO(Sportivo sportivo, SportivoDTO sportivoDTO){
+
+		sportivoDTO.setNome(sportivo.getNome());
+		sportivoDTO.setCognome(sportivo.getCognome());
+		sportivoDTO.setDataNascita(sportivo.getDataNascita());
+		sportivoDTO.setCarteCredito(sportivo.getCarteCredito());
+		sportivoDTO.setPartecipazioni(sportivo.getPartecipazioni());
+		sportivoDTO.setPrenotazioni(sportivo.getPrenotazioni());
+		sportivoDTO.setQuotePartecipazione(sportivo.getQuotePartecipazione());
+		sportivoDTO.setSconti(sportivo.getSconti());
+	}
 
 }

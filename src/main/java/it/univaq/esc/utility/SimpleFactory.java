@@ -46,7 +46,7 @@ public class SimpleFactory {
 	}
 	
 	public Model getOpzioni(ImpiantoService impiantoService, SportivoService sportivoService, SportService sportService, IstruttoreService istruttoreService, PrenotazioneService prenotazioneService, Model opzioni) {
-		return this.opzioniPrenotazione.getOpzioni(impiantoService, sportivoService, sportService, istruttoreService, prenotazioneService, opzioni);
+		return this.opzioniPrenotazione.getOpzioni(impiantoService, sportivoService, sportService, istruttoreService, prenotazioneService);
 	}
 	
 	
