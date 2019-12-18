@@ -9,15 +9,15 @@ import it.univaq.esc.dto.SportivoDTO;
 public class OpzioniPrenotazioneImpianto implements IOpzioniPrenotazione{
 
 	@Autowired
-	private List<SportDTO> Sport; 
+	private List<SportDTO> sport; 
 	@Autowired
-	private List<SportivoDTO> Sportivi;
+	private List<SportivoDTO> sportivi;
 
 	@Override
 	public IOpzioniPrenotazione getOpzioni(ImpiantoService impiantoService, SportivoService sportivoService, SportService sportService,
 			IstruttoreService istruttoreService, PrenotazioneService prenotazioneService) {
-		Sport = sportService.toDTO(sportService.getAllSport());
-		Sportivi = sportivoService.toDTO(sportivoService.getSportivi());
+		sport = sportService.toDTO(sportService.getAllSport());
+		sportivi = sportivoService.toDTO(sportivoService.getSportivi());
 		return this;
 	}
 	
