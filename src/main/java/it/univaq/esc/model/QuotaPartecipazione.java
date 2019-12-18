@@ -57,14 +57,14 @@ public class QuotaPartecipazione {
 	}
 
 
-	public Prenotazione getPrenotazione() {
-		return this.prenotazione;
-	}
+	// public Prenotazione getPrenotazione() {
+	// 	return this.prenotazione;
+	// }
 
 
-	public void setPrenotazione(Prenotazione prenotazione) {
-		this.prenotazione = prenotazione;
-	}
+	// public void setPrenotazione(Prenotazione prenotazione) {
+	// 	this.prenotazione = prenotazione;
+	// }
 	
 	
 	
@@ -87,15 +87,15 @@ public class QuotaPartecipazione {
     /**
      * @return Sportivo return the sportivoAssociato
      */
-    public Sportivo getSportivoAssociato() {
-        return sportivoAssociato;
-    }
+    // public Sportivo getSportivoAssociato() {
+    //     return sportivoAssociato;
+    // }
 
     /**
      * @param sportivoAssociato the sportivoAssociato to set
      */
-    public void setSportivoAssociato(Sportivo sportivoAssociato) {
-        this.sportivoAssociato = sportivoAssociato;
-    }
+    // public void setSportivoAssociato(Sportivo sportivoAssociato) {
+    //     this.sportivoAssociato = sportivoAssociato;
+    // }
 
 }
