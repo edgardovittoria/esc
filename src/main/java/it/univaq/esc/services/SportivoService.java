@@ -17,7 +17,7 @@ public class SportivoService {
 	@Autowired
 	private SportivoRepository sportivoRepo;
 	private List<Sportivo> sportivi;
-	private SimpleFactory simpleFactory = SimpleFactory.getInstance();
+	//private SimpleFactory simpleFactory = SimpleFactory.getInstance();
 	
 	private static SportivoService sportivoServiceInstance;
     
@@ -35,11 +35,11 @@ public class SportivoService {
 
 
 
-	public Prenotazione creaNuovaPrenotazione(int lastIDPrenotazione, Sportivo sportivo) {
-		Prenotazione nuovaPrenotazione = this.simpleFactory.getNuovaPrenotazione(lastIDPrenotazione, sportivo); 
-		return nuovaPrenotazione;
-	}
-	
+//	public Prenotazione creaNuovaPrenotazione(int lastIDPrenotazione, Sportivo sportivo) {
+//		Prenotazione nuovaPrenotazione = this.simpleFactory.getNuovaPrenotazione(lastIDPrenotazione, sportivo); 
+//		return nuovaPrenotazione;
+//	}
+//	
 	public void gestisciPagamento(Prenotazione prenotazione) {
 		
 	}

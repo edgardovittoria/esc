@@ -21,6 +21,7 @@ import it.univaq.esc.services.IstruttoreService;
 import it.univaq.esc.services.PrenotazioneService;
 import it.univaq.esc.services.SportService;
 import it.univaq.esc.services.SportivoService;
+import it.univaq.utility.SimpleFactory;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +40,8 @@ public class EffettuaPrenotazioneHandler {
 	private SportivoService sportivoService;
 	@Autowired
 	private IstruttoreService istruttoreService;
+	@Autowired
+	private SimpleFactory simpleFactory;
 	
 	
 	private Sportivo sportivoPrenotante;
@@ -49,12 +52,9 @@ public class EffettuaPrenotazioneHandler {
 	
 	
 	
+	
 	//costruttore
-	public EffettuaPrenotazioneHandler() {
-		//this.registroPrenotazioni = RegistroPrenotazioni.getInstance();
-		//this.registroSportivi = RegistroSportivi.getInstance();
-		//this.registroSport = RegistroSport.getInstance();
-	}
+	public EffettuaPrenotazioneHandler() {	}
 
 
 	
@@ -70,7 +70,7 @@ public class EffettuaPrenotazioneHandler {
 			int LastIDPrenotazione = prenotazioneService.getLastIDPrenotazione();
 			sportivoPrenotante = sportivoService.getSportivo(IDSportivo);
 			// loggerAvviaPren.info(sportivoPrenotante.getNome());
-			nuovaPrenotazione = sportivoService.creaNuovaPrenotazione(LastIDPrenotazione, sportivoPrenotante);
+			nuovaPrenotazione = simpleFactory.getNuovaPrenotazione(LastIDPrenotazione, sportivoPrenotante);
 
 			/**
 			 * Ricaviamo gli sport disponibili per la prenotazione.
