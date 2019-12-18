@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.Sportivo;
 import it.univaq.esc.repository.SportivoRepository;
-import it.univaq.utility.SimpleFactory;
+import it.univaq.esc.utility.SimpleFactory;
 
 @Service
 public class SportivoService {

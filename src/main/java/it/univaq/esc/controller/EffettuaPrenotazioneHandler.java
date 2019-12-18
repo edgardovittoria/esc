@@ -21,7 +21,7 @@ import it.univaq.esc.services.IstruttoreService;
 import it.univaq.esc.services.PrenotazioneService;
 import it.univaq.esc.services.SportService;
 import it.univaq.esc.services.SportivoService;
-import it.univaq.utility.SimpleFactory;
+import it.univaq.esc.utility.SimpleFactory;
 
 import java.util.ArrayList;
 import java.util.Calendar;

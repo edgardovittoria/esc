@@ -1,4 +1,4 @@
-package it.univaq.utility;
+package it.univaq.esc.utility;
 
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
