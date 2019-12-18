@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -65,12 +64,12 @@ public abstract class Impianto implements IPrenotabile{
 	public void setPavimentazione(IPavimentazione pavimentazione) {
 		this.pavimentazione = pavimentazione;
 	}
-	public List<Sport> getSportPraticabili() {
-		return sportPraticabili;
-	}
-	public void setSportPraticabili(List<Sport> sportPraticabili) {
-		this.sportPraticabili = sportPraticabili;
-	}
+	// public List<Sport> getSportPraticabili() {
+	// 	return sportPraticabili;
+	// }
+	// public void setSportPraticabili(List<Sport> sportPraticabili) {
+	// 	this.sportPraticabili = sportPraticabili;
+	// }
 	
 	@Override
 	public boolean confermaPrenotazione(List<Object> parametri) {
