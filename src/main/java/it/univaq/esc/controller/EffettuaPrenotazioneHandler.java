@@ -61,59 +61,18 @@ public class EffettuaPrenotazioneHandler {
 
 
 	@GetMapping("/prenotazione/{IDSportivo}")
-	public String avviaNuovaPrenotazione(@PathVariable int IDSportivo, Model results) throws Exception {
-		// Logger loggerAvviaPren = LoggerFactory.getLogger(EffettuaPrenotazioneHandler.class);
-		// loggerAvviaPren.info(""+IDSportivo);
-		
+	public Model avviaNuovaPrenotazione(@PathVariable int IDSportivo, Model results) throws Exception {		
 		try {
-			// loggerAvviaPren.info(""+registroPrenotazioni.getLastIDPrenotazione());
+			
 			int LastIDPrenotazione = prenotazioneService.getLastIDPrenotazione();
 			sportivoPrenotante = sportivoService.getSportivo(IDSportivo);
-			// loggerAvviaPren.info(sportivoPrenotante.getNome());
-			nuovaPrenotazione = simpleFactory.getNuovaPrenotazione(LastIDPrenotazione, sportivoPrenotante);
-
-			/**
-			 * Ricaviamo gli sport disponibili per la prenotazione.
-			 */
-			List<SportDTO> availableSport = sportService.toDTO(sportService.getAllSport());
-
-			List<Impianto> availableImpianti = impiantoService.getAllImpianti();
-			ArrayList<Istruttore> availableIstruttori = istruttoreService.getIstruttori();
-			ArrayList<Calendar> listaCalendari = new ArrayList<Calendar>();
-
-			for (Impianto imp : availableImpianti) {
-				listaCalendari.add(imp.getCalendario());
-			}
-
-			
-			results.addAttribute("Sport", availableSport);
-			results.addAttribute("Impianti", availableImpianti);
-			results.addAttribute("Istruttori", availableIstruttori);
-			results.addAttribute("Calendario", listaCalendari);			
-
+			nuovaPrenotazione = this.simpleFactory.getNuovaPrenotazione(LastIDPrenotazione, sportivoPrenotante);
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "newPrenotazione";
+		return this.simpleFactory.getOpzioni(impiantoService, sportivoService, sportService, istruttoreService, prenotazioneService, results);
 	}
 	
-	@GetMapping("/impianti")
-	public List<Impianto> aggiornaOpzioneSport(@RequestParam("etichetta") String etichetta){
-		
-		//sfruttando il registro Sport
-		Sport sport = sportService.getSport(etichetta);
-		return sport.getImpianti();
-	}
 	
-	@GetMapping("/calendario/{etichetta}")
-	public void aggiornaOpzioneCalendario(@PathVariable String etichetta) {
-		
-	}
-	
-	@GetMapping("/istruttore/{etichetta}")
-	public List<Istruttore> aggiornaOpzioneIstruttore(@PathVariable String etichetta) {
-		//Sport sport = this.registroSport.getSportDes(etichetta);
-		Sport sport = sportService.getSport(etichetta);
-		return sport.getIstruttori();
-	}
 }
