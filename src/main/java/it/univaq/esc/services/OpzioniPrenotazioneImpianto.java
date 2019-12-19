@@ -1,10 +1,11 @@
 package it.univaq.esc.services;
 
-import java.util.List;
+
+import java.util.Set;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import it.univaq.esc.dto.IOpzioniPrenotazioneDTO;
 import it.univaq.esc.dto.OpzioniPrenotazioneImpiantoDTO;
 import it.univaq.esc.model.Sport;
@@ -14,9 +15,9 @@ import it.univaq.esc.model.Sportivo;
 public class OpzioniPrenotazioneImpianto implements IOpzioniPrenotazione{
 
 	
-	private List<Sport> sport; 
+	private Set<Sport> sport; 
 	
-    private List<Sportivo> sportivi;
+    private Set<Sportivo> sportivi;
     
     
     private SportService sportService = SportService.getInstance();
@@ -29,7 +30,9 @@ public class OpzioniPrenotazioneImpianto implements IOpzioniPrenotazione{
 	@Override
 	public IOpzioniPrenotazione getOpzioni(ImpiantoService impiantoService, SportivoService sportivoService, SportService sportService,
 			IstruttoreService istruttoreService, PrenotazioneService prenotazioneService) {
+		//Logger logger = LoggerFactory.getLogger(OpzioniPrenotazioneImpianto.class);
 		this.sport = sportService.getAllSport();
+		//logger.info(this.sport.toString());
 		this.sportivi = sportivoService.getSportivi();
 		return this;
 	}
@@ -38,22 +41,22 @@ public class OpzioniPrenotazioneImpianto implements IOpzioniPrenotazione{
     /**
      * @param sport the sport to set
      */
-    public void setSport(List<Sport> sport) {
+    public void setSport(Set<Sport> sport) {
         this.sport = sport;
     }
 
     /**
      * @param sportivi the sportivi to set
      */
-    public void setSportivi(List<Sportivo> sportivi) {
+    public void setSportivi(Set<Sportivo> sportivi) {
         this.sportivi = sportivi;
     }
 
-    public List<Sport> getSport(){
+    public Set<Sport> getSport(){
         return this.sport;
     }
 
-    public List<Sportivo> getSportivi(){
+    public Set<Sportivo> getSportivi(){
         return this.sportivi;
     }
     

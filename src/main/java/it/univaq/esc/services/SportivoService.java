@@ -1,7 +1,7 @@
 package it.univaq.esc.services;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class SportivoService {
 
 	@Autowired
 	private SportivoRepository sportivoRepo;
-	private List<Sportivo> sportivi;
+	private Set<Sportivo> sportivi;
 	//private SimpleFactory simpleFactory = SimpleFactory.getInstance();
 	
 	private static SportivoService sportivoServiceInstance;
@@ -53,7 +53,7 @@ public class SportivoService {
 	
 	@PostConstruct
 	private void inizializzaSportivi(){
-		sportivi = sportivoRepo.findAll();
+		sportivi =  new HashSet<Sportivo>(sportivoRepo.findAll());
 		// log.info(""+sportivi.size());
 	}
 
@@ -77,14 +77,14 @@ public class SportivoService {
     /**
      * @return List<Sportivo> return the sportivi
      */
-    public List<Sportivo> getSportivi() {
+    public Set<Sportivo> getSportivi() {
         return sportivi;
     }
 
     /**
      * @param sportivi the sportivi to set
      */
-    public void setSportivi(List<Sportivo> sportivi) {
+    public void setSportivi(Set<Sportivo> sportivi) {
         this.sportivi = sportivi;
 	}
 	
@@ -106,8 +106,8 @@ public class SportivoService {
 		
 	}
 
-	public List<SportivoDTO> toDTO(List<Sportivo> sportivi){
-		List<SportivoDTO> listaSportivi = new ArrayList<SportivoDTO>();
+	public Set<SportivoDTO> toDTO(Set<Sportivo> sportivi){
+		Set<SportivoDTO> listaSportivi = new HashSet<SportivoDTO>();
 		for (Sportivo sportivo : sportivi) {
 			SportivoDTO sportivoDTO = new SportivoDTO();
 			setOptionDTO(sportivo, sportivoDTO);

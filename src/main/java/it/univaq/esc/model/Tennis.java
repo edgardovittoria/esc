@@ -1,8 +1,6 @@
 package it.univaq.esc.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

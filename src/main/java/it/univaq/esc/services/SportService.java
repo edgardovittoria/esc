@@ -1,6 +1,5 @@
 package it.univaq.esc.services;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -133,7 +132,7 @@ public class SportService {
 	}
 
 	public Set<SportDTO> toDTO(Set<Sport> listaSport) {
-		Logger logger = LoggerFactory.getLogger(SportivoService.class);
+		
 		Set<SportDTO> listaSportDTO = new HashSet<SportDTO>(); 
 		for (Sport sport : listaSport) {
 			SportDTO sportDTO = new SportDTO();
@@ -141,8 +140,9 @@ public class SportService {
 			sportDTO.setDescrizione(sport.getSportDescription());
 			sportDTO.setImpianti((ImpiantoService.toDTO(sport.getImpianti())));
 			listaSportDTO.add(sportDTO);
-			logger.info(listaSportDTO.toString());
 		}
+		Logger logger = LoggerFactory.getLogger(SportService.class);
+		logger.info(listaSportDTO.toString());
 
 		return listaSportDTO;
 		
