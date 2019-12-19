@@ -1,7 +1,7 @@
 package it.univaq.esc.dto;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -16,11 +16,11 @@ public class SportivoDTO {
 	private String nome;
 	private String cognome;
 	private Date dataNascita;
-	private List<Prenotazione> prenotazioni;
-	private List<Prenotazione> partecipazioni;
-	private List<CartaCredito> carteCredito;
-	private List<Sconto> sconti;
-	private List<QuotaPartecipazione> quotePartecipazione;
+	private Set<Prenotazione> prenotazioni;
+	private Set<Prenotazione> partecipazioni;
+	private Set<CartaCredito> carteCredito;
+	private Set<Sconto> sconti;
+	private Set<QuotaPartecipazione> quotePartecipazione;
 	
 	
 	public String getNome() {
@@ -41,34 +41,34 @@ public class SportivoDTO {
 	public void setDataNascita(Date dataNascita) {
 		this.dataNascita = dataNascita;
 	}
-	public List<Prenotazione> getPrenotazioni() {
+	public Set<Prenotazione> getPrenotazioni() {
 		return prenotazioni;
 	}
-	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
+	public void setPrenotazioni(Set<Prenotazione> prenotazioni) {
 		this.prenotazioni = prenotazioni;
 	}
-	public List<Prenotazione> getPartecipazioni() {
+	public Set<Prenotazione> getPartecipazioni() {
 		return partecipazioni;
 	}
-	public void setPartecipazioni(List<Prenotazione> partecipazioni) {
+	public void setPartecipazioni(Set<Prenotazione> partecipazioni) {
 		this.partecipazioni = partecipazioni;
 	}
-	public List<CartaCredito> getCarteCredito() {
+	public Set<CartaCredito> getCarteCredito() {
 		return carteCredito;
 	}
-	public void setCarteCredito(List<CartaCredito> carteCredito) {
+	public void setCarteCredito(Set<CartaCredito> carteCredito) {
 		this.carteCredito = carteCredito;
 	}
-	public List<Sconto> getSconti() {
+	public Set<Sconto> getSconti() {
 		return sconti;
 	}
-	public void setSconti(List<Sconto> sconti) {
+	public void setSconti(Set<Sconto> sconti) {
 		this.sconti = sconti;
 	}
-	public List<QuotaPartecipazione> getQuotePartecipazione() {
+	public Set<QuotaPartecipazione> getQuotePartecipazione() {
 		return quotePartecipazione;
 	}
-	public void setQuotePartecipazione(List<QuotaPartecipazione> quotePartecipazione) {
+	public void setQuotePartecipazione(Set<QuotaPartecipazione> quotePartecipazione) {
 		this.quotePartecipazione = quotePartecipazione;
 	}
 	

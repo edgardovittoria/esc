@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -27,7 +28,8 @@ public abstract class Sport {
 	protected String sportDescription;
 	@Column(name = "nome", insertable = false, updatable = false)
 	protected String nome;
-	@ManyToMany(mappedBy = "sportPraticabili")
+	@ManyToMany
+	@JoinColumn(name = "sportPraticabili")
 	protected List<Impianto> impianti;
 	@OneToMany(mappedBy = "sportInsegnato")
 	protected List<Istruttore> istruttori; 

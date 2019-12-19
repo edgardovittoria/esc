@@ -1,14 +1,10 @@
 package it.univaq.esc.dto;
 
 import java.util.Calendar;
-import java.util.List;
-
 import org.javamoney.moneta.Money;
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.model.IPavimentazione;
-import it.univaq.esc.model.Impianto;
-import it.univaq.esc.model.Sport;
 
 @Component
 public class ImpiantoDTO {

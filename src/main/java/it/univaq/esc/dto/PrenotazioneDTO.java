@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import it.univaq.esc.model.CostoPrenotazione;
 import it.univaq.esc.model.IPrenotabile;
-import it.univaq.esc.model.Sportivo;
 
 @Component
 public class PrenotazioneDTO {
@@ -18,12 +17,12 @@ public class PrenotazioneDTO {
 	}
 	private int numPartecipanti;
 	private int numPostiLiberi;
-	private Sportivo sportivoPrenotante;
+	private SportivoDTO sportivoPrenotante;
 	private CostoPrenotazione costoPrenotazione;
 	private IPrenotabile servizioPrenotato;
 	private Calendar calendario;
-	private List<Sportivo> Partecipanti;
-	private List<Sportivo> Invitati;
+	private List<SportivoDTO> Partecipanti;
+	private List<SportivoDTO> Invitati;
 	
 	public Boolean getConfermata() {
 		return confermata;
@@ -43,10 +42,10 @@ public class PrenotazioneDTO {
 	public void setNumPostiLiberi(int numPostiLiberi) {
 		this.numPostiLiberi = numPostiLiberi;
 	}
-	public Sportivo getSportivoPrenotante() {
+	public SportivoDTO getSportivoPrenotante() {
 		return sportivoPrenotante;
 	}
-	public void setSportivoPrenotante(Sportivo sportivoPrenotante) {
+	public void setSportivoPrenotante(SportivoDTO sportivoPrenotante) {
 		this.sportivoPrenotante = sportivoPrenotante;
 	}
 	public CostoPrenotazione getCostoPrenotazione() {
@@ -67,16 +66,16 @@ public class PrenotazioneDTO {
 	public void setCalendario(Calendar calendario) {
 		this.calendario = calendario;
 	}
-	public List<Sportivo> getPartecipanti() {
+	public List<SportivoDTO> getPartecipanti() {
 		return Partecipanti;
 	}
-	public void setPartecipanti(List<Sportivo> partecipanti) {
+	public void setPartecipanti(List<SportivoDTO> partecipanti) {
 		Partecipanti = partecipanti;
 	}
-	public List<Sportivo> getInvitati() {
+	public List<SportivoDTO> getInvitati() {
 		return Invitati;
 	}
-	public void setInvitati(List<Sportivo> invitati) {
+	public void setInvitati(List<SportivoDTO> invitati) {
 		Invitati = invitati;
 	}
 

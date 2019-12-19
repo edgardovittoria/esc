@@ -1,19 +1,21 @@
 package it.univaq.esc.model;
 
-import java.util.List;
+import java.util.Set;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import it.univaq.esc.utility.SimpleFactory;
+
+
 
 @Entity
 @Table(name = "sportivo")
@@ -30,19 +32,20 @@ public class Sportivo {
 	@Column(name = "dataNascita", nullable = true)
 	private Date dataNascita;
 	
-	@OneToMany(mappedBy = "sportivoPrenotante")
-	private List<Prenotazione> prenotazioni;
-	@ManyToMany(mappedBy = "Partecipanti")
-	private List<Prenotazione> partecipazioni;
-	@ManyToMany(mappedBy = "Invitati")
-	private List<Prenotazione> inviti;
+	@OneToMany(mappedBy = "sportivoPrenotante", fetch = FetchType.EAGER)
+	private Set<Prenotazione> prenotazioni;
+	@ManyToMany(mappedBy = "Partecipanti", fetch = FetchType.EAGER)
+	private Set<Prenotazione> partecipazioni;
+	@ManyToMany(mappedBy = "Invitati", fetch = FetchType.EAGER)
+	private Set<Prenotazione> inviti;
 	
-	@OneToMany(mappedBy = "proprietario")	
-	private List<CartaCredito> carteCredito;
-    @OneToMany(mappedBy = "possessore")
-    private List<Sconto> sconti;
-	@OneToMany(mappedBy = "sportivoAssociato")
-	private List<QuotaPartecipazione> quotePartecipazione;
+	@OneToMany(mappedBy = "proprietario", fetch = FetchType.EAGER)	
+	private Set<CartaCredito> carteCredito;
+    @OneToMany(mappedBy = "possessore", fetch = FetchType.EAGER)
+    private Set<Sconto> sconti;
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "sportivoAssociato")
+	private Set<QuotaPartecipazione> quotePartecipazione;
 	
 	
 	public Sportivo() {}
@@ -88,62 +91,62 @@ public class Sportivo {
 	}
 
 
-	public List<Prenotazione> getPrenotazioni() {
+	public Set<Prenotazione> getPrenotazioni() {
 		return prenotazioni;
 	}
 
 
-	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
+	public void setPrenotazioni(Set<Prenotazione> prenotazioni) {
 		this.prenotazioni = prenotazioni;
 	}
 
 
-	public List<Prenotazione> getPartecipazioni() {
+	public Set<Prenotazione> getPartecipazioni() {
 		return partecipazioni;
 	}
 
 
-	public void setPartecipazioni(List<Prenotazione> partecipazioni) {
+	public void setPartecipazioni(Set<Prenotazione> partecipazioni) {
 		this.partecipazioni = partecipazioni;
 	}
 
 
-	public List<Prenotazione> getInviti() {
+	public Set<Prenotazione> getInviti() {
 		return inviti;
 	}
 
 
-	public void setInviti(List<Prenotazione> inviti) {
+	public void setInviti(Set<Prenotazione> inviti) {
 		this.inviti = inviti;
 	}
 
 
-	public List<CartaCredito> getCarteCredito() {
+	public Set<CartaCredito> getCarteCredito() {
 		return carteCredito;
 	}
 
 
-	public void setCarteCredito(List<CartaCredito> carteCredito) {
+	public void setCarteCredito(Set<CartaCredito> carteCredito) {
 		this.carteCredito = carteCredito;
 	}
 
 
-	public List<Sconto> getSconti() {
+	public Set<Sconto> getSconti() {
 		return sconti;
 	}
 
 
-	public void setSconti(List<Sconto> sconti) {
+	public void setSconti(Set<Sconto> sconti) {
 		this.sconti = sconti;
 	}
 
 
-	public List<QuotaPartecipazione> getQuotePartecipazione() {
+	public Set<QuotaPartecipazione> getQuotePartecipazione() {
 		return quotePartecipazione;
 	}
 
 
-	public void setQuotePartecipazione(List<QuotaPartecipazione> quotePartecipazione) {
+	public void setQuotePartecipazione(Set<QuotaPartecipazione> quotePartecipazione) {
 		this.quotePartecipazione = quotePartecipazione;
 	}
 

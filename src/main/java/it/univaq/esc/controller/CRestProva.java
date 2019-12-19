@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.univaq.esc.dto.IOpzioniPrenotazioneDTO;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.repository.SportRepository;
 import it.univaq.esc.services.IOpzioniPrenotazione;
@@ -43,9 +45,10 @@ public class CRestProva {
     }
 
 
-    @GetMapping("/sports")
-	public IOpzioniPrenotazione index(Model results){
-        return this.simpleFactory.getOpzioni(impiantoService, sportivoService, sportService, istruttoreService, prenotazioneService, results);
-
+    @GetMapping("/prenotazione/{tipologia}")
+	public IOpzioniPrenotazioneDTO index(@PathVariable String tipologia){
+		this.simpleFactory.setStrategy(tipologia);
+        return this.simpleFactory.getOpzioni(impiantoService, sportivoService, sportService, istruttoreService, prenotazioneService).toDTO();
+		
 	}
 }

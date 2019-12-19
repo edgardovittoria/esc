@@ -72,7 +72,7 @@ public class EffettuaPrenotazioneHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return this.simpleFactory.getOpzioni(impiantoService, sportivoService, sportService, istruttoreService, prenotazioneService, results);
+		return this.simpleFactory.getOpzioni(impiantoService, sportivoService, sportService, istruttoreService, prenotazioneService);
 	}
 	
 	
