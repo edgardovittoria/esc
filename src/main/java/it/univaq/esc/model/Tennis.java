@@ -1,6 +1,8 @@
 package it.univaq.esc.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -12,8 +14,8 @@ public class Tennis extends Sport{
 	private static Tennis tennisInstance;
 
 	private Tennis(){
-		this.impianti = new ArrayList<Impianto>();
-		this.istruttori = new ArrayList<Istruttore>();
+		this.impianti = new HashSet<Impianto>();
+		this.istruttori = new HashSet<Istruttore>();
 		this.sportDescription = "tennis";
 	}		
 

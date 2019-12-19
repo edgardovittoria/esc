@@ -1,7 +1,8 @@
 package it.univaq.esc.services;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -22,7 +23,8 @@ public class SportService {
 	@Autowired
 	private SportRepository sportRepo;
 
-	private List<Sport> listaSport;
+	
+	private Set<Sport> listaSport;
 
 
 	private static SportService sportServiceInstance;
@@ -35,7 +37,7 @@ public class SportService {
 
 	@PostConstruct
 	private void inizializzaListaSport() {
-		this.listaSport = sportRepo.findAll(); 
+		this.listaSport = new HashSet<>(sportRepo.findAll()); 
 	}
 
 	public static SportService getInstance(){
@@ -130,13 +132,14 @@ public class SportService {
 		
 	}
 
-	public List<SportDTO> toDTO(List<Sport> listaSport) {
+	public Set<SportDTO> toDTO(Set<Sport> listaSport) {
 		Logger logger = LoggerFactory.getLogger(SportivoService.class);
-		List<SportDTO> listaSportDTO = new ArrayList<SportDTO>(); 
+		Set<SportDTO> listaSportDTO = new HashSet<SportDTO>(); 
 		for (Sport sport : listaSport) {
 			SportDTO sportDTO = new SportDTO();
 			sportDTO.setNome(sport.getNome());
 			sportDTO.setDescrizione(sport.getSportDescription());
+			sportDTO.setImpianti((ImpiantoService.toDTO(sport.getImpianti())));
 			listaSportDTO.add(sportDTO);
 			logger.info(listaSportDTO.toString());
 		}
@@ -153,7 +156,7 @@ public class SportService {
 		return sportRepo.findBySportDescription(description);
 	}
 
-	public List<Sport> getAllSport(){
+	public Set<Sport> getAllSport(){
 		return this.listaSport;
 	}
 	

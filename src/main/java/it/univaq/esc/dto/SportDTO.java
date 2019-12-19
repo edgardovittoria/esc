@@ -1,6 +1,7 @@
 package it.univaq.esc.dto;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -12,9 +13,9 @@ public class SportDTO {
 
     private String descrizione;
 
-    private List<ImpiantoDTO> impianti;
+    private Set<ImpiantoDTO> impianti;
 
-    private List<IstruttoreDTO> istruttori;
+    private Set<IstruttoreDTO> istruttori;
 
     public SportDTO(){
         
@@ -53,28 +54,28 @@ public class SportDTO {
     /**
      * @return List<ImpiantoDTO> return the impianti
      */
-    public List<ImpiantoDTO> getImpianti() {
+    public Set<ImpiantoDTO> getImpianti() {
         return impianti;
     }
 
     /**
      * @param impianti the impianti to set
      */
-    public void setImpianti(List<ImpiantoDTO> impianti) {
+    public void setImpianti(Set<ImpiantoDTO> impianti) {
         this.impianti = impianti;
     }
 
     /**
      * @return List<IstruttoreDTO> return the istruttori
      */
-    public List<IstruttoreDTO> getIstruttori() {
+    public Set<IstruttoreDTO> getIstruttori() {
         return istruttori;
     }
 
     /**
      * @param istruttori the istruttori to set
      */
-    public void setIstruttori(List<IstruttoreDTO> istruttori) {
+    public void setIstruttori(Set<IstruttoreDTO> istruttori) {
         this.istruttori = istruttori;
     }
 

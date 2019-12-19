@@ -2,6 +2,7 @@ package it.univaq.esc.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import it.univaq.esc.dto.IOpzioniPrenotazioneDTO;
@@ -28,8 +29,8 @@ public class OpzioniPrenotazioneImpianto implements IOpzioniPrenotazione{
 	@Override
 	public IOpzioniPrenotazione getOpzioni(ImpiantoService impiantoService, SportivoService sportivoService, SportService sportService,
 			IstruttoreService istruttoreService, PrenotazioneService prenotazioneService) {
-		sport = sportService.getAllSport();
-		sportivi = sportivoService.getSportivi();
+		this.sport = sportService.getAllSport();
+		this.sportivi = sportivoService.getSportivi();
 		return this;
 	}
 	
@@ -59,8 +60,9 @@ public class OpzioniPrenotazioneImpianto implements IOpzioniPrenotazione{
     @Override
     public IOpzioniPrenotazioneDTO toDTO(){
         OpzioniPrenotazioneImpiantoDTO opzioniDTO = new OpzioniPrenotazioneImpiantoDTO();
-        opzioniDTO.setSport(this.sportService.toDTO(sport));
-        opzioniDTO.setSportivi(this.sportivoService.toDTO(sportivi));
+        
+        opzioniDTO.setSport(this.sportService.toDTO(this.sport));
+        opzioniDTO.setSportivi(this.sportivoService.toDTO(this.sportivi));
         return opzioniDTO;
     }
 

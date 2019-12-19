@@ -1,6 +1,7 @@
 package it.univaq.esc.model;
 
-import java.util.List;
+
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -30,9 +31,9 @@ public abstract class Sport {
 	protected String nome;
 	@ManyToMany
 	@JoinColumn(name = "sportPraticabili")
-	protected List<Impianto> impianti;
+	protected Set<Impianto> impianti;
 	@OneToMany(mappedBy = "sportInsegnato")
-	protected List<Istruttore> istruttori; 
+	protected Set<Istruttore> istruttori; 
 	
 
 	/**
@@ -68,23 +69,23 @@ public abstract class Sport {
 	/**
 	 * Restituisce la lista degli impianti associati allo sport.
 	 */
-	public List<Impianto> getImpianti(){
+	public Set<Impianto> getImpianti(){
 		return this.impianti;
 	}
 
-	public void setImpianti(List<Impianto> impianti){
+	public void setImpianti(Set<Impianto> impianti){
 		this.impianti = impianti;
 	}
 
 	/**
 	 * Restituisce la lista degli istruttori associati allo sport.
 	 */
-	public List<Istruttore> getIstruttori() {
+	public Set<Istruttore> getIstruttori() {
 		return this.istruttori;	
 	}
 
 
-	public void setIstruttori(List<Istruttore> istruttori){
+	public void setIstruttori(Set<Istruttore> istruttori){
 		this.istruttori = istruttori;
 	}
 
