@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public abstract class Sport {
 	protected String sportDescription;
 	@Column(name = "nome", insertable = false, updatable = false)
 	protected String nome;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sportPraticabili")
 	protected Set<Impianto> impianti;
 	@OneToMany(mappedBy = "sportInsegnato")
