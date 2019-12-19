@@ -21,28 +21,28 @@ public class DataGenerator {
      * @param evento
      * @throws Exception
      */
-    // @EventListener
-    // public void popola(ContextRefreshedEvent evento) throws Exception {
-    //     try{
-    //         logger.info("Generazione dati...");
-            
-
-    //         /* 
-    //         Inserire qui i vari seed da richiamare.
-    //         */
-    //         SeedImpianti.generaDati();
-    //         SeedIstruttori.generaDati(20);
-    //         SeedSport.generaDati();
-    //         seedSportivi.generaDati(50);
-            
-            
-
-    //         logger.info("...generazione totale completata!");
-    //     }
-    //     catch(Exception e){
-    //         e.printStackTrace();
-    //     }
-    // }
+//     @EventListener
+//     public void popola(ContextRefreshedEvent evento) throws Exception {
+//         try{
+//             logger.info("Generazione dati...");
+//            
+//
+//             /* 
+//             Inserire qui i vari seed da richiamare.
+//             */
+//             SeedImpianti.generaDati();
+//             SeedIstruttori.generaDati(20);
+//             SeedSport.generaDati();
+//             seedSportivi.generaDati(50);
+//            
+//            
+//
+//             logger.info("...generazione totale completata!");
+//         }
+//         catch(Exception e){
+//             e.printStackTrace();
+//         }
+//     }
 }
 
 

@@ -1,5 +1,7 @@
 package it.univaq.esc.services;
 
+import org.springframework.stereotype.Service;
+
 import it.univaq.esc.dto.IOpzioniPrenotazioneDTO;
 
 public interface IOpzioniPrenotazione {

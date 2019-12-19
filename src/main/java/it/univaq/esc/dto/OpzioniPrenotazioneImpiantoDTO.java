@@ -2,6 +2,9 @@ package it.univaq.esc.dto;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class OpzioniPrenotazioneImpiantoDTO implements IOpzioniPrenotazioneDTO{
     
     private List<SportDTO> sport; 
@@ -20,6 +23,8 @@ public class OpzioniPrenotazioneImpiantoDTO implements IOpzioniPrenotazioneDTO{
      */
     public void setSport(List<SportDTO> sport) {
         this.sport = sport;
+        //Logger logger = LoggerFactory.getLogger(OpzioniPrenotazioneImpiantoDTO.class);
+        //logger.info(this.sport.get(0).getNome());
     }
 
     /**

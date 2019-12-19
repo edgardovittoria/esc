@@ -2,7 +2,6 @@ package it.univaq.esc.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.univaq.esc.dto.IOpzioniPrenotazioneDTO;
@@ -18,11 +17,11 @@ public class OpzioniPrenotazioneImpianto implements IOpzioniPrenotazione{
 	
     private List<Sportivo> sportivi;
     
-    @Autowired
-    private SportService sportService;
+    
+    private SportService sportService = SportService.getInstance();
 
-    @Autowired
-    private SportivoService sportivoService;
+    
+    private SportivoService sportivoService = SportivoService.getInstance();
 
 	public OpzioniPrenotazioneImpianto(){}
 

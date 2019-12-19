@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -129,12 +131,14 @@ public class SportService {
 	}
 
 	public List<SportDTO> toDTO(List<Sport> listaSport) {
+		Logger logger = LoggerFactory.getLogger(SportivoService.class);
 		List<SportDTO> listaSportDTO = new ArrayList<SportDTO>(); 
 		for (Sport sport : listaSport) {
 			SportDTO sportDTO = new SportDTO();
 			sportDTO.setNome(sport.getNome());
 			sportDTO.setDescrizione(sport.getSportDescription());
 			listaSportDTO.add(sportDTO);
+			logger.info(listaSportDTO.toString());
 		}
 
 		return listaSportDTO;
