@@ -1,135 +1,128 @@
 package it.univaq.esc.model;
 
-
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-@Entity
-@Table(name = "prenotazione")
 public class Prenotazione {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int IDPrenotazione;
-	@Column
-	private Boolean confermata;
+    private int idPrenotazione;
+    private boolean confermata = false;
+    private int postiLiberi;
+    private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();
+    private Manutentore responsabilePrenotazione;
+    private Calendario calendarioPrenotazione;
+    private Sport sportAssociato;
+    private Sportivo sportivoPrenotante;
+    private List<Sportivo> partecipanti = new ArrayList<Sportivo>();
+    private List<Sportivo> invitati = new ArrayList<Sportivo>();
+    private List<Impianto> impiantiPrenotati = new ArrayList<Impianto>();
 
-	private enum modalita{
-		STANDARD, PENDING
-	}
-	@Column
-	private int numPartecipanti;
-	@Column
-	private int numPostiLiberi;
-    @ManyToOne
-	private Sportivo sportivoPrenotante;
-	@OneToOne
-	private CostoPrenotazione costoPrenotazione;
-	@Transient
-	private IPrenotabile servizioPrenotato;
-	@Column
-	private Calendar calendario;
-	@ManyToMany
-	private List<Sportivo> Partecipanti;
-	@ManyToMany
-	private List<Sportivo> Invitati;
 
-	//costruttore
-	public Prenotazione(int LastIDPrenotazione, Sportivo sportivoPrenotante) {
-		this.IDPrenotazione = LastIDPrenotazione;
-		this.sportivoPrenotante = sportivoPrenotante;
-	}
+    public Prenotazione(int lastIdPrenotazione, Sportivo sportivoPrenotante) {
+        setIdPrenotazione(lastIdPrenotazione);
+        setSportivoPrenotante(sportivoPrenotante);
+        aggiungiPartecipante(sportivoPrenotante);
+        aggiungiQuotaPartecipazione(sportivoPrenotante, 0, false);
+        
+    }
 
-	public int getIDPrenotazione() {
-		return IDPrenotazione;
-	}
 
-	public void setIDPrenotazione(int iDPrenotazione) {
-		IDPrenotazione = iDPrenotazione;
-	}
+    public int getIdPrenotazione(){
+        return this.idPrenotazione;
+    }
 
-	public Boolean getConfermata() {
-		return confermata;
-	}
+    private void setIdPrenotazione(int lastIdPrenotazione) {
+        this.idPrenotazione = lastIdPrenotazione + 1;
+    }
 
-	public void setConfermata(Boolean confermata) {
-		this.confermata = confermata;
-	}
+    private void setSportivoPrenotante(Sportivo sportivoPrenotante) {
+        this.sportivoPrenotante = sportivoPrenotante;
+    }
 
-	public int getNumPartecipanti() {
-		return numPartecipanti;
-	}
+    public Sportivo getSportivoPrenotante(){
+        return this.sportivoPrenotante;
+    }
 
-	public void setNumPartecipanti(int numPartecipanti) {
-		this.numPartecipanti = numPartecipanti;
-	}
+    public void aggiungiPartecipante(Sportivo sportivoPartecipante) {
+        getListaPartecipanti().add(sportivoPartecipante);
+    }
 
-	public int getNumPostiLiberi() {
-		return numPostiLiberi;
-	}
+    public void aggiungiListaPartecipanti(List<Sportivo> listaPartecipantiDaAggiungere){
+        getListaPartecipanti().addAll(listaPartecipantiDaAggiungere);
+    }
+    
+    
+    public List<Sportivo> getListaPartecipanti(){
+        return this.partecipanti;
+    }
 
-	public void setNumPostiLiberi(int numPostiLiberi) {
-		this.numPostiLiberi = numPostiLiberi;
-	}
+    public List<Sportivo> getListaInvitati(){
+        return this.invitati;
+    }
 
-	public Sportivo getSportivoPrenotante() {
-		return sportivoPrenotante;
-	}
+    public void invitaSportivo(Sportivo sportivoDaInvitare) {
+        getListaInvitati().add(sportivoDaInvitare);
+    }
 
-	public void setSportivoPrenotante(Sportivo sportivoPrenotante) {
-		this.sportivoPrenotante = sportivoPrenotante;
-	}
+    public void invitaSportivi(List<Sportivo> listaSportiviDaInvitare) {
+        getListaInvitati().addAll(listaSportiviDaInvitare);
+    }
 
-	public CostoPrenotazione getCostoPrenotazione() {
-		return costoPrenotazione;
-	}
+    public void setConfermata() {
+        this.confermata = true;
+    }
 
-	public void setCostoPrenotazione(CostoPrenotazione costoPrenotazione) {
-		this.costoPrenotazione = costoPrenotazione;
-	}
+    public void setNonConfermata() {
+        this.confermata = false;
+    }
 
-	public IPrenotabile getServizioPrenotato() {
-		return servizioPrenotato;
-	}
+    public boolean isConfermata() {
+        return this.confermata;
+    }
 
-	public void setServizioPrenotato(IPrenotabile servizioPrenotato) {
-		this.servizioPrenotato = servizioPrenotato;
-	}
+    public int getPostiLiberi() {
+        return this.postiLiberi;
+    }
 
-	public Calendar getCalendario() {
-		return calendario;
-	}
+    public Manutentore getManutentore() {
+        return this.responsabilePrenotazione;
+    }
 
-	public void setCalendario(Calendar calendario) {
-		this.calendario = calendario;
-	}
+    private void associaManutentore(Manutentore manutentoreDaAssociare) {
+        this.responsabilePrenotazione = manutentoreDaAssociare;
+    }
+    
+    public void setCalendario(Calendario datePrenotate){
+        this.calendarioPrenotazione = datePrenotate;
+    }
 
-	public List<Sportivo> getPartecipanti() {
-		return Partecipanti;
-	}
+    public Calendario getCalendarioPrenotazione() {
+        return this.calendarioPrenotazione;
+    }
 
-	public void setPartecipanti(List<Sportivo> partecipanti) {
-		Partecipanti = partecipanti;
-	}
+    public void setSport(Sport sportScelto) {
+        this.sportAssociato = sportScelto;
+    }
 
-	public List<Sportivo> getInvitati() {
-		return Invitati;
-	}
+    public Sport getSportAssociato() {
+        return this.sportAssociato;
+    }
 
-	public void setInvitati(List<Sportivo> invitati) {
-		Invitati = invitati;
-	}
-	
+    public void aggiungiQuotaPartecipazione(Sportivo sportivoDaAssociare, float costo, boolean isPagata){
+        QuotaPartecipazione quotaDaAggiungere = new QuotaPartecipazione(isPagata, costo);
+        quotaDaAggiungere.setSportivoAssociato(sportivoDaAssociare);
+        getListaQuotePartecipazione().add(quotaDaAggiungere);
+    }
+
+    public List<QuotaPartecipazione> getListaQuotePartecipazione(){
+        return this.quoteDiPartecipazione;
+    }
+
+
+    public List<Impianto> getImpiantiPrenotati() {
+        return impiantiPrenotati;
+    }
+
+    public void aggiungiImpiantoPrenotato(Impianto impianto){
+        this.impiantiPrenotati.add(impianto);
+    }
 }
-

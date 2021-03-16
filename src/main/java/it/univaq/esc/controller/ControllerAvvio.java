@@ -1,21 +1,27 @@
-package it.univaq.esc;
+package it.univaq.esc.controller;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import it.univaq.esc.model.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+@Controller
+public class ControllerAvvio {
+    
+    @RequestMapping(value = "/test")
+    public ModelAndView avvio(){
 
-@SpringBootApplication
-public class EscApplication {
+        return new ModelAndView("newPrenotazione", this.getParametri());
+    }
 
-
-	
-	public static void main(String[] args) {
-				
-		SpringApplication.run(EscApplication.class, args);
-
-		/*EffettuaPrenotazioneHandler controller = new EffettuaPrenotazioneHandler();
+    private HashMap<String, Object> getParametri(){
+        EffettuaPrenotazioneHandler controller = new EffettuaPrenotazioneHandler();
 
         Sportivo sportivoPrenotante = new Sportivo("Pippo", "Franco", "pippofranco@bagaglino.com");
         Sportivo sportivo1 = new Sportivo("Gianni", "cognome", "poppins@bianconiglio.com");
@@ -110,15 +116,10 @@ public class EscApplication {
         prenotazioneAvviata.setCalendario(calendarioPrenotazione);
 
         List<Sport> sportPrenotabili = controller.getSportPraticabili();
-        System.out.println("SPORT PRATICABBILI");
-        for(Sport sport : sportPrenotabili){
-            System.out.println(sport.getNome());
-        }
-        System.out.println("");
+        
         
         Sport sportScelto = tennis;
         prenotazioneAvviata.setSport(sportScelto);
-        System.out.println("SPORT SELEZIONATO: " + prenotazioneAvviata.getSportAssociato().getNome());
 
         //prenotazione dell'impianto1 nella stessa data scelta dallo sportivo che sta effettuando la prenotazione
         Prenotazione prenotazione1 = new Prenotazione(0, sportivo1);
@@ -146,19 +147,13 @@ public class EscApplication {
 
         List<Impianto> impiantiDisponibili = controller.getImpiantiDisponibili(prenotazioneAvviata.getCalendarioPrenotazione());
 
-        System.out.println("");
-        System.out.println("ID IMPIANTI DISPONIBILI");
-        for(Impianto impianto : impiantiDisponibili){
-            System.out.println(impianto.getIdImpianto());
-        }
+        
 
-        System.out.println("");
-        System.out.println(prenotazioneAvviata.toString());
-        System.out.println(prenotazioneAvviata.getSportivoPrenotante().getNome());
-        System.out.println(prenotazioneAvviata.getListaQuotePartecipazione().size());*/
-   
+        HashMap<String, Object> parametri = new HashMap<String, Object>();
+        parametri.put("sportPraticabili", sportPrenotabili);
+        parametri.put("sportSelezionato", prenotazioneAvviata.getSportAssociato().getNome());
+        parametri.put("impiantiDisponibili", impiantiDisponibili);
 
-		
-	}
-
+        return parametri;
+    }
 }

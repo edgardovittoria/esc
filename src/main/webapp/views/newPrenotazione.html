@@ -12,51 +12,18 @@
 <body>
     <div class="container">
         <h1>Vista di prova per la prenotazione</h1>
-        <div th:if="${Sport != null}">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h3>Sport</h3>
-                </div>
-                <div class="col-sm-8">
-                    <table class="table table-striped table-inverse table-responsive">
-                        <thead class="thead-inverse">
-                            <tr>
-                                <th>Nome</th>
-                                <th>Descrizione</th>   
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each=" sport: ${Sport}">
-                                    <td scope="row" th:text="${sport.nome}">Nome dello sport</td>
-                                    <td th:text="${sport.descrizione}">Descrizione sport</td>
-                                </tr>
-                            </tbody>
-                    </table>
-                </div>
-            </div>
+        <h2>SPORT PRATICABILI :</h2>
+        <div>
+            <ul th:each=" sport: ${sportPraticabili}">
+                <li th:text="${sport.nome}">nome sport</li>
+            </ul>
         </div>
-        <div th:if="${Impianti != null}">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h3>Impianti</h3>
-                </div>
-                <div class="col-sm-8">
-                    <table class="table table-striped table-inverse table-responsive">
-                        <thead class="thead-inverse">
-                            <tr>
-                                <th>ID</th>
-                                <th>Tipologia</th>   
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each=" impianto: ${Impianti}">
-                                    <td scope="row" th:text="${impianto.idImpianto}">ID Impianto</td>
-                                    <td th:text="${impianto.indoor} ? 'coperto' : 'scoperto'">Tipologia</td>
-                                </tr>
-                            </tbody>
-                    </table>
-                </div>
-            </div>
+        <h2>SPORT SELEZIONATO : <div th:text="${sportSelezionato}">sport selezionato</div> </h2>
+        <h2>ID IMPIANTI DISPONIBILI :</h2>
+        <div>
+            <ul th:each=" impianto: ${impiantiDisponibili}">
+                <li th:text="${impianto.idImpianto}">id impianto</li>
+            </ul>
         </div>
     </div>
 </body>
