@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.*;
 
 
@@ -16,6 +17,7 @@ public class EffettuaPrenotazioneHandler {
     private RegistroImpianti registroImpianti = RegistroImpianti.getInstance();
     private Prenotazione prenotazioneInAtto;
     private PrenotazioneSpecs specifichePrenotazioneInAtto;
+    private FactorySpecifichePrenotazione factorySpecifichePrenotazione = new FactorySpecifichePrenotazione();
 
     public EffettuaPrenotazioneHandler() {
     }
@@ -34,7 +36,7 @@ public class EffettuaPrenotazioneHandler {
 
     public void avviaNuovaPrenotazione(Sportivo sportivo, TipiPrenotazione tipoPrenotazione) {
         int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
-        PrenotazioneSpecs prenotazioneSpecs = new PrenotazioneImpiantoSpecs();
+        PrenotazioneSpecs prenotazioneSpecs = this.factorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
         setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, sportivo, prenotazioneSpecs));
         this.specifichePrenotazioneInAtto = this.prenotazioneInAtto.getPrenotazioneSpecs();
     }
