@@ -6,25 +6,15 @@ import java.util.List;
 public class Prenotazione {
     private int idPrenotazione;
     private boolean confermata = false;
-    private int postiLiberi;
-    private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();
-    private Manutentore responsabilePrenotazione;
-    private Calendario calendarioPrenotazione;
-    private Sport sportAssociato;
-    private Sportivo sportivoPrenotante;
-    private List<Sportivo> partecipanti = new ArrayList<Sportivo>();
-    private List<Sportivo> invitati = new ArrayList<Sportivo>();
-    private List<Impianto> impiantiPrenotati = new ArrayList<Impianto>();
+    private float costo;
+    private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();    
+    private PrenotazioneSpecs prenotazioneSpecs;
 
-
-    public Prenotazione(int lastIdPrenotazione, Sportivo sportivoPrenotante) {
+    public Prenotazione(int lastIdPrenotazione, Sportivo sportivoPrenotante, PrenotazioneSpecs prenotazioneSpecs) {
         setIdPrenotazione(lastIdPrenotazione);
-        setSportivoPrenotante(sportivoPrenotante);
-        aggiungiPartecipante(sportivoPrenotante);
         aggiungiQuotaPartecipazione(sportivoPrenotante, 0, false);
-        
+        this.prenotazioneSpecs = prenotazioneSpecs;
     }
-
 
     public int getIdPrenotazione(){
         return this.idPrenotazione;
@@ -32,39 +22,6 @@ public class Prenotazione {
 
     private void setIdPrenotazione(int lastIdPrenotazione) {
         this.idPrenotazione = lastIdPrenotazione + 1;
-    }
-
-    private void setSportivoPrenotante(Sportivo sportivoPrenotante) {
-        this.sportivoPrenotante = sportivoPrenotante;
-    }
-
-    public Sportivo getSportivoPrenotante(){
-        return this.sportivoPrenotante;
-    }
-
-    public void aggiungiPartecipante(Sportivo sportivoPartecipante) {
-        getListaPartecipanti().add(sportivoPartecipante);
-    }
-
-    public void aggiungiListaPartecipanti(List<Sportivo> listaPartecipantiDaAggiungere){
-        getListaPartecipanti().addAll(listaPartecipantiDaAggiungere);
-    }
-    
-    
-    public List<Sportivo> getListaPartecipanti(){
-        return this.partecipanti;
-    }
-
-    public List<Sportivo> getListaInvitati(){
-        return this.invitati;
-    }
-
-    public void invitaSportivo(Sportivo sportivoDaInvitare) {
-        getListaInvitati().add(sportivoDaInvitare);
-    }
-
-    public void invitaSportivi(List<Sportivo> listaSportiviDaInvitare) {
-        getListaInvitati().addAll(listaSportiviDaInvitare);
     }
 
     public void setConfermata() {
@@ -79,32 +36,12 @@ public class Prenotazione {
         return this.confermata;
     }
 
-    public int getPostiLiberi() {
-        return this.postiLiberi;
+    public float getCosto() {
+        return costo;
     }
 
-    public Manutentore getManutentore() {
-        return this.responsabilePrenotazione;
-    }
-
-    private void associaManutentore(Manutentore manutentoreDaAssociare) {
-        this.responsabilePrenotazione = manutentoreDaAssociare;
-    }
-    
-    public void setCalendario(Calendario datePrenotate){
-        this.calendarioPrenotazione = datePrenotate;
-    }
-
-    public Calendario getCalendarioPrenotazione() {
-        return this.calendarioPrenotazione;
-    }
-
-    public void setSport(Sport sportScelto) {
-        this.sportAssociato = sportScelto;
-    }
-
-    public Sport getSportAssociato() {
-        return this.sportAssociato;
+    public void setCosto(float costo) {
+        this.costo = costo;
     }
 
     public void aggiungiQuotaPartecipazione(Sportivo sportivoDaAssociare, float costo, boolean isPagata){
@@ -117,12 +54,16 @@ public class Prenotazione {
         return this.quoteDiPartecipazione;
     }
 
-
-    public List<Impianto> getImpiantiPrenotati() {
-        return impiantiPrenotati;
+    public PrenotazioneSpecs getPrenotazioneSpecs() {
+        return prenotazioneSpecs;
     }
 
-    public void aggiungiImpiantoPrenotato(Impianto impianto){
-        this.impiantiPrenotati.add(impianto);
+    public void setPrenotazioneSpecs(PrenotazioneSpecs prenotazioneSpecs) {
+        this.prenotazioneSpecs = prenotazioneSpecs;
     }
+
+    
+    
+
+    
 }

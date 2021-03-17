@@ -106,52 +106,54 @@ public class ControllerAvvio {
 
         
 
-        
-        controller.avviaNuovaPrenotazione(sportivoPrenotante);
+        TipiPrenotazione tipoPrenotazione = TipiPrenotazione.IMPIANTO;
+        controller.avviaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione);
         Prenotazione prenotazioneAvviata = controller.getPrenotazioneInAtto();
 
         Calendario calendarioPrenotazione = new Calendario();
         calendarioPrenotazione.aggiungiAppuntamento(new Appuntamento(LocalDateTime.of(2020, 5, 26, 10, 30), LocalDateTime.of(2020, 5, 26, 11, 30)));
 
-        prenotazioneAvviata.setCalendario(calendarioPrenotazione);
+        prenotazioneAvviata.getPrenotazioneSpecs().setCalendario(calendarioPrenotazione);
 
         List<Sport> sportPrenotabili = controller.getSportPraticabili();
         
         
         Sport sportScelto = tennis;
-        prenotazioneAvviata.setSport(sportScelto);
+        prenotazioneAvviata.getPrenotazioneSpecs().setSport(sportScelto);
 
         //prenotazione dell'impianto1 nella stessa data scelta dallo sportivo che sta effettuando la prenotazione
-        Prenotazione prenotazione1 = new Prenotazione(0, sportivo1);
-        prenotazione1.aggiungiPartecipante(sportivo1);
-        prenotazione1.setCalendario(calendarioPrenotazione);
-        prenotazione1.aggiungiImpiantoPrenotato(impianto1);
+        PrenotazioneSpecs prenotazioneSpecs = new PrenotazioneImpiantoSpecs();
+        Prenotazione prenotazione1 = new Prenotazione(0, sportivo1, prenotazioneSpecs);
+        prenotazione1.getPrenotazioneSpecs().aggiungiPartecipante(sportivo1);
+        prenotazione1.getPrenotazioneSpecs().setCalendario(calendarioPrenotazione);
+        prenotazione1.getPrenotazioneSpecs().aggiungiImpiantoPrenotato(impianto1);
         prenotazione1.setConfermata();
-        prenotazione1.setSport(tennis);
-        prenotazione1.aggiungiPartecipante(sportivo2);
+        prenotazione1.getPrenotazioneSpecs().setSport(tennis);
+        prenotazione1.getPrenotazioneSpecs().aggiungiPartecipante(sportivo2);
 
         //Prenotazione dell'impianto3 in una data diversa dalla data scelta dallo sportivo che sta effettuando la prenotazione;
         Calendario calendarioPrenotazione2 = new Calendario();
         calendarioPrenotazione2.aggiungiAppuntamento(new Appuntamento(LocalDateTime.of(2020, 5, 21, 17, 0), LocalDateTime.of(2020, 5, 21, 19,0)));
-        Prenotazione prenotazione2 = new Prenotazione(1, sportivo2);
-        prenotazione2.aggiungiPartecipante(sportivo2);
-        prenotazione2.setCalendario(calendarioPrenotazione2);
-        prenotazione2.aggiungiImpiantoPrenotato(impianto3);
+        PrenotazioneSpecs prenotazioneSpecs2 = new PrenotazioneImpiantoSpecs();
+        Prenotazione prenotazione2 = new Prenotazione(1, sportivo2, prenotazioneSpecs2);
+        prenotazione2.getPrenotazioneSpecs().aggiungiPartecipante(sportivo2);
+        prenotazione2.getPrenotazioneSpecs().setCalendario(calendarioPrenotazione2);
+        prenotazione2.getPrenotazioneSpecs().aggiungiImpiantoPrenotato(impianto3);
         prenotazione2.setConfermata();
-        prenotazione2.setSport(tennis);
-        prenotazione2.aggiungiPartecipante(sportivo3);
+        prenotazione2.getPrenotazioneSpecs().setSport(tennis);
+        prenotazione2.getPrenotazioneSpecs().aggiungiPartecipante(sportivo3);
 
         //aggiunta delle prenotazione nel registro delle prenotazioni
         controller.getRegistroPrenotazioni().aggiungiPrenotazione(prenotazione1);
         controller.getRegistroPrenotazioni().aggiungiPrenotazione(prenotazione2);
 
-        List<Impianto> impiantiDisponibili = controller.getImpiantiDisponibili(prenotazioneAvviata.getCalendarioPrenotazione());
+        List<Impianto> impiantiDisponibili = controller.getImpiantiDisponibili(prenotazioneAvviata.getPrenotazioneSpecs().getCalendarioPrenotazione());
 
         
 
         HashMap<String, Object> parametri = new HashMap<String, Object>();
         parametri.put("sportPraticabili", sportPrenotabili);
-        parametri.put("sportSelezionato", prenotazioneAvviata.getSportAssociato().getNome());
+        parametri.put("sportSelezionato", prenotazioneAvviata.getPrenotazioneSpecs().getSportAssociato().getNome());
         parametri.put("impiantiDisponibili", impiantiDisponibili);
 
         return parametri;

@@ -40,11 +40,6 @@ public class Sportivo {
         this.email = email;
     }
 
-    public Prenotazione creaNuovaPrenotazione(int IDLastPrenotazione, Sportivo sportivo){
-        Prenotazione prenotazione = new Prenotazione(IDLastPrenotazione, sportivo);
-        return prenotazione;
-    }
-
     public List<Sport> getSportPraticatiDalloSportivo() {
         return sportPraticatiDalloSportivo;
     }

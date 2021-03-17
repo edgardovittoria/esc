@@ -15,6 +15,7 @@ public class EffettuaPrenotazioneHandler {
     private RegistroSportivi registroSportivi = RegistroSportivi.getInstance();
     private RegistroImpianti registroImpianti = RegistroImpianti.getInstance();
     private Prenotazione prenotazioneInAtto;
+    private PrenotazioneSpecs specifichePrenotazioneInAtto;
 
     public EffettuaPrenotazioneHandler() {
     }
@@ -31,9 +32,11 @@ public class EffettuaPrenotazioneHandler {
         this.prenotazioneInAtto = prenotazioneInAtto;
     }
 
-    public void avviaNuovaPrenotazione(Sportivo sportivo) {
+    public void avviaNuovaPrenotazione(Sportivo sportivo, TipiPrenotazione tipoPrenotazione) {
         int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
-        setPrenotazioneInAtto(sportivo.creaNuovaPrenotazione(lastIdPrenotazione, sportivo));
+        PrenotazioneSpecs prenotazioneSpecs = new PrenotazioneImpiantoSpecs();
+        setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, sportivo, prenotazioneSpecs));
+        this.specifichePrenotazioneInAtto = this.prenotazioneInAtto.getPrenotazioneSpecs();
     }
 
     public List<Sport> getSportPraticabili() {
@@ -51,8 +54,8 @@ public class EffettuaPrenotazioneHandler {
         List<Prenotazione> prenotazioniEffettuate = registroPrenotazioni.getTutteLePrenotazioni();
         Calendario dateDisponibiliSportivoPrenotante = new Calendario();
         for(Prenotazione prenotazione : prenotazioniEffettuate) {
-            if(prenotazione.getSportivoPrenotante().getEmail().equals(prenotazioneInAtto.getSportivoPrenotante().getEmail())){
-                dateDisponibiliSportivoPrenotante.unisciCalendario(prenotazione.getCalendarioPrenotazione());
+            if(prenotazione.getPrenotazioneSpecs().getSportivoPrenotante().getEmail().equals(prenotazioneInAtto.getPrenotazioneSpecs().getSportivoPrenotante().getEmail())){
+                dateDisponibiliSportivoPrenotante.unisciCalendario(prenotazione.getPrenotazioneSpecs().getCalendarioPrenotazione());
                 
             }
 
@@ -66,8 +69,8 @@ public class EffettuaPrenotazioneHandler {
         Set<Impianto> impiantiDisponibili = new HashSet<Impianto>();
         List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
         for (Prenotazione prenotazione : registroPrenotazioni.getTutteLePrenotazioni()){
-            if(!prenotazione.getCalendarioPrenotazione().sovrapponeA(calendario)){
-                impiantiDisponibili.addAll(prenotazione.getImpiantiPrenotati());
+            if(!prenotazione.getPrenotazioneSpecs().getCalendarioPrenotazione().sovrapponeA(calendario)){
+                impiantiDisponibili.addAll(prenotazione.getPrenotazioneSpecs().getImpiantiPrenotati());
             }
         }
         listaImpiantiDisponibili.addAll(impiantiDisponibili);
@@ -75,7 +78,7 @@ public class EffettuaPrenotazioneHandler {
     }
 
     public List<Sportivo> getListaSportiviInvitabili(){
-        Sport sportPrenotazioneInAtto = this.getPrenotazioneInAtto().getSportAssociato();
+        Sport sportPrenotazioneInAtto = this.getSpecifichePrenotazioneInAtto().getSportAssociato();
         List<Sportivo> listaSportiviInvitabili = new ArrayList<Sportivo>();
         for(Sportivo sportivo : getSportivi()){
             if(sportivo.getSportPraticatiDalloSportivo().contains(sportPrenotazioneInAtto)){
@@ -102,6 +105,15 @@ public class EffettuaPrenotazioneHandler {
         this.registroPrenotazioni = registroPrenotazioni;
     }
 
+    public PrenotazioneSpecs getSpecifichePrenotazioneInAtto() {
+        return specifichePrenotazioneInAtto;
+    }
+
+    public void setSpecifichePrenotazioneInAtto(PrenotazioneSpecs specifichePrenotazioneInAtto) {
+        this.specifichePrenotazioneInAtto = specifichePrenotazioneInAtto;
+    }
+
+    
 
     // fine temporaneo
         
