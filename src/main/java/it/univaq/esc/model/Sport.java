@@ -1,8 +1,17 @@
 package it.univaq.esc.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "sports")
 public class Sport {
 
+    @Id
     private String nome;
+    @Column
     private int numeroGiocatori;
 
     public Sport(String nome, int numeroGiocatori){

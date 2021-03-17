@@ -3,11 +3,25 @@ package it.univaq.esc.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "sportivi")
 public class Sportivo {
 
+    @Column
     private String nome;
+    @Column
     private String cognome;
+    @Id
     private String email;
+    @OneToMany()
+    @JoinColumn()
     private List<Sport> sportPraticatiDalloSportivo = new ArrayList<Sport>();
 
     public Sportivo(String nome, String cognome, String email) {
