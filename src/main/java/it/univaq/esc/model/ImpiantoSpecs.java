@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,57 +21,33 @@ public class ImpiantoSpecs {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idSpecificaImpianto;
-    @Column
-    private boolean indoor;
-    @Column
-    private int costo;
+    
     @Enumerated(EnumType.STRING)
     private Pavimentazione TipoPavimentazione;
-    @OneToMany()
+    @ManyToOne()
     @JoinColumn()
-    private List<Sport> sportPraticabili;
+    private Sport sportPraticabile;
 
-    public ImpiantoSpecs(boolean indoor, int costo, Pavimentazione TipoPavimentazione, List<Sport> sportPraticabiliNellImpianto) {
-        this.indoor = indoor;
-        this.costo = costo;
+    public ImpiantoSpecs(Pavimentazione TipoPavimentazione, Sport sportPraticabileNellImpianto) {
         this.TipoPavimentazione = TipoPavimentazione;
-        this.sportPraticabili = sportPraticabiliNellImpianto;
+        this.sportPraticabile = sportPraticabileNellImpianto;
     }
-    
-    public boolean isIndoor() {
-        return this.indoor;
-    }
-    
-    public int getCosto() {
-        return costo;
-    }
+
 
     public Pavimentazione getTipoPavimentazione() {
         return TipoPavimentazione;
-    }
-
-    public void setIndoor(boolean indoor) {
-        this.indoor = indoor;
-    }
-
-    public void setCosto(int costo) {
-        this.costo = costo;
-    }
+    }    
 
     public void setTipoPavimentazione(Pavimentazione tipoPavimentazione) {
         TipoPavimentazione = tipoPavimentazione;
     }
 
-    public List<Sport> getSportPraticabili() {
-        return sportPraticabili;
+    public Sport getSportPraticabile() {
+        return sportPraticabile;
     }
 
-    public void setSportPraticabili(List<Sport> sportPraticabili) {
-        this.sportPraticabili = sportPraticabili;
-    }
-
-    public void aggiungiSportPraticabile(Sport sportPraticabile){
-        this.sportPraticabili.add(sportPraticabile);
+    public void setSportPraticabile(Sport sportPraticabile){
+        this.sportPraticabile = sportPraticabile;
     }
 
    

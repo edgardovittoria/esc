@@ -3,13 +3,40 @@ package it.univaq.esc.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "specifichePrenotazione")
 public abstract class PrenotazioneSpecs {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int idSpecificaPrenotazione;
+    @ManyToOne()
+    @JoinColumn()
     private Sportivo sportivoPrenotante;
+    @ManyToMany()
+    @JoinColumn()
     private List<Sportivo> partecipanti = new ArrayList<Sportivo>();
+    @ManyToOne()
+    @JoinColumn()
     private Manutentore responsabilePrenotazione;
+    @OneToOne()
     private Calendario calendarioPrenotazione;
+    @ManyToOne()
+    @JoinColumn()
     private Sport sportAssociato;
+    @ManyToMany()
+    @JoinColumn()
     private List<Impianto> impiantiPrenotati = new ArrayList<Impianto>();
     
     public void setSportivoPrenotante(Sportivo sportivoPrenotante) {

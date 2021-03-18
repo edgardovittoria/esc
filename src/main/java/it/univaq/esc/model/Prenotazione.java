@@ -3,11 +3,27 @@ package it.univaq.esc.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "prenotazioni")
 public class Prenotazione {
+    @Id
     private int idPrenotazione;
+    @Column
     private boolean confermata = false;
+    @Column
     private float costo;
+    @OneToMany()
+    @JoinColumn()
     private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();    
+    @OneToOne()
     private PrenotazioneSpecs prenotazioneSpecs;
 
     public Prenotazione(int lastIdPrenotazione, Sportivo sportivoPrenotante, PrenotazioneSpecs prenotazioneSpecs) {

@@ -1,17 +1,34 @@
 package it.univaq.esc.model;
 
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "impianti")
 public class Impianto {
     
+    @Id
     private int idImpianto;
-    private ImpiantoSpecs caratteristicheImpianto;
+    @Column
+    private int costo;
+    @Column
+    private boolean indoor;
+    @OneToMany()
+    @JoinColumn()
+    private List<ImpiantoSpecs> specificheImpianto;
     
 
     public Impianto() {}
 
-    public Impianto(int idImpianto, ImpiantoSpecs caratteristicheImpianto) {
+    public Impianto(int idImpianto, List<ImpiantoSpecs> caratteristicheImpianto) {
         this.idImpianto = idImpianto;
-        this.caratteristicheImpianto = caratteristicheImpianto;
+        this.specificheImpianto = caratteristicheImpianto;
     }
 
 
@@ -19,26 +36,33 @@ public class Impianto {
         return idImpianto;
     }
 
-    public boolean isIndoor(){
-        return this.caratteristicheImpianto.isIndoor();   
+    public int getCosto() {
+        return costo;
+    }
+
+    public void setCosto(int costo) {
+        this.costo = costo;
+    }
+
+    public boolean isIndoor() {
+        return this.indoor;
+    }
+
+    public void setIndoor(boolean indoor) {
+        this.indoor = indoor;
     }
 
     public Pavimentazione getTipoPavimentazione(){
-          return this.caratteristicheImpianto.getTipoPavimentazione();
+          return this.specificheImpianto.get(0).getTipoPavimentazione();
       }
 
-    
 
-    public void aggiungiSportPraticabile(Sport sportPraticabile){
-        this.caratteristicheImpianto.aggiungiSportPraticabile(sportPraticabile);
+    public List<ImpiantoSpecs> getSpecificheImpianto() {
+        return specificheImpianto;
     }
 
-    public ImpiantoSpecs getCaratteristicheImpianto() {
-        return caratteristicheImpianto;
-    }
-
-    public void setCaratteristicheImpianto(ImpiantoSpecs caratteristicheImpianto) {
-        this.caratteristicheImpianto = caratteristicheImpianto;
+    public void setSpecificaImpianto(ImpiantoSpecs specificaImpianto) {
+        this.specificheImpianto.add(specificaImpianto);
     }
     
   

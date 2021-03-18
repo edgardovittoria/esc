@@ -55,9 +55,22 @@ public class ControllerAvvio {
         sportPraticatiImpianto3.add(pallavolo);
         sportPraticatiImpianto3.add(tennis);
 
-        ImpiantoSpecs specificheImpianto1 = new ImpiantoSpecs(true, 10, Pavimentazione.SINTETICO, sportPraticatiImpianto1);
-        ImpiantoSpecs specificheImpianto2 = new ImpiantoSpecs(true, 10, Pavimentazione.TERRA_BATTUTA, sportPraticatiImpianto2);
-        ImpiantoSpecs specificheImpianto3 = new ImpiantoSpecs(false, 20, Pavimentazione.CEMENTO, sportPraticatiImpianto3);
+        ImpiantoSpecs specificaImpianto1 = new ImpiantoSpecs(Pavimentazione.SINTETICO, sportPraticatiImpianto1.get(0));
+        ImpiantoSpecs specificaImpianto2 = new ImpiantoSpecs(Pavimentazione.TERRA_BATTUTA, sportPraticatiImpianto2.get(1));
+        ImpiantoSpecs specificaImpianto3 = new ImpiantoSpecs(Pavimentazione.CEMENTO, sportPraticatiImpianto3.get(2));
+
+        List<ImpiantoSpecs> specificheImpianto1 = new ArrayList<ImpiantoSpecs>();
+        specificheImpianto1.add(specificaImpianto1);
+        specificheImpianto1.add(specificaImpianto2);
+        specificheImpianto1.add(specificaImpianto3);
+
+        List<ImpiantoSpecs> specificheImpianto2 = new ArrayList<ImpiantoSpecs>();
+        specificheImpianto2.add(specificaImpianto1);
+        specificheImpianto2.add(specificaImpianto3);
+
+        List<ImpiantoSpecs> specificheImpianto3 = new ArrayList<ImpiantoSpecs>();
+        specificheImpianto3.add(specificaImpianto1);
+        specificheImpianto3.add(specificaImpianto2);
 
         Impianto impianto1 = new Impianto(1, specificheImpianto1);
         Impianto impianto2 = new Impianto(2, specificheImpianto2);

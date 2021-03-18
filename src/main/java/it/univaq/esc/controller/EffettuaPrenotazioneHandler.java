@@ -45,7 +45,9 @@ public class EffettuaPrenotazioneHandler {
         List<Sport> listaSportPraticabili = new ArrayList<Sport>();
         Set<Sport> setSportPraticabili = new HashSet<Sport>();
         for (Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()) {
-            setSportPraticabili.addAll(impianto.getCaratteristicheImpianto().getSportPraticabili());
+            for(ImpiantoSpecs specifica : impianto.getSpecificheImpianto()){
+                setSportPraticabili.add(specifica.getSportPraticabile());
+            }
         }
         listaSportPraticabili.addAll(setSportPraticabili);
         return listaSportPraticabili;

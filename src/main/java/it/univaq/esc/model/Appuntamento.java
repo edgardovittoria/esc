@@ -2,9 +2,23 @@ package it.univaq.esc.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "appuntamenti")
 public class Appuntamento {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int idAppuntamento;
+    @Column
     private LocalDateTime dataOraInizioAppuntamento;
+    @Column
     private LocalDateTime dataOraFineAppuntamento;
 
     public Appuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento){
