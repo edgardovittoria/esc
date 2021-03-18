@@ -3,9 +3,19 @@ package it.univaq.esc.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
+
+@Entity(name = "prenotazioneImpiantoSpecs")
 public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
 
+    @Column
     private int postiLiberi;
+    @OneToMany()
+    @JoinColumn()
     private List<Sportivo> invitati = new ArrayList<Sportivo>();
 
     public PrenotazioneImpiantoSpecs() {
