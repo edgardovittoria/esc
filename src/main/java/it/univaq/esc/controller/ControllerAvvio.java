@@ -55,9 +55,9 @@ public class ControllerAvvio {
         sportPraticatiImpianto3.add(pallavolo);
         sportPraticatiImpianto3.add(tennis);
 
-        ImpiantoSpecs specificheImpianto1 = new ImpiantoSpecs(true, 10, Pavimentazione.sintetico, sportPraticatiImpianto1);
-        ImpiantoSpecs specificheImpianto2 = new ImpiantoSpecs(true, 10, Pavimentazione.terraBattuta, sportPraticatiImpianto2);
-        ImpiantoSpecs specificheImpianto3 = new ImpiantoSpecs(false, 20, Pavimentazione.cemento, sportPraticatiImpianto3);
+        ImpiantoSpecs specificheImpianto1 = new ImpiantoSpecs(true, 10, Pavimentazione.SINTETICO, sportPraticatiImpianto1);
+        ImpiantoSpecs specificheImpianto2 = new ImpiantoSpecs(true, 10, Pavimentazione.TERRA_BATTUTA, sportPraticatiImpianto2);
+        ImpiantoSpecs specificheImpianto3 = new ImpiantoSpecs(false, 20, Pavimentazione.CEMENTO, sportPraticatiImpianto3);
 
         Impianto impianto1 = new Impianto(1, specificheImpianto1);
         Impianto impianto2 = new Impianto(2, specificheImpianto2);
