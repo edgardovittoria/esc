@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Abruzzo Tourism</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/profiloSportivo.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script defer src="https://use.fontawesome.com/releases/v5.15.2/js/all.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.15.2/js/v4-shims.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="img-container">
+            <img src="img/avatarProfilo.png">
+            <h2 th:text="${nome} + ' ' + ${cognome}">nome e cognome</h2>
+        </div>
+        <div class="container">
+            <p>Prenota un impianto una lezione o un corso</p>
+        </div>
+        <div class="btn-container">
+            <span></span>
+            <button class="btn" id="prenotazioneLezione"><i class="fas fa-table-tennis"></i>LEZIONE</button>
+            <button class="btn" id="prenotazioneImpianto" th:onclick="|window.location.href='/test'|"><i class="far fa-futbol"></i>IMPIANTO</button>
+            <button class="btn" id="prenotazioneCorso"><i class="fas fa-volleyball-ball"></i>CORSO</button>
+        </div>
+    </body>
+</html>

@@ -20,6 +20,13 @@ public class ControllerAvvio {
         return new ModelAndView("newPrenotazione", this.getParametri());
     }
 
+    @RequestMapping(value = "/profilo")
+    public ModelAndView getProfilo(){
+        ModelAndView modelAndView = new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo());
+        modelAndView.addObject("avvio", this.avvio());
+        return modelAndView;
+    }
+
     private HashMap<String, Object> getParametri(){
         EffettuaPrenotazioneHandler controller = new EffettuaPrenotazioneHandler();
 
@@ -170,5 +177,13 @@ public class ControllerAvvio {
         parametri.put("impiantiDisponibili", impiantiDisponibili);
 
         return parametri;
+    }
+
+    private HashMap<String, Object> getDettagliProfiloSportivo(){
+        Sportivo sportivo = new Sportivo("Pippo", "Franco", "pippofranco@gmail.com");
+        HashMap<String, Object> dettagliProfiloSportivo = new HashMap<String, Object>();
+        dettagliProfiloSportivo.put("nome", sportivo.getNome());
+        dettagliProfiloSportivo.put("cognome", sportivo.getCognome());
+        return dettagliProfiloSportivo;
     }
 }
