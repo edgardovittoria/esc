@@ -13,7 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ControllerAvvio {
-    
+
+        
     @RequestMapping(value = "/test")
     public ModelAndView avvio(){
 
@@ -22,9 +23,8 @@ public class ControllerAvvio {
 
     @RequestMapping(value = "/profilo")
     public ModelAndView getProfilo(){
-        ModelAndView modelAndView = new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo());
-        modelAndView.addObject("avvio", this.avvio());
-        return modelAndView;
+
+        return new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo());
     }
 
     private HashMap<String, Object> getParametri(){
