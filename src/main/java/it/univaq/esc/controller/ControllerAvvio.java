@@ -5,7 +5,7 @@ import it.univaq.esc.model.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -25,9 +25,8 @@ public class ControllerAvvio {
 
     @RequestMapping(value = "/profilo")
     public ModelAndView getProfilo(){
-        ModelAndView modelAndView = new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo());
-        modelAndView.addObject("avvio", this.avvio());
-        return modelAndView;
+
+        return new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo());
     }
 
     @RequestMapping(value = "/prenotaImpianto")
