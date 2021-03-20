@@ -214,6 +214,7 @@ public class ControllerAvvio {
         HashMap<String, Object> dettagliProfiloSportivo = new HashMap<String, Object>();
         dettagliProfiloSportivo.put("nome", sportivo.getNome());
         dettagliProfiloSportivo.put("cognome", sportivo.getCognome());
+        dettagliProfiloSportivo.put("email", sportivo.getEmail());
         return dettagliProfiloSportivo;
     }
 
