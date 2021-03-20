@@ -5,6 +5,7 @@ import it.univaq.esc.model.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ControllerAvvio {
+
+    private EffettuaPrenotazioneHandler controllerPrenotazioni = new EffettuaPrenotazioneHandler();
     
     @RequestMapping(value = "/test")
     public ModelAndView avvio(){
@@ -27,7 +30,29 @@ public class ControllerAvvio {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/prenotaImpianto")
+    public ModelAndView mostraOpzioniPrenotazioneImpianto(){
+        ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", this.getOpzioniPrenotazioneImpianto());
+        return opzioniPrenotazioneImpianto;
+    }
+
+    private HashMap<String, Object> getOpzioniPrenotazioneImpianto(){
+        HashMap<String, Object> opzioniPrenotazioneImpianto = new HashMap<String, Object>();
+        opzioniPrenotazioneImpianto.put("sportPraticabili", getControllerPrenotazioni().getSportPraticabili());
+        HashMap<Integer, String> impiantiDisponibili = new HashMap<Integer, String>();
+        for(Impianto impianto : getControllerPrenotazioni().getImpiantiDisponibili(new Calendario())){
+            impiantiDisponibili.put(impianto.getIdImpianto(), impianto.getTipoPavimentazione().toString());
+        }
+        opzioniPrenotazioneImpianto.put("impiantiDisponibili", impiantiDisponibili);
+        opzioniPrenotazioneImpianto.put("sportiviIscrittiPolisportiva", getControllerPrenotazioni().getSportivi());
+        
+        
+
+        return opzioniPrenotazioneImpianto;
+    }
+
     private HashMap<String, Object> getParametri(){
+        RegistroSportivi registroSportivi = RegistroSportivi.getInstance();
         EffettuaPrenotazioneHandler controller = new EffettuaPrenotazioneHandler();
 
         Sportivo sportivoPrenotante = new Sportivo("Pippo", "Franco", "pippofranco@bagaglino.com");
@@ -48,6 +73,10 @@ public class ControllerAvvio {
         sportivo2.aggiungiSporPraticatoDalloSportivo(tennis);
         sportivo3.aggiungiSporPraticatoDalloSportivo(calcetto);
         sportivo3.aggiungiSporPraticatoDalloSportivo(pallavolo);
+
+        registroSportivi.registraSportivo(sportivo1);
+        registroSportivi.registraSportivo(sportivo2);
+        registroSportivi.registraSportivo(sportivo3);
 
         List<Sport> sportPraticatiImpianto1 = new ArrayList<Sport>();
         sportPraticatiImpianto1.add(calcetto);
@@ -186,4 +215,21 @@ public class ControllerAvvio {
         dettagliProfiloSportivo.put("cognome", sportivo.getCognome());
         return dettagliProfiloSportivo;
     }
+
+    
+
+    /**
+     * @return EffettuaPrenotazioneHandler return the controllerPrenotazioni
+     */
+    public EffettuaPrenotazioneHandler getControllerPrenotazioni() {
+        return controllerPrenotazioni;
+    }
+
+    /**
+     * @param controllerPrenotazioni the controllerPrenotazioni to set
+     */
+    public void setControllerPrenotazioni(EffettuaPrenotazioneHandler controllerPrenotazioni) {
+        this.controllerPrenotazioni = controllerPrenotazioni;
+    }
+
 }
