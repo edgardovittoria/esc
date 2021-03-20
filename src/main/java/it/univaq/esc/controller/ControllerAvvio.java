@@ -25,8 +25,10 @@ public class ControllerAvvio {
 
     @RequestMapping(value = "/profilo")
     public ModelAndView getProfilo(){
-
-        return new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo());
+    ModelAndView profiloSportivo = new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo());
+        profiloSportivo.addObject("avvio", this.avvio());
+        return profiloSportivo;
+        
     }
 
     @RequestMapping(value = "/prenotaImpianto")
