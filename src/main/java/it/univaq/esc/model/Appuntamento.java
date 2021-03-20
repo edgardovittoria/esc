@@ -21,6 +21,8 @@ public class Appuntamento {
     @Column
     private LocalDateTime dataOraFineAppuntamento;
 
+    public Appuntamento(){}
+
     public Appuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento){
         setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
         setDataOraFineAppuntamento(dataOraFineAppuntamento);

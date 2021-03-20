@@ -14,6 +14,8 @@ public class Sport {
     @Column
     private int numeroGiocatori;
 
+    public Sport(){}
+
     public Sport(String nome, int numeroGiocatori){
         this.nome = nome;
         this.numeroGiocatori = numeroGiocatori;

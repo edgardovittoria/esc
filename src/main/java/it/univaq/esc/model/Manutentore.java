@@ -18,6 +18,8 @@ public class Manutentore {
     @OneToOne()
     private Calendario calendario;
 
+    public Manutentore(){}
+
     public Manutentore(String nome, String cognome, String email, Calendario calendario){
         setNome(nome);
         setCognome(cognome);

@@ -25,6 +25,8 @@ public class ImpiantoSpecs {
     @JoinColumn()
     private Sport sportPraticabile;
 
+    public ImpiantoSpecs(){}
+
     public ImpiantoSpecs(Pavimentazione TipoPavimentazione, Sport sportPraticabileNellImpianto) {
         this.TipoPavimentazione = TipoPavimentazione;
         this.sportPraticabile = sportPraticabileNellImpianto;

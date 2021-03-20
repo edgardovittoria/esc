@@ -22,6 +22,8 @@ public class QuotaPartecipazione {
     @OneToOne()
     private Sportivo sportivoAssociato;
 
+    public QuotaPartecipazione(){}
+
     public QuotaPartecipazione(boolean pagata, float costo) {
         this.pagata = pagata;
         this.costo = costo;

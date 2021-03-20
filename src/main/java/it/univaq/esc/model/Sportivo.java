@@ -21,8 +21,10 @@ public class Sportivo {
     @Id
     private String email;
     @OneToMany()
-    @JoinColumn()
+    @JoinColumn(name = "email_sportivo")
     private List<Sport> sportPraticatiDalloSportivo = new ArrayList<Sport>();
+
+    public Sportivo(){}
 
     public Sportivo(String nome, String cognome, String email) {
         this.nome = nome;

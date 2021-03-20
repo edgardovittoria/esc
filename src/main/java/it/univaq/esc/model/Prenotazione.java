@@ -26,9 +26,11 @@ public class Prenotazione {
     @OneToOne()
     private PrenotazioneSpecs prenotazioneSpecs;
 
+    public Prenotazione(){}
+
     public Prenotazione(int lastIdPrenotazione, Sportivo sportivoPrenotante, PrenotazioneSpecs prenotazioneSpecs) {
         setIdPrenotazione(lastIdPrenotazione);
-        aggiungiQuotaPartecipazione(sportivoPrenotante, 0, false);
+        //aggiungiQuotaPartecipazione(sportivoPrenotante, 0, false);
         this.prenotazioneSpecs = prenotazioneSpecs;
     }
 
