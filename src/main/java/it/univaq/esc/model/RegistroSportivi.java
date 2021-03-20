@@ -27,4 +27,13 @@ public class RegistroSportivi {
     public void registraSportivo(Sportivo sportivoDaRegistrare) {
         getListaSportivi().add(sportivoDaRegistrare);
     }
+
+    public Sportivo getSportivoDaEmail(String emailSportivo){
+        for(Sportivo sportivo : getListaSportivi()){
+            if(sportivo.getEmail().equals(emailSportivo)){
+                return sportivo;
+            }
+        }
+        return null;
+    }
 }

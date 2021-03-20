@@ -9,13 +9,18 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ControllerAvvio {
 
     private EffettuaPrenotazioneHandler controllerPrenotazioni = new EffettuaPrenotazioneHandler();
+    private RegistroImpianti registroImpianti = RegistroImpianti.getInstance();
+    private RegistroPrenotazioni registroPrenotazioni = RegistroPrenotazioni.getInstance();
+    private RegistroSportivi registroSportivi = RegistroSportivi.getInstance();
     
     @RequestMapping(value = "/test")
     public ModelAndView avvio(){
@@ -31,11 +36,8 @@ public class ControllerAvvio {
         
     }
 
-    @RequestMapping(value = "/prenotaImpianto")
-    public ModelAndView mostraOpzioniPrenotazioneImpianto(){
-        ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", this.getOpzioniPrenotazioneImpianto());
-        return opzioniPrenotazioneImpianto;
-    }
+    
+    
 
     private HashMap<String, Object> getOpzioniPrenotazioneImpianto(){
         HashMap<String, Object> opzioniPrenotazioneImpianto = new HashMap<String, Object>();
@@ -53,8 +55,8 @@ public class ControllerAvvio {
     }
 
     private HashMap<String, Object> getParametri(){
-        RegistroSportivi registroSportivi = RegistroSportivi.getInstance();
-        EffettuaPrenotazioneHandler controller = new EffettuaPrenotazioneHandler();
+        
+        
 
         Sportivo sportivoPrenotante = new Sportivo("Pippo", "Franco", "pippofranco@bagaglino.com");
         Sportivo sportivo1 = new Sportivo("Gianni", "cognome", "poppins@bianconiglio.com");
@@ -115,11 +117,17 @@ public class ControllerAvvio {
         Impianto impianto4 = new Impianto(4, specificheImpianto3);
         Impianto impianto5 = new Impianto(5, specificheImpianto1);
 
-        controller.getRegistroImpianti().aggiungiImpianto(impianto1);
-        controller.getRegistroImpianti().aggiungiImpianto(impianto2);
-        controller.getRegistroImpianti().aggiungiImpianto(impianto3);
-        controller.getRegistroImpianti().aggiungiImpianto(impianto4);
-        controller.getRegistroImpianti().aggiungiImpianto(impianto5);
+        this.registroImpianti.aggiungiImpianto(impianto1);
+        this.registroImpianti.aggiungiImpianto(impianto2);
+        this.registroImpianti.aggiungiImpianto(impianto3);
+        this.registroImpianti.aggiungiImpianto(impianto4);
+        this.registroImpianti.aggiungiImpianto(impianto5);
+
+        controllerPrenotazioni.getRegistroImpianti().aggiungiImpianto(impianto1);
+        controllerPrenotazioni.getRegistroImpianti().aggiungiImpianto(impianto2);
+        controllerPrenotazioni.getRegistroImpianti().aggiungiImpianto(impianto3);
+        controllerPrenotazioni.getRegistroImpianti().aggiungiImpianto(impianto4);
+        controllerPrenotazioni.getRegistroImpianti().aggiungiImpianto(impianto5);
 
         Calendario calendarioImpianto1 = new Calendario();
         Calendario calendarioImpianto2 = new Calendario();
@@ -156,16 +164,16 @@ public class ControllerAvvio {
 
         
 
-        TipiPrenotazione tipoPrenotazione = TipiPrenotazione.IMPIANTO;
-        controller.avviaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione);
-        Prenotazione prenotazioneAvviata = controller.getPrenotazioneInAtto();
+        String tipoPrenotazione = TipiPrenotazione.IMPIANTO.toString();
+        controllerPrenotazioni.avviaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione);
+        Prenotazione prenotazioneAvviata = controllerPrenotazioni.getPrenotazioneInAtto();
 
         Calendario calendarioPrenotazione = new Calendario();
         calendarioPrenotazione.aggiungiAppuntamento(new Appuntamento(LocalDateTime.of(2020, 5, 26, 10, 30), LocalDateTime.of(2020, 5, 26, 11, 30)));
 
         prenotazioneAvviata.getPrenotazioneSpecs().setCalendario(calendarioPrenotazione);
 
-        List<Sport> sportPrenotabili = controller.getSportPraticabili();
+        List<Sport> sportPrenotabili = controllerPrenotazioni.getSportPraticabili();
         
         
         Sport sportScelto = tennis;
@@ -194,10 +202,10 @@ public class ControllerAvvio {
         prenotazione2.getPrenotazioneSpecs().aggiungiPartecipante(sportivo3);
 
         //aggiunta delle prenotazione nel registro delle prenotazioni
-        controller.getRegistroPrenotazioni().aggiungiPrenotazione(prenotazione1);
-        controller.getRegistroPrenotazioni().aggiungiPrenotazione(prenotazione2);
+        controllerPrenotazioni.getRegistroPrenotazioni().aggiungiPrenotazione(prenotazione1);
+        controllerPrenotazioni.getRegistroPrenotazioni().aggiungiPrenotazione(prenotazione2);
 
-        List<Impianto> impiantiDisponibili = controller.getImpiantiDisponibili(prenotazioneAvviata.getPrenotazioneSpecs().getCalendarioPrenotazione());
+        List<Impianto> impiantiDisponibili = controllerPrenotazioni.getImpiantiDisponibili(prenotazioneAvviata.getPrenotazioneSpecs().getCalendarioPrenotazione());
 
         
 
@@ -231,7 +239,16 @@ public class ControllerAvvio {
      * @param controllerPrenotazioni the controllerPrenotazioni to set
      */
     public void setControllerPrenotazioni(EffettuaPrenotazioneHandler controllerPrenotazioni) {
+
         this.controllerPrenotazioni = controllerPrenotazioni;
+    }
+
+    @RequestMapping(value = "/nuovaPrenotazione")
+    public ModelAndView avviaPrenotazione(@RequestParam(name="email") String emailSportivoPrenotante, @RequestParam(name="tipoPrenotazione") String tipoPrenotazione){
+        EffettuaPrenotazioneHandler controllerNuovaPrenotazione = new EffettuaPrenotazioneHandler();
+        controllerNuovaPrenotazione.avviaNuovaPrenotazione(this.registroSportivi.getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
+        ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", this.getOpzioniPrenotazioneImpianto());
+        return opzioniPrenotazioneImpianto;
     }
 
 }
