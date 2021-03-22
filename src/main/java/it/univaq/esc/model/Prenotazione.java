@@ -3,6 +3,7 @@ package it.univaq.esc.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ public class Prenotazione {
     @OneToMany()
     @JoinColumn()
     private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();    
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     private PrenotazioneSpecs prenotazioneSpecs;
 
     public Prenotazione(){}

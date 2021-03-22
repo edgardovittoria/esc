@@ -6,20 +6,30 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.*;
+import it.univaq.esc.repository.PrenotazioneRepository;
 
 
 public class EffettuaPrenotazioneHandler {
+    @Autowired
+    private PrenotazioneRepository prenotazioneRepository;
 
-    private RegistroPrenotazioni registroPrenotazioni = RegistroPrenotazioni.getInstance();
-    private RegistroSportivi registroSportivi = RegistroSportivi.getInstance();
-    private RegistroImpianti registroImpianti = RegistroImpianti.getInstance();
+    private RegistroPrenotazioni registroPrenotazioni;
+    private RegistroSportivi registroSportivi;
+    private RegistroImpianti registroImpianti;
     private Prenotazione prenotazioneInAtto;
     private PrenotazioneSpecs specifichePrenotazioneInAtto;
-    private FactorySpecifichePrenotazione factorySpecifichePrenotazione = new FactorySpecifichePrenotazione();
+    private FactorySpecifichePrenotazione factorySpecifichePrenotazione;
 
     public EffettuaPrenotazioneHandler() {
+        this.registroImpianti = RegistroImpianti.getInstance();
+        this.registroPrenotazioni = RegistroPrenotazioni.getInstance();
+        this.registroSportivi = RegistroSportivi.getInstance();
+        this.factorySpecifichePrenotazione = new FactorySpecifichePrenotazione();
+        this.registroPrenotazioni.popola(prenotazioneRepository.findAll());
     }
 
     public List<Sportivo> getSportivi() {
@@ -115,6 +125,11 @@ public class EffettuaPrenotazioneHandler {
 
     public void setSpecifichePrenotazioneInAtto(PrenotazioneSpecs specifichePrenotazioneInAtto) {
         this.specifichePrenotazioneInAtto = specifichePrenotazioneInAtto;
+    }
+
+    public void confermaPrenotazione(){
+        this.getPrenotazioneInAtto().setConfermata();
+        prenotazioneRepository.save(this.getPrenotazioneInAtto());
     }
 
     

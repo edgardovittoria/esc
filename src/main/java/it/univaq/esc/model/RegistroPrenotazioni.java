@@ -3,14 +3,20 @@ package it.univaq.esc.model;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class RegistroPrenotazioni {
+   
+
     private List<Prenotazione> prenotazioniEffettuate = new ArrayList<Prenotazione>();
     private static RegistroPrenotazioni instance = null;
 
-    private RegistroPrenotazioni(){}
+    private RegistroPrenotazioni(){
+        
+    }
 
-    public void aggiungiListaPrenotazioni(List<Prenotazione> listaPrenotazioniDaAggiungere){
-        getTutteLePrenotazioni().addAll(listaPrenotazioniDaAggiungere);
+    public void popola(List<Prenotazione> listaPrenotazioni){
+        getTutteLePrenotazioni().addAll(listaPrenotazioni);
     }
 
     public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {
@@ -41,8 +47,13 @@ public class RegistroPrenotazioni {
     public static RegistroPrenotazioni getInstance(){
         if(instance == null){
             instance = new RegistroPrenotazioni();
+            
+            
         }
         return instance;
 
     }
+
+    
+
 }

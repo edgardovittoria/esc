@@ -4,6 +4,7 @@ package it.univaq.esc.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
+
 @Entity
 @Table(name = "calendario")
 public class Calendario {
@@ -19,8 +22,8 @@ public class Calendario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idCalendario;
-    @OneToMany()
-    @JoinColumn()
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
     private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
     /**
