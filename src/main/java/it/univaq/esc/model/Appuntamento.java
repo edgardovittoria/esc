@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,9 +20,6 @@ public class Appuntamento {
     private LocalDateTime dataOraInizioAppuntamento;
     @Column
     private LocalDateTime dataOraFineAppuntamento;
-
-    // @OneToOne
-    // private Calendario calendarioAssociato;
 
     public Appuntamento(){}
 

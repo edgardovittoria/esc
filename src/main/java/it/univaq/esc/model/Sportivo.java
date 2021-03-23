@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,7 +26,6 @@ public class Sportivo {
     @JoinTable(name = "sport_praticati_sportivi",
                 joinColumns = {@JoinColumn(name="email")},
                 inverseJoinColumns = {@JoinColumn(name="sport_praticato")})
-    //@JoinColumn(name = "email_sportivo")
     private List<Sport> sportPraticatiDalloSportivo = new ArrayList<Sport>();
 
     public Sportivo(){}

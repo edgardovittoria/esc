@@ -2,12 +2,17 @@ package it.univaq.esc.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "impianti")
@@ -19,8 +24,11 @@ public class Impianto {
     private int costo;
     @Column
     private boolean indoor;
-    @OneToMany()
-    @JoinColumn()
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "specifiche_associate_impianti",
+                joinColumns = {@JoinColumn(name="id_impianto")},
+                inverseJoinColumns = {@JoinColumn(name="id_specifica_associata")})
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<ImpiantoSpecs> specificheImpianto;
     
 

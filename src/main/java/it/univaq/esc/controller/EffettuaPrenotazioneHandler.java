@@ -7,30 +7,34 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.*;
 import it.univaq.esc.repository.PrenotazioneRepository;
 
-
+@Controller
 public class EffettuaPrenotazioneHandler {
+
+
+    @Autowired
+    private RegistroPrenotazioni registroPrenotazioni;
+
+    @Autowired
+    private RegistroSportivi registroSportivi;
+
+    @Autowired
+    private RegistroImpianti registroImpianti;
+
+    //questo serve perchè nel metodo confermaPrenotazione salviamo la prenotazione nel db
     @Autowired
     private PrenotazioneRepository prenotazioneRepository;
 
-    private RegistroPrenotazioni registroPrenotazioni;
-    private RegistroSportivi registroSportivi;
-    private RegistroImpianti registroImpianti;
     private Prenotazione prenotazioneInAtto;
     private PrenotazioneSpecs specifichePrenotazioneInAtto;
-    private FactorySpecifichePrenotazione factorySpecifichePrenotazione;
+    private FactorySpecifichePrenotazione factorySpecifichePrenotazione = new FactorySpecifichePrenotazione();
 
-    public EffettuaPrenotazioneHandler() {
-        this.registroImpianti = RegistroImpianti.getInstance();
-        this.registroPrenotazioni = RegistroPrenotazioni.getInstance();
-        this.registroSportivi = RegistroSportivi.getInstance();
-        this.factorySpecifichePrenotazione = new FactorySpecifichePrenotazione();
-        this.registroPrenotazioni.popola(prenotazioneRepository.findAll());
-    }
+    public EffettuaPrenotazioneHandler() {}
 
     public List<Sportivo> getSportivi() {
         return this.registroSportivi.getListaSportivi();
@@ -103,6 +107,10 @@ public class EffettuaPrenotazioneHandler {
     }
 
     // temporaneo
+    public RegistroSportivi getRegistroSportivi(){
+        return registroSportivi;
+    }
+    
     public RegistroImpianti getRegistroImpianti() {
         return registroImpianti;
     }

@@ -10,9 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 
 @Entity(name = "prenotazioneSpecs")
@@ -37,7 +41,10 @@ public abstract class PrenotazioneSpecs {
     @JoinColumn()
     private Sport sportAssociato;
     @ManyToMany()
-    @JoinColumn()
+    @JoinTable(name = "impianti_prenotati",
+                joinColumns = {@JoinColumn(name="id_specifica_prenotazione")},
+                inverseJoinColumns = {@JoinColumn(name="id_impianto_prenotato")})
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Impianto> impiantiPrenotati = new ArrayList<Impianto>();
     
     public void setSportivoPrenotante(Sportivo sportivoPrenotante) {

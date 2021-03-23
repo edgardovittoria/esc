@@ -1,19 +1,15 @@
 package it.univaq.esc.controller;
 
 import it.univaq.esc.model.*;
-import it.univaq.esc.repository.ImpiantoRepository;
-import it.univaq.esc.repository.SportRepository;
-import it.univaq.esc.repository.SportivoRepository;
 
+import it.univaq.esc.repository.SportRepository;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,18 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class ControllerAvvio {
 
     @Autowired
-    private SportivoRepository sportivoRepository;
-
-    @Autowired
     private SportRepository sportRepository;
 
     @Autowired
-    private ImpiantoRepository impiantoRepository;
+    private EffettuaPrenotazioneHandler effettuaPrenotazioneHandler;
 
-    
-    private RegistroImpianti registroImpianti = RegistroImpianti.getInstance();
-    
-    private RegistroSportivi registroSportivi = RegistroSportivi.getInstance();
     
     @RequestMapping(value = "/test")
     public ModelAndView avvio(){
@@ -53,10 +42,11 @@ public class ControllerAvvio {
     
 
     private HashMap<String, Object> getOpzioniPrenotazioneImpianto(){
-        EffettuaPrenotazioneHandler controller = new EffettuaPrenotazioneHandler();
+        EffettuaPrenotazioneHandler controller = effettuaPrenotazioneHandler;
         HashMap<String, Object> opzioniPrenotazioneImpianto = new HashMap<String, Object>();
         opzioniPrenotazioneImpianto.put("sportPraticabili", controller.getSportPraticabili());
         HashMap<Integer, String> impiantiDisponibili = new HashMap<Integer, String>();
+        //non va bene perchè getImpiantiDisponibili ricerca gli impianti esclusivamente nelle prenotazioni effettuate
         for(Impianto impianto : controller.getImpiantiDisponibili(new Calendario())){
             impiantiDisponibili.put(impianto.getIdImpianto(), impianto.getTipoPavimentazione().toString());
         }
@@ -70,24 +60,10 @@ public class ControllerAvvio {
 
     private HashMap<String, Object> getParametri(){
         
-        EffettuaPrenotazioneHandler controllerPrenotazioni = new EffettuaPrenotazioneHandler();
-
-        registroSportivi.getListaSportivi().addAll(sportivoRepository.findAll());      
-
-        registroImpianti.getListaImpiantiPolisportiva().addAll(impiantoRepository.findAll());
-       
-
-        
-
-        
-
-
-
-
-        
+        EffettuaPrenotazioneHandler controllerPrenotazioni = effettuaPrenotazioneHandler;
 
         String tipoPrenotazione = TipiPrenotazione.IMPIANTO.toString();
-        controllerPrenotazioni.avviaNuovaPrenotazione(registroSportivi.getListaSportivi().get(0), tipoPrenotazione);
+        controllerPrenotazioni.avviaNuovaPrenotazione(controllerPrenotazioni.getRegistroSportivi().getListaSportivi().get(0), tipoPrenotazione);
         Prenotazione prenotazioneAvviata = controllerPrenotazioni.getPrenotazioneInAtto();
 
         Calendario calendarioPrenotazione = new Calendario();
@@ -97,17 +73,10 @@ public class ControllerAvvio {
 
         List<Sport> sportPrenotabili = controllerPrenotazioni.getSportPraticabili();
         
-        
-         Sport sportScelto = sportRepository.getOne("tennis");
-         prenotazioneAvviata.getPrenotazioneSpecs().setSport(sportScelto);
-
-        
-
-        
+        Sport sportScelto = sportRepository.getOne("tennis");
+        prenotazioneAvviata.getPrenotazioneSpecs().setSport(sportScelto);
 
         List<Impianto> impiantiDisponibili = controllerPrenotazioni.getImpiantiDisponibili(prenotazioneAvviata.getPrenotazioneSpecs().getCalendarioPrenotazione());
-
-        
 
         HashMap<String, Object> parametri = new HashMap<String, Object>();
         parametri.put("sportPraticabili", sportPrenotabili);
@@ -131,8 +100,8 @@ public class ControllerAvvio {
    
     @RequestMapping(value = "/nuovaPrenotazione")
     public ModelAndView avviaPrenotazione(@RequestParam(name="email") String emailSportivoPrenotante, @RequestParam(name="tipoPrenotazione") String tipoPrenotazione){
-        EffettuaPrenotazioneHandler controllerNuovaPrenotazione = new EffettuaPrenotazioneHandler();
-        controllerNuovaPrenotazione.avviaNuovaPrenotazione(this.registroSportivi.getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
+        EffettuaPrenotazioneHandler controllerNuovaPrenotazione = effettuaPrenotazioneHandler;
+        controllerNuovaPrenotazione.avviaNuovaPrenotazione(controllerNuovaPrenotazione.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
         HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto();
         opzioniPrenotazione.put("sportivoPrenotante", controllerNuovaPrenotazione.getPrenotazioneInAtto().getPrenotazioneSpecs().getSportivoPrenotante());
         ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", opzioniPrenotazione);

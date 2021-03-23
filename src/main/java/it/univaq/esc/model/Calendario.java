@@ -13,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 
 
 @Entity
@@ -24,6 +27,7 @@ public class Calendario {
     private int idCalendario;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
     /**

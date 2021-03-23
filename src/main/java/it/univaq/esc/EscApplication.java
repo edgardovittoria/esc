@@ -61,7 +61,7 @@ public class EscApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Sportivo sportivoPrenotante = new Sportivo("Pippo", "Franco", "pippofranco@bagaglino.com");
+        /*Sportivo sportivoPrenotante = new Sportivo("Pippo", "Franco", "pippofranco@bagaglino.com");
         Sportivo sportivo1 = new Sportivo("Gianni", "cognome", "poppins@bianconiglio.com");
         Sportivo sportivo2 = new Sportivo("mariangelo", "sasso", "marsasso@boh.com");
         Sportivo sportivo3 = new Sportivo("tardigrado", "acqua", "matita@boh.com");
@@ -75,7 +75,7 @@ public class EscApplication implements CommandLineRunner {
         sportRepository.save(pallavolo);*/
 
 
-        sportivoPrenotante.aggiungiSporPraticatoDalloSportivo(tennis);
+        /*sportivoPrenotante.aggiungiSporPraticatoDalloSportivo(tennis);
         sportivo1.aggiungiSporPraticatoDalloSportivo(calcetto);
         sportivo1.aggiungiSporPraticatoDalloSportivo(tennis);
         sportivo1.aggiungiSporPraticatoDalloSportivo(pallavolo);
@@ -89,7 +89,7 @@ public class EscApplication implements CommandLineRunner {
         sportivoRepository.save(sportivo2);
         sportivoRepository.save(sportivo3);
 
-        List<Sport> sportPraticatiImpianto1 = new ArrayList<Sport>();
+        /*List<Sport> sportPraticatiImpianto1 = new ArrayList<Sport>();
         sportPraticatiImpianto1.add(calcetto);
         sportPraticatiImpianto1.add(tennis);
 
@@ -100,29 +100,31 @@ public class EscApplication implements CommandLineRunner {
         List<Sport> sportPraticatiImpianto3 = new ArrayList<Sport>();
         sportPraticatiImpianto3.add(calcetto);
         sportPraticatiImpianto3.add(pallavolo);
-        sportPraticatiImpianto3.add(tennis);
+        sportPraticatiImpianto3.add(tennis);*/
 
-        ImpiantoSpecs specificaImpianto1 = new ImpiantoSpecs(Pavimentazione.SINTETICO, sportPraticatiImpianto1.get(0));
-        ImpiantoSpecs specificaImpianto2 = new ImpiantoSpecs(Pavimentazione.TERRA_BATTUTA, sportPraticatiImpianto2.get(1));
-        ImpiantoSpecs specificaImpianto3 = new ImpiantoSpecs(Pavimentazione.CEMENTO, sportPraticatiImpianto3.get(2));
+        /*ImpiantoSpecs specificaImpianto1 = new ImpiantoSpecs(Pavimentazione.SINTETICO, calcetto);
+        ImpiantoSpecs specificaImpianto12 = new ImpiantoSpecs(Pavimentazione.SINTETICO, tennis);
+        ImpiantoSpecs specificaImpianto13 = new ImpiantoSpecs(Pavimentazione.SINTETICO, pallavolo);
+        ImpiantoSpecs specificaImpianto2 = new ImpiantoSpecs(Pavimentazione.TERRA_BATTUTA, tennis);
+        ImpiantoSpecs specificaImpianto3 = new ImpiantoSpecs(Pavimentazione.CEMENTO, pallavolo);
+        ImpiantoSpecs specificaImpianto32 = new ImpiantoSpecs(Pavimentazione.CEMENTO, tennis);
 
-        impiantoSpecsRepository.save(specificaImpianto1);
+        /*impiantoSpecsRepository.save(specificaImpianto1);
         impiantoSpecsRepository.save(specificaImpianto2);
-        impiantoSpecsRepository.save(specificaImpianto3);
+        impiantoSpecsRepository.save(specificaImpianto3);*/
 
 
-        List<ImpiantoSpecs> specificheImpianto1 = new ArrayList<ImpiantoSpecs>();
+        /*List<ImpiantoSpecs> specificheImpianto1 = new ArrayList<ImpiantoSpecs>();
         specificheImpianto1.add(specificaImpianto1);
-        specificheImpianto1.add(specificaImpianto2);
-        specificheImpianto1.add(specificaImpianto3);
+        specificheImpianto1.add(specificaImpianto12);
+        specificheImpianto1.add(specificaImpianto13);
 
         List<ImpiantoSpecs> specificheImpianto2 = new ArrayList<ImpiantoSpecs>();
-        specificheImpianto2.add(specificaImpianto1);
-        specificheImpianto2.add(specificaImpianto3);
+        specificheImpianto2.add(specificaImpianto2);
 
         List<ImpiantoSpecs> specificheImpianto3 = new ArrayList<ImpiantoSpecs>();
-        specificheImpianto3.add(specificaImpianto1);
-        specificheImpianto3.add(specificaImpianto2);
+        specificheImpianto3.add(specificaImpianto3);
+        specificheImpianto3.add(specificaImpianto32);
 
         Impianto impianto1 = new Impianto(1, specificheImpianto1);
         Impianto impianto2 = new Impianto(2, specificheImpianto2);
@@ -206,7 +208,7 @@ public class EscApplication implements CommandLineRunner {
         calendarioRepository.save(calendarioPrenotazione);
         calendarioRepository.save(calendarioPrenotazione2);
         prenotazioneRepository.save(prenotazione1);
-        prenotazioneRepository.save(prenotazione2);
+        prenotazioneRepository.save(prenotazione2);*/
 
         
     }
