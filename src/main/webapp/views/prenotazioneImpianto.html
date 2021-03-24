@@ -74,9 +74,9 @@
         <div>
           <div>
             <label for="start">Orario Inizio Prenotazione:</label>
-            <input id="timepicker" class="timepicker" oninput="aggiornaOraFinePrenotazione()"/>
+            <input id="timepicker" class="timepicker" />
           </div>
-          <div>
+          <div id="inputFine">
             <label for="start">Orario Fine Prenotazione:</label>
             <input id="timepickerFine" class="timepickerFine" />
           </div>
@@ -107,7 +107,6 @@
       <input type="reset" value="Reset opzioni" />
     </form>
 
-
     <script>
       $(".timepicker").timepicker({
         timeFormat: "HH:mm",
@@ -118,36 +117,25 @@
         startTime: "10:00",
         dynamic: false,
         dropdown: true,
-        scrollbar: true
-      });  
+        scrollbar: true,
+        change: function () {
 
-      
-      $(".timepickerFine").timepicker({
-        timeFormat: "HH:mm",
-        minTime: "10:00",
-        maxTime: "22:00",
-        defaultTime: "10",
-        startTime: "10:00",
-        dynamic: false,
-        dropdown: true,
-        scrollbar: true,
+          $(".timepickerFine").remove();
+          $("#inputFine").append(
+            '<input id="timepickerFine" class="timepickerFine" />'
+          );
+          $(".timepickerFine").timepicker({
+            timeFormat: "HH:mm",
+            minTime: $(".timepicker").val(),
+            maxTime: "22:00",
+            defaultTime: $(".timepicker").val(),
+            startTime: $(".timepicker").val(),
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true,
+          });
+        },
       });
-    </script>
-    <script>
-        function aggiornaOraFinePrenotazione(){
-        console.log("pippo")
-        /*$(".timepickerFine").timepicker({
-        timeFormat: "HH:mm",
-        minTime: $(".timepicker").val(),
-        maxTime: "22:00",
-        defaultTime: $(".timepicker").val(),
-        startTime: $(".timepicker").val(),
-        dynamic: false,
-        dropdown: true,
-        scrollbar: true,
-      });*/
-      }
-      
     </script>
   </body>
 </html>
