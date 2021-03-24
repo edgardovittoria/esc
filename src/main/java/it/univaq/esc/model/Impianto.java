@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
@@ -30,6 +31,14 @@ public class Impianto {
                 inverseJoinColumns = {@JoinColumn(name="id_specifica_associata")})
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<ImpiantoSpecs> specificheImpianto;
+
+
+    @ManyToMany
+    @JoinTable(name = "impianti_prenotati",
+                joinColumns = {@JoinColumn(name="id_impianto_prenotato")},
+                inverseJoinColumns = {@JoinColumn(name="id_specifica_prenotazione")})
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<PrenotazioneSpecs> prenotazioniPerImpianto;
     
 
     public Impianto() {}
@@ -72,6 +81,31 @@ public class Impianto {
     public void setSpecificaImpianto(ImpiantoSpecs specificaImpianto) {
         this.specificheImpianto.add(specificaImpianto);
     }
+
+    
     
   
+
+    /**
+     * @param idImpianto the idImpianto to set
+     */
+    public void setIdImpianto(int idImpianto) {
+        this.idImpianto = idImpianto;
+    }
+
+    /**
+     * @param specificheImpianto the specificheImpianto to set
+     */
+    public void setSpecificheImpianto(List<ImpiantoSpecs> specificheImpianto) {
+        this.specificheImpianto = specificheImpianto;
+    }
+
+    /**
+     * @return List<Prenotazione> return the prenotazioniPerImpianto
+     */
+    public List<PrenotazioneSpecs> getPrenotazioniPerImpianto() {
+        return prenotazioniPerImpianto;
+    }
+
+   
 }

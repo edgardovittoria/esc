@@ -84,15 +84,21 @@ public class EffettuaPrenotazioneHandler {
 
     //metodo che ricava impianti disponibili a partire dal calendario
     public List<Impianto> getImpiantiDisponibili(Calendario calendario){
-        Set<Impianto> impiantiDisponibili = new HashSet<Impianto>();
+        
         List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
-        for (Prenotazione prenotazione : registroPrenotazioni.getTutteLePrenotazioni()){
-            if(!prenotazione.getPrenotazioneSpecs().getCalendarioPrenotazione().sovrapponeA(calendario)){
-                impiantiDisponibili.addAll(prenotazione.getPrenotazioneSpecs().getImpiantiPrenotati());
+        
+        for(Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()){
+            Calendario calendarioImpianto = new Calendario();
+            for(PrenotazioneSpecs prenotazioneImpianto : impianto.getPrenotazioniPerImpianto()){
+                calendarioImpianto.unisciCalendario(prenotazioneImpianto.getCalendarioPrenotazione());
+            }
+            if(!calendarioImpianto.sovrapponeA(calendario)){
+                listaImpiantiDisponibili.add(impianto);
             }
         }
-        listaImpiantiDisponibili.addAll(impiantiDisponibili);
+
         return listaImpiantiDisponibili;
+        
     }
 
     public List<Sportivo> getListaSportiviInvitabili(){

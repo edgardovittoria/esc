@@ -4,6 +4,7 @@ import it.univaq.esc.model.*;
 
 import it.univaq.esc.repository.SportRepository;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
@@ -41,12 +42,12 @@ public class ControllerAvvio {
     
     
 
-    private HashMap<String, Object> getOpzioniPrenotazioneImpianto(){
-        EffettuaPrenotazioneHandler controller = effettuaPrenotazioneHandler;
+    private HashMap<String, Object> getOpzioniPrenotazioneImpianto(EffettuaPrenotazioneHandler controller){
+       // EffettuaPrenotazioneHandler controller = effettuaPrenotazioneHandler;
         HashMap<String, Object> opzioniPrenotazioneImpianto = new HashMap<String, Object>();
         opzioniPrenotazioneImpianto.put("sportPraticabili", controller.getSportPraticabili());
         HashMap<Integer, String> impiantiDisponibili = new HashMap<Integer, String>();
-        //non va bene perchè getImpiantiDisponibili ricerca gli impianti esclusivamente nelle prenotazioni effettuate
+    
         for(Impianto impianto : controller.getImpiantiDisponibili(new Calendario())){
             impiantiDisponibili.put(impianto.getIdImpianto(), impianto.getTipoPavimentazione().toString());
         }
@@ -102,7 +103,7 @@ public class ControllerAvvio {
     public ModelAndView avviaPrenotazione(@RequestParam(name="email") String emailSportivoPrenotante, @RequestParam(name="tipoPrenotazione") String tipoPrenotazione){
         EffettuaPrenotazioneHandler controllerNuovaPrenotazione = effettuaPrenotazioneHandler;
         controllerNuovaPrenotazione.avviaNuovaPrenotazione(controllerNuovaPrenotazione.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
-        HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto();
+        HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto(controllerNuovaPrenotazione);
         opzioniPrenotazione.put("sportivoPrenotante", controllerNuovaPrenotazione.getPrenotazioneInAtto().getPrenotazioneSpecs().getSportivoPrenotante());
         ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", opzioniPrenotazione);
         return opzioniPrenotazioneImpianto;
