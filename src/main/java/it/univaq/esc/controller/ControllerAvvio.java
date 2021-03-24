@@ -88,7 +88,7 @@ public class ControllerAvvio {
     }
 
     private HashMap<String, Object> getDettagliProfiloSportivo(){
-        Sportivo sportivo = new Sportivo("Pippo", "Franco", "pippofranco@gmail.com");
+        Sportivo sportivo = new Sportivo("Pippo", "Franco", "pippofranco@bagaglino.com");
         HashMap<String, Object> dettagliProfiloSportivo = new HashMap<String, Object>();
         dettagliProfiloSportivo.put("nome", sportivo.getNome());
         dettagliProfiloSportivo.put("cognome", sportivo.getCognome());
@@ -104,7 +104,7 @@ public class ControllerAvvio {
         EffettuaPrenotazioneHandler controllerNuovaPrenotazione = effettuaPrenotazioneHandler;
         controllerNuovaPrenotazione.avviaNuovaPrenotazione(controllerNuovaPrenotazione.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
         HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto(controllerNuovaPrenotazione);
-        opzioniPrenotazione.put("sportivoPrenotante", controllerNuovaPrenotazione.getPrenotazioneInAtto().getPrenotazioneSpecs().getSportivoPrenotante());
+        opzioniPrenotazione.put("sportivoPrenotante", controllerNuovaPrenotazione.getPrenotazioneInAtto().getPrenotazioneSpecs().getSportivoPrenotante());        
         ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", opzioniPrenotazione);
         return opzioniPrenotazioneImpianto;
     }

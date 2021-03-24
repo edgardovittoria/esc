@@ -47,6 +47,7 @@ public abstract class PrenotazioneSpecs {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Impianto> impiantiPrenotati = new ArrayList<Impianto>();
     
+
     public void setSportivoPrenotante(Sportivo sportivoPrenotante) {
         this.sportivoPrenotante = sportivoPrenotante;
     }

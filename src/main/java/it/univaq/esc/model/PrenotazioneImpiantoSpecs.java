@@ -18,8 +18,8 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     @JoinColumn()
     private List<Sportivo> invitati = new ArrayList<Sportivo>();
 
-    public PrenotazioneImpiantoSpecs() {
-    }
+    public PrenotazioneImpiantoSpecs() {}
+       
 
     public int getPostiLiberi() {
         return this.postiLiberi;

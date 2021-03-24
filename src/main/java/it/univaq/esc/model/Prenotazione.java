@@ -29,7 +29,7 @@ public class Prenotazione {
 
     public Prenotazione(){}
 
-    public Prenotazione(int lastIdPrenotazione, Sportivo sportivoPrenotante, PrenotazioneSpecs prenotazioneSpecs) {
+    public Prenotazione(int lastIdPrenotazione, PrenotazioneSpecs prenotazioneSpecs) {
         setIdPrenotazione(lastIdPrenotazione);
         //aggiungiQuotaPartecipazione(sportivoPrenotante, 0, false);
         this.prenotazioneSpecs = prenotazioneSpecs;
