@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head th:fragment="dataOraSelezioneHead">
+<script type="text/javascript"></script>
+<script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css"
+    />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+</head>
+<body>
+
+    <div class="container border border-dark rounded" th:fragment="dataOraSelezione">
+        <div class="row">
+          <div class="col-sm">
+            <label for="start">Data Prenotazione:</label>
+
+            <input
+              type="date"
+              id="start"
+              name="trip-start"
+              value="2021-03-24"
+              min="2021-03-24"
+              max="2021-12-31"
+            />
+          </div>
+
+          <div class="col-sm">
+            <label for="start">Orario Inizio Prenotazione:</label>
+            <input id="timepicker" class="timepicker" />
+          </div>
+          <div id="inputFine" class="col-sm">
+            <label for="start">Orario Fine Prenotazione:</label>
+            <input id="timepickerFine" class="timepickerFine" />
+          </div>
+        </div>
+      </div>
+
+      <script th:fragment="dataOraSelezioneFooter">
+        $(".timepicker").timepicker({
+          timeFormat: "HH:mm",
+          interval: 30,
+          minTime: "10:00",
+          maxTime: "21:00",
+          defaultTime: "10",
+          startTime: "10:00",
+          dynamic: false,
+          dropdown: true,
+          scrollbar: true,
+          change: function () {
+            $(".timepickerFine").remove();
+            $("#inputFine").append(
+              '<input id="timepickerFine" class="timepickerFine" />'
+            );
+            $(".timepickerFine").timepicker({
+              timeFormat: "HH:mm",
+              minTime: $(".timepicker").val(),
+              maxTime: "22:00",
+              defaultTime: $(".timepicker").val(),
+              startTime: $(".timepicker").val(),
+              dynamic: false,
+              dropdown: true,
+              scrollbar: true,
+            });
+          },
+        });
+      </script>
+</body>
+</html>
