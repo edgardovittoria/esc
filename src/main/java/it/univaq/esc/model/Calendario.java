@@ -23,8 +23,8 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Calendario {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int idCalendario;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idPrenotazione;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
     @LazyCollection(LazyCollectionOption.FALSE)

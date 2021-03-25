@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -21,8 +22,11 @@ public class Prenotazione {
     private boolean confermata = false;
     @Column
     private float costo;
-    @OneToMany()
-    @JoinColumn()
+    @PrimaryKeyJoinColumn
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+    private Calendario calendarioPrenotazione;
+    @OneToMany
+    @JoinColumn
     private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();    
     @OneToOne(cascade = CascadeType.ALL)
     private PrenotazioneSpecs prenotazioneSpecs;
@@ -61,6 +65,14 @@ public class Prenotazione {
 
     public void setCosto(float costo) {
         this.costo = costo;
+    }
+
+    public void setCalendario(Calendario datePrenotate){
+        this.calendarioPrenotazione = datePrenotate;
+    }
+
+    public Calendario getCalendarioPrenotazione() {
+        return this.calendarioPrenotazione;
     }
 
     public void aggiungiQuotaPartecipazione(Sportivo sportivoDaAssociare, float costo, boolean isPagata){

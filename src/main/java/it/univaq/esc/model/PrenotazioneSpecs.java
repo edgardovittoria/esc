@@ -35,8 +35,6 @@ public abstract class PrenotazioneSpecs {
     @ManyToOne()
     @JoinColumn()
     private Manutentore responsabilePrenotazione;
-    @OneToOne()
-    private Calendario calendarioPrenotazione;
     @ManyToOne()
     @JoinColumn()
     private Sport sportAssociato;
@@ -70,14 +68,6 @@ public abstract class PrenotazioneSpecs {
 
     private void associaManutentore(Manutentore manutentoreDaAssociare) {
         this.responsabilePrenotazione = manutentoreDaAssociare;
-    }
-
-    public void setCalendario(Calendario datePrenotate){
-        this.calendarioPrenotazione = datePrenotate;
-    }
-
-    public Calendario getCalendarioPrenotazione() {
-        return this.calendarioPrenotazione;
     }
 
     public void setSport(Sport sportScelto) {

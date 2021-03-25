@@ -32,7 +32,7 @@ public class EscApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         
         
-       // popolaDB.popola();
+       popolaDB.popola();
 
         
     }
