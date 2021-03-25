@@ -70,14 +70,14 @@ public class ControllerAvvio {
         Calendario calendarioPrenotazione = new Calendario();
         calendarioPrenotazione.aggiungiAppuntamento(new Appuntamento(LocalDateTime.of(2020, 5, 26, 10, 30), LocalDateTime.of(2020, 5, 26, 11, 30)));
 
-        prenotazioneAvviata.getPrenotazioneSpecs().setCalendario(calendarioPrenotazione);
+        prenotazioneAvviata.setCalendario(calendarioPrenotazione);
 
         List<Sport> sportPrenotabili = controllerPrenotazioni.getSportPraticabili();
         
         Sport sportScelto = sportRepository.getOne("tennis");
         prenotazioneAvviata.getPrenotazioneSpecs().setSport(sportScelto);
 
-        List<Impianto> impiantiDisponibili = controllerPrenotazioni.getImpiantiDisponibili(prenotazioneAvviata.getPrenotazioneSpecs().getCalendarioPrenotazione());
+        List<Impianto> impiantiDisponibili = controllerPrenotazioni.getImpiantiDisponibili(prenotazioneAvviata.getCalendarioPrenotazione());
 
         HashMap<String, Object> parametri = new HashMap<String, Object>();
         parametri.put("sportPraticabili", sportPrenotabili);
