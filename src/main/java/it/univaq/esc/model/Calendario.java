@@ -1,6 +1,7 @@
 package it.univaq.esc.model;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,19 +16,21 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.stereotype.Component;
 
 
 
-@Entity
-@Table(name = "calendario")
+// @Entity
+// @Table(name = "calendario")
+@Component
 public class Calendario {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPrenotazione;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
-    @LazyCollection(LazyCollectionOption.FALSE)
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // private int idPrenotazione;
+    // @OneToMany(cascade = CascadeType.ALL)
+    // @JoinColumn
+    // @LazyCollection(LazyCollectionOption.FALSE)
     private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
     /**
@@ -60,12 +63,21 @@ public class Calendario {
 
 
     public void aggiungiAppuntamento(Appuntamento appuntamentoDaAggiungere){
-        List<Appuntamento> lista = new ArrayList<Appuntamento>();
-        lista.add(appuntamentoDaAggiungere);
-        Calendario calendarioDaVerificare = new Calendario(lista);
-        if(!this.sovrapponeA(calendarioDaVerificare)){
+        if(!this.sovrapponeA(appuntamentoDaAggiungere)){
         this.getListaAppuntamenti().add(appuntamentoDaAggiungere);
     }
+    }
+
+    public void aggiungiAppuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento, Prenotazione prenotazioneRelativaAppuntamento, Impianto impiantoRelativoAppuntamento){
+        Appuntamento appuntamentoDaAggiungere = new Appuntamento();
+        appuntamentoDaAggiungere.setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
+        appuntamentoDaAggiungere.setDataOraFineAppuntamento(dataOraFineAppuntamento);
+        appuntamentoDaAggiungere.setImpiantoAppuntamento(impiantoRelativoAppuntamento);
+        appuntamentoDaAggiungere.setPrenotazioneAppuntamento(prenotazioneRelativaAppuntamento);
+        if(!this.sovrapponeA(appuntamentoDaAggiungere)){
+            this.getListaAppuntamenti().add(appuntamentoDaAggiungere);
+        }
+        
     }
 
 
@@ -77,19 +89,31 @@ public class Calendario {
     public boolean sovrapponeA(Calendario calendarioDiCuiVerificareSovrapposizione){
         boolean calendariSiSovrappongono = false;
         
-        for(Appuntamento appuntamento : this.getListaAppuntamenti()){
+        for(Appuntamento appuntamento : calendarioDiCuiVerificareSovrapposizione.getListaAppuntamenti()){
             if(!calendariSiSovrappongono){
-            for(Appuntamento appuntamentoCalendarioDaVerificare : calendarioDiCuiVerificareSovrapposizione.getListaAppuntamenti()){
-                if(!calendariSiSovrappongono){
-                    calendariSiSovrappongono = appuntamento.sovrapponeA(appuntamentoCalendarioDaVerificare);
-                }
+                calendariSiSovrappongono = this.sovrapponeA(appuntamento);
             }
         }
-        
-    }
-
         return calendariSiSovrappongono;
     }
+
+
+    /**
+     * Verifica se un appuntamento si sovrappone con quelli del calendario in oggetto
+     * @param appuntamentoDiCuiVerificareSovrapposizione appuntamento di cui verificare la sovrapposizione
+     * @return true se il calendario si sovrappone almeno su un appuntamento con quello da verificare, false altrimenti.
+     */
+    private boolean sovrapponeA(Appuntamento appuntamentoDiCuiVerificareSovrapposizione){
+        boolean calendarioSiSovrappone = false;
+        
+        for(Appuntamento appuntamento : this.getListaAppuntamenti()){
+            if(!calendarioSiSovrappone){
+                calendarioSiSovrappone = appuntamento.sovrapponeA(appuntamentoDiCuiVerificareSovrapposizione);
+            }
+        }
+        return calendarioSiSovrappone;
+    }
+
 
     public void unisciCalendario(Calendario calendarioDaUnire){
         if(!this.sovrapponeA(calendarioDaUnire)){

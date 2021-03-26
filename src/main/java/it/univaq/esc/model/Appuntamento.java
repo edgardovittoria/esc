@@ -2,12 +2,21 @@ package it.univaq.esc.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 @Entity
 @Table(name = "appuntamenti")
@@ -20,6 +29,16 @@ public class Appuntamento {
     private LocalDateTime dataOraInizioAppuntamento;
     @Column
     private LocalDateTime dataOraFineAppuntamento;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "Prenotazione_ID", nullable = false)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPrenotazione")
+    private Prenotazione prenotazioneAppuntamento;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "Impianto_ID", nullable = false)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idImpianto")
+    private Impianto impiantoAppuntamento;
 
     public Appuntamento(){}
 
@@ -78,5 +97,50 @@ public class Appuntamento {
         }
         return false;
     } 
+
+
+    
+
+
+   
+
+    /**
+     * @return Prenotazione return the prenotazioneAppuntamento
+     */
+    public Prenotazione getPrenotazioneAppuntamento() {
+        return prenotazioneAppuntamento;
+    }
+
+    /**
+     * @param prenotazioneAppuntamento the prenotazioneAppuntamento to set
+     */
+    public void setPrenotazioneAppuntamento(Prenotazione prenotazioneAppuntamento) {
+        this.prenotazioneAppuntamento = prenotazioneAppuntamento;
+    }
+
+    /**
+     * @return Impianto return the impiantoAppuntamento
+     */
+    public Impianto getImpiantoAppuntamento() {
+        return impiantoAppuntamento;
+    }
+
+    /**
+     * @param impiantoAppuntamento the impiantoAppuntamento to set
+     */
+    public void setImpiantoAppuntamento(Impianto impiantoAppuntamento) {
+        this.impiantoAppuntamento = impiantoAppuntamento;
+    }
+
+    
+
+
+    /**
+     * @return int return the idAppuntamento
+     */
+    public int getIdAppuntamento() {
+        return idAppuntamento;
+    }
+
 
 }

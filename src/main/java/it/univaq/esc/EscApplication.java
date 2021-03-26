@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import it.univaq.esc.test.TestVerificaCalendario;
+
 
 
 
@@ -14,8 +16,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class EscApplication implements CommandLineRunner {
 
-    @Autowired
-    private PopolaDB popolaDB;
+     @Autowired
+    private TestVerificaCalendario testCalendarioPrenotazioni;
 	
 	public static void main(String[] args) {
 				
@@ -32,7 +34,7 @@ public class EscApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         
         
-       popolaDB.popola();
+        testCalendarioPrenotazioni.test();
 
         
     }

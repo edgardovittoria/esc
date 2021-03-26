@@ -1,4 +1,4 @@
-package it.univaq.esc;
+package it.univaq.esc.test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import it.univaq.esc.model.PrenotazioneImpiantoSpecs;
 import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.Sportivo;
-import it.univaq.esc.repository.CalendarioRepository;
+import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.ImpiantoRepository;
 import it.univaq.esc.repository.PrenotazioneRepository;
 import it.univaq.esc.repository.SportivoRepository;
@@ -27,14 +27,17 @@ public class PopolaDB {
     @Autowired
     private SportivoRepository sportivoRepository;
 
-    @Autowired
-    private CalendarioRepository calendarioRepository;
+    // @Autowired
+    // private CalendarioRepository calendarioRepository;
 
     @Autowired
     private ImpiantoRepository impiantoRepository;
 
     @Autowired
     private PrenotazioneRepository prenotazioneRepository;
+
+    @Autowired
+    private AppuntamentoRepository appuntamentoRepository;
 
     
     public PopolaDB(){}
@@ -156,13 +159,14 @@ public class PopolaDB {
 
         //prenotazione dell'impianto1 nella stessa data scelta dallo sportivo che sta effettuando la prenotazione
         Calendario calendarioPrenotazione = new Calendario();
-        calendarioPrenotazione.aggiungiAppuntamento(new Appuntamento(LocalDateTime.of(2020, 5, 26, 10, 30), LocalDateTime.of(2020, 5, 26, 11, 30)));
+        
         PrenotazioneSpecs prenotazioneSpecs = new PrenotazioneImpiantoSpecs();
         Prenotazione prenotazione1 = new Prenotazione(0, prenotazioneSpecs);
         prenotazione1.getPrenotazioneSpecs().setSportivoPrenotante(sportivo1);
         prenotazione1.getPrenotazioneSpecs().aggiungiPartecipante(sportivo1);
-        prenotazione1.setCalendario(calendarioPrenotazione);
         prenotazione1.getPrenotazioneSpecs().aggiungiImpiantoPrenotato(impianto1);
+        prenotazione1.setCalendario(calendarioPrenotazione);
+        prenotazione1.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2020, 5, 26, 10, 30), LocalDateTime.of(2020, 5, 26, 11, 30), prenotazione1, impianto1);
         prenotazione1.setConfermata();
         prenotazione1.getPrenotazioneSpecs().setSport(tennis);
         prenotazione1.getPrenotazioneSpecs().aggiungiPartecipante(sportivo2);
@@ -170,12 +174,12 @@ public class PopolaDB {
 
         //Prenotazione dell'impianto3 in una data diversa dalla data scelta dallo sportivo che sta effettuando la prenotazione;
         Calendario calendarioPrenotazione2 = new Calendario();
-        calendarioPrenotazione2.aggiungiAppuntamento(new Appuntamento(LocalDateTime.of(2020, 5, 21, 17, 0), LocalDateTime.of(2020, 5, 21, 19,0)));
         PrenotazioneSpecs prenotazioneSpecs2 = new PrenotazioneImpiantoSpecs();
         Prenotazione prenotazione2 = new Prenotazione(1, prenotazioneSpecs2);
         prenotazione2.getPrenotazioneSpecs().setSportivoPrenotante(sportivo2);
         prenotazione2.getPrenotazioneSpecs().aggiungiPartecipante(sportivo2);
         prenotazione2.setCalendario(calendarioPrenotazione2);
+        prenotazione2.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2020, 5, 21, 17, 0), LocalDateTime.of(2020, 5, 21, 19,0), prenotazione2, impianto3);
         prenotazione2.getPrenotazioneSpecs().aggiungiImpiantoPrenotato(impianto3);
         prenotazione2.setConfermata();
         prenotazione2.getPrenotazioneSpecs().setSport(tennis);
@@ -186,6 +190,10 @@ public class PopolaDB {
         calendarioRepository.save(calendarioPrenotazione2);*/
         prenotazioneRepository.save(prenotazione1);
         prenotazioneRepository.save(prenotazione2);
+        appuntamentoRepository.saveAll(prenotazione1.getCalendarioPrenotazione().getListaAppuntamenti());
+        appuntamentoRepository.saveAll(prenotazione2.getCalendarioPrenotazione().getListaAppuntamenti());
+        
+        
     }
 
 

@@ -3,8 +3,9 @@ package it.univaq.esc.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "manutentori")
@@ -15,7 +16,8 @@ public class Manutentore {
     private String cognome;
     @Id
     private String email;
-    @OneToOne()
+    
+    @Transient
     private Calendario calendario;
 
     public Manutentore(){}

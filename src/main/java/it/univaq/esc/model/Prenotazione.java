@@ -10,11 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 
 @Entity
 @Table(name = "prenotazioni")
+
 public class Prenotazione {
     @Id
     private int idPrenotazione;
@@ -22,9 +24,9 @@ public class Prenotazione {
     private boolean confermata = false;
     @Column
     private float costo;
-    @PrimaryKeyJoinColumn
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
-    private Calendario calendarioPrenotazione;
+  
+    @Transient
+    private Calendario calendarioPrenotazione = new Calendario();
     @OneToMany
     @JoinColumn
     private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();    

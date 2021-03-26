@@ -6,42 +6,39 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import groovy.lang.Singleton;
+import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.ImpiantoRepository;
 
 @Component
+@Singleton
 public class RegistroImpianti {
 
     @Autowired
     private ImpiantoRepository impiantoRepository;
+
+    @Autowired 
+    private AppuntamentoRepository appuntamentoRepository;
 
     //private static RegistroImpianti instance = null;
     private List<Impianto> listaImpiantiPolisportiva = new ArrayList<Impianto>();
 
     public RegistroImpianti() {}
 
-    @Bean
-    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-    public RegistroImpianti registroImpiantiSingleton(){
-        return new RegistroImpianti();
-    }
+    
 
     @PostConstruct
     public void popola(){
         this.getListaImpiantiPolisportiva().addAll(impiantoRepository.findAll());
+        for(Impianto impianto : this.getListaImpiantiPolisportiva()){
+            impianto.getCalendarioAppuntamentiImpianto().setListaAppuntamenti(appuntamentoRepository.findByImpiantoAppuntamento_IdImpianto(impianto.getIdImpianto()));
+        }
+        
     }
 
-    /*public static RegistroImpianti getInstance() {
-        if(instance == null){
-            instance = new RegistroImpianti();
-        
-        }
-        return instance;
-    }*/
+
 
     public void aggiungiImpianto(Impianto impiantoDaAggiungere) {
         getListaImpiantiPolisportiva().add(impiantoDaAggiungere);

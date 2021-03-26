@@ -9,11 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+
 
 @Entity
 @Table(name = "impianti")
@@ -33,12 +34,9 @@ public class Impianto {
     private List<ImpiantoSpecs> specificheImpianto;
 
 
-    @ManyToMany
-    @JoinTable(name = "impianti_prenotati",
-                joinColumns = {@JoinColumn(name="id_impianto_prenotato")},
-                inverseJoinColumns = {@JoinColumn(name="id_specifica_prenotazione")})
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<PrenotazioneSpecs> prenotazioniPerImpianto;
+    
+    @Transient
+    private Calendario calendarioAppuntamentiImpianto = new Calendario();
     
 
     public Impianto() {}
@@ -100,12 +98,21 @@ public class Impianto {
         this.specificheImpianto = specificheImpianto;
     }
 
+    
+
+
     /**
-     * @return List<Prenotazione> return the prenotazioniPerImpianto
+     * @return Calendario return the calendarioAppuntamentiImpianto
      */
-    public List<PrenotazioneSpecs> getPrenotazioniPerImpianto() {
-        return prenotazioniPerImpianto;
+    public Calendario getCalendarioAppuntamentiImpianto() {
+        return calendarioAppuntamentiImpianto;
     }
 
-   
+    /**
+     * @param calendarioAppuntamentiImpianto the calendarioAppuntamentiImpianto to set
+     */
+    public void setCalendarioAppuntamentiImpianto(Calendario calendarioAppuntamentiImpianto) {
+        this.calendarioAppuntamentiImpianto = calendarioAppuntamentiImpianto;
+    }
+
 }

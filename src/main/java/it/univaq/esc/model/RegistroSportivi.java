@@ -6,15 +6,14 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import groovy.lang.Singleton;
 import it.univaq.esc.repository.SportivoRepository;
 
 
 @Component
+@Singleton
 public class RegistroSportivi {
 
     @Autowired
@@ -25,12 +24,6 @@ public class RegistroSportivi {
 
 
     public RegistroSportivi() {}
-
-    @Bean
-    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-    public RegistroSportivi registroSportiviSingleton(){
-        return new RegistroSportivi();
-    }
 
     @PostConstruct
     public void popola(){

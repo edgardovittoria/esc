@@ -6,33 +6,36 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import groovy.lang.Singleton;
+import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.PrenotazioneRepository;
 
 
 @Component
+@Singleton
 public class RegistroPrenotazioni {
 
-    @Autowired PrenotazioneRepository prenotazioneRepository;
+    @Autowired 
+    private PrenotazioneRepository prenotazioneRepository;
+
+    @Autowired
+    private AppuntamentoRepository appuntamentoRepository;
 
     private List<Prenotazione> prenotazioniEffettuate = new ArrayList<Prenotazione>();
     //private static RegistroPrenotazioni instance = null;
 
     public RegistroPrenotazioni(){}
 
-    @Bean
-    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-    public RegistroPrenotazioni registroPrenotazioniSingleton(){
-        return new RegistroPrenotazioni();
-    }
 
     @PostConstruct
     public void popola(){
         getTutteLePrenotazioni().addAll(prenotazioneRepository.findAll());
+        for(Prenotazione prenotazione : this.getTutteLePrenotazioni()){
+            prenotazione.getCalendarioPrenotazione().setListaAppuntamenti(appuntamentoRepository.findByPrenotazioneAppuntamento_IdPrenotazione(prenotazione.getIdPrenotazione()));
+        }
+
     }
 
     public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {

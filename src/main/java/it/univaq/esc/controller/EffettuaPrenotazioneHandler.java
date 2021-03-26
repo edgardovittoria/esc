@@ -32,7 +32,8 @@ public class EffettuaPrenotazioneHandler {
 
     private Prenotazione prenotazioneInAtto;
     private PrenotazioneSpecs specifichePrenotazioneInAtto;
-    private FactorySpecifichePrenotazione factorySpecifichePrenotazione = new FactorySpecifichePrenotazione();
+    @Autowired
+    private FactorySpecifichePrenotazione factorySpecifichePrenotazione;
 
     public EffettuaPrenotazioneHandler() {}
 
@@ -74,7 +75,7 @@ public class EffettuaPrenotazioneHandler {
         Calendario dateDisponibiliSportivoPrenotante = new Calendario();
         for(Prenotazione prenotazione : prenotazioniEffettuate) {
             if(prenotazione.getPrenotazioneSpecs().getSportivoPrenotante().getEmail().equals(prenotazioneInAtto.getPrenotazioneSpecs().getSportivoPrenotante().getEmail())){
-                dateDisponibiliSportivoPrenotante.unisciCalendario(prenotazione.getPrenotazioneSpecs().getCalendarioPrenotazione());
+                dateDisponibiliSportivoPrenotante.unisciCalendario(prenotazione.getCalendarioPrenotazione());
                 
             }
 
@@ -86,18 +87,12 @@ public class EffettuaPrenotazioneHandler {
     //metodo che ricava impianti disponibili a partire dal calendario
     public List<Impianto> getImpiantiDisponibili(Calendario calendario){
         
-        List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
-        
+        List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();        
         for(Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()){
-            Calendario calendarioImpianto = new Calendario();
-            for(PrenotazioneSpecs prenotazioneImpianto : impianto.getPrenotazioniPerImpianto()){
-                calendarioImpianto.unisciCalendario(prenotazioneImpianto.getCalendarioPrenotazione());
-            }
-            if(!calendarioImpianto.sovrapponeA(calendario)){
+            if(!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(calendario)){
                 listaImpiantiDisponibili.add(impianto);
             }
         }
-
         return listaImpiantiDisponibili;
         
     }

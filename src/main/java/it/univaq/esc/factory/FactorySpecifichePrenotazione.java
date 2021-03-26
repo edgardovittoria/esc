@@ -1,9 +1,11 @@
 package it.univaq.esc.factory;
 
+import org.springframework.stereotype.Component;
+
 import it.univaq.esc.model.PrenotazioneImpiantoSpecs;
 import it.univaq.esc.model.PrenotazioneSpecs;
 
-
+@Component
 public class FactorySpecifichePrenotazione {
 
     public FactorySpecifichePrenotazione() {
