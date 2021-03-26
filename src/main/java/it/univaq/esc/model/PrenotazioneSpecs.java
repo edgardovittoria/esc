@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -66,7 +65,7 @@ public abstract class PrenotazioneSpecs {
         return this.responsabilePrenotazione;
     }
 
-    private void associaManutentore(Manutentore manutentoreDaAssociare) {
+    public void associaManutentore(Manutentore manutentoreDaAssociare) {
         this.responsabilePrenotazione = manutentoreDaAssociare;
     }
 

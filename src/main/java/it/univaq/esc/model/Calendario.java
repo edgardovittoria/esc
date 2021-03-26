@@ -5,32 +5,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 
 
-// @Entity
-// @Table(name = "calendario")
+
 @Component
 public class Calendario {
     
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // private int idPrenotazione;
-    // @OneToMany(cascade = CascadeType.ALL)
-    // @JoinColumn
-    // @LazyCollection(LazyCollectionOption.FALSE)
+    
     private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
     /**

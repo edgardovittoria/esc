@@ -4,7 +4,6 @@ import it.univaq.esc.model.*;
 
 import it.univaq.esc.repository.SportRepository;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
