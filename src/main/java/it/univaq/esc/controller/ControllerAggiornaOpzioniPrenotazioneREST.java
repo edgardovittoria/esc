@@ -3,7 +3,9 @@ package it.univaq.esc.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +20,8 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
     @Autowired
     private EffettuaPrenotazioneHandler controller;
 
-    @GetMapping("/impianti")
-    public List<Impianto> getListaImpianti(){
-        return controller.getImpiantiDisponibili(new Calendario());
+    @PostMapping("/impianti")
+    public List<Impianto> getListaImpianti(@RequestBody Calendario calendario){
+        return controller.getImpiantiDisponibili(calendario);
     }
 }
