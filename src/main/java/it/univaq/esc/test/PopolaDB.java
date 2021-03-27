@@ -166,7 +166,7 @@ public class PopolaDB {
         prenotazione1.getPrenotazioneSpecs().aggiungiPartecipante(sportivo1);
         prenotazione1.getPrenotazioneSpecs().aggiungiImpiantoPrenotato(impianto1);
         prenotazione1.setCalendario(calendarioPrenotazione);
-        prenotazione1.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2020, 5, 26, 10, 30), LocalDateTime.of(2020, 5, 26, 11, 30), prenotazione1, impianto1);
+        prenotazione1.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2021, 5, 26, 10, 30), LocalDateTime.of(2021, 5, 26, 11, 30), prenotazione1, impianto1);
         prenotazione1.setConfermata();
         prenotazione1.getPrenotazioneSpecs().setSport(tennis);
         prenotazione1.getPrenotazioneSpecs().aggiungiPartecipante(sportivo2);
@@ -179,7 +179,7 @@ public class PopolaDB {
         prenotazione2.getPrenotazioneSpecs().setSportivoPrenotante(sportivo2);
         prenotazione2.getPrenotazioneSpecs().aggiungiPartecipante(sportivo2);
         prenotazione2.setCalendario(calendarioPrenotazione2);
-        prenotazione2.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2020, 5, 21, 17, 0), LocalDateTime.of(2020, 5, 21, 19,0), prenotazione2, impianto3);
+        prenotazione2.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2021, 5, 21, 17, 00), LocalDateTime.of(2021, 5, 21, 19,00), prenotazione2, impianto3);
         prenotazione2.getPrenotazioneSpecs().aggiungiImpiantoPrenotato(impianto3);
         prenotazione2.setConfermata();
         prenotazione2.getPrenotazioneSpecs().setSport(tennis);

@@ -22,10 +22,13 @@ $(".timepicker").timepicker({
       dynamic: false,
       dropdown: true,
       scrollbar: true,
+      change: function(){
+        var dataOraInizio = $("#start").val()+"T"+$(".timepicker").val();
+        var dataOraFine = $("#start").val()+"T"+$(".timepickerFine").val();
+        aggiornaImpiantiDisponibili(dataOraInizio, dataOraFine);
+      }
     });
-    var dataOraInizio = $("#start").val()+"T"+$(".timepicker").val();
-    var dataOraFine = $("#start").val()+"T"+$(".timepickerFine").val();
-    aggiornaImpiantiDisponibili(dataOraInizio, dataOraFine);
+    
   },
 });
 
@@ -40,7 +43,14 @@ function aggiornaImpiantiDisponibili(dataOraInizio, dataOraFine) {
     statusCode: {
       200: function (impianti) {
         console.log(impianti);
+        $('#selezioneImpianto').html('');
+        var options = '';    
+        $.each(impianti, function(id, pavimentazione){
+            options += '<option value="' + id + '">' + id + " " + pavimentazione + '</option>';  
+        }) ;        
+        $('#selezioneImpianto').append(options); 
       },
     },
   });
 }
+
