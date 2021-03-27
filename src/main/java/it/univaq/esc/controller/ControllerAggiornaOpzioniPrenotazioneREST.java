@@ -1,5 +1,6 @@
 package it.univaq.esc.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
     private EffettuaPrenotazioneHandler controller;
 
     @PostMapping("/impianti")
-    public List<Impianto> getListaImpianti(@RequestBody Calendario calendario){
-        return controller.getImpiantiDisponibili(calendario);
+    public List<Impianto> getListaImpianti(@RequestBody List<LocalDateTime> dataOraInizioFine){        
+        return controller.getImpiantiDisponibiliByOrario(dataOraInizioFine.get(0), dataOraInizioFine.get(1));
     }
 }

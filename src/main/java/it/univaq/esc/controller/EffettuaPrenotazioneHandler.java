@@ -1,5 +1,6 @@
 package it.univaq.esc.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -82,6 +83,16 @@ public class EffettuaPrenotazioneHandler {
         }
         return null;
 
+    }
+
+    public List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine){
+        List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
+        for(Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()){
+            if(!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)){
+                listaImpiantiDisponibili.add(impianto);
+            }
+        }
+        return listaImpiantiDisponibili;
     }
 
     //metodo che ricava impianti disponibili a partire dal calendario

@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 
 @Entity(name = "prenotazioneImpiantoSpecs")
 public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
@@ -16,6 +19,7 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     private int postiLiberi;
     @OneToMany()
     @JoinColumn()
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Sportivo> invitati = new ArrayList<Sportivo>();
 
     public PrenotazioneImpiantoSpecs() {}

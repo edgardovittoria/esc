@@ -30,6 +30,7 @@ public abstract class PrenotazioneSpecs {
     private Sportivo sportivoPrenotante;
     @ManyToMany()
     @JoinColumn()
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Sportivo> partecipanti = new ArrayList<Sportivo>();
     @ManyToOne()
     @JoinColumn()

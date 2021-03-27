@@ -13,10 +13,18 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 
 @Entity
 @Table(name = "prenotazioni")
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPrenotazione")
 public class Prenotazione {
     @Id
     private int idPrenotazione;
@@ -25,13 +33,15 @@ public class Prenotazione {
     @Column
     private float costo;
   
-    @Transient
-    private Calendario calendarioPrenotazione = new Calendario();
     @OneToMany
     @JoinColumn
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();    
     @OneToOne(cascade = CascadeType.ALL)
     private PrenotazioneSpecs prenotazioneSpecs;
+
+    @Transient
+    private Calendario calendarioPrenotazione = new Calendario();
 
     public Prenotazione(){}
 

@@ -98,6 +98,17 @@ public class Calendario {
         return calendarioSiSovrappone;
     }
 
+    public boolean sovrapponeA(LocalDateTime oraInizio, LocalDateTime oraFine){
+        boolean calendarioSiSovrappone = false;
+        
+        for(Appuntamento appuntamento : this.getListaAppuntamenti()){
+            if(!calendarioSiSovrappone){
+                calendarioSiSovrappone = appuntamento.sovrapponeA(oraInizio, oraFine);
+            }
+        }
+        return calendarioSiSovrappone;
+    }
+
 
     public void unisciCalendario(Calendario calendarioDaUnire){
         if(!this.sovrapponeA(calendarioDaUnire)){

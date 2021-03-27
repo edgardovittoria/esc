@@ -11,8 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
@@ -28,14 +29,14 @@ public class Appuntamento {
     @Column
     private LocalDateTime dataOraFineAppuntamento;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "Prenotazione_ID", nullable = false)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPrenotazione")
+    @JsonIdentityReference(alwaysAsId = true)
     private Prenotazione prenotazioneAppuntamento;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "Impianto_ID", nullable = false)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idImpianto")
+    @JsonIdentityReference(alwaysAsId = true)
     private Impianto impiantoAppuntamento;
 
     public Appuntamento(){}
@@ -91,6 +92,19 @@ public class Appuntamento {
             return true;
         }
         else if(this.getDataOraInizioAppuntamento().equals(appuntamentoDaVerificareSovrapposizioneOrari.getDataOraInizioAppuntamento())){
+            return true;
+        }
+        return false;
+    } 
+
+    public boolean sovrapponeA(LocalDateTime oraInizio, LocalDateTime oraFine){
+        if(this.getDataOraInizioAppuntamento().isBefore(oraInizio) && this.getDataOraFineAppuntamento().isAfter(oraInizio)){
+            return true;
+        }
+        else if(this.getDataOraInizioAppuntamento().isBefore(oraFine) && this.getDataOraFineAppuntamento().isAfter(oraFine)){
+            return true;
+        }
+        else if(this.getDataOraInizioAppuntamento().equals(oraInizio)){
             return true;
         }
         return false;

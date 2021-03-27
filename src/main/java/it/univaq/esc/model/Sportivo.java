@@ -12,6 +12,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "sportivi")
 public class Sportivo {
@@ -26,6 +29,7 @@ public class Sportivo {
     @JoinTable(name = "sport_praticati_sportivi",
                 joinColumns = {@JoinColumn(name="email")},
                 inverseJoinColumns = {@JoinColumn(name="sport_praticato")})
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Sport> sportPraticatiDalloSportivo = new ArrayList<Sport>();
 
     public Sportivo(){}
