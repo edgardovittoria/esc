@@ -18,6 +18,30 @@
 
 </head>
 <body>
+  <div th:fragment="formPrenotaImpianto">
+    <label for="">PRENOTAZIONE IMPIANTO</label>
+    <div class="container">
+      <form>
+        <div class="container form-group border border-dark rounded">
+          <label for="">Seleziona Sport</label>
+          <div
+            th:each="sport : ${sportPraticabili}"
+            class="form-check"
+            id="selezioneSport"
+          >
+            <label class="form-check-label">
+              <input
+                type="radio"
+                class="form-check-input"
+                name="sportPraticabile"
+                id=""
+                th:value="${sport.nome}"
+                checked
+              />
+              <div th:text="${sport.nome}">nome sport</div>
+            </label>
+          </div>
+        </div>
 
     <div class="container border border-dark rounded" th:fragment="dataOraSelezione">
         <div class="row">
@@ -44,6 +68,40 @@
           </div>
         </div>
       </div>
+      <div class="container form-group border border-dark rounded">
+        <label for="">Seleziona impianto</label>
+        <select class="form-control" name="" id="selezioneImpianto">
+          <option
+            th:each="impianto : ${impiantiDisponibili}"
+            th:value="${impianto.key}"
+            th:text="|${impianto.key} ${impianto.value}|"
+          />
+        </select>
+      </div>
+      <div class="container form-group border border-dark rounded">
+        <label for="">Invita sportivi alla prenotazione</label>
+        <select
+          multiple
+          class="form-control selectpicker"
+          data-live-search="true"
+          name=""
+          id="invitaSportivi"
+        >
+          <option
+            th:each="sportivo : ${sportiviIscrittiPolisportiva}"
+            th:value="${sportivo.email}"
+            th:text="|${sportivo.nome} ${sportivo.cognome}|"
+          />
+        </select>
+      </div>
+      <div class="container">
+        <input type="submit" value="Conferma prenotazione" />
+        
+      </div>
+    </form>
+    </div>
+  </div>
+
 
       <script src="js/dataOraSelezione.js" th:fragment="dataOraSelezioneFooter"></script>
       
