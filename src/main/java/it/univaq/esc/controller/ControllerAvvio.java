@@ -24,16 +24,16 @@ public class ControllerAvvio {
     private EffettuaPrenotazioneHandler effettuaPrenotazioneHandler;
 
     
-    @RequestMapping(value = "/test")
-    public ModelAndView avvio(){
+    // @RequestMapping(value = "/test")
+    // public ModelAndView avvio(){
 
-        return new ModelAndView("newPrenotazione", this.getParametri());
-    }
+    //     return new ModelAndView("newPrenotazione", this.getParametri());
+    // }
 
     @RequestMapping(value = "/profilo")
     public ModelAndView getProfilo(){
     ModelAndView profiloSportivo = new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo());
-        profiloSportivo.addObject("avvio", this.avvio());
+        // profiloSportivo.addObject("avvio", this.avvio());
         return profiloSportivo;
         
     }
@@ -58,33 +58,33 @@ public class ControllerAvvio {
         return opzioniPrenotazioneImpianto;
     }
 
-    private HashMap<String, Object> getParametri(){
+    // private HashMap<String, Object> getParametri(){
         
-        EffettuaPrenotazioneHandler controllerPrenotazioni = effettuaPrenotazioneHandler;
+    //     EffettuaPrenotazioneHandler controllerPrenotazioni = effettuaPrenotazioneHandler;
 
-        String tipoPrenotazione = TipiPrenotazione.IMPIANTO.toString();
-        controllerPrenotazioni.avviaNuovaPrenotazione(controllerPrenotazioni.getRegistroSportivi().getListaSportivi().get(0), tipoPrenotazione);
-        Prenotazione prenotazioneAvviata = controllerPrenotazioni.getPrenotazioneInAtto();
+    //     String tipoPrenotazione = TipiPrenotazione.IMPIANTO.toString();
+    //     controllerPrenotazioni.avviaNuovaPrenotazione(controllerPrenotazioni.getRegistroSportivi().getListaSportivi().get(0), tipoPrenotazione);
+    //     Prenotazione prenotazioneAvviata = controllerPrenotazioni.getPrenotazioneInAtto();
 
-        Calendario calendarioPrenotazione = new Calendario();
-        calendarioPrenotazione.aggiungiAppuntamento(new Appuntamento(LocalDateTime.of(2020, 5, 26, 10, 30), LocalDateTime.of(2020, 5, 26, 11, 30)));
+    //     Calendario calendarioPrenotazione = new Calendario();
+    //     calendarioPrenotazione.aggiungiAppuntamento(new Appuntamento(LocalDateTime.of(2020, 5, 26, 10, 30), LocalDateTime.of(2020, 5, 26, 11, 30)));
 
-        prenotazioneAvviata.setCalendario(calendarioPrenotazione);
+    //     prenotazioneAvviata.setCalendario(calendarioPrenotazione);
 
-        List<Sport> sportPrenotabili = controllerPrenotazioni.getSportPraticabili();
+    //     List<Sport> sportPrenotabili = controllerPrenotazioni.getSportPraticabili();
         
-        Sport sportScelto = sportRepository.getOne("tennis");
-        prenotazioneAvviata.getPrenotazioneSpecs().setSport(sportScelto);
+    //     Sport sportScelto = sportRepository.getOne("tennis");
+    //     prenotazioneAvviata.getPrenotazioneSpecs().setSport(sportScelto);
 
-        List<Impianto> impiantiDisponibili = controllerPrenotazioni.getImpiantiDisponibili(prenotazioneAvviata.getCalendarioPrenotazione());
+    //     List<Impianto> impiantiDisponibili = controllerPrenotazioni.getImpiantiDisponibili(prenotazioneAvviata.getCalendarioPrenotazione());
 
-        HashMap<String, Object> parametri = new HashMap<String, Object>();
-        parametri.put("sportPraticabili", sportPrenotabili);
-        parametri.put("sportSelezionato", prenotazioneAvviata.getPrenotazioneSpecs().getSportAssociato().getNome());
-        parametri.put("impiantiDisponibili", impiantiDisponibili);
+    //     HashMap<String, Object> parametri = new HashMap<String, Object>();
+    //     parametri.put("sportPraticabili", sportPrenotabili);
+    //     parametri.put("sportSelezionato", prenotazioneAvviata.getPrenotazioneSpecs().getSportAssociato().getNome());
+    //     parametri.put("impiantiDisponibili", impiantiDisponibili);
 
-        return parametri;
-    }
+    //     return parametri;
+    // }
 
     private HashMap<String, Object> getDettagliProfiloSportivo(){
         Sportivo sportivo = new Sportivo("Pippo", "Franco", "pippofranco@bagaglino.com");
@@ -103,7 +103,7 @@ public class ControllerAvvio {
         EffettuaPrenotazioneHandler controllerNuovaPrenotazione = effettuaPrenotazioneHandler;
         controllerNuovaPrenotazione.avviaNuovaPrenotazione(controllerNuovaPrenotazione.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
         HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto(controllerNuovaPrenotazione);
-        opzioniPrenotazione.put("sportivoPrenotante", controllerNuovaPrenotazione.getPrenotazioneInAtto().getPrenotazioneSpecs().getSportivoPrenotante());        
+        opzioniPrenotazione.put("sportivoPrenotante", controllerNuovaPrenotazione.getPrenotazioneInAtto().getSportivoPrenotante());        
         ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", opzioniPrenotazione);
         return opzioniPrenotazioneImpianto;
     }

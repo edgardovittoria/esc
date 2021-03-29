@@ -8,14 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import org.hibernate.annotations.LazyCollection;
@@ -32,20 +32,31 @@ public class Prenotazione {
     private boolean confermata = false;
     @Column
     private float costo;
+
+    @ManyToOne()
+    @JoinColumn()
+    private Sportivo sportivoPrenotante;
   
+
+    @ManyToMany()
+    @JoinColumn()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Sportivo> partecipanti = new ArrayList<Sportivo>();
+
     @OneToMany
     @JoinColumn
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();    
-    @OneToOne(cascade = CascadeType.ALL)
-    private PrenotazioneSpecs prenotazioneSpecs;
+    
+    @OneToOne(targetEntity = Prenotabile.class, cascade = CascadeType.ALL)
+    private IPrenotabile prenotazioneSpecs;
 
     @Transient
     private Calendario calendarioPrenotazione = new Calendario();
 
     public Prenotazione(){}
 
-    public Prenotazione(int lastIdPrenotazione, PrenotazioneSpecs prenotazioneSpecs) {
+    public Prenotazione(int lastIdPrenotazione, IPrenotabile prenotazioneSpecs) {
         setIdPrenotazione(lastIdPrenotazione);
         //aggiungiQuotaPartecipazione(sportivoPrenotante, 0, false);
         this.prenotazioneSpecs = prenotazioneSpecs;
@@ -79,6 +90,26 @@ public class Prenotazione {
         this.costo = costo;
     }
 
+    public void setSportivoPrenotante(Sportivo sportivoPrenotante) {
+        this.sportivoPrenotante = sportivoPrenotante;
+    }
+
+    public Sportivo getSportivoPrenotante() {
+        return this.sportivoPrenotante;
+    }
+
+    public List<Sportivo> getListaPartecipanti() {
+        return this.partecipanti;
+    }
+
+    public void aggiungiPartecipante(Sportivo sportivoPartecipante) {
+        getListaPartecipanti().add(sportivoPartecipante);
+    }
+
+    public void aggiungiListaPartecipanti(List<Sportivo> listaPartecipanti){
+        this.getListaPartecipanti().addAll(listaPartecipanti);
+    }
+
     public void setCalendario(Calendario datePrenotate){
         this.calendarioPrenotazione = datePrenotate;
     }
@@ -97,11 +128,11 @@ public class Prenotazione {
         return this.quoteDiPartecipazione;
     }
 
-    public PrenotazioneSpecs getPrenotazioneSpecs() {
+    public IPrenotabile getPrenotazioneSpecs() {
         return prenotazioneSpecs;
     }
 
-    public void setPrenotazioneSpecs(PrenotazioneSpecs prenotazioneSpecs) {
+    public void setPrenotazioneSpecs(IPrenotabile prenotazioneSpecs) {
         this.prenotazioneSpecs = prenotazioneSpecs;
     }
 

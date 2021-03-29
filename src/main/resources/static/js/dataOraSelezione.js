@@ -23,10 +23,8 @@
         dropdown: true,
         scrollbar: true,
         change: function(){
-          var dataOraInizio = $("#start").val()+"T"+$(".timepicker").val();
-          var dataOraFine = $("#start").val()+"T"+$(".timepickerFine").val();
-          var sportSelezionato = $("input[name='sportPraticabile']:checked").val();
-          aggiornaImpiantiDisponibili(dataOraInizio, dataOraFine, sportSelezionato);
+         
+          aggiornaImpiantiDisponibili();
         }
       });
       
@@ -35,7 +33,10 @@
 
 
 
-function aggiornaImpiantiDisponibili(dataOraInizio, dataOraFine, sportSelezionato) {
+function aggiornaImpiantiDisponibili() {
+  var dataOraInizio = $("#start").val()+"T"+$(".timepicker").val();
+          var dataOraFine = $("#start").val()+"T"+$(".timepickerFine").val();
+          var sportSelezionato = $("input[name='sportPraticabile']:checked").val();
   var appuntamento = [dataOraInizio, dataOraFine];
   var dati = {
     'orario': appuntamento,

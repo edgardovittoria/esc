@@ -21,16 +21,18 @@
   <div th:fragment="formPrenotaImpianto">
     <label for="">PRENOTAZIONE IMPIANTO</label>
     <div class="container">
-      <form>
+      <form th:action="@{}" th:object="${formPrenotaImpianto}">
         <div class="container form-group border border-dark rounded">
           <label for="">Seleziona Sport</label>
-          <div
+          <div 
             th:each="sport : ${sportPraticabili}"
             class="form-check"
             id="selezioneSport"
+            onchange="aggiornaImpiantiDisponibili()"
           >
             <label class="form-check-label">
               <input
+              th:field="*{sport}"
                 type="radio"
                 class="form-check-input"
                 name="sportPraticabile"
@@ -45,10 +47,11 @@
 
     <div class="container border border-dark rounded" th:fragment="dataOraSelezione">
         <div class="row">
-          <div class="col-sm">
+          <div class="col-sm" th>
             <label for="start">Data Prenotazione:</label>
 
             <input
+            th:field="*{dataPrenotazione}"
               type="date"
               id="start"
               name="trip-start"
@@ -60,11 +63,11 @@
 
           <div class="col-sm">
             <label for="start">Orario Inizio Prenotazione:</label>
-            <input id="timepicker" class="timepicker" />
+            <input id="timepicker" class="timepicker"  th:field="*{oraInizio}"/>
           </div>
           <div id="inputFine" class="col-sm">
             <label for="start">Orario Fine Prenotazione:</label>
-            <input id="timepickerFine" class="timepickerFine" />
+            <input id="timepickerFine" class="timepickerFine" th:field="*{oraFine}"/>
           </div>
         </div>
       </div>
@@ -72,6 +75,7 @@
         <label for="">Seleziona impianto</label>
         <select class="form-control" name="" id="selezioneImpianto">
           <option
+          th:field="*{impianto}"
             th:each="impianto : ${impiantiDisponibili}"
             th:value="${impianto.key}"
             th:text="|${impianto.key} ${impianto.value}|"
@@ -88,6 +92,7 @@
           id="invitaSportivi"
         >
           <option
+          th:field="*{sportiviInvitati}"
             th:each="sportivo : ${sportiviIscrittiPolisportiva}"
             th:value="${sportivo.email}"
             th:text="|${sportivo.nome} ${sportivo.cognome}|"
@@ -95,7 +100,7 @@
         </select>
       </div>
       <div class="container">
-        <input type="submit" value="Conferma prenotazione" />
+        <input type="submit" value="Conferma prenotazione"/>
         
       </div>
     </form>

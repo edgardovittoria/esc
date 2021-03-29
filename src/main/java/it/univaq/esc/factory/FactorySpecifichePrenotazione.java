@@ -2,8 +2,9 @@ package it.univaq.esc.factory;
 
 import org.springframework.stereotype.Component;
 
+import it.univaq.esc.model.IPrenotabile;
 import it.univaq.esc.model.PrenotazioneImpiantoSpecs;
-import it.univaq.esc.model.PrenotazioneSpecs;
+
 
 @Component
 public class FactorySpecifichePrenotazione {
@@ -11,7 +12,7 @@ public class FactorySpecifichePrenotazione {
     public FactorySpecifichePrenotazione() {
     }
 
-    public PrenotazioneSpecs getSpecifichePrenotazione(String tipoPrenotazione){
+    public IPrenotabile getSpecifichePrenotazione(String tipoPrenotazione){
         switch(tipoPrenotazione){
             default :
                 return null;

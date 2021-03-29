@@ -51,5 +51,14 @@ public class RegistroImpianti {
     public void rimuoviImpianto(Impianto impiantoDaRimuovere){
         getListaImpiantiPolisportiva().remove(impiantoDaRimuovere);
     }
+
+    public Impianto getImpiantoByID(Integer idImpianto){
+        for(Impianto impianto : this.getListaImpiantiPolisportiva()){
+            if(impianto.getIdImpianto() == idImpianto){
+                return impianto;
+            }
+        }
+        return null;
+    }
     
 }

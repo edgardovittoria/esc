@@ -2,7 +2,7 @@ package it.univaq.esc.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,11 +10,13 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.web.bind.annotation.RequestMapping;
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.*;
-import it.univaq.esc.repository.PrenotazioneRepository;
+
 
 @Controller
+@RequestMapping("/prenotazione")
 public class EffettuaPrenotazioneHandler {
 
 
@@ -27,12 +29,8 @@ public class EffettuaPrenotazioneHandler {
     @Autowired
     private RegistroImpianti registroImpianti;
 
-    //questo serve perchè nel metodo confermaPrenotazione salviamo la prenotazione nel db
-    @Autowired
-    private PrenotazioneRepository prenotazioneRepository;
-
     private Prenotazione prenotazioneInAtto;
-    private PrenotazioneSpecs specifichePrenotazioneInAtto;
+    private IPrenotabile specifichePrenotazioneInAtto;
     @Autowired
     private FactorySpecifichePrenotazione factorySpecifichePrenotazione;
 
@@ -52,9 +50,9 @@ public class EffettuaPrenotazioneHandler {
 
     public void avviaNuovaPrenotazione(Sportivo sportivo, String tipoPrenotazione) {
         int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
-        PrenotazioneSpecs prenotazioneSpecs = this.factorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
-        prenotazioneSpecs.setSportivoPrenotante(sportivo);
+        IPrenotabile prenotazioneSpecs = this.factorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
         setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
+        getPrenotazioneInAtto().setSportivoPrenotante(sportivo);
         this.specifichePrenotazioneInAtto = this.prenotazioneInAtto.getPrenotazioneSpecs();
     }
 
@@ -71,19 +69,19 @@ public class EffettuaPrenotazioneHandler {
 
     }
 
-    public List<Date> getDateDisponibiliPerPrenotazione() {
-        List<Prenotazione> prenotazioniEffettuate = registroPrenotazioni.getTutteLePrenotazioni();
-        Calendario dateDisponibiliSportivoPrenotante = new Calendario();
-        for(Prenotazione prenotazione : prenotazioniEffettuate) {
-            if(prenotazione.getPrenotazioneSpecs().getSportivoPrenotante().getEmail().equals(prenotazioneInAtto.getPrenotazioneSpecs().getSportivoPrenotante().getEmail())){
-                dateDisponibiliSportivoPrenotante.unisciCalendario(prenotazione.getCalendarioPrenotazione());
+    // public List<Date> getDateDisponibiliPerPrenotazione() {
+    //     List<Prenotazione> prenotazioniEffettuate = registroPrenotazioni.getTutteLePrenotazioni();
+    //     Calendario dateDisponibiliSportivoPrenotante = new Calendario();
+    //     for(Prenotazione prenotazione : prenotazioniEffettuate) {
+    //         if(prenotazione.getPrenotazioneSpecs().getSportivoPrenotante().getEmail().equals(prenotazioneInAtto.getPrenotazioneSpecs().getSportivoPrenotante().getEmail())){
+    //             dateDisponibiliSportivoPrenotante.unisciCalendario(prenotazione.getCalendarioPrenotazione());
                 
-            }
+    //         }
 
-        }
-        return null;
+    //     }
+    //     return null;
 
-    }
+    // }
 
     public List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine){
         List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
@@ -109,7 +107,7 @@ public class EffettuaPrenotazioneHandler {
     }
 
     public List<Sportivo> getListaSportiviInvitabili(){
-        Sport sportPrenotazioneInAtto = this.getSpecifichePrenotazioneInAtto().getSportAssociato();
+        Sport sportPrenotazioneInAtto = (Sport)this.getSpecifichePrenotazioneInAtto().getValoriSpecifichePrenotazione().get("sport");
         List<Sportivo> listaSportiviInvitabili = new ArrayList<Sportivo>();
         for(Sportivo sportivo : getSportivi()){
             if(sportivo.getSportPraticatiDalloSportivo().contains(sportPrenotazioneInAtto)){
@@ -140,18 +138,31 @@ public class EffettuaPrenotazioneHandler {
         this.registroPrenotazioni = registroPrenotazioni;
     }
 
-    public PrenotazioneSpecs getSpecifichePrenotazioneInAtto() {
-        return specifichePrenotazioneInAtto;
+    public IPrenotabile getSpecifichePrenotazioneInAtto() {
+        return this.specifichePrenotazioneInAtto;
     }
 
     public void setSpecifichePrenotazioneInAtto(PrenotazioneSpecs specifichePrenotazioneInAtto) {
         this.specifichePrenotazioneInAtto = specifichePrenotazioneInAtto;
     }
 
-    public void confermaPrenotazione(){
-        this.getPrenotazioneInAtto().setConfermata();
-        prenotazioneRepository.save(this.getPrenotazioneInAtto());
-    }
+    // @PostMapping("/confermaPrenotazione")
+    // public ModelAndView confermaPrenotazione(@ModelAttribute FormPrenotaImpianto form){
+    //     this.getPrenotazioneInAtto().getPrenotazioneSpecs().setSport(this.getSportPraticabili().stream().filter(sport -> sport.getNome().equals(form.getSport())).collect(Collectors.toList()).get(0));
+    //     this.getPrenotazioneInAtto().getPrenotazioneSpecs().aggiungiImpiantoPrenotato(this.getRegistroImpianti().getImpiantoByID(form.getImpianto()));
+    //     LocalDateTime dataOraInizio = LocalDateTime.of(form.getDataPrenotazione(), form.getOraInizio());
+    //     LocalDateTime dataOraFine = LocalDateTime.of(form.getDataPrenotazione(), form.getOraFine());
+    //     Calendario calendarioPrenotazione = new Calendario();
+    //     calendarioPrenotazione.aggiungiAppuntamento(dataOraInizio, dataOraFine, this.prenotazioneInAtto, this.getRegistroImpianti().getImpiantoByID(form.getImpianto()));
+    //     this.prenotazioneInAtto.setCalendario(calendarioPrenotazione);
+        
+    //     // for(String email : form.getSportiviInvitati()){
+    //     //     this.getPrenotazioneInAtto().getPrenotazioneSpecs().setsp
+    //     // }
+        
+    //     this.getPrenotazioneInAtto().setConfermata();
+    //     prenotazioneRepository.save(this.getPrenotazioneInAtto());
+    // }
 
     
 
