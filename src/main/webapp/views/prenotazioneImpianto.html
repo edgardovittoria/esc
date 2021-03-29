@@ -90,9 +90,9 @@
                     <input
                       type="radio"
                       class="form-check-input"
-                      name="${sport.nome}"
+                      name="sportPraticabile"
                       id=""
-                      value="${sport.nome}"
+                      th:value="${sport.nome}"
                       checked
                     />
                     <div th:text="${sport.nome}">nome sport</div>
@@ -155,7 +155,7 @@
               </div>
               <div class="container">
                 <input type="submit" value="Conferma prenotazione" />
-                <input type="reset" value="Reset opzioni" />
+                
               </div>
             </form>
           </div>
@@ -164,7 +164,6 @@
     </div>
 
     <scrip th:replace="componenti/dataOraSelezione :: dataOraSelezioneFooter"></scrip>
-
 
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
