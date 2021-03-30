@@ -3,13 +3,10 @@ package it.univaq.esc.controller;
 import it.univaq.esc.mappingObjectsViewController.FormPrenotaImpianto;
 import it.univaq.esc.model.*;
 
-import it.univaq.esc.repository.SportRepository;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.HashMap;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ControllerAvvio {
 
-    @Autowired
-    private SportRepository sportRepository;
 
     @Autowired
     private EffettuaPrenotazioneHandler effettuaPrenotazioneHandler;

@@ -4,20 +4,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
-import it.univaq.esc.model.Sport;
+
 
 
 @RestController
@@ -30,7 +28,9 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
     @PostMapping("/impianti")
     public @ResponseBody HashMap<Integer, String> getListaImpianti(@RequestBody HashMap<String, Object> dati){        
 
+        
         List<String> orario = (ArrayList<String>)dati.get("orario");
+        
         List<Impianto> impiantiDisponibili =  controller.getImpiantiDisponibiliByOrario(LocalDateTime.parse(orario.get(0)), LocalDateTime.parse(orario.get(1)));
         HashMap<Integer, String> datiImpiantiDisponibili = new HashMap<Integer, String>();
         for(Impianto impianto : impiantiDisponibili){
