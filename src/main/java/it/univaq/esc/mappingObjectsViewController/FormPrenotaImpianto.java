@@ -13,8 +13,8 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
 
     private String sportSelezionato = "tennis";
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dataPrenotazione;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate dataPrenotazione = LocalDate.now();
 
     @DateTimeFormat(pattern = "HH:MM")
     private LocalTime oraInizio;
@@ -45,7 +45,11 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
     /**
      * @return Date return the dataPrenotazione
      */
-    public LocalDate getDataPrenotazione() {
+    public String getDataPrenotazione() {
+        return dataPrenotazione.toString();
+    }
+
+    public LocalDate getLocalDataPrenotazione(){
         return dataPrenotazione;
     }
 
@@ -94,8 +98,8 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
     /**
      * @param impianto the impianto to set
      */
-    public void setImpianto(Integer impianto) {
-        this.impianto = impianto;
+    public void setImpianto(String impianto) {
+        this.impianto = Integer.parseInt(impianto);
     }
 
     /**

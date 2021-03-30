@@ -40,6 +40,7 @@ public class RegistroPrenotazioni {
 
     public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {
         getTutteLePrenotazioni().add(prenotazioneDaAggiungere);
+        this.prenotazioneRepository.save(prenotazioneDaAggiungere);
     }
 
     public List<Prenotazione> getTutteLePrenotazioni(){

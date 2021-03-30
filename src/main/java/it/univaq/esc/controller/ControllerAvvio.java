@@ -4,6 +4,8 @@ import it.univaq.esc.mappingObjectsViewController.FormPrenotaImpianto;
 import it.univaq.esc.model.*;
 
 import it.univaq.esc.repository.SportRepository;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
@@ -105,7 +107,7 @@ public class ControllerAvvio {
         controllerNuovaPrenotazione.avviaNuovaPrenotazione(controllerNuovaPrenotazione.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
         HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto(controllerNuovaPrenotazione);
         opzioniPrenotazione.put("sportivoPrenotante", controllerNuovaPrenotazione.getPrenotazioneInAtto().getSportivoPrenotante());     
-        opzioniPrenotazione.put("formPrenotaImpianto", new FormPrenotaImpianto()); 
+        opzioniPrenotazione.put("formPrenotaImpianto", new FormPrenotaImpianto());
         ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", opzioniPrenotazione);
         return opzioniPrenotazioneImpianto;
     }

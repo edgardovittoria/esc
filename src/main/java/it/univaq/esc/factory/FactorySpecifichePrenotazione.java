@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import it.univaq.esc.model.IPrenotabile;
 import it.univaq.esc.model.PrenotazioneImpiantoSpecs;
+import it.univaq.esc.model.PrenotazioneSpecs;
 
 
 @Component
@@ -18,7 +19,7 @@ public class FactorySpecifichePrenotazione {
                 return null;
 
             case "IMPIANTO" :  
-                return new PrenotazioneImpiantoSpecs();
+                return new PrenotazioneImpiantoSpecs(new PrenotazioneSpecs());
 
             case "LEZIONE" : 
                 return null;

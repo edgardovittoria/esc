@@ -2,7 +2,7 @@ package it.univaq.esc.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,6 +57,7 @@ public class EffettuaPrenotazioneHandler {
         IPrenotabile prenotazioneSpecs = this.factorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
         setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
         getPrenotazioneInAtto().setSportivoPrenotante(sportivo);
+        getPrenotazioneInAtto().aggiungiPartecipante(sportivo);
         this.specifichePrenotazioneInAtto = this.prenotazioneInAtto.getPrenotazioneSpecs();
     }
 
@@ -152,20 +153,53 @@ public class EffettuaPrenotazioneHandler {
 
     @PostMapping("/confermaPrenotazione")
     public ModelAndView confermaPrenotazione(@ModelAttribute FormPrenotaImpianto formPrenotaImpianto){
-        // this.getPrenotazioneInAtto().getPrenotazioneSpecs().setSport(this.getSportPraticabili().stream().filter(sport -> sport.getNome().equals(form.getSport())).collect(Collectors.toList()).get(0));
-        // this.getPrenotazioneInAtto().getPrenotazioneSpecs().aggiungiImpiantoPrenotato(this.getRegistroImpianti().getImpiantoByID(form.getImpianto()));
-        // LocalDateTime dataOraInizio = LocalDateTime.of(form.getDataPrenotazione(), form.getOraInizio());
-        // LocalDateTime dataOraFine = LocalDateTime.of(form.getDataPrenotazione(), form.getOraFine());
-        // Calendario calendarioPrenotazione = new Calendario();
-        // calendarioPrenotazione.aggiungiAppuntamento(dataOraInizio, dataOraFine, this.prenotazioneInAtto, this.getRegistroImpianti().getImpiantoByID(form.getImpianto()));
-        // this.prenotazioneInAtto.setCalendario(calendarioPrenotazione);
         
-        // for(String email : form.getSportiviInvitati()){
-        //     this.getPrenotazioneInAtto().getPrenotazioneSpecs().setsp
-        // }
+        HashMap<String, Object> mappaValori = new HashMap<String, Object>();
+        for(Sport sport : this.getSportPraticabili()){
+            if(sport.getNome().equals(formPrenotaImpianto.getSportSelezionato())){
+                mappaValori.put("sport", sport);
+            }
+        }
         
-        // this.getPrenotazioneInAtto().setConfermata();
-        // prenotazioneRepository.save(this.getPrenotazioneInAtto());
+        List<Impianto> impianti = new ArrayList<Impianto>();
+
+        impianti.add(this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
+        mappaValori.put("impianti", impianti);
+        
+        Calendario calendarioPrenotazione = new Calendario();
+        LocalDateTime dataInizio = LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraInizio());
+        System.out.println(dataInizio);
+        LocalDateTime dataFine = LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraFine());
+        System.out.println(dataFine);
+
+        calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine , this.getPrenotazioneInAtto(), this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
+        this.getPrenotazioneInAtto().setCalendario(calendarioPrenotazione);
+
+        List<Sportivo> sportivi = new ArrayList<Sportivo>();
+        for(String email : formPrenotaImpianto.getSportiviInvitati()){
+            sportivi.add(this.getRegistroSportivi().getSportivoDaEmail(email));
+        }
+
+        mappaValori.put("invitati", sportivi);
+
+
+        this.getPrenotazioneInAtto().getPrenotazioneSpecs().impostaValoriSpecifichePrenotazione(mappaValori);
+
+        this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
+        
+        System.out.println("PRENOTAZIONE CONFERMATA");
+        System.out.println("ID :"+this.prenotazioneInAtto.getIdPrenotazione());
+        System.out.println("SPORTIVO PRENOTANTE :"+this.prenotazioneInAtto.getSportivoPrenotante().getEmail());
+        System.out.println("PARTECIPANTI :"+this.prenotazioneInAtto.getListaPartecipanti().get(0).getEmail());
+        System.out.println("DATA DI PRENOTAZIONE :"+this.prenotazioneInAtto.getCalendarioPrenotazione().getListaAppuntamenti().get(0).getDataOraInizioAppuntamento());
+        System.out.println("INVITATI :"+this.prenotazioneInAtto.getPrenotazioneSpecs().getValoriSpecifichePrenotazione().get("invitati").toString());
+
+        // System.out.println("ID_IMPIANTO : "+formPrenotaImpianto.getImpianto());
+        // System.out.println("DATA : "+formPrenotaImpianto.getLocalDataPrenotazione());
+        // System.out.println("ORA_INIZIO : "+formPrenotaImpianto.getOraInizio());
+        // System.out.println("SPORT : "+formPrenotaImpianto.getSportSelezionato());
+        // System.out.println("INVITATI : "+formPrenotaImpianto.getSportiviInvitati().get(0));
+        // System.out.println("DATA_LOCAL : "+LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraInizio()));
         return null;
     }
 

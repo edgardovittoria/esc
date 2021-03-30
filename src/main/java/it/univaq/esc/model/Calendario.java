@@ -53,6 +53,8 @@ public class Calendario {
     }
 
     public void aggiungiAppuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento, Prenotazione prenotazioneRelativaAppuntamento, Impianto impiantoRelativoAppuntamento){
+        System.out.println("DATA_INIZIO : "+dataOraInizioAppuntamento);
+        
         Appuntamento appuntamentoDaAggiungere = new Appuntamento();
         appuntamentoDaAggiungere.setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
         appuntamentoDaAggiungere.setDataOraFineAppuntamento(dataOraFineAppuntamento);

@@ -43,7 +43,7 @@ public class PrenotazioneSpecs extends Prenotabile {
         this.responsabilePrenotazione = manutentoreDaAssociare;
     }
 
-    public void setSport(Sport sportScelto) {
+    private void setSport(Sport sportScelto) {
         this.sportAssociato = sportScelto;
     }
 
