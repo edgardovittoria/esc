@@ -151,7 +151,7 @@ public class EffettuaPrenotazioneHandler {
     }
 
     @PostMapping("/confermaPrenotazione")
-    public ModelAndView confermaPrenotazione(@ModelAttribute FormPrenotaImpianto formPrenotaImpianto){
+    public ModelAndView confermaPrenotazione(@ModelAttribute FormPrenotaImpianto form){
         // this.getPrenotazioneInAtto().getPrenotazioneSpecs().setSport(this.getSportPraticabili().stream().filter(sport -> sport.getNome().equals(form.getSport())).collect(Collectors.toList()).get(0));
         // this.getPrenotazioneInAtto().getPrenotazioneSpecs().aggiungiImpiantoPrenotato(this.getRegistroImpianti().getImpiantoByID(form.getImpianto()));
         // LocalDateTime dataOraInizio = LocalDateTime.of(form.getDataPrenotazione(), form.getOraInizio());

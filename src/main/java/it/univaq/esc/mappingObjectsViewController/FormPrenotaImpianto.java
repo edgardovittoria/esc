@@ -5,15 +5,23 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FormPrenotaImpianto implements IFormPrenotabile {
 
-    private String sport;
+    private String sportSelezionato = "tennis";
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataPrenotazione;
+
+    @DateTimeFormat(pattern = "HH:MM")
     private LocalTime oraInizio;
+
+    @DateTimeFormat(pattern = "HH:MM")
     private LocalTime oraFine;
+
     private Integer impianto;
     private List<String> sportiviInvitati;
 
@@ -23,15 +31,15 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
     /**
      * @return String return the sport
      */
-    public String getSport() {
-        return sport;
+    public String getSportSelezionato() {
+        return this.sportSelezionato;
     }
 
     /**
      * @param sport the sport to set
      */
-    public void setSport(String sport) {
-        this.sport = sport;
+    public void setSportSelezionato(String sport) {
+        this.sportSelezionato = sport;
     }
 
     /**
@@ -44,8 +52,8 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
     /**
      * @param dataPrenotazione the dataPrenotazione to set
      */
-    public void setDataPrenotazione(LocalDate dataPrenotazione) {
-        this.dataPrenotazione = dataPrenotazione;
+    public void setDataPrenotazione(String dataPrenotazione) {
+        this.dataPrenotazione = LocalDate.parse(dataPrenotazione);
     }
 
     /**
@@ -58,8 +66,8 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
     /**
      * @param oraInizio the oraInizio to set
      */
-    public void setOraInizio(LocalTime oraInizio) {
-        this.oraInizio = oraInizio;
+    public void setOraInizio(String oraInizio) {
+        this.oraInizio = LocalTime.parse(oraInizio);
     }
 
     /**
@@ -72,8 +80,8 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
     /**
      * @param oraFine the oraFine to set
      */
-    public void setOraFine(LocalTime oraFine) {
-        this.oraFine = oraFine;
+    public void setOraFine(String oraFine) {
+        this.oraFine = LocalTime.parse(oraFine);
     }
 
     /**
@@ -108,7 +116,7 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
     public HashMap<String, Object> getValoriForm() {
         
         HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-        mappaValori.put("sport", this.getSport());
+        mappaValori.put("sport", this.getSportSelezionato());
         mappaValori.put("dataPrenotazione", this.getDataPrenotazione());
         mappaValori.put("oraInizio", this.getOraInizio());
         mappaValori.put("oraFine", this.getOraFine());

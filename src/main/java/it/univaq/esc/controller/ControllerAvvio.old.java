@@ -1,6 +1,5 @@
 package it.univaq.esc.controller;
 
-import it.univaq.esc.mappingObjectsViewController.FormPrenotaImpianto;
 import it.univaq.esc.model.*;
 
 import it.univaq.esc.repository.SportRepository;
@@ -104,8 +103,7 @@ public class ControllerAvvio {
         EffettuaPrenotazioneHandler controllerNuovaPrenotazione = effettuaPrenotazioneHandler;
         controllerNuovaPrenotazione.avviaNuovaPrenotazione(controllerNuovaPrenotazione.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
         HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto(controllerNuovaPrenotazione);
-        opzioniPrenotazione.put("sportivoPrenotante", controllerNuovaPrenotazione.getPrenotazioneInAtto().getSportivoPrenotante());     
-        opzioniPrenotazione.put("formPrenotaImpianto", new FormPrenotaImpianto()); 
+        opzioniPrenotazione.put("sportivoPrenotante", controllerNuovaPrenotazione.getPrenotazioneInAtto().getSportivoPrenotante());        
         ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", opzioniPrenotazione);
         return opzioniPrenotazioneImpianto;
     }
