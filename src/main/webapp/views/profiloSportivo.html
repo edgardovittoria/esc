@@ -4,7 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html layout:decorate="~{layoutBase}">
   <head>
     <title>Abruzzo Tourism</title>
     <meta charset="UTF-8" />
@@ -25,6 +25,7 @@ and open the template in the editor.
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
+    <section layout:fragment="contenuto">
     <div class="img-container">
       <img src="img/avatarProfilo.png" />
       <h2 th:text="${nome} + ' ' + ${cognome}">nome e cognome</h2>
@@ -82,15 +83,20 @@ and open the template in the editor.
         </tr>
       </table>
     </div>
+  </section>
   </body>
-  <script th:inline="javascript">
-    /*<![CDATA[*/
-
-    var message = /*[[${message}]]*/ "default";
-    if(message){
-        alert(message);
-    }
-
-    /*]]>*/
-  </script>
+  <footer >
+    
+    <script layout:fragment="extra-footer" th:inline="javascript">
+      /*<![CDATA[*/
+  
+      var message = /*[[${message}]]*/ "default";
+      if(message){
+          alert(message);
+      }
+  
+      /*]]>*/
+    </script>
+  </footer>
+  
 </html>
