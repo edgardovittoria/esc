@@ -47,6 +47,16 @@ public class RegistroPrenotazioni {
         return this.prenotazioniEffettuate;
     }
 
+    public List<Prenotazione> getPrenotazioniByEmailSportivo(String email){
+        List<Prenotazione> prenotazioniSportivo = new ArrayList<Prenotazione>();
+        for (Prenotazione prenotazione : this.getTutteLePrenotazioni()){
+            if(prenotazione.getSportivoPrenotante().getEmail().equals(email)){
+                prenotazioniSportivo.add(prenotazione);
+            }
+        }
+        return prenotazioniSportivo;
+    }
+
     public void cancellaPrenotazione(Prenotazione prenotazioneDaCancellare){
         getTutteLePrenotazioni().remove(prenotazioneDaCancellare);
     }

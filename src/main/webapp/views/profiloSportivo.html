@@ -5,31 +5,92 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>
-        <title>Abruzzo Tourism</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/profiloSportivo.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script defer src="https://use.fontawesome.com/releases/v5.15.2/js/all.js"></script>
-        <script defer src="https://use.fontawesome.com/releases/v5.15.2/js/v4-shims.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    </head>
-    <body>
-        <div class="img-container">
-            <img src="img/avatarProfilo.png">
-            <h2 th:text="${nome} + ' ' + ${cognome}">nome e cognome</h2>
-            <h3 th:text="${email}">email</h3>
-        </div>
-        <div class="container">
-            <p>Prenota un impianto una lezione o un corso</p>
-        </div>
-        <div class="btn-container">
-            <span></span>
-            <button class="btn" id="prenotazioneLezione"><i class="fas fa-table-tennis"></i>LEZIONE</button>
-            <a th:href="@{/nuovaPrenotazione(email=${email},tipoPrenotazione='IMPIANTO')}">
-            <button class="btn" id="prenotazioneImpianto"><i class="far fa-futbol"></i>IMPIANTO</button></a>
-            <button class="btn" id="prenotazioneCorso"><i class="fas fa-volleyball-ball"></i>CORSO</button>
-        </div>
-    </body>
+  <head>
+    <title>Abruzzo Tourism</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/profiloSportivo.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.15.2/js/all.js"
+    ></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.15.2/js/v4-shims.js"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="img-container">
+      <img src="img/avatarProfilo.png" />
+      <h2 th:text="${nome} + ' ' + ${cognome}">nome e cognome</h2>
+      <h3 th:text="${email}">email</h3>
+    </div>
+    <div class="container">
+      <p>Prenota un impianto una lezione o un corso</p>
+    </div>
+    <div class="btn-container">
+      <span></span>
+      <button class="btn" id="prenotazioneLezione">
+        <i class="fas fa-table-tennis"></i>LEZIONE
+      </button>
+      <a
+        th:href="@{/nuovaPrenotazione(email=${email},tipoPrenotazione='IMPIANTO')}"
+      >
+        <button class="btn" id="prenotazioneImpianto">
+          <i class="far fa-futbol"></i>IMPIANTO
+        </button></a
+      >
+      <button class="btn" id="prenotazioneCorso">
+        <i class="fas fa-volleyball-ball"></i>CORSO
+      </button>
+    </div>
+    <div class="table-container">
+      <h3>Prenotazioni</h3>
+      <table>
+        <tr id="label">
+          <th>Impianto Prenotato</th>
+          <th>Data Inizio</th>
+          <th>Data Fine</th>
+          <th>Numero partecipanti</th>
+          <th>Costo totale</th>
+        </tr>
+        <tr th:each=" prenotazione: ${prenotazioniEffettuate}">
+          <th
+            th:text="${prenotazione.prenotazioneSpecs.getValoriSpecifichePrenotazione().get('impianti').get(0).specificheImpianto.get(0).TipoPavimentazione}"
+          >
+            Impianto Prenotato
+          </th>
+          <th
+            th:text="${prenotazione.calendarioPrenotazione.listaAppuntamenti}"
+          >
+            Data Inizio
+          </th>
+          <th
+            th:text="${prenotazione.calendarioPrenotazione.listaAppuntamenti}"
+          >
+            Data Fine
+          </th>
+          <th th:text="${prenotazione.getListaPartecipanti().size()}">
+            Numero partecipanti
+          </th>
+          <th>20€</th>
+        </tr>
+      </table>
+    </div>
+  </body>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var message = /*[[${message}]]*/ "default";
+    if(message){
+        alert(message);
+    }
+
+    /*]]>*/
+  </script>
 </html>
