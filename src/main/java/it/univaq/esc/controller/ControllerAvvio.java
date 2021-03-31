@@ -18,8 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ControllerAvvio {
 
 
-    @Autowired
-    private EffettuaPrenotazioneHandler effettuaPrenotazioneHandler;
+    //@Autowired
+    //private EffettuaPrenotazioneHandler effettuaPrenotazioneHandler;
 
     
     // @RequestMapping(value = "/test")
@@ -85,12 +85,14 @@ public class ControllerAvvio {
     // }
 
     private HashMap<String, Object> getDettagliProfiloSportivo(){
+        EffettuaPrenotazioneHandler controllerPrenotazione = new EffettuaPrenotazioneHandler();
         Sportivo sportivo = new Sportivo("Pippo", "Franco", "pippofranco@bagaglino.com");
         HashMap<String, Object> dettagliProfiloSportivo = new HashMap<String, Object>();
         dettagliProfiloSportivo.put("nome", sportivo.getNome());
         dettagliProfiloSportivo.put("cognome", sportivo.getCognome());
         dettagliProfiloSportivo.put("email", sportivo.getEmail());
-        dettagliProfiloSportivo.put("prenotazioniEffettuate", this.effettuaPrenotazioneHandler.getRegistroPrenotazioni().getPrenotazioniByEmailSportivo("pippofranco@bagaglino.com"));
+        
+        dettagliProfiloSportivo.put("prenotazioniEffettuate", controllerPrenotazione.getRegistroPrenotazioni().getPrenotazioniByEmailSportivo("pippofranco@bagaglino.com"));
         return dettagliProfiloSportivo;
     }
 
@@ -99,7 +101,7 @@ public class ControllerAvvio {
    
     @RequestMapping(value = "/nuovaPrenotazione")
     public ModelAndView avviaPrenotazione(@RequestParam(name="email") String emailSportivoPrenotante, @RequestParam(name="tipoPrenotazione") String tipoPrenotazione){
-        EffettuaPrenotazioneHandler controllerNuovaPrenotazione = effettuaPrenotazioneHandler;
+        EffettuaPrenotazioneHandler controllerNuovaPrenotazione = new EffettuaPrenotazioneHandler();
         controllerNuovaPrenotazione.avviaNuovaPrenotazione(controllerNuovaPrenotazione.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
         HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto(controllerNuovaPrenotazione);
         opzioniPrenotazione.put("sportivoPrenotante", controllerNuovaPrenotazione.getPrenotazioneInAtto().getSportivoPrenotante());     

@@ -50,8 +50,8 @@ and open the template in the editor.
         <i class="fas fa-volleyball-ball"></i>CORSO
       </button>
     </div>
-    <div class="table-container">
-      <h3>Prenotazioni</h3>
+    <div class="table-container" th:unless="${#lists.isEmpty(prenotazioniEffettuate)}">
+      <h3>Prenotazioni</h3>0
       <table>
         <tr id="label">
           <th>Sport Prenotato</th>

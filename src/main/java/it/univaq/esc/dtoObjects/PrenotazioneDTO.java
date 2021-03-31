@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.univaq.esc.model.Appuntamento;
+import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.Sportivo;
@@ -20,6 +21,10 @@ public class PrenotazioneDTO {
     private IPrenotabileDTO specifichePrenotazione;    
 
     public PrenotazioneDTO(){}
+
+    public PrenotazioneDTO(IPrenotabileDTO specifichePrenotazione){
+        setSpecifichePrenotazione(specifichePrenotazione);
+    }
 
 
     public float getCosto() {
@@ -118,7 +123,18 @@ public class PrenotazioneDTO {
             appuntamentoDTO.impostaValoriDTO(appuntamento);
             this.getAppuntamenti().add(appuntamentoDTO);
         }
+        for(Impianto impianto : (List<Impianto>) prenotazione.getSingolaSpecifica("impianti")){
+            ImpiantoDTO impiantoDTO = new ImpiantoDTO();
+            impiantoDTO.impostaValoriDTO(impianto);
+            this.getImpiantiPrenotati().add(impiantoDTO);
+        }     
     }
+
+    public Object getSingolaSpecificaDTO(String etichettaSpecificaDTO){
+        return getSpecifichePrenotazione().getValoriSpecifichePrenotazioneDTO().get(etichettaSpecificaDTO);
+    }
+
+    
 
 
 }
