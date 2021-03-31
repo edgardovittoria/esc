@@ -60,5 +60,14 @@ public class PrenotazioneImpiantoSpecsDTO implements IPrenotabileDTO {
         return mappaValori;
     }
 
+    @Override
+    public String getTipoSpecificaDTO() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    
+
     
 }

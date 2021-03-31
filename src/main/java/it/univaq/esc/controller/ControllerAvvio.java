@@ -1,12 +1,15 @@
 package it.univaq.esc.controller;
 
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
+import it.univaq.esc.dtoObjects.IPrenotabileDTO;
+import it.univaq.esc.dtoObjects.PrenotazioneDTO;
+import it.univaq.esc.dtoObjects.SportDTO;
+import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.*;
 
-
-
+import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,9 @@ public class ControllerAvvio {
     @Autowired
     private EffettuaPrenotazioneHandler effettuaPrenotazioneHandler;
 
+    @Autowired
+    private RegistroSportivi registroSportivi;
+
     
     // @RequestMapping(value = "/test")
     // public ModelAndView avvio(){
@@ -30,7 +36,7 @@ public class ControllerAvvio {
 
     @RequestMapping(value = "/profilo")
     public ModelAndView getProfilo(){
-    ModelAndView profiloSportivo = new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo());
+    ModelAndView profiloSportivo = new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo("pippofranco@bagaglino.com"));
         // profiloSportivo.addObject("avvio", this.avvio());
         return profiloSportivo;
         
@@ -82,13 +88,20 @@ public class ControllerAvvio {
     //     return parametri;
     // }
 
-    private HashMap<String, Object> getDettagliProfiloSportivo(){
-        Sportivo sportivo = new Sportivo("Pippo", "Franco", "pippofranco@bagaglino.com");
+    private HashMap<String, Object> getDettagliProfiloSportivo(String email){
+        SportivoDTO sportivoDTO = new SportivoDTO();
+        sportivoDTO.impostaValoriDTO(this.registroSportivi.getSportivoDaEmail(email));
         HashMap<String, Object> dettagliProfiloSportivo = new HashMap<String, Object>();
-        dettagliProfiloSportivo.put("nome", sportivo.getNome());
-        dettagliProfiloSportivo.put("cognome", sportivo.getCognome());
-        dettagliProfiloSportivo.put("email", sportivo.getEmail());
-        dettagliProfiloSportivo.put("prenotazioniEffettuate", this.effettuaPrenotazioneHandler.getRegistroPrenotazioni().getPrenotazioniByEmailSportivo("pippofranco@bagaglino.com"));
+        dettagliProfiloSportivo.put("sportivo", sportivoDTO);
+        List<PrenotazioneDTO> prenotazioniDTO = new ArrayList<PrenotazioneDTO>();
+        for(Prenotazione prenotazione : this.effettuaPrenotazioneHandler.getPrenotazioniByEmailSportivo(email)){
+            IPrenotabileDTO specifichePrenotazione = this.effettuaPrenotazioneHandler.getSpecifichePrenotazioneDTOByTipoPrenotazione(prenotazione.getPrenotazioneSpecs().getTipoSpecifica());
+            specifichePrenotazione.impostaValoriSpecifichePrenotazioneDTO(prenotazione.getPrenotazioneSpecs().getValoriSpecifichePrenotazione());
+            PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO(specifichePrenotazione);
+            prenotazioneDTO.impostaValoriDTO(prenotazione);
+            prenotazioniDTO.add(prenotazioneDTO);
+        }
+        dettagliProfiloSportivo.put("prenotazioniEffettuate", prenotazioniDTO);
         return dettagliProfiloSportivo;
     }
 

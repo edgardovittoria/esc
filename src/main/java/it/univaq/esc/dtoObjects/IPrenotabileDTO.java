@@ -6,4 +6,5 @@ public interface IPrenotabileDTO {
     
     public void impostaValoriSpecifichePrenotazioneDTO(HashMap<String, Object> mappaValori);
     public HashMap<String, Object> getValoriSpecifichePrenotazioneDTO();
+    public String getTipoSpecificaDTO();
 }

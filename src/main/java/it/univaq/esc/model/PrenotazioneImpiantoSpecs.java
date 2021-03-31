@@ -95,4 +95,9 @@ public class PrenotazioneImpiantoSpecs extends Prenotabile {
         return mappaValori;
     }
 
+    @Override
+    public String getTipoSpecifica() {
+        return TipiPrenotazione.IMPIANTO.toString();
+    }
+
 }

@@ -28,8 +28,8 @@ and open the template in the editor.
     <section layout:fragment="contenuto">
     <div class="img-container">
       <img src="img/avatarProfilo.png" />
-      <h2 th:text="${nome} + ' ' + ${cognome}">nome e cognome</h2>
-      <h3 th:text="${email}">email</h3>
+      <h2 th:text="${sportivo.nome} + ' ' + ${sportivo.cognome}">nome e cognome</h2>
+      <h3 th:text="${sportivo.email}">email</h3>
     </div>
     <div class="container">
       <p>Prenota un impianto una lezione o un corso</p>
@@ -51,7 +51,7 @@ and open the template in the editor.
       </button>
     </div>
     <div class="table-container" th:if="${!prenotazioniEffettuate.isEmpty()}">
-      <h3>Prenotazioni</h3>0
+      <h3>Prenotazioni</h3>
       <table>
         <tr id="label">
           <th>Sport Prenotato</th>
@@ -64,31 +64,31 @@ and open the template in the editor.
         </tr>
         <tr th:each=" prenotazione: ${prenotazioniEffettuate}">
           <th
-            th:text="${prenotazione.prenotazioneSpecs.getValoriSpecifichePrenotazione().get('sport').nome}"
+            th:text="${prenotazione.getSport().getNome()}"
           >
             Sport Prenotato
           </th>
           <th
-            th:text="${prenotazione.prenotazioneSpecs.getValoriSpecifichePrenotazione().get('impianti').get(0).getTipoPavimentazione()}"
+            th:text="${prenotazione.getImpiantiPrenotati().get(0).getPavimentazione()}"
           >
             Impianto Prenotato
           </th>
           <th
-            th:text="${prenotazione.calendarioPrenotazione.listaAppuntamenti.get(0).getDataAppuntamento()}"
+            th:text="${prenotazione.getAppuntamenti().get(0).getDataAppuntamento()}"
           >
             Data
           </th>
           <th
-            th:text="${prenotazione.calendarioPrenotazione.listaAppuntamenti.get(0).getOraInizioAppuntamento()}"
+            th:text="${prenotazione.getAppuntamenti().get(0).getOraInizioAppuntamento()}"
           >
-            Ora gino
+            Ora Inizio
           </th>
           <th
-            th:text="${prenotazione.calendarioPrenotazione.listaAppuntamenti.get(0).getOraFineAppuntamento()}"
+            th:text="${prenotazione.getAppuntamenti().get(0).getOraFineAppuntamento()}"
           >
             Ora Fine
           </th>
-          <th th:text="${prenotazione.getListaPartecipanti().size()}">
+          <th th:text="${prenotazione.getPartecipanti().size()}">
             Numero partecipanti
           </th>
           <th>20€</th>

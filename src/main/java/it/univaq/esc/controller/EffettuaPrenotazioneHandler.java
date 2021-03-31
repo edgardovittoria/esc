@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
+import it.univaq.esc.dtoObjects.IPrenotabileDTO;
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.*;
 
@@ -89,6 +90,10 @@ public class EffettuaPrenotazioneHandler {
 
     // }
 
+    public IPrenotabileDTO getSpecifichePrenotazioneDTOByTipoPrenotazione(String tipoPrenotazione){
+        return this.factorySpecifichePrenotazione.getSpecifichePrenotazioneDTO(tipoPrenotazione);
+    }
+
     public List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine){
         List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
         for(Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()){
@@ -150,6 +155,10 @@ public class EffettuaPrenotazioneHandler {
 
     public void setSpecifichePrenotazioneInAtto(PrenotazioneSpecs specifichePrenotazioneInAtto) {
         this.specifichePrenotazioneInAtto = specifichePrenotazioneInAtto;
+    }
+
+    public List<Prenotazione> getPrenotazioniByEmailSportivo(String email){
+        return this.getRegistroPrenotazioni().getPrenotazioniByEmailSportivo(email);
     }
 
     @PostMapping("/confermaPrenotazione")

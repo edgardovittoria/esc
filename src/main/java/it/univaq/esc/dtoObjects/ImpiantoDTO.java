@@ -11,7 +11,7 @@ public class ImpiantoDTO {
 
     private int idImpianto;
     private boolean indoor;
-    private String pavimetazione;
+    private String pavimentazione;
     private List<SportDTO> sportPraticabili = new ArrayList<SportDTO>();
     private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
 
@@ -33,12 +33,12 @@ public class ImpiantoDTO {
         this.indoor = indoor;
     }
 
-    public String getPavimetazione() {
-        return pavimetazione;
+    public String getPavimentazione() {
+        return pavimentazione;
     }
 
-    public void setPavimetazione(String pavimetazione) {
-        this.pavimetazione = pavimetazione;
+    public void setPavimentazione(String pavimentazione) {
+        this.pavimentazione = pavimentazione;
     }
 
     public List<SportDTO> getSportPraticabili() {
@@ -60,7 +60,7 @@ public class ImpiantoDTO {
     public void impostaValoriDTO(Impianto impianto){
         setIdImpianto(impianto.getIdImpianto());
         setIndoor(impianto.isIndoor());
-        setPavimetazione(impianto.getTipoPavimentazione().toString());
+        setPavimentazione(impianto.getTipoPavimentazione().toString());
         for(Sport sport : impianto.getSportPraticabili()){
             SportDTO sportDTO = new SportDTO();
             sportDTO.impostaValoriDTO(sport);

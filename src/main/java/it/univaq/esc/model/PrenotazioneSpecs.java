@@ -98,4 +98,11 @@ public class PrenotazioneSpecs extends Prenotabile {
 
         return mappaValori;
     }
+
+
+    @Override
+    public String getTipoSpecifica() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
