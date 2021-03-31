@@ -1,6 +1,9 @@
 package it.univaq.esc.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -73,6 +76,18 @@ public class Appuntamento {
         this.dataOraFineAppuntamento = dataOraFineAppuntamento;
     }
 
+
+    public LocalDate getDataAppuntamento(){
+        return this.dataOraFineAppuntamento.toLocalDate();
+    }
+
+    public LocalTime getOraInizioAppuntamento(){
+        return this.dataOraInizioAppuntamento.toLocalTime();
+    }
+
+    public LocalTime getOraFineAppuntamento(){
+        return this.dataOraFineAppuntamento.toLocalTime();
+    }
 
 
     /**

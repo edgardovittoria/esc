@@ -55,8 +55,9 @@ and open the template in the editor.
       <table>
         <tr id="label">
           <th>Impianto Prenotato</th>
-          <th>Data Inizio</th>
-          <th>Data Fine</th>
+          <th>Data</th>
+          <th>Ora Inizio</th>
+          <th>Ora Fine</th>
           <th>Numero partecipanti</th>
           <th>Costo totale</th>
         </tr>
@@ -67,14 +68,19 @@ and open the template in the editor.
             Impianto Prenotato
           </th>
           <th
-            th:text="${prenotazione.calendarioPrenotazione.listaAppuntamenti}"
+            th:text="${prenotazione.calendarioPrenotazione.listaAppuntamenti.get(0).getDataAppuntamento()}"
           >
-            Data Inizio
+            Data
           </th>
           <th
-            th:text="${prenotazione.calendarioPrenotazione.listaAppuntamenti}"
+            th:text="${prenotazione.calendarioPrenotazione.listaAppuntamenti.get(0).getOraInizioAppuntamento()}"
           >
-            Data Fine
+            Ora gino
+          </th>
+          <th
+            th:text="${prenotazione.calendarioPrenotazione.listaAppuntamenti.get(0).getOraFineAppuntamento()}"
+          >
+            Ora Fine
           </th>
           <th th:text="${prenotazione.getListaPartecipanti().size()}">
             Numero partecipanti

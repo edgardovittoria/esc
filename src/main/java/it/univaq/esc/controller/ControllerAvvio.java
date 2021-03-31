@@ -91,7 +91,6 @@ public class ControllerAvvio {
         dettagliProfiloSportivo.put("cognome", sportivo.getCognome());
         dettagliProfiloSportivo.put("email", sportivo.getEmail());
         dettagliProfiloSportivo.put("prenotazioniEffettuate", this.effettuaPrenotazioneHandler.getRegistroPrenotazioni().getPrenotazioniByEmailSportivo("pippofranco@bagaglino.com"));
-
         return dettagliProfiloSportivo;
     }
 
