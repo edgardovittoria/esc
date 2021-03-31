@@ -1,6 +1,6 @@
 package it.univaq.esc.controller;
 
-import it.univaq.esc.mappingObjectsViewController.FormPrenotaImpianto;
+import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.model.*;
 
 

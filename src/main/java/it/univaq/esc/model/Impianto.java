@@ -1,5 +1,6 @@
 package it.univaq.esc.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -83,6 +84,14 @@ public class Impianto {
         this.specificheImpianto.add(specificaImpianto);
     }
 
+    public List<Sport> getSportPraticabili(){
+        List<Sport> sportPraticabili = new ArrayList<Sport>();
+        for(ImpiantoSpecs impiantoSpecs : this.getSpecificheImpianto()){
+            sportPraticabili.add(impiantoSpecs.getSportPraticabile());
+        }
+        return sportPraticabili;
+    }
+
     
     
   
@@ -116,6 +125,10 @@ public class Impianto {
      */
     public void setCalendarioAppuntamentiImpianto(Calendario calendarioAppuntamentiImpianto) {
         this.calendarioAppuntamentiImpianto = calendarioAppuntamentiImpianto;
+    }
+
+    public List<Appuntamento> getListaAppuntamenti(){
+        return this.getCalendarioAppuntamentiImpianto().getListaAppuntamenti();
     }
 
 }

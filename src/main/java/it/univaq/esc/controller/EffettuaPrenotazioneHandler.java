@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
-import it.univaq.esc.mappingObjectsViewController.FormPrenotaImpianto;
 import it.univaq.esc.model.*;
 
 

@@ -118,6 +118,10 @@ public class Prenotazione {
         return this.calendarioPrenotazione;
     }
 
+    public List<Appuntamento> getListaAppuntamenti(){
+        return this.getCalendarioPrenotazione().getListaAppuntamenti();
+    }
+
     public void aggiungiQuotaPartecipazione(Sportivo sportivoDaAssociare, float costo, boolean isPagata){
         QuotaPartecipazione quotaDaAggiungere = new QuotaPartecipazione(isPagata, costo);
         quotaDaAggiungere.setSportivoAssociato(sportivoDaAssociare);
@@ -136,7 +140,9 @@ public class Prenotazione {
         this.prenotazioneSpecs = prenotazioneSpecs;
     }
 
-    
+    public Object getSingolaSpecifica(String etichettaSpecifica){
+        return this.getPrenotazioneSpecs().getValoriSpecifichePrenotazione().get(etichettaSpecifica);
+    }
     
 
     

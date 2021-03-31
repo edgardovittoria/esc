@@ -89,6 +89,10 @@ public class Appuntamento {
         return this.dataOraFineAppuntamento.toLocalTime();
     }
 
+    public int getIdImpiantoAppuntamento(){
+        return this.getImpiantoAppuntamento().getIdImpianto();
+    }
+
 
     /**
      * Verifica se l'appuntamento passato come parametro si sovrappone a quello sul quale è richiamato.

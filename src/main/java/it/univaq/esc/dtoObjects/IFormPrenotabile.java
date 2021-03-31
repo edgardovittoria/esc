@@ -1,4 +1,4 @@
-package it.univaq.esc.mappingObjectsViewController;
+package it.univaq.esc.dtoObjects;
 
 import java.util.HashMap;
 
