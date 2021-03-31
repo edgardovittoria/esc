@@ -50,7 +50,7 @@ and open the template in the editor.
         <i class="fas fa-volleyball-ball"></i>CORSO
       </button>
     </div>
-    <div class="table-container" th:unless="${#lists.isEmpty(prenotazioniEffettuate)}">
+    <div class="table-container" th:if="${!prenotazioniEffettuate.isEmpty()}">
       <h3>Prenotazioni</h3>0
       <table>
         <tr id="label">
@@ -64,12 +64,12 @@ and open the template in the editor.
         </tr>
         <tr th:each=" prenotazione: ${prenotazioniEffettuate}">
           <th
-            th:text="${prenotazione.prenotazioneSpecs.getValoriSpecifichePrenotazione().get('sport').get(0).specificheImpianto.get(0).TipoPavimentazione}"
+            th:text="${prenotazione.prenotazioneSpecs.getValoriSpecifichePrenotazione().get('sport').nome}"
           >
             Sport Prenotato
           </th>
           <th
-            th:text="${prenotazione.prenotazioneSpecs.getValoriSpecifichePrenotazione().get('impianti').get(0).specificheImpianto.get(0).TipoPavimentazione}"
+            th:text="${prenotazione.prenotazioneSpecs.getValoriSpecifichePrenotazione().get('impianti').get(0).getTipoPavimentazione()}"
           >
             Impianto Prenotato
           </th>

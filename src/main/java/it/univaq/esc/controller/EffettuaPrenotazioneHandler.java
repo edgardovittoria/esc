@@ -169,9 +169,7 @@ public class EffettuaPrenotazioneHandler {
         
         Calendario calendarioPrenotazione = new Calendario();
         LocalDateTime dataInizio = LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraInizio());
-        System.out.println(dataInizio);
         LocalDateTime dataFine = LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraFine());
-        System.out.println(dataFine);
 
         calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine , this.getPrenotazioneInAtto(), this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
         this.getPrenotazioneInAtto().setCalendario(calendarioPrenotazione);

@@ -18,8 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ControllerAvvio {
 
 
-    //@Autowired
-    //private EffettuaPrenotazioneHandler effettuaPrenotazioneHandler;
+    @Autowired
+    private EffettuaPrenotazioneHandler effettuaPrenotazioneHandler;
 
     
     // @RequestMapping(value = "/test")
@@ -34,22 +34,20 @@ public class ControllerAvvio {
         // profiloSportivo.addObject("avvio", this.avvio());
         return profiloSportivo;
         
-    }
-
-    
+    }    
     
 
-    private HashMap<String, Object> getOpzioniPrenotazioneImpianto(EffettuaPrenotazioneHandler controller){
+    private HashMap<String, Object> getOpzioniPrenotazioneImpianto(){
        // EffettuaPrenotazioneHandler controller = effettuaPrenotazioneHandler;
         HashMap<String, Object> opzioniPrenotazioneImpianto = new HashMap<String, Object>();
-        opzioniPrenotazioneImpianto.put("sportPraticabili", controller.getSportPraticabili());
+        opzioniPrenotazioneImpianto.put("sportPraticabili", this.effettuaPrenotazioneHandler.getSportPraticabili());
         HashMap<Integer, String> impiantiDisponibili = new HashMap<Integer, String>();
     
-        for(Impianto impianto : controller.getImpiantiDisponibili(new Calendario())){
+        for(Impianto impianto : this.effettuaPrenotazioneHandler.getImpiantiDisponibili(new Calendario())){
             impiantiDisponibili.put(impianto.getIdImpianto(), impianto.getTipoPavimentazione().toString());
         }
         opzioniPrenotazioneImpianto.put("impiantiDisponibili", impiantiDisponibili);
-        opzioniPrenotazioneImpianto.put("sportiviIscrittiPolisportiva", controller.getSportivi());
+        opzioniPrenotazioneImpianto.put("sportiviIscrittiPolisportiva", this.effettuaPrenotazioneHandler.getSportivi());
         
         
 
@@ -85,14 +83,12 @@ public class ControllerAvvio {
     // }
 
     private HashMap<String, Object> getDettagliProfiloSportivo(){
-        EffettuaPrenotazioneHandler controllerPrenotazione = new EffettuaPrenotazioneHandler();
         Sportivo sportivo = new Sportivo("Pippo", "Franco", "pippofranco@bagaglino.com");
         HashMap<String, Object> dettagliProfiloSportivo = new HashMap<String, Object>();
         dettagliProfiloSportivo.put("nome", sportivo.getNome());
         dettagliProfiloSportivo.put("cognome", sportivo.getCognome());
         dettagliProfiloSportivo.put("email", sportivo.getEmail());
-        
-        dettagliProfiloSportivo.put("prenotazioniEffettuate", controllerPrenotazione.getRegistroPrenotazioni().getPrenotazioniByEmailSportivo("pippofranco@bagaglino.com"));
+        dettagliProfiloSportivo.put("prenotazioniEffettuate", this.effettuaPrenotazioneHandler.getRegistroPrenotazioni().getPrenotazioniByEmailSportivo("pippofranco@bagaglino.com"));
         return dettagliProfiloSportivo;
     }
 
@@ -101,10 +97,9 @@ public class ControllerAvvio {
    
     @RequestMapping(value = "/nuovaPrenotazione")
     public ModelAndView avviaPrenotazione(@RequestParam(name="email") String emailSportivoPrenotante, @RequestParam(name="tipoPrenotazione") String tipoPrenotazione){
-        EffettuaPrenotazioneHandler controllerNuovaPrenotazione = new EffettuaPrenotazioneHandler();
-        controllerNuovaPrenotazione.avviaNuovaPrenotazione(controllerNuovaPrenotazione.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
-        HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto(controllerNuovaPrenotazione);
-        opzioniPrenotazione.put("sportivoPrenotante", controllerNuovaPrenotazione.getPrenotazioneInAtto().getSportivoPrenotante());     
+        this.effettuaPrenotazioneHandler.avviaNuovaPrenotazione(this.effettuaPrenotazioneHandler.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
+        HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto();
+        opzioniPrenotazione.put("sportivoPrenotante", this.effettuaPrenotazioneHandler.getPrenotazioneInAtto().getSportivoPrenotante());     
         opzioniPrenotazione.put("formPrenotaImpianto", new FormPrenotaImpianto());
         ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", opzioniPrenotazione);
         return opzioniPrenotazioneImpianto;
