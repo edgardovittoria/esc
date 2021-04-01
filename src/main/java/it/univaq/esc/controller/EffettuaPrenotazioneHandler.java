@@ -36,7 +36,7 @@ public class EffettuaPrenotazioneHandler {
 
 
     private Prenotazione prenotazioneInAtto;
-    private IPrenotabile specifichePrenotazioneInAtto;
+   
     @Autowired
     private FactorySpecifichePrenotazione factorySpecifichePrenotazione;
 
@@ -60,7 +60,6 @@ public class EffettuaPrenotazioneHandler {
         setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
         getPrenotazioneInAtto().setSportivoPrenotante(sportivo);
         getPrenotazioneInAtto().aggiungiPartecipante(sportivo);
-        this.specifichePrenotazioneInAtto = this.prenotazioneInAtto.getPrenotazioneSpecs();
     }
 
     public List<Sport> getSportPraticabili() {
@@ -118,7 +117,7 @@ public class EffettuaPrenotazioneHandler {
     }
 
     public List<Sportivo> getListaSportiviInvitabili(){
-        Sport sportPrenotazioneInAtto = (Sport)this.getSpecifichePrenotazioneInAtto().getValoriSpecifichePrenotazione().get("sport");
+        Sport sportPrenotazioneInAtto = (Sport)this.getPrenotazioneInAtto().getSingolaSpecifica("sport");
         List<Sportivo> listaSportiviInvitabili = new ArrayList<Sportivo>();
         for(Sportivo sportivo : getSportivi()){
             if(sportivo.getSportPraticatiDalloSportivo().contains(sportPrenotazioneInAtto)){
@@ -149,13 +148,6 @@ public class EffettuaPrenotazioneHandler {
         this.registroPrenotazioni = registroPrenotazioni;
     }
 
-    public IPrenotabile getSpecifichePrenotazioneInAtto() {
-        return this.specifichePrenotazioneInAtto;
-    }
-
-    public void setSpecifichePrenotazioneInAtto(PrenotazioneSpecs specifichePrenotazioneInAtto) {
-        this.specifichePrenotazioneInAtto = specifichePrenotazioneInAtto;
-    }
 
     public List<Prenotazione> getPrenotazioniByEmailSportivo(String email){
         return this.getRegistroPrenotazioni().getPrenotazioniByEmailSportivo(email);
@@ -191,25 +183,19 @@ public class EffettuaPrenotazioneHandler {
         mappaValori.put("invitati", sportivi);
 
 
-        this.getPrenotazioneInAtto().getPrenotazioneSpecs().impostaValoriSpecifichePrenotazione(mappaValori);
+        this.getPrenotazioneInAtto().impostaValoriPrenotazioneSpecs(mappaValori);
 
         this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
         
-        System.out.println("PRENOTAZIONE CONFERMATA");
-        System.out.println("ID :"+this.prenotazioneInAtto.getIdPrenotazione());
-        System.out.println("SPORTIVO PRENOTANTE :"+this.prenotazioneInAtto.getSportivoPrenotante().getEmail());
-        System.out.println("PARTECIPANTI :"+this.prenotazioneInAtto.getListaPartecipanti().get(0).getEmail());
-        System.out.println("DATA DI PRENOTAZIONE :"+this.prenotazioneInAtto.getCalendarioPrenotazione().getListaAppuntamenti().get(0).getDataOraInizioAppuntamento());
-        System.out.println("INVITATI :"+this.prenotazioneInAtto.getPrenotazioneSpecs().getValoriSpecifichePrenotazione().get("invitati").toString());
+        // System.out.println("PRENOTAZIONE CONFERMATA");
+        // System.out.println("ID :"+this.prenotazioneInAtto.getIdPrenotazione());
+        // System.out.println("SPORTIVO PRENOTANTE :"+this.prenotazioneInAtto.getSportivoPrenotante().getEmail());
+        // System.out.println("PARTECIPANTI :"+this.prenotazioneInAtto.getListaPartecipanti().get(0).getEmail());
+        // System.out.println("DATA DI PRENOTAZIONE :"+this.prenotazioneInAtto.getCalendarioPrenotazione().getListaAppuntamenti().get(0).getDataOraInizioAppuntamento());
+        // System.out.println("INVITATI :"+this.prenotazioneInAtto.getPrenotazioneSpecs().getValoriSpecifichePrenotazione().get("invitati").toString());
 
         
         redirectAttributes.addFlashAttribute("message", "La prenotazione è stata registrata con successo!");
-        // System.out.println("ID_IMPIANTO : "+formPrenotaImpianto.getImpianto());
-        // System.out.println("DATA : "+formPrenotaImpianto.getLocalDataPrenotazione());
-        // System.out.println("ORA_INIZIO : "+formPrenotaImpianto.getOraInizio());
-        // System.out.println("SPORT : "+formPrenotaImpianto.getSportSelezionato());
-        // System.out.println("INVITATI : "+formPrenotaImpianto.getSportiviInvitati().get(0));
-        // System.out.println("DATA_LOCAL : "+LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraInizio()));
         return "redirect:/profilo";
     }
 

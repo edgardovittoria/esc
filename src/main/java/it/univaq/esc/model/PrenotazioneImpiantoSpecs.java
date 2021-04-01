@@ -27,6 +27,9 @@ public class PrenotazioneImpiantoSpecs extends Prenotabile {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Sportivo> invitati = new ArrayList<Sportivo>();
 
+    @Column
+    private int numeroGiocatoriNonRegistratiAssociati = 0;
+
     @OneToOne(targetEntity = Prenotabile.class, cascade = CascadeType.ALL)
     private IPrenotabile prenotazioneSpecsBase;
 
@@ -98,6 +101,25 @@ public class PrenotazioneImpiantoSpecs extends Prenotabile {
     @Override
     public String getTipoSpecifica() {
         return TipiPrenotazione.IMPIANTO.toString();
+    }
+
+
+    
+
+    
+
+    /**
+     * @return int return the numeroGiocatoriNonRegistratiAssociati
+     */
+    public int getNumeroGiocatoriNonRegistratiAssociati() {
+        return numeroGiocatoriNonRegistratiAssociati;
+    }
+
+    /**
+     * @param numeroGiocatoriNonRegistratiAssociati the numeroGiocatoriNonRegistratiAssociati to set
+     */
+    public void setNumeroGiocatoriNonRegistratiAssociati(int numeroGiocatoriNonRegistratiAssociati) {
+        this.numeroGiocatoriNonRegistratiAssociati = numeroGiocatoriNonRegistratiAssociati;
     }
 
 }

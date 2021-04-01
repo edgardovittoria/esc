@@ -7,6 +7,7 @@ import it.univaq.esc.dtoObjects.PrenotazioneImpiantoSpecsDTO;
 import it.univaq.esc.model.IPrenotabile;
 import it.univaq.esc.model.PrenotazioneImpiantoSpecs;
 import it.univaq.esc.model.PrenotazioneSpecs;
+import it.univaq.esc.model.TipiPrenotazione;
 
 
 @Component

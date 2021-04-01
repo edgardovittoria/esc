@@ -1,6 +1,7 @@
 package it.univaq.esc.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -138,6 +139,10 @@ public class Prenotazione {
 
     public void setPrenotazioneSpecs(IPrenotabile prenotazioneSpecs) {
         this.prenotazioneSpecs = prenotazioneSpecs;
+    }
+
+    public void impostaValoriPrenotazioneSpecs(HashMap<String, Object> mappaValori){
+        this.getPrenotazioneSpecs().impostaValoriSpecifichePrenotazione(mappaValori);
     }
 
     public Object getSingolaSpecifica(String etichettaSpecifica){

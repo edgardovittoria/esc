@@ -23,10 +23,11 @@
         >
           <div class="container form-group border border-dark rounded">
             <label for="">Seleziona Sport</label>
+            <div class="row">
+              <div class="col-sm">
             <div
               th:each="sport : ${sportPraticabili}"
-              class="form-check"
-              id="selezioneSport"
+              class="form-check col-sm col-4"
               onchange="aggiornaImpiantiDisponibili()"
             >
               <label class="form-check-label">
@@ -42,6 +43,9 @@
                 <div th:text="${sport.nome}">nome sport</div>
               </label>
             </div>
+          </div>
+            <div class="col-sm">Posti liberi: <span th:text="10"></span></div>
+          </div>
           </div>
 
           <div
