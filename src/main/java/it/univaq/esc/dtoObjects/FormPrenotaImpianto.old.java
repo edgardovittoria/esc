@@ -27,8 +27,6 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
 
     private Integer postiLiberi;
 
-    private Integer numeroGiocatoriNonIscritti;
-
     public FormPrenotaImpianto() {
     }
 
@@ -131,7 +129,6 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
         mappaValori.put("impianto", this.getImpianto());
         mappaValori.put("invitati", this.getSportiviInvitati());
         mappaValori.put("postiLiberi", this.getPostiLiberi());
-        mappaValori.put("numeroPartecipantiNonIscritti", this.getNumeroGiocatoriNonIscritti());
 
         return mappaValori;
     }
@@ -149,21 +146,6 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
      */
     public void setPostiLiberi(Integer postiLiberi) {
         this.postiLiberi = postiLiberi;
-    }
-
-
-    /**
-     * @return Integer return the numeroGiocatoriNonIscritti
-     */
-    public Integer getNumeroGiocatoriNonIscritti() {
-        return numeroGiocatoriNonIscritti;
-    }
-
-    /**
-     * @param numeroGiocatoriNonIscritti the numeroGiocatoriNonIscritti to set
-     */
-    public void setNumeroGiocatoriNonIscritti(Integer numeroGiocatoriNonIscritti) {
-        this.numeroGiocatoriNonIscritti = numeroGiocatoriNonIscritti;
     }
 
 }
