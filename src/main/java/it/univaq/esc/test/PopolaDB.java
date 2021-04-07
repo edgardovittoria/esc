@@ -167,8 +167,11 @@ public class PopolaDB {
         prenotazione1.setSportAssociato(tennis);
         prenotazione1.setImpiantoSpecifica(impianto1, prenotazioneSpecs);
        
+        Calendario calendarioSpecs1 = new Calendario();
+        calendarioSpecs1.aggiungiAppuntamento(LocalDateTime.of(2021, 5, 26, 10, 30), LocalDateTime.of(2021, 5, 26, 11, 30), prenotazioneSpecs);
+        prenotazione1.setCalendarioSpecifica(calendarioSpecs1, prenotazioneSpecs);
        
-        prenotazione1.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2021, 5, 26, 10, 30), LocalDateTime.of(2021, 5, 26, 11, 30), prenotazioneSpecs);
+        prenotazione1.impostaCalendarioPrenotazioneDaSpecifiche();
         prenotazione1.aggiungiPartecipanteAPrenotazioneSpecs(sportivo2, prenotazioneSpecs);
         
 
@@ -179,7 +182,10 @@ public class PopolaDB {
         prenotazione2.setSportivoPrenotante(sportivo2);
         prenotazione2.aggiungiPartecipanteAPrenotazioneSpecs(sportivo2, prenotazioneSpecs2);
        
-        prenotazione2.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2021, 5, 21, 17, 00), LocalDateTime.of(2021, 5, 21, 19,00), prenotazioneSpecs2);
+        Calendario calendarioSpecs2 = new Calendario();
+        calendarioSpecs2.aggiungiAppuntamento(LocalDateTime.of(2021, 5, 21, 17, 00), LocalDateTime.of(2021, 5, 21, 19,00), prenotazioneSpecs2);
+        prenotazione2.setCalendarioSpecifica(calendarioSpecs2, prenotazioneSpecs2);
+        prenotazione2.impostaCalendarioPrenotazioneDaSpecifiche();
         
         prenotazione2.setSportAssociato(tennis);
         prenotazione2.setImpiantoSpecifica(impianto3, prenotazioneSpecs2);
@@ -187,6 +193,7 @@ public class PopolaDB {
         
         /*calendarioRepository.save(calendarioPrenotazione);
         calendarioRepository.save(calendarioPrenotazione2);*/
+        
         prenotazioneRepository.save(prenotazione1);
         prenotazioneRepository.save(prenotazione2);
         appuntamentoRepository.saveAll(prenotazione1.getListaAppuntamenti());

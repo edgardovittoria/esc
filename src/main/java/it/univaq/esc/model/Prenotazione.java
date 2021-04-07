@@ -44,7 +44,9 @@ public class Prenotazione {
     private Sport sportAssociato;
     
     
-    @OneToOne(targetEntity = PrenotazioneSpecs.class, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<PrenotazioneSpecs> listaSpecifichePrenotazione = new ArrayList<PrenotazioneSpecs>();
 
     @Transient

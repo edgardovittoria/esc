@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +30,7 @@ public class Appuntamento {
     @Column
     private LocalDateTime dataOraFineAppuntamento;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "PrenotazioneSpecs_ID", nullable = false)
     @JsonIdentityReference(alwaysAsId = true)
     private PrenotazioneSpecs prenotazioneSpecsAppuntamento;
