@@ -1,8 +1,8 @@
 package it.univaq.esc.controller;
 
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
-import it.univaq.esc.dtoObjects.IPrenotabileDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
+import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.*;
@@ -95,8 +95,9 @@ public class ControllerAvvio {
         dettagliProfiloSportivo.put("sportivo", sportivoDTO);
         List<PrenotazioneDTO> prenotazioniDTO = new ArrayList<PrenotazioneDTO>();
         for(Prenotazione prenotazione : this.effettuaPrenotazioneHandler.getPrenotazioniByEmailSportivo(email)){
-            IPrenotabileDTO specifichePrenotazione = this.effettuaPrenotazioneHandler.getSpecifichePrenotazioneDTOByTipoPrenotazione(prenotazione.getPrenotazioneSpecs().getTipoSpecifica());
-            specifichePrenotazione.impostaValoriSpecifichePrenotazioneDTO(prenotazione.getPrenotazioneSpecs().getValoriSpecifichePrenotazione());
+            PrenotazioneSpecsDTO specifichePrenotazione = this.effettuaPrenotazioneHandler.getSpecifichePrenotazioneDTOByTipoPrenotazione(prenotazione.getTipoPrenotazione());
+            specifichePrenotazione.impostaValoriDTO(prenotazione.getListaSpecifichePrenotazione().get(0));
+            specifichePrenotazione.impostaValoriSpecificheExtraPrenotazioneDTO(prenotazione.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione());
             PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO(specifichePrenotazione);
             prenotazioneDTO.impostaValoriDTO(prenotazione);
             prenotazioniDTO.add(prenotazioneDTO);

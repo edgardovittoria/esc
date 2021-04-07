@@ -23,10 +23,10 @@ public class TestVerificaCalendario {
             System.out.println("-----------lista appuntamenti------------");
             for(Appuntamento appuntamento : prenotazione.getCalendarioPrenotazione().getListaAppuntamenti()){
                 System.out.println("Appuntamento ID: " + appuntamento.getIdAppuntamento());
-                System.out.println("Impianto prenotato ID: " + appuntamento.getImpiantoAppuntamento().getIdImpianto());
+                System.out.println("Impianto prenotato ID: " + appuntamento.getIdImpiantoPrenotato());
                 System.out.println("Data  e ora inizio: " + appuntamento.getDataOraInizioAppuntamento().toString());
                 System.out.println("Data  e ora fine: " + appuntamento.getDataOraFineAppuntamento().toString());
-                System.out.println("Prenotazione relativa ID: " + appuntamento.getPrenotazioneAppuntamento().getIdPrenotazione());
+                System.out.println("Istanza PrenotazioneSpecs relativa: " + appuntamento.getPrenotazioneSpecsAppuntamento().toString());
                 System.out.println("");
             }
             }

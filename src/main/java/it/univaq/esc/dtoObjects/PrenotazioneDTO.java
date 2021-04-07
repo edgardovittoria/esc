@@ -2,50 +2,47 @@ package it.univaq.esc.dtoObjects;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import it.univaq.esc.model.Appuntamento;
-import it.univaq.esc.model.Impianto;
+import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.Prenotazione;
+import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.Sport;
-import it.univaq.esc.model.Sportivo;
+import net.bytebuddy.build.HashCodeAndEqualsPlugin.ValueHandling.Sort;
+
 
 public class PrenotazioneDTO {
 
-    private float costo;
-    private boolean confermata;
+
     private SportivoDTO sportivoPrenotante;  
-    private List<SportivoDTO> partecipanti = new ArrayList<SportivoDTO>();
     private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
-    private SportDTO sport;
-    private List<ImpiantoDTO> impiantiPrenotati = new ArrayList<ImpiantoDTO>();
-    private IPrenotabileDTO specifichePrenotazione;    
+    private List<PrenotazioneSpecsDTO> listaSpecifichePrenotazione = new ArrayList<PrenotazioneSpecsDTO>();    
+    private String tipoSpecifica;
+    private SportDTO sportAssociato;
 
     public PrenotazioneDTO(){}
 
-    public PrenotazioneDTO(IPrenotabileDTO specifichePrenotazione){
-        setSpecifichePrenotazione(specifichePrenotazione);
+    public PrenotazioneDTO(PrenotazioneSpecsDTO specifichePrenotazione){
+        this.aggiungiSpecificaPrenotazione(specifichePrenotazione);
     }
 
 
-    public float getCosto() {
-        return costo;
+    
+
+    /**
+     * @return SportDTO return the sportAssociato
+     */
+    public SportDTO getSportAssociato() {
+        return sportAssociato;
+    }
+
+    /**
+     * @param sportAssociato the sportAssociato to set
+     */
+    public void setSportAssociato(SportDTO sportAssociato) {
+        this.sportAssociato = sportAssociato;
     }
 
 
-    public void setCosto(float costo) {
-        this.costo = costo;
-    }
-
-
-    public boolean isConfermata() {
-        return confermata;
-    }
-
-
-    public void setConfermata(boolean confermata) {
-        this.confermata = confermata;
-    }
-
+   
 
     public SportivoDTO getSportivoPrenotante() {
         return sportivoPrenotante;
@@ -56,15 +53,6 @@ public class PrenotazioneDTO {
         this.sportivoPrenotante = sportivoPrenotante;
     }
 
-
-    public List<SportivoDTO> getPartecipanti() {
-        return partecipanti;
-    }
-
-
-    public void setPartecipanti(List<SportivoDTO> partecipanti) {
-        this.partecipanti = partecipanti;
-    }
 
 
     public List<AppuntamentoDTO> getAppuntamenti() {
@@ -77,64 +65,63 @@ public class PrenotazioneDTO {
     }
 
 
-    public SportDTO getSport() {
-        return sport;
+
+
+    public List<PrenotazioneSpecsDTO> getSpecifichePrenotazione() {
+        return this.listaSpecifichePrenotazione;
     }
 
 
-    public void setSport(SportDTO sport) {
-        this.sport = sport;
+    public void setListaSpecifichePrenotazione(List<PrenotazioneSpecsDTO> specifichePrenotazione) {
+        this.getSpecifichePrenotazione().addAll(specifichePrenotazione);
     }
 
-
-    public List<ImpiantoDTO> getImpiantiPrenotati() {
-        return impiantiPrenotati;
-    }
-
-
-    public void setImpiantiPrenotati(List<ImpiantoDTO> impiantiPrenotati) {
-        this.impiantiPrenotati = impiantiPrenotati;
-    }
-
-
-    public IPrenotabileDTO getSpecifichePrenotazione() {
-        return specifichePrenotazione;
-    }
-
-
-    public void setSpecifichePrenotazione(IPrenotabileDTO specifichePrenotazione) {
-        this.specifichePrenotazione = specifichePrenotazione;
+    public void aggiungiSpecificaPrenotazione(PrenotazioneSpecsDTO specifica){
+        this.getSpecifichePrenotazione().add(specifica);
     }
 
     public void impostaValoriDTO(Prenotazione prenotazione){
         this.sportivoPrenotante = new SportivoDTO();
         this.sportivoPrenotante.impostaValoriDTO(prenotazione.getSportivoPrenotante());
-        this.confermata = prenotazione.isConfermata();
-        this.costo = prenotazione.getCosto();
-        for(Sportivo sportivo : prenotazione.getListaPartecipanti()){
-            SportivoDTO partecipanteDTO = new SportivoDTO();
-            partecipanteDTO.impostaValoriDTO(sportivo);
-            this.partecipanti.add(partecipanteDTO);
+        this.setTipoSpecifica(prenotazione.getTipoPrenotazione());
+        for(PrenotazioneSpecs specifica : prenotazione.getListaSpecifichePrenotazione()){
+            PrenotazioneSpecsDTO specificaDTO = FactorySpecifichePrenotazione.getSpecifichePrenotazioneDTO(this.getTipoSpecifica());
+            specificaDTO.impostaValoriDTO(specifica);
+            this.aggiungiSpecificaPrenotazione(specificaDTO);
         }
-        this.sport = new SportDTO();
-        this.sport.impostaValoriDTO((Sport) prenotazione.getSingolaSpecifica("sport"));
-        for(Appuntamento appuntamento : prenotazione.getListaAppuntamenti()){
-            AppuntamentoDTO appuntamentoDTO = new AppuntamentoDTO();
-            appuntamentoDTO.impostaValoriDTO(appuntamento);
-            this.getAppuntamenti().add(appuntamentoDTO);
-        }
-        for(Impianto impianto : (List<Impianto>) prenotazione.getSingolaSpecifica("impianti")){
-            ImpiantoDTO impiantoDTO = new ImpiantoDTO();
-            impiantoDTO.impostaValoriDTO(impianto);
-            this.getImpiantiPrenotati().add(impiantoDTO);
-        }     
+        this.setSportAssociato(new SportDTO());;
+        this.getSportAssociato().impostaValoriDTO((Sport) prenotazione.getSportAssociato());
+        
     }
 
-    public Object getSingolaSpecificaDTO(String etichettaSpecificaDTO){
-        return getSpecifichePrenotazione().getValoriSpecifichePrenotazioneDTO().get(etichettaSpecificaDTO);
+    public Object getSingolaSpecificaDTO(String etichettaSpecificaDTO, PrenotazioneSpecsDTO specifica){
+        return specifica.getValoriSpecificheExtraPrenotazioneDTO().get(etichettaSpecificaDTO);
     }
 
     
 
+
+
+    /**
+     * @return List<PrenotazioneSpecsDTO> return the listaSpecifichePrenotazione
+     */
+    public List<PrenotazioneSpecsDTO> getListaSpecifichePrenotazione() {
+        return listaSpecifichePrenotazione;
+    }
+
+
+    /**
+     * @return String return the tipoSpecifica
+     */
+    public String getTipoSpecifica() {
+        return tipoSpecifica;
+    }
+
+    /**
+     * @param tipoSpecifica the tipoSpecifica to set
+     */
+    public void setTipoSpecifica(String tipoSpecifica) {
+        this.tipoSpecifica = tipoSpecifica;
+    }
 
 }

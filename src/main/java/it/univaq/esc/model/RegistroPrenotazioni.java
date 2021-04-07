@@ -33,7 +33,8 @@ public class RegistroPrenotazioni {
     public void popola(){
         getTutteLePrenotazioni().addAll(prenotazioneRepository.findAll());
         for(Prenotazione prenotazione : this.getTutteLePrenotazioni()){
-            prenotazione.getCalendarioPrenotazione().setListaAppuntamenti(appuntamentoRepository.findByPrenotazioneAppuntamento_IdPrenotazione(prenotazione.getIdPrenotazione()));
+            prenotazione.impostaCalendarioPrenotazioneDaSpecifiche();
+            //prenotazione.getCalendarioPrenotazione().setListaAppuntamenti(appuntamentoRepository.findByPrenotazioneAppuntamento_IdPrenotazione(prenotazione.getIdPrenotazione()));
         }
 
     }
@@ -41,7 +42,7 @@ public class RegistroPrenotazioni {
     public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {
         getTutteLePrenotazioni().add(prenotazioneDaAggiungere);
         this.prenotazioneRepository.save(prenotazioneDaAggiungere);
-        this.appuntamentoRepository.saveAll(prenotazioneDaAggiungere.getCalendarioPrenotazione().getListaAppuntamenti());
+        this.appuntamentoRepository.saveAll(prenotazioneDaAggiungere.getListaAppuntamenti());
     }
 
     public List<Prenotazione> getTutteLePrenotazioni(){
@@ -59,12 +60,13 @@ public class RegistroPrenotazioni {
     }
 
     public void cancellaPrenotazione(Prenotazione prenotazioneDaCancellare){
+        appuntamentoRepository.deleteAll(prenotazioneDaCancellare.getListaAppuntamenti());
         getTutteLePrenotazioni().remove(prenotazioneDaCancellare);
+        prenotazioneRepository.delete(prenotazioneDaCancellare);
+        
     }
 
-    public void cancellaListaPrenotazioni(List<Prenotazione> listaPrenotazioniDaCancellare){
-        getTutteLePrenotazioni().removeAll(listaPrenotazioniDaCancellare);
-    }
+    
 
     public int getLastIdPrenotazione() {
         if(getTutteLePrenotazioni().isEmpty()){
@@ -75,15 +77,6 @@ public class RegistroPrenotazioni {
         return lastPrenotazione.getIdPrenotazione();}
     }
 
-    /*public static RegistroPrenotazioni getInstance(){
-        if(instance == null){
-            instance = new RegistroPrenotazioni();
-            
-            
-        }
-        return instance;
-
-    }*/
 
     
 

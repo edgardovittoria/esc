@@ -50,7 +50,7 @@ public class AppuntamentoDTO {
         setDataAppuntamento(appuntamento.getDataAppuntamento());
         setOraInizioAppuntamento(appuntamento.getOraInizioAppuntamento());
         setOraFineAppuntamento(appuntamento.getOraFineAppuntamento());
-        setIdImpianto(appuntamento.getIdImpiantoAppuntamento());
+        setIdImpianto(appuntamento.getIdImpiantoPrenotato());
     }
     
 }

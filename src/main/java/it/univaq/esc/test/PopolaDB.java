@@ -2,7 +2,6 @@ package it.univaq.esc.test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Calendario;
-import it.univaq.esc.model.IPrenotabile;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.Pavimentazione;
@@ -160,47 +158,39 @@ public class PopolaDB {
         calendarioRepository.save(calendarioImpianto3);*/
 
         //prenotazione dell'impianto1 nella stessa data scelta dallo sportivo che sta effettuando la prenotazione
-        Calendario calendarioPrenotazione = new Calendario();        
-        IPrenotabile prenotazioneSpecs = new PrenotazioneImpiantoSpecs(new PrenotazioneSpecs());
+               
+        PrenotazioneSpecs prenotazioneSpecs = new PrenotazioneImpiantoSpecs();
         Prenotazione prenotazione1 = new Prenotazione(0, prenotazioneSpecs);
         prenotazione1.setSportivoPrenotante(sportivo1);
-        prenotazione1.aggiungiPartecipante(sportivo1);
-        List<Impianto> impiantiPrenotati1 = new ArrayList<Impianto>();
-        impiantiPrenotati1.add(impianto1);
-        HashMap<String, Object> mappaValori1 = new HashMap<String, Object>();
-        mappaValori1.put("impianti", impiantiPrenotati1);
-        mappaValori1.put("sport", tennis);
-        prenotazione1.getPrenotazioneSpecs().impostaValoriSpecifichePrenotazione(mappaValori1);
-        prenotazione1.setCalendario(calendarioPrenotazione);
-        prenotazione1.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2021, 5, 26, 10, 30), LocalDateTime.of(2021, 5, 26, 11, 30), prenotazione1, impianto1);
-        prenotazione1.setConfermata();
-        prenotazione1.aggiungiPartecipante(sportivo2);
-        prenotazione1.setSportivoPrenotante(sportivo2);
+        prenotazione1.aggiungiPartecipanteAPrenotazioneSpecs(sportivo1, prenotazioneSpecs);
+        
+        prenotazione1.setSportAssociato(tennis);
+        prenotazione1.setImpiantoSpecifica(impianto1, prenotazioneSpecs);
+       
+       
+        prenotazione1.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2021, 5, 26, 10, 30), LocalDateTime.of(2021, 5, 26, 11, 30), prenotazioneSpecs);
+        prenotazione1.aggiungiPartecipanteAPrenotazioneSpecs(sportivo2, prenotazioneSpecs);
+        
 
         //Prenotazione dell'impianto3 in una data diversa dalla data scelta dallo sportivo che sta effettuando la prenotazione;
-        Calendario calendarioPrenotazione2 = new Calendario();
-        IPrenotabile prenotazioneSpecs2 = new PrenotazioneImpiantoSpecs(new PrenotazioneSpecs());
+        
+        PrenotazioneSpecs prenotazioneSpecs2 = new PrenotazioneImpiantoSpecs();
         Prenotazione prenotazione2 = new Prenotazione(1, prenotazioneSpecs2);
         prenotazione2.setSportivoPrenotante(sportivo2);
-        prenotazione2.aggiungiPartecipante(sportivo2);
-        prenotazione2.setCalendario(calendarioPrenotazione2);
-        prenotazione2.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2021, 5, 21, 17, 00), LocalDateTime.of(2021, 5, 21, 19,00), prenotazione2, impianto3);
-        List<Impianto> impiantiPrenotati2 = new ArrayList<Impianto>();
-        impiantiPrenotati2.add(impianto3);
-        HashMap<String, Object> mappaValori2 = new HashMap<String, Object>();
-        mappaValori2.put("impianti", impiantiPrenotati2);
-        mappaValori2.put("sport", tennis);
-        prenotazione2.getPrenotazioneSpecs().impostaValoriSpecifichePrenotazione(mappaValori2);
-        prenotazione2.setConfermata();
-        prenotazione2.aggiungiPartecipante(sportivo3);
-        prenotazione2.setSportivoPrenotante(sportivo3);
-
+        prenotazione2.aggiungiPartecipanteAPrenotazioneSpecs(sportivo2, prenotazioneSpecs2);
+       
+        prenotazione2.getCalendarioPrenotazione().aggiungiAppuntamento(LocalDateTime.of(2021, 5, 21, 17, 00), LocalDateTime.of(2021, 5, 21, 19,00), prenotazioneSpecs2);
+        
+        prenotazione2.setSportAssociato(tennis);
+        prenotazione2.setImpiantoSpecifica(impianto3, prenotazioneSpecs2);
+        prenotazione2.aggiungiPartecipanteAPrenotazioneSpecs(sportivo3, prenotazioneSpecs2);
+        
         /*calendarioRepository.save(calendarioPrenotazione);
         calendarioRepository.save(calendarioPrenotazione2);*/
         prenotazioneRepository.save(prenotazione1);
         prenotazioneRepository.save(prenotazione2);
-        appuntamentoRepository.saveAll(prenotazione1.getCalendarioPrenotazione().getListaAppuntamenti());
-        appuntamentoRepository.saveAll(prenotazione2.getCalendarioPrenotazione().getListaAppuntamenti());
+        appuntamentoRepository.saveAll(prenotazione1.getListaAppuntamenti());
+        appuntamentoRepository.saveAll(prenotazione2.getListaAppuntamenti());
         
         
     }

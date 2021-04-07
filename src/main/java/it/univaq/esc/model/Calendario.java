@@ -52,14 +52,12 @@ public class Calendario {
     }
     }
 
-    public void aggiungiAppuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento, Prenotazione prenotazioneRelativaAppuntamento, Impianto impiantoRelativoAppuntamento){
-        System.out.println("DATA_INIZIO : "+dataOraInizioAppuntamento);
+    public void aggiungiAppuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento, PrenotazioneSpecs prenotazioneSpecs){
         
         Appuntamento appuntamentoDaAggiungere = new Appuntamento();
         appuntamentoDaAggiungere.setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
         appuntamentoDaAggiungere.setDataOraFineAppuntamento(dataOraFineAppuntamento);
-        appuntamentoDaAggiungere.setImpiantoAppuntamento(impiantoRelativoAppuntamento);
-        appuntamentoDaAggiungere.setPrenotazioneAppuntamento(prenotazioneRelativaAppuntamento);
+        appuntamentoDaAggiungere.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
         if(!this.sovrapponeA(appuntamentoDaAggiungere)){
             this.getListaAppuntamenti().add(appuntamentoDaAggiungere);
         }

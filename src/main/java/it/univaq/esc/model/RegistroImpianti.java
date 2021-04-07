@@ -33,7 +33,7 @@ public class RegistroImpianti {
     public void popola(){
         this.getListaImpiantiPolisportiva().addAll(impiantoRepository.findAll());
         for(Impianto impianto : this.getListaImpiantiPolisportiva()){
-            impianto.getCalendarioAppuntamentiImpianto().setListaAppuntamenti(appuntamentoRepository.findByImpiantoAppuntamento_IdImpianto(impianto.getIdImpianto()));
+            impianto.getCalendarioAppuntamentiImpianto().setListaAppuntamenti(appuntamentoRepository.findByPrenotazioneSpecsAppuntamento_ImpiantoPrenotato(impianto));
         }
         
     }
@@ -42,6 +42,7 @@ public class RegistroImpianti {
 
     public void aggiungiImpianto(Impianto impiantoDaAggiungere) {
         getListaImpiantiPolisportiva().add(impiantoDaAggiungere);
+        impiantoRepository.save(impiantoDaAggiungere);
     }
 
     public List<Impianto> getListaImpiantiPolisportiva() {
@@ -50,6 +51,7 @@ public class RegistroImpianti {
 
     public void rimuoviImpianto(Impianto impiantoDaRimuovere){
         getListaImpiantiPolisportiva().remove(impiantoDaRimuovere);
+        impiantoRepository.delete(impiantoDaRimuovere);
     }
 
     public Impianto getImpiantoByID(Integer idImpianto){

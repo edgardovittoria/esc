@@ -30,12 +30,6 @@ public class RegistroSportivi {
         this.getListaSportivi().addAll(sportivoRepository.findAll());
     }
 
-    /*public static RegistroSportivi getInstance() {
-        if(instance == null) {
-            instance = new RegistroSportivi();
-        }
-        return instance;
-    }*/
 
     public List<Sportivo> getListaSportivi() {
         return this.registroSportivi;

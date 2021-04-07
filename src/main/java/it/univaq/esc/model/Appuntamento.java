@@ -30,14 +30,10 @@ public class Appuntamento {
     private LocalDateTime dataOraFineAppuntamento;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "Prenotazione_ID", nullable = false)
+    @JoinColumn(name = "PrenotazioneSpecs_ID", nullable = false)
     @JsonIdentityReference(alwaysAsId = true)
-    private Prenotazione prenotazioneAppuntamento;
+    private PrenotazioneSpecs prenotazioneSpecsAppuntamento;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "Impianto_ID", nullable = false)
-    @JsonIdentityReference(alwaysAsId = true)
-    private Impianto impiantoAppuntamento;
 
     public Appuntamento(){}
 
@@ -89,9 +85,9 @@ public class Appuntamento {
         return this.dataOraFineAppuntamento.toLocalTime();
     }
 
-    public int getIdImpiantoAppuntamento(){
-        return this.getImpiantoAppuntamento().getIdImpianto();
-    }
+   public Integer getIdImpiantoPrenotato(){
+       return this.getPrenotazioneSpecsAppuntamento().getIdImpiantoPrenotato();
+   }
 
 
     /**
@@ -126,49 +122,26 @@ public class Appuntamento {
         return false;
     } 
 
-
-    
-
-
    
 
     /**
      * @return Prenotazione return the prenotazioneAppuntamento
      */
-    public Prenotazione getPrenotazioneAppuntamento() {
-        return prenotazioneAppuntamento;
+    public PrenotazioneSpecs getPrenotazioneSpecsAppuntamento() {
+        return prenotazioneSpecsAppuntamento;
     }
 
     /**
      * @param prenotazioneAppuntamento the prenotazioneAppuntamento to set
      */
-    public void setPrenotazioneAppuntamento(Prenotazione prenotazioneAppuntamento) {
-        this.prenotazioneAppuntamento = prenotazioneAppuntamento;
+    public void setPrenotazioneSpecsAppuntamento(PrenotazioneSpecs prenotazioneSpecsAppuntamento) {
+        this.prenotazioneSpecsAppuntamento = prenotazioneSpecsAppuntamento;
     }
 
-    /**
-     * @return Impianto return the impiantoAppuntamento
-     */
-    public Impianto getImpiantoAppuntamento() {
-        return impiantoAppuntamento;
+    public Integer getIdAppuntamento(){
+        return this.idAppuntamento;
     }
-
-    /**
-     * @param impiantoAppuntamento the impiantoAppuntamento to set
-     */
-    public void setImpiantoAppuntamento(Impianto impiantoAppuntamento) {
-        this.impiantoAppuntamento = impiantoAppuntamento;
-    }
-
     
-
-
-    /**
-     * @return int return the idAppuntamento
-     */
-    public int getIdAppuntamento() {
-        return idAppuntamento;
-    }
 
 
 }

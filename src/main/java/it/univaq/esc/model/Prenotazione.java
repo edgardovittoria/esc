@@ -3,6 +3,7 @@ package it.univaq.esc.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,38 +30,32 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Prenotazione {
     @Id
     private int idPrenotazione;
-    @Column
-    private boolean confermata = false;
-    @Column
-    private float costo;
+    
 
     @ManyToOne()
     @JoinColumn()
     private Sportivo sportivoPrenotante;
   
+    @Column
+    private String tipoPrenotazione;
 
-    @ManyToMany()
+    @ManyToOne()
     @JoinColumn()
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Sportivo> partecipanti = new ArrayList<Sportivo>();
-
-    @OneToMany
-    @JoinColumn
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();    
+    private Sport sportAssociato;
     
-    @OneToOne(targetEntity = Prenotabile.class, cascade = CascadeType.ALL)
-    private IPrenotabile prenotazioneSpecs;
+    
+    @OneToOne(targetEntity = PrenotazioneSpecs.class, cascade = CascadeType.ALL)
+    private List<PrenotazioneSpecs> listaSpecifichePrenotazione = new ArrayList<PrenotazioneSpecs>();
 
     @Transient
     private Calendario calendarioPrenotazione = new Calendario();
 
     public Prenotazione(){}
 
-    public Prenotazione(int lastIdPrenotazione, IPrenotabile prenotazioneSpecs) {
+    public Prenotazione(int lastIdPrenotazione, PrenotazioneSpecs prenotazioneSpecs) {
         setIdPrenotazione(lastIdPrenotazione);
         //aggiungiQuotaPartecipazione(sportivoPrenotante, 0, false);
-        this.prenotazioneSpecs = prenotazioneSpecs;
+        this.getListaSpecifichePrenotazione().add(prenotazioneSpecs);
     }
 
     public int getIdPrenotazione(){
@@ -71,25 +66,7 @@ public class Prenotazione {
         this.idPrenotazione = lastIdPrenotazione + 1;
     }
 
-    public void setConfermata() {
-        this.confermata = true;
-    }
-
-    public void setNonConfermata() {
-        this.confermata = false;
-    }
-
-    public boolean isConfermata() {
-        return this.confermata;
-    }
-
-    public float getCosto() {
-        return costo;
-    }
-
-    public void setCosto(float costo) {
-        this.costo = costo;
-    }
+    
 
     public void setSportivoPrenotante(Sportivo sportivoPrenotante) {
         this.sportivoPrenotante = sportivoPrenotante;
@@ -99,21 +76,28 @@ public class Prenotazione {
         return this.sportivoPrenotante;
     }
 
-    public List<Sportivo> getListaPartecipanti() {
-        return this.partecipanti;
+    
+    public void setSportAssociato(Sport sport){
+        this.sportAssociato = sport;
     }
 
-    public void aggiungiPartecipante(Sportivo sportivoPartecipante) {
-        getListaPartecipanti().add(sportivoPartecipante);
+    public Sport getSportAssociato(){
+        return this.sportAssociato;
     }
-
-    public void aggiungiListaPartecipanti(List<Sportivo> listaPartecipanti){
-        this.getListaPartecipanti().addAll(listaPartecipanti);
-    }
+    
 
     public void setCalendario(Calendario datePrenotate){
         this.calendarioPrenotazione = datePrenotate;
     }
+
+    public void setCalendarioSpecifica(Calendario calendario, PrenotazioneSpecs specifica){
+        specifica.impostaCalendario(calendario);
+    }
+
+    public void setImpiantoSpecifica(Impianto impianto, PrenotazioneSpecs specifica){
+        specifica.setImpiantoPrenotato(impianto);
+    }
+
 
     public Calendario getCalendarioPrenotazione() {
         return this.calendarioPrenotazione;
@@ -123,32 +107,51 @@ public class Prenotazione {
         return this.getCalendarioPrenotazione().getListaAppuntamenti();
     }
 
-    public void aggiungiQuotaPartecipazione(Sportivo sportivoDaAssociare, float costo, boolean isPagata){
-        QuotaPartecipazione quotaDaAggiungere = new QuotaPartecipazione(isPagata, costo);
-        quotaDaAggiungere.setSportivoAssociato(sportivoDaAssociare);
-        getListaQuotePartecipazione().add(quotaDaAggiungere);
-    }
-
-    public List<QuotaPartecipazione> getListaQuotePartecipazione(){
-        return this.quoteDiPartecipazione;
-    }
-
-    public IPrenotabile getPrenotazioneSpecs() {
-        return prenotazioneSpecs;
-    }
-
-    public void setPrenotazioneSpecs(IPrenotabile prenotazioneSpecs) {
-        this.prenotazioneSpecs = prenotazioneSpecs;
-    }
-
-    public void impostaValoriPrenotazioneSpecs(HashMap<String, Object> mappaValori){
-        this.getPrenotazioneSpecs().impostaValoriSpecifichePrenotazione(mappaValori);
-    }
-
-    public Object getSingolaSpecifica(String etichettaSpecifica){
-        return this.getPrenotazioneSpecs().getValoriSpecifichePrenotazione().get(etichettaSpecifica);
-    }
     
+
+    public List<PrenotazioneSpecs> getListaSpecifichePrenotazione() {
+        return listaSpecifichePrenotazione;
+    }
+
+    public void setListaSpecifichePrenotazione(List<PrenotazioneSpecs> listaSpecifichePrenotazione) {
+        this.listaSpecifichePrenotazione = listaSpecifichePrenotazione;
+    }
+
+    public void impostaValoriListaSpecifichePrenotazione(List<Map<String, Object>> listaMappeValori){
+        for(PrenotazioneSpecs specifica : this.getListaSpecifichePrenotazione()){
+            specifica.impostaValoriSpecificheExtraPrenotazione(listaMappeValori.get(this.getListaSpecifichePrenotazione().indexOf(specifica)));
+        }
+    }
+
+    public void impostaValoriSpecificheExtraSingolaPrenotazioneSpecs(Map<String, Object> mappaValori, PrenotazioneSpecs specifica){
+        specifica.impostaValoriSpecificheExtraPrenotazione(mappaValori);
+    }
+
+    public Object getSingolaSpecificaExtra(String etichettaSpecifica, PrenotazioneSpecs specifica){
+        return specifica.getValoriSpecificheExtraPrenotazione().get(etichettaSpecifica);
+    }
+
+    public Map<String, Object> getSpecificheExtraSingolaPrenotazioneSpecs(PrenotazioneSpecs specifica){
+        return specifica.getValoriSpecificheExtraPrenotazione();
+    }
+
+    public void setTipoPrenotazione(String tipoPrenotazione){
+        this.tipoPrenotazione = tipoPrenotazione;
+    }
+
+    public String getTipoPrenotazione(){
+        return this.tipoPrenotazione;
+    }
+
+    public void impostaCalendarioPrenotazioneDaSpecifiche(){
+        for(PrenotazioneSpecs specifica : this.getListaSpecifichePrenotazione()){
+            this.calendarioPrenotazione.unisciCalendario(specifica.getCalendarioPrenotazioneSpecs());
+        }
+    }
+
+    public void aggiungiPartecipanteAPrenotazioneSpecs(Sportivo partecipante, PrenotazioneSpecs specificaPrenotazione){
+        specificaPrenotazione.aggiungiPartecipante(partecipante);
+    }
 
     
 }

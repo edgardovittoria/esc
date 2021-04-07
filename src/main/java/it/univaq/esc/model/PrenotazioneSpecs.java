@@ -1,108 +1,128 @@
 package it.univaq.esc.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-import javax.persistence.DiscriminatorValue;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-@Entity(name = "prenotazioneSpecs")
-@DiscriminatorValue("prenotazioneSpecsBase")
-public class PrenotazioneSpecs extends Prenotabile {
-  
-    
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class PrenotazioneSpecs {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column
+    private boolean confermata = false;
+    @Column
+    private float costo;
+
     @ManyToOne()
     @JoinColumn()
     private Manutentore responsabilePrenotazione;
-    @ManyToOne()
-    @JoinColumn()
-    private Sport sportAssociato;
+    
+
     @ManyToMany()
-    @JoinTable(name = "impianti_prenotati", joinColumns = {
-            @JoinColumn(name = "id_specifica_prenotazione") }, inverseJoinColumns = {
-                    @JoinColumn(name = "id_impianto_prenotato") })
+    @JoinColumn()
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Impianto> impiantiPrenotati = new ArrayList<Impianto>();
+    private List<Sportivo> partecipanti = new ArrayList<Sportivo>();
 
-    public PrenotazioneSpecs(){}
+    @Transient
+    private Calendario calendarioPrenotazioneSpecs = new Calendario();
+
+    @OneToMany
+    @JoinColumn
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();    
+
+    @ManyToOne
+    @JoinColumn
+    private Impianto impiantoPrenotato;
 
 
-    public Manutentore getManutentore() {
-        return this.responsabilePrenotazione;
-    }
-
-    public void associaManutentore(Manutentore manutentoreDaAssociare) {
-        this.responsabilePrenotazione = manutentoreDaAssociare;
-    }
-
-    private void setSport(Sport sportScelto) {
-        this.sportAssociato = sportScelto;
-    }
-
-    public Sport getSportAssociato() {
-        return this.sportAssociato;
-    }
-
-    public List<Impianto> getImpiantiPrenotati() {
-        return impiantiPrenotati;
-    }
-
-    public void aggiungiImpiantoPrenotato(Impianto impianto) {
-        this.impiantiPrenotati.add(impianto);
-    }
-
-    public void aggiungiListaImpiantiPrenotati(List<Impianto> listaImpianti) {
-        this.impiantiPrenotati.addAll(listaImpianti);
-    }
 
     
 
-    @Override
-    public void impostaValoriSpecifichePrenotazione(HashMap<String, Object> mappaValori) {
-        
-        for(String chiave : mappaValori.keySet()){
-
-
-            switch (chiave) {
-                case "manutentore":
-                    this.associaManutentore((Manutentore)mappaValori.get(chiave));
-                    break;
-                case "sport":
-                
-                    this.setSport((Sport)mappaValori.get(chiave));
-                    break;
-                case "impianti":
-                
-                    this.aggiungiListaImpiantiPrenotati((List<Impianto>)mappaValori.get(chiave));
-                default:
-                    break;
-            }
-        }
-
+    public void setConfermata() {
+        this.confermata = true;
     }
 
-    @Override
-    public HashMap<String, Object> getValoriSpecifichePrenotazione() {
-        HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-        mappaValori.put("manutentore", this.getManutentore());
-        mappaValori.put("sport", this.getSportAssociato());
-        mappaValori.put("impianti", this.getImpiantiPrenotati());
-
-        return mappaValori;
+    public void setNonConfermata() {
+        this.confermata = false;
     }
 
-
-    @Override
-    public String getTipoSpecifica() {
-        // TODO Auto-generated method stub
-        return null;
+    public boolean isConfermata() {
+        return this.confermata;
     }
-}
+
+    public float getCosto() {
+        return costo;
+    }
+
+    public void setCosto(float costo) {
+        this.costo = costo;
+    }
+
+    public void setImpiantoPrenotato(Impianto impiantoPrenotato){
+        this.impiantoPrenotato = impiantoPrenotato;
+    }
+
+    public Impianto getImpiantoPrenotato(){
+        return this.impiantoPrenotato;
+    }
+
+    public Integer getIdImpiantoPrenotato(){
+        return this.getImpiantoPrenotato().getIdImpianto();
+    }
+
+    public List<Sportivo> getListaPartecipanti() {
+        return this.partecipanti;
+    }
+
+    public void aggiungiPartecipante(Sportivo sportivoPartecipante) {
+        getListaPartecipanti().add(sportivoPartecipante);
+    }
+
+    public void aggiungiQuotaPartecipazione(Sportivo sportivoDaAssociare, float costo, boolean isPagata){
+        QuotaPartecipazione quotaDaAggiungere = new QuotaPartecipazione(isPagata, costo);
+        quotaDaAggiungere.setSportivoAssociato(sportivoDaAssociare);
+        getListaQuotePartecipazione().add(quotaDaAggiungere);
+    }
+
+    public List<QuotaPartecipazione> getListaQuotePartecipazione(){
+        return this.quoteDiPartecipazione;
+    }
+
+    public void impostaCalendario(Calendario calendarioDaImpostare){
+        this.calendarioPrenotazioneSpecs = calendarioDaImpostare;
+    }
+
+    public Calendario getCalendarioPrenotazioneSpecs(){
+        return this.calendarioPrenotazioneSpecs;
+    }
+
+    public List<Appuntamento> getListaAppuntamentiPrenotazioneSpecs(){
+        return this.getCalendarioPrenotazioneSpecs().getListaAppuntamenti();
+    }
+
+    public abstract void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori);
+    
+    public abstract Map<String, Object> getValoriSpecificheExtraPrenotazione();
+
+    }
