@@ -59,6 +59,7 @@ public class EffettuaPrenotazioneHandler {
         setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
         getPrenotazioneInAtto().setSportivoPrenotante(sportivo);
         getPrenotazioneInAtto().aggiungiPartecipanteAPrenotazioneSpecs(sportivo, prenotazioneSpecs);
+        this.getPrenotazioneInAtto().setTipoPrenotazione(tipoPrenotazione);
     }
 
     public List<Sport> getSportPraticabili() {

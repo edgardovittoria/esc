@@ -36,7 +36,10 @@ public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
 
     @Override
     public void impostaValoriSpecificheExtraPrenotazioneDTO(Map<String, Object> mappaValori) {
-        setPostiLiberi((int)mappaValori.get("postiLiberi"));
+        
+        // I posti liberi sono da eliminare perché si possono calcolare in automatico
+        setPostiLiberi(12);
+        
         for(Sportivo invitato : (List<Sportivo>) mappaValori.get("invitati")){
             SportivoDTO invitatoDTO = new SportivoDTO();
             invitatoDTO.impostaValoriDTO(invitato);

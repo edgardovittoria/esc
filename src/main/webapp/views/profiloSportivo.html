@@ -64,7 +64,7 @@ and open the template in the editor.
         </tr>
         <tr th:each=" prenotazione: ${prenotazioniEffettuate}">
           <th
-            th:text="${prenotazione.getSport().getNome()}"
+            th:text="${prenotazione.getSportAssociato().getNome()}"
           >
             Sport Prenotato
           </th>

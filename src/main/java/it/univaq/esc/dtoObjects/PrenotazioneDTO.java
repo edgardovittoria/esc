@@ -3,10 +3,11 @@ package it.univaq.esc.dtoObjects;
 import java.util.ArrayList;
 import java.util.List;
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
+import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.Sport;
-import net.bytebuddy.build.HashCodeAndEqualsPlugin.ValueHandling.Sort;
+
 
 
 public class PrenotazioneDTO {
@@ -25,6 +26,13 @@ public class PrenotazioneDTO {
     }
 
 
+    public List<ImpiantoDTO> getImpiantiPrenotati(){
+        List<ImpiantoDTO> impiantiPrenotati = new ArrayList<ImpiantoDTO>();
+        for (PrenotazioneSpecsDTO specifica : this.getListaSpecifichePrenotazione()){
+            impiantiPrenotati.add(specifica.getImpiantoPrenotato());
+        }
+        return impiantiPrenotati;
+    }
     
 
     /**
@@ -66,6 +74,9 @@ public class PrenotazioneDTO {
 
 
 
+    public void aggiungiAppuntamentoDTO(AppuntamentoDTO appuntamentoDTO){
+        this.getAppuntamenti().add(appuntamentoDTO);
+    }
 
     public List<PrenotazioneSpecsDTO> getSpecifichePrenotazione() {
         return this.listaSpecifichePrenotazione;
@@ -89,8 +100,13 @@ public class PrenotazioneDTO {
             specificaDTO.impostaValoriDTO(specifica);
             this.aggiungiSpecificaPrenotazione(specificaDTO);
         }
-        this.setSportAssociato(new SportDTO());;
+        this.setSportAssociato(new SportDTO());
         this.getSportAssociato().impostaValoriDTO((Sport) prenotazione.getSportAssociato());
+        for(Appuntamento appuntamento : prenotazione.getListaAppuntamenti()){
+            AppuntamentoDTO appDTO = new AppuntamentoDTO();
+            appDTO.impostaValoriDTO(appuntamento);
+            this.aggiungiAppuntamentoDTO(appDTO);
+        }
         
     }
 
