@@ -1,11 +1,12 @@
 package it.univaq.esc.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -35,13 +36,11 @@ public class Prenotazione {
     @ManyToOne()
     @JoinColumn()
     private Sportivo sportivoPrenotante;
-  
-    @Column
-    private String tipoPrenotazione;
 
-    @ManyToOne()
-    @JoinColumn()
-    private Sport sportAssociato;
+    @Column
+    private LocalDateTime oraDataPrenotazione;
+  
+    
     
     
     @OneToMany(mappedBy = "prenotazioneAssociata")
@@ -76,17 +75,9 @@ public class Prenotazione {
     }
 
     
-    public void setSportAssociato(Sport sport){
-        this.sportAssociato = sport;
-    }
-
-    public Sport getSportAssociato(){
-        return this.sportAssociato;
-    }
     
-    public void setImpiantoSpecifica(Impianto impianto, PrenotazioneSpecs specifica){
-        specifica.setImpiantoPrenotato(impianto);
-    }
+    
+    
 
 
     public List<PrenotazioneSpecs> getListaSpecifichePrenotazione() {
@@ -115,18 +106,7 @@ public class Prenotazione {
         return specifica.getValoriSpecificheExtraPrenotazione();
     }
 
-    public void setTipoPrenotazione(String tipoPrenotazione){
-        this.tipoPrenotazione = tipoPrenotazione;
-    }
 
-    public String getTipoPrenotazione(){
-        return this.tipoPrenotazione;
-    }
-
-
-    public void aggiungiPartecipanteAPrenotazioneSpecs(Sportivo partecipante, PrenotazioneSpecs specificaPrenotazione){
-        specificaPrenotazione.aggiungiPartecipante(partecipante);
-    }
 
     
 }

@@ -59,8 +59,11 @@ public class EffettuaPrenotazioneHandler {
         setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
         prenotazioneSpecs.setPrenotazioneAssociata(getPrenotazioneInAtto());
         getPrenotazioneInAtto().setSportivoPrenotante(sportivo);
-        getPrenotazioneInAtto().aggiungiPartecipanteAPrenotazioneSpecs(sportivo, prenotazioneSpecs);
-        this.getPrenotazioneInAtto().setTipoPrenotazione(tipoPrenotazione);
+        Appuntamento appuntamento = new Appuntamento();
+        appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
+        appuntamento.aggiungiPartecipante(sportivo);
+       // getPrenotazioneInAtto().aggiungiPartecipanteAPrenotazioneSpecs(sportivo, prenotazioneSpecs);
+        
     }
 
     public List<Sport> getSportPraticabili() {
@@ -118,7 +121,7 @@ public class EffettuaPrenotazioneHandler {
     }
 
     public List<Sportivo> getListaSportiviInvitabili(){
-        Sport sportPrenotazioneInAtto = this.getPrenotazioneInAtto().getSportAssociato();
+        Sport sportPrenotazioneInAtto = this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0).getSportAssociato();
         List<Sportivo> listaSportiviInvitabili = new ArrayList<Sportivo>();
         for(Sportivo sportivo : getSportivi()){
             if(sportivo.getSportPraticatiDalloSportivo().contains(sportPrenotazioneInAtto)){
@@ -160,11 +163,11 @@ public class EffettuaPrenotazioneHandler {
         HashMap<String, Object> mappaValori = new HashMap<String, Object>();
         for(Sport sport : this.getSportPraticabili()){
             if(sport.getNome().equals(formPrenotaImpianto.getSportSelezionato())){
-                this.prenotazioneInAtto.setSportAssociato(sport);
+                this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).setSportAssociato(sport);
             }
         }
         
-        this.prenotazioneInAtto.setImpiantoSpecifica(this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()), this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+        
 
         // impianti.add(this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
         // mappaValori.put("impianto", impianti);
@@ -176,8 +179,7 @@ public class EffettuaPrenotazioneHandler {
         // calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine , this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
         //this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
 
-        Appuntamento appuntamento = new Appuntamento(dataInizio, dataFine);
-        appuntamento.setPrenotazioneSpecsAppuntamento(this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+        Appuntamento appuntamento = new Appuntamento(dataInizio, dataFine, this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0));
 
         List<Sportivo> sportivi = new ArrayList<Sportivo>();
         for(String email : formPrenotaImpianto.getSportiviInvitati()){
@@ -185,7 +187,7 @@ public class EffettuaPrenotazioneHandler {
         }
 
         mappaValori.put("invitati", sportivi);
-
+        mappaValori.put("impianto", this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
 
         this.getPrenotazioneInAtto().impostaValoriSpecificheExtraSingolaPrenotazioneSpecs(mappaValori, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
 
@@ -195,7 +197,7 @@ public class EffettuaPrenotazioneHandler {
 
         this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto(), appuntamenti);
         
-        this.registroImpianti.aggiornaCalendarioImpianto(this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0).getImpiantoPrenotato(), calendarioDaUnire);
+        this.registroImpianti.aggiornaCalendarioImpianto((Impianto)this.getPrenotazioneInAtto().getSingolaSpecificaExtra("impianto", this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)), calendarioDaUnire);
 
         
         redirectAttributes.addFlashAttribute("message", "La prenotazione è stata registrata con successo!");

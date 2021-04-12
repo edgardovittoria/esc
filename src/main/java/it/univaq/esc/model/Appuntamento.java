@@ -3,6 +3,8 @@ package it.univaq.esc.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,10 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 
 @Entity
@@ -35,14 +41,31 @@ public class Appuntamento {
     @JsonIdentityReference(alwaysAsId = true)
     private PrenotazioneSpecs prenotazioneSpecsAppuntamento;
 
+    @ManyToMany()
+    @JoinColumn()
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Sportivo> partecipanti = new ArrayList<Sportivo>();
+
 
     public Appuntamento(){}
 
-    public Appuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento){
+    public Appuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento, PrenotazioneSpecs specificaPrenotazione){
         setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
         setDataOraFineAppuntamento(dataOraFineAppuntamento);
+        setPrenotazioneSpecsAppuntamento(specificaPrenotazione);
     }
 
+    public Impianto getImpiantoPrenotato(){
+        return (Impianto)this.getPrenotazioneSpecsAppuntamento().getValoriSpecificheExtraPrenotazione().get("impianto");
+    }
+
+    public List<Sportivo> getListaPartecipanti() {
+        return this.partecipanti;
+    }
+
+    public void aggiungiPartecipante(Sportivo sportivoPartecipante) {
+        getListaPartecipanti().add(sportivoPartecipante);
+    }
     
 
     /**
@@ -86,9 +109,7 @@ public class Appuntamento {
         return this.dataOraFineAppuntamento.toLocalTime();
     }
 
-   public Integer getIdImpiantoPrenotato(){
-       return this.getPrenotazioneSpecsAppuntamento().getIdImpiantoPrenotato();
-   }
+   
 
 
     /**

@@ -33,25 +33,17 @@ public abstract class PrenotazioneSpecs {
     @Column
     private float costo;
 
+    
+    
+    @Column
+    private String tipoPrenotazione;
+
     @ManyToOne()
     @JoinColumn()
-    private Manutentore responsabilePrenotazione;
-    
-
-    @ManyToMany()
-    @JoinColumn()
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Sportivo> partecipanti = new ArrayList<Sportivo>();
+    private Sport sportAssociato;
 
 
-    @OneToMany
-    @JoinColumn
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();    
-
-    @ManyToOne
-    @JoinColumn
-    private Impianto impiantoPrenotato;
+   
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "prenotazione_ID", nullable = false)
@@ -81,36 +73,14 @@ public abstract class PrenotazioneSpecs {
         this.costo = costo;
     }
 
-    public void setImpiantoPrenotato(Impianto impiantoPrenotato){
-        this.impiantoPrenotato = impiantoPrenotato;
+    public void setSportAssociato(Sport sport){
+        this.sportAssociato = sport;
     }
 
-    public Impianto getImpiantoPrenotato(){
-        return this.impiantoPrenotato;
+    public Sport getSportAssociato(){
+        return this.sportAssociato;
     }
 
-    public Integer getIdImpiantoPrenotato(){
-        return this.getImpiantoPrenotato().getIdImpianto();
-    }
-
-    public List<Sportivo> getListaPartecipanti() {
-        return this.partecipanti;
-    }
-
-    public void aggiungiPartecipante(Sportivo sportivoPartecipante) {
-        getListaPartecipanti().add(sportivoPartecipante);
-    }
-
-    public void aggiungiQuotaPartecipazione(Sportivo sportivoDaAssociare, float costo, boolean isPagata){
-        QuotaPartecipazione quotaDaAggiungere = new QuotaPartecipazione(isPagata, costo);
-        quotaDaAggiungere.setSportivoAssociato(sportivoDaAssociare);
-        getListaQuotePartecipazione().add(quotaDaAggiungere);
-    }
-
-    public List<QuotaPartecipazione> getListaQuotePartecipazione(){
-        return this.quoteDiPartecipazione;
-
-    }
 
     public abstract void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori);
     
@@ -123,5 +93,7 @@ public abstract class PrenotazioneSpecs {
     public void setPrenotazioneAssociata(Prenotazione prenotazioneAssociata) {
         this.prenotazioneAssociata = prenotazioneAssociata;
     }
+
+    public abstract String getTipoPrenotazione();
 
     }

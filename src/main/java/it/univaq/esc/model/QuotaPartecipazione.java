@@ -5,7 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import javax.persistence.Table;
 
 @Entity
@@ -19,8 +21,13 @@ public class QuotaPartecipazione {
     private boolean pagata;
     @Column
     private float costo;
-    @OneToOne()
+    @ManyToOne()
+    @JoinColumn(name = "sportivo_email",nullable = false)
     private Sportivo sportivoAssociato;
+
+    @ManyToOne
+    @JoinColumn(name = "prenotazioneSpecs_ID", nullable = false)
+    private PrenotazioneSpecs specificaPrenotazioneAssociata;
 
     public QuotaPartecipazione(){}
 
@@ -47,6 +54,14 @@ public class QuotaPartecipazione {
 
     public float getCosto() {
         return costo;
+    }
+
+    public void setSpecificaPrenotazioneAssociata(PrenotazioneSpecs specifica){
+        this.specificaPrenotazioneAssociata = specifica;
+    }
+
+    public PrenotazioneSpecs getSpecificaPrenotazioneAssociata(){
+        return this.specificaPrenotazioneAssociata;
     }
 
     public void setCosto(float costo) {

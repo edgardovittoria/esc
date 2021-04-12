@@ -33,7 +33,13 @@ public class RegistroImpianti {
     public void popola(){
         this.getListaImpiantiPolisportiva().addAll(impiantoRepository.findAll());
         for(Impianto impianto : this.getListaImpiantiPolisportiva()){
-            impianto.getCalendarioAppuntamentiImpianto().setListaAppuntamenti(appuntamentoRepository.findByPrenotazioneSpecsAppuntamento_ImpiantoPrenotato(impianto));
+            List<Appuntamento> appuntamentiImpianto = new ArrayList<Appuntamento>();
+            for(Appuntamento appuntamento : appuntamentoRepository.findAll()){
+                if(impianto.getIdImpianto() == appuntamento.getImpiantoPrenotato().getIdImpianto()){
+                    appuntamentiImpianto.add(appuntamento);
+                }
+            }
+            impianto.getCalendarioAppuntamentiImpianto().setListaAppuntamenti(appuntamentiImpianto);
         }
         
     }

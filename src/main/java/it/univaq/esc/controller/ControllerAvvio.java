@@ -95,7 +95,7 @@ public class ControllerAvvio {
         dettagliProfiloSportivo.put("sportivo", sportivoDTO);
         List<PrenotazioneDTO> prenotazioniDTO = new ArrayList<PrenotazioneDTO>();
         for(Prenotazione prenotazione : this.effettuaPrenotazioneHandler.getPrenotazioniByEmailSportivo(email)){
-            PrenotazioneSpecsDTO specifichePrenotazione = this.effettuaPrenotazioneHandler.getSpecifichePrenotazioneDTOByTipoPrenotazione(prenotazione.getTipoPrenotazione());
+            PrenotazioneSpecsDTO specifichePrenotazione = this.effettuaPrenotazioneHandler.getSpecifichePrenotazioneDTOByTipoPrenotazione(prenotazione.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione());
             specifichePrenotazione.impostaValoriDTO(prenotazione.getListaSpecifichePrenotazione().get(0));
             specifichePrenotazione.impostaValoriSpecificheExtraPrenotazioneDTO(prenotazione.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione());
             PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO(specifichePrenotazione);

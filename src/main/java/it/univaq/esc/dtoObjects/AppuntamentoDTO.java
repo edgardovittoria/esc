@@ -2,15 +2,18 @@ package it.univaq.esc.dtoObjects;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import it.univaq.esc.model.Appuntamento;
+import it.univaq.esc.model.Sportivo;
 
 public class AppuntamentoDTO {
     
     private LocalDate dataAppuntamento;
     private LocalTime oraInizioAppuntamento;
     private LocalTime oraFineAppuntamento;
-    private int idImpianto;
+    private List<SportivoDTO> partecipanti = new ArrayList<SportivoDTO>();
 
     public AppuntamentoDTO(){}
 
@@ -38,19 +41,26 @@ public class AppuntamentoDTO {
         this.oraFineAppuntamento = oraFineAppuntamento;
     }
 
-    public int getIdImpianto() {
-        return idImpianto;
+    public List<SportivoDTO> getListaPartecipanti(){
+        return this.partecipanti;
     }
 
-    public void setIdImpianto(int idImpianto) {
-        this.idImpianto = idImpianto;
+    public void aggiungiPartecipante(SportivoDTO partecipante){
+        this.partecipanti.add(partecipante);
     }
+
+    
 
     public void impostaValoriDTO(Appuntamento appuntamento){
         setDataAppuntamento(appuntamento.getDataAppuntamento());
         setOraInizioAppuntamento(appuntamento.getOraInizioAppuntamento());
         setOraFineAppuntamento(appuntamento.getOraFineAppuntamento());
-        setIdImpianto(appuntamento.getIdImpiantoPrenotato());
+        for(Sportivo partecipante : appuntamento.getListaPartecipanti()){
+            SportivoDTO partecipanteDTO = new SportivoDTO();
+            partecipanteDTO.impostaValoriDTO(partecipante);
+            this.aggiungiPartecipante(partecipanteDTO);
+        }
+        
     }
     
 }

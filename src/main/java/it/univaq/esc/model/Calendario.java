@@ -54,10 +54,7 @@ public class Calendario {
 
     public void aggiungiAppuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento, PrenotazioneSpecs prenotazioneSpecs){
         
-        Appuntamento appuntamentoDaAggiungere = new Appuntamento();
-        appuntamentoDaAggiungere.setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
-        appuntamentoDaAggiungere.setDataOraFineAppuntamento(dataOraFineAppuntamento);
-        appuntamentoDaAggiungere.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
+        Appuntamento appuntamentoDaAggiungere = new Appuntamento(dataOraInizioAppuntamento, dataOraFineAppuntamento, prenotazioneSpecs);
         if(!this.sovrapponeA(appuntamentoDaAggiungere)){
             this.getListaAppuntamenti().add(appuntamentoDaAggiungere);
         }

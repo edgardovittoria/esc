@@ -18,12 +18,12 @@ public abstract class PrenotazioneSpecsDTO {
 
     // private Manutentore responsabilePrenotazione;
 
-    private List<SportivoDTO> partecipanti = new ArrayList<SportivoDTO>();
+    private SportDTO sportAssociato;
 
     // private List<QuotaPartecipazione> quoteDiPartecipazione = new
     // ArrayList<QuotaPartecipazione>();
-
-    private ImpiantoDTO impiantoPrenotato;
+    private String tipoSpecifica;
+    
 
     /**
      * @return boolean return the confermata
@@ -54,45 +54,39 @@ public abstract class PrenotazioneSpecsDTO {
     }
 
     /**
-     * @return List<SportivoDTO> return the partecipanti
+     * @return SportDTO return the sportAssociato
      */
-    public List<SportivoDTO> getPartecipanti() {
-        return partecipanti;
+    public SportDTO getSportAssociato() {
+        return sportAssociato;
     }
 
     /**
-     * @param partecipanti the partecipanti to set
+     * @param sportAssociato the sportAssociato to set
      */
-    public void setPartecipanti(List<SportivoDTO> partecipanti) {
-        this.partecipanti = partecipanti;
+    public void setSportAssociato(SportDTO sportAssociato) {
+        this.sportAssociato = sportAssociato;
+    }
+
+
+     /**
+     * @return String return the tipoSpecifica
+     */
+    public String getTipoSpecifica() {
+        return tipoSpecifica;
     }
 
     /**
-     * @return ImpiantoDTO return the impiantoPrenotato
+     * @param tipoSpecifica the tipoSpecifica to set
      */
-    public ImpiantoDTO getImpiantoPrenotato() {
-        return impiantoPrenotato;
+    public void setTipoSpecifica(String tipoSpecifica) {
+        this.tipoSpecifica = tipoSpecifica;
     }
 
-    /**
-     * @param impiantoPrenotato the impiantoPrenotato to set
-     */
-    public void setImpiantoPrenotato(ImpiantoDTO impiantoPrenotato) {
-        this.impiantoPrenotato = impiantoPrenotato;
-    }
 
-    public void impostaValoriDTO(PrenotazioneSpecs prenotazioneSpecs) {
-        for (Sportivo sportivo : prenotazioneSpecs.getListaPartecipanti()) {
-            SportivoDTO partecipanteDTO = new SportivoDTO();
-            partecipanteDTO.impostaValoriDTO(sportivo);
-            this.partecipanti.add(partecipanteDTO);
-        }
-
-        ImpiantoDTO impiantoDTO = new ImpiantoDTO();
-        impiantoDTO.impostaValoriDTO(prenotazioneSpecs.getImpiantoPrenotato());
-        this.setImpiantoPrenotato(impiantoDTO);
-
-    }
+    public void impostaValoriDTO(PrenotazioneSpecs prenotazioneSpecs){
+        SportDTO sportAssociato = new SportDTO();
+        sportAssociato.impostaValoriDTO(prenotazioneSpecs.getSportAssociato());
+    };
 
     public abstract void impostaValoriSpecificheExtraPrenotazioneDTO(Map<String, Object> mappaValori);
 

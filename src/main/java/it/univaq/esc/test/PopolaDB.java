@@ -2,7 +2,9 @@ package it.univaq.esc.test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -165,18 +167,21 @@ public class PopolaDB {
         //prenotazioneSpecs.setPrenotazioneAssociata(prenotazione1);
         prenotazione1.getListaSpecifichePrenotazione().get(0).setPrenotazioneAssociata(prenotazione1);
         prenotazione1.setSportivoPrenotante(sportivo1);
-        prenotazione1.aggiungiPartecipanteAPrenotazioneSpecs(sportivo1, prenotazioneSpecs);
         
-        prenotazione1.setSportAssociato(tennis);
-        prenotazione1.setImpiantoSpecifica(impianto1, prenotazioneSpecs);
-        prenotazione1.setTipoPrenotazione(TipiPrenotazione.IMPIANTO.toString());
+        prenotazione1.getListaSpecifichePrenotazione().get(0).setSportAssociato(tennis);
+        Map<String, Object> mappaValori = new HashMap<String, Object>();
+        mappaValori.put("impianto", impianto1);
+        prenotazione1.getListaSpecifichePrenotazione().get(0).impostaValoriSpecificheExtraPrenotazione(mappaValori);
+        
+        Appuntamento appuntamento1 = new Appuntamento(LocalDateTime.of(2021, 5, 26, 10, 30), LocalDateTime.of(2021, 5, 26, 11, 30), prenotazioneSpecs);
+        appuntamento1.aggiungiPartecipante(sportivo1);
+        appuntamento1.aggiungiPartecipante(sportivo2);
         Calendario calendarioSpecs1 = new Calendario();
-        calendarioSpecs1.aggiungiAppuntamento(LocalDateTime.of(2021, 5, 26, 10, 30), LocalDateTime.of(2021, 5, 26, 11, 30), prenotazioneSpecs);
+        calendarioSpecs1.aggiungiAppuntamento(appuntamento1);
         //prenotazione1.setCalendarioSpecifica(calendarioSpecs1, prenotazioneSpecs);
         impianto1.setCalendarioAppuntamentiImpianto(calendarioSpecs1);
         //prenotazione1.impostaCalendarioPrenotazioneDaSpecifiche();
-        prenotazione1.aggiungiPartecipanteAPrenotazioneSpecs(sportivo2, prenotazioneSpecs);
-        
+       
 
         //Prenotazione dell'impianto3 in una data diversa dalla data scelta dallo sportivo che sta effettuando la prenotazione;
         
@@ -185,18 +190,23 @@ public class PopolaDB {
         //prenotazioneSpecs2.setPrenotazioneAssociata(prenotazione2);
         prenotazione2.getListaSpecifichePrenotazione().get(0).setPrenotazioneAssociata(prenotazione2);
         prenotazione2.setSportivoPrenotante(sportivo2);
-        prenotazione2.aggiungiPartecipanteAPrenotazioneSpecs(sportivo2, prenotazioneSpecs2);
-        prenotazione2.setTipoPrenotazione(TipiPrenotazione.IMPIANTO.toString());
+        
+        
+        Appuntamento appuntamento2 = new Appuntamento(LocalDateTime.of(2021, 5, 21, 17, 00), LocalDateTime.of(2021, 5, 21, 19,00), prenotazioneSpecs2);
+        appuntamento2.aggiungiPartecipante(sportivo2);
+        appuntamento2.aggiungiPartecipante(sportivo3);
         Calendario calendarioSpecs2 = new Calendario();
-        calendarioSpecs2.aggiungiAppuntamento(LocalDateTime.of(2021, 5, 21, 17, 00), LocalDateTime.of(2021, 5, 21, 19,00), prenotazioneSpecs2);
+        calendarioSpecs2.aggiungiAppuntamento(appuntamento2);
         
         impianto3.setCalendarioAppuntamentiImpianto(calendarioSpecs2);
         // prenotazione2.setCalendarioSpecifica(calendarioSpecs2, prenotazioneSpecs2);
         // prenotazione2.impostaCalendarioPrenotazioneDaSpecifiche();
         
-        prenotazione2.setSportAssociato(tennis);
-        prenotazione2.setImpiantoSpecifica(impianto3, prenotazioneSpecs2);
-        prenotazione2.aggiungiPartecipanteAPrenotazioneSpecs(sportivo3, prenotazioneSpecs2);
+        prenotazione2.getListaSpecifichePrenotazione().get(0).setSportAssociato(tennis);
+        Map<String, Object> mappaValori2 = new HashMap<String, Object>();
+        mappaValori2.put("impianto", impianto3);
+        prenotazione2.getListaSpecifichePrenotazione().get(0).impostaValoriSpecificheExtraPrenotazione(mappaValori);
+        
         
         /*calendarioRepository.save(calendarioPrenotazione);
         calendarioRepository.save(calendarioPrenotazione2);*/
