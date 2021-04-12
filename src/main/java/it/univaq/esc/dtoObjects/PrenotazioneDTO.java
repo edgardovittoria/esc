@@ -14,7 +14,6 @@ public class PrenotazioneDTO {
 
 
     private SportivoDTO sportivoPrenotante;  
-    private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
     private List<PrenotazioneSpecsDTO> listaSpecifichePrenotazione = new ArrayList<PrenotazioneSpecsDTO>();    
     private String tipoSpecifica;
     private SportDTO sportAssociato;
@@ -56,26 +55,8 @@ public class PrenotazioneDTO {
         return sportivoPrenotante;
     }
 
-
     public void setSportivoPrenotante(SportivoDTO sportivoPrenotante) {
         this.sportivoPrenotante = sportivoPrenotante;
-    }
-
-
-
-    public List<AppuntamentoDTO> getAppuntamenti() {
-        return appuntamenti;
-    }
-
-
-    public void setAppuntamenti(List<AppuntamentoDTO> appuntamenti) {
-        this.appuntamenti = appuntamenti;
-    }
-
-
-
-    public void aggiungiAppuntamentoDTO(AppuntamentoDTO appuntamentoDTO){
-        this.getAppuntamenti().add(appuntamentoDTO);
     }
 
     public List<PrenotazioneSpecsDTO> getSpecifichePrenotazione() {
@@ -102,11 +83,6 @@ public class PrenotazioneDTO {
         }
         this.setSportAssociato(new SportDTO());
         this.getSportAssociato().impostaValoriDTO((Sport) prenotazione.getSportAssociato());
-        for(Appuntamento appuntamento : prenotazione.getListaAppuntamenti()){
-            AppuntamentoDTO appDTO = new AppuntamentoDTO();
-            appDTO.impostaValoriDTO(appuntamento);
-            this.aggiungiAppuntamentoDTO(appDTO);
-        }
         
     }
 

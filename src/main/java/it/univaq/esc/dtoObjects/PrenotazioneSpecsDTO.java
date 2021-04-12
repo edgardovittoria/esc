@@ -11,28 +11,19 @@ import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.Sportivo;
 
 public abstract class PrenotazioneSpecsDTO {
-    
+
     private boolean confermata = false;
-   
+
     private float costo;
 
-   
-    //private Manutentore responsabilePrenotazione;
-   
-    
+    // private Manutentore responsabilePrenotazione;
 
-    
-   
     private List<SportivoDTO> partecipanti = new ArrayList<SportivoDTO>();
 
-    private List<AppuntamentoDTO> calendarioPrenotazioneSpecsDTO = new ArrayList<AppuntamentoDTO>();
+    // private List<QuotaPartecipazione> quoteDiPartecipazione = new
+    // ArrayList<QuotaPartecipazione>();
 
-//    private List<QuotaPartecipazione> quoteDiPartecipazione = new ArrayList<QuotaPartecipazione>();    
-
-    
     private ImpiantoDTO impiantoPrenotato;
-
-    
 
     /**
      * @return boolean return the confermata
@@ -62,7 +53,6 @@ public abstract class PrenotazioneSpecsDTO {
         this.costo = costo;
     }
 
-    
     /**
      * @return List<SportivoDTO> return the partecipanti
      */
@@ -75,20 +65,6 @@ public abstract class PrenotazioneSpecsDTO {
      */
     public void setPartecipanti(List<SportivoDTO> partecipanti) {
         this.partecipanti = partecipanti;
-    }
-
-    /**
-     * @return List<AppuntamentoDTO> return the calendarioPrenotazioneSpecsDTO
-     */
-    public List<AppuntamentoDTO> getCalendarioPrenotazioneSpecsDTO() {
-        return calendarioPrenotazioneSpecsDTO;
-    }
-
-    /**
-     * @param calendarioPrenotazioneSpecsDTO the calendarioPrenotazioneSpecsDTO to set
-     */
-    public void setCalendarioPrenotazioneSpecsDTO(List<AppuntamentoDTO> calendarioPrenotazioneSpecsDTO) {
-        this.calendarioPrenotazioneSpecsDTO = calendarioPrenotazioneSpecsDTO;
     }
 
     /**
@@ -105,31 +81,21 @@ public abstract class PrenotazioneSpecsDTO {
         this.impiantoPrenotato = impiantoPrenotato;
     }
 
-    public void impostaValoriDTO(PrenotazioneSpecs prenotazioneSpecs){
-        for(Sportivo sportivo : prenotazioneSpecs.getListaPartecipanti()){
+    public void impostaValoriDTO(PrenotazioneSpecs prenotazioneSpecs) {
+        for (Sportivo sportivo : prenotazioneSpecs.getListaPartecipanti()) {
             SportivoDTO partecipanteDTO = new SportivoDTO();
             partecipanteDTO.impostaValoriDTO(sportivo);
             this.partecipanti.add(partecipanteDTO);
         }
-        
-        
-        for(Appuntamento appuntamento : prenotazioneSpecs.getListaAppuntamentiPrenotazioneSpecs()){
-            AppuntamentoDTO appuntamentoDTO = new AppuntamentoDTO();
-            appuntamentoDTO.impostaValoriDTO(appuntamento);
-            this.getCalendarioPrenotazioneSpecsDTO().add(appuntamentoDTO);
-        }
-        
-            ImpiantoDTO impiantoDTO = new ImpiantoDTO();
-            impiantoDTO.impostaValoriDTO(prenotazioneSpecs.getImpiantoPrenotato());
-            this.setImpiantoPrenotato(impiantoDTO);
-          
+
+        ImpiantoDTO impiantoDTO = new ImpiantoDTO();
+        impiantoDTO.impostaValoriDTO(prenotazioneSpecs.getImpiantoPrenotato());
+        this.setImpiantoPrenotato(impiantoDTO);
+
     }
 
-    
     public abstract void impostaValoriSpecificheExtraPrenotazioneDTO(Map<String, Object> mappaValori);
-    
+
     public abstract Map<String, Object> getValoriSpecificheExtraPrenotazioneDTO();
 
-
-    
 }

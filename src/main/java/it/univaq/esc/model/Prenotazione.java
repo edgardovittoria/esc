@@ -44,13 +44,10 @@ public class Prenotazione {
     private Sport sportAssociato;
     
     
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
+    @OneToMany(mappedBy = "prenotazioneAssociata")
+    //@JoinColumn
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<PrenotazioneSpecs> listaSpecifichePrenotazione = new ArrayList<PrenotazioneSpecs>();
-
-    @Transient
-    private Calendario calendarioPrenotazione = new Calendario();
 
     public Prenotazione(){}
 
@@ -87,29 +84,10 @@ public class Prenotazione {
         return this.sportAssociato;
     }
     
-
-    public void setCalendario(Calendario datePrenotate){
-        this.calendarioPrenotazione = datePrenotate;
-    }
-
-    public void setCalendarioSpecifica(Calendario calendario, PrenotazioneSpecs specifica){
-        specifica.impostaCalendario(calendario);
-    }
-
     public void setImpiantoSpecifica(Impianto impianto, PrenotazioneSpecs specifica){
         specifica.setImpiantoPrenotato(impianto);
     }
 
-
-    public Calendario getCalendarioPrenotazione() {
-        return this.calendarioPrenotazione;
-    }
-
-    public List<Appuntamento> getListaAppuntamenti(){
-        return this.getCalendarioPrenotazione().getListaAppuntamenti();
-    }
-
-    
 
     public List<PrenotazioneSpecs> getListaSpecifichePrenotazione() {
         return listaSpecifichePrenotazione;
@@ -145,11 +123,6 @@ public class Prenotazione {
         return this.tipoPrenotazione;
     }
 
-    public void impostaCalendarioPrenotazioneDaSpecifiche(){
-        for(PrenotazioneSpecs specifica : this.getListaSpecifichePrenotazione()){
-            this.calendarioPrenotazione.unisciCalendario(specifica.getCalendarioPrenotazioneSpecs());
-        }
-    }
 
     public void aggiungiPartecipanteAPrenotazioneSpecs(Sportivo partecipante, PrenotazioneSpecs specificaPrenotazione){
         specificaPrenotazione.aggiungiPartecipante(partecipante);

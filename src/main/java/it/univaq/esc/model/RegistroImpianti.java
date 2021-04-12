@@ -38,6 +38,10 @@ public class RegistroImpianti {
         
     }
 
+    public void aggiornaCalendarioImpianto(Impianto impianto, Calendario calendarioDaUnire){
+        impianto.getCalendarioAppuntamentiImpianto().unisciCalendario(calendarioDaUnire);
+    }
+
 
 
     public void aggiungiImpianto(Impianto impiantoDaAggiungere) {

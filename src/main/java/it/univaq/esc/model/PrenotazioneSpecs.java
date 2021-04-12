@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -43,8 +43,6 @@ public abstract class PrenotazioneSpecs {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Sportivo> partecipanti = new ArrayList<Sportivo>();
 
-    @Transient
-    private Calendario calendarioPrenotazioneSpecs = new Calendario();
 
     @OneToMany
     @JoinColumn
@@ -54,6 +52,10 @@ public abstract class PrenotazioneSpecs {
     @ManyToOne
     @JoinColumn
     private Impianto impiantoPrenotato;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "prenotazione_ID", nullable = false)
+    private Prenotazione prenotazioneAssociata;
 
 
 
@@ -107,22 +109,19 @@ public abstract class PrenotazioneSpecs {
 
     public List<QuotaPartecipazione> getListaQuotePartecipazione(){
         return this.quoteDiPartecipazione;
-    }
 
-    public void impostaCalendario(Calendario calendarioDaImpostare){
-        this.calendarioPrenotazioneSpecs = calendarioDaImpostare;
-    }
-
-    public Calendario getCalendarioPrenotazioneSpecs(){
-        return this.calendarioPrenotazioneSpecs;
-    }
-
-    public List<Appuntamento> getListaAppuntamentiPrenotazioneSpecs(){
-        return this.getCalendarioPrenotazioneSpecs().getListaAppuntamenti();
     }
 
     public abstract void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori);
     
     public abstract Map<String, Object> getValoriSpecificheExtraPrenotazione();
+
+    public Prenotazione getPrenotazioneAssociata() {
+        return prenotazioneAssociata;
+    }
+
+    public void setPrenotazioneAssociata(Prenotazione prenotazioneAssociata) {
+        this.prenotazioneAssociata = prenotazioneAssociata;
+    }
 
     }

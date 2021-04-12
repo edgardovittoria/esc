@@ -57,6 +57,7 @@ public class EffettuaPrenotazioneHandler {
         int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
         PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
         setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
+        prenotazioneSpecs.setPrenotazioneAssociata(getPrenotazioneInAtto());
         getPrenotazioneInAtto().setSportivoPrenotante(sportivo);
         getPrenotazioneInAtto().aggiungiPartecipanteAPrenotazioneSpecs(sportivo, prenotazioneSpecs);
         this.getPrenotazioneInAtto().setTipoPrenotazione(tipoPrenotazione);
@@ -168,12 +169,15 @@ public class EffettuaPrenotazioneHandler {
         // impianti.add(this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
         // mappaValori.put("impianto", impianti);
         
-        Calendario calendarioPrenotazione = new Calendario();
+        // Calendario calendarioPrenotazione = new Calendario();
         LocalDateTime dataInizio = LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraInizio());
         LocalDateTime dataFine = LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraFine());
 
-        calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine , this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
-        this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+        // calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine , this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+        //this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+
+        Appuntamento appuntamento = new Appuntamento(dataInizio, dataFine);
+        appuntamento.setPrenotazioneSpecsAppuntamento(this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
 
         List<Sportivo> sportivi = new ArrayList<Sportivo>();
         for(String email : formPrenotaImpianto.getSportiviInvitati()){
@@ -185,14 +189,13 @@ public class EffettuaPrenotazioneHandler {
 
         this.getPrenotazioneInAtto().impostaValoriSpecificheExtraSingolaPrenotazioneSpecs(mappaValori, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
 
-        this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
+        List<Appuntamento> appuntamenti = new ArrayList<Appuntamento>();
+        appuntamenti.add(appuntamento);
+        Calendario calendarioDaUnire = new Calendario(appuntamenti);
+
+        this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto(), appuntamenti);
         
-        // System.out.println("PRENOTAZIONE CONFERMATA");
-        // System.out.println("ID :"+this.prenotazioneInAtto.getIdPrenotazione());
-        // System.out.println("SPORTIVO PRENOTANTE :"+this.prenotazioneInAtto.getSportivoPrenotante().getEmail());
-        // System.out.println("PARTECIPANTI :"+this.prenotazioneInAtto.getListaPartecipanti().get(0).getEmail());
-        // System.out.println("DATA DI PRENOTAZIONE :"+this.prenotazioneInAtto.getCalendarioPrenotazione().getListaAppuntamenti().get(0).getDataOraInizioAppuntamento());
-        // System.out.println("INVITATI :"+this.prenotazioneInAtto.getPrenotazioneSpecs().getValoriSpecifichePrenotazione().get("invitati").toString());
+        this.registroImpianti.aggiornaCalendarioImpianto(this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0).getImpiantoPrenotato(), calendarioDaUnire);
 
         
         redirectAttributes.addFlashAttribute("message", "La prenotazione è stata registrata con successo!");

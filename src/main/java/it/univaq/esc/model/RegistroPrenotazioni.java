@@ -33,16 +33,15 @@ public class RegistroPrenotazioni {
     public void popola(){
         getTutteLePrenotazioni().addAll(prenotazioneRepository.findAll());
         for(Prenotazione prenotazione : this.getTutteLePrenotazioni()){
-            prenotazione.impostaCalendarioPrenotazioneDaSpecifiche();
+            //prenotazione.impostaCalendarioPrenotazioneDaSpecifiche();
             //prenotazione.getCalendarioPrenotazione().setListaAppuntamenti(appuntamentoRepository.findByPrenotazioneAppuntamento_IdPrenotazione(prenotazione.getIdPrenotazione()));
         }
 
     }
 
-    public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {
+    public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere, List<Appuntamento> appuntamenti) {
         getTutteLePrenotazioni().add(prenotazioneDaAggiungere);
-        this.prenotazioneRepository.save(prenotazioneDaAggiungere);
-        this.appuntamentoRepository.saveAll(prenotazioneDaAggiungere.getListaAppuntamenti());
+        this.appuntamentoRepository.saveAll(appuntamenti);
     }
 
     public List<Prenotazione> getTutteLePrenotazioni(){
@@ -60,7 +59,7 @@ public class RegistroPrenotazioni {
     }
 
     public void cancellaPrenotazione(Prenotazione prenotazioneDaCancellare){
-        appuntamentoRepository.deleteAll(prenotazioneDaCancellare.getListaAppuntamenti());
+        //appuntamentoRepository.deleteAll(prenotazioneDaCancellare.getListaAppuntamenti());
         getTutteLePrenotazioni().remove(prenotazioneDaCancellare);
         prenotazioneRepository.delete(prenotazioneDaCancellare);
         
