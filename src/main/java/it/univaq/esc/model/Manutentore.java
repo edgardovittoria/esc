@@ -18,10 +18,12 @@ public class Manutentore extends RuoloUtentePolisportivaDecorator{
     @Transient
     private Calendario calendario = new Calendario();
 
-    public Manutentore(){}
+    public Manutentore(UtentePolisportivaAbstract utenteDaDecorare){
+        super(utenteDaDecorare);
+    }
 
-    public Manutentore(Calendario calendario){
-        
+    public Manutentore(UtentePolisportivaAbstract utenteDaDecorare, Calendario calendario){
+        super(utenteDaDecorare);
         this.calendario = calendario;
     }
 

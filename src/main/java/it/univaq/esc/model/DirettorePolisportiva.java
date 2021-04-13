@@ -11,6 +11,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @DiscriminatorValue(value = "Direttore")
 public class DirettorePolisportiva extends RuoloUtentePolisportivaDecorator{
 
+    public DirettorePolisportiva(UtentePolisportivaAbstract utenteDaDecorare){
+        super(utenteDaDecorare);
+    }
+
     @Override
     public void setProprieta(Map<String, Object> mappaProprieta) {
         this.getUtentePolisportiva().setProprieta(mappaProprieta);

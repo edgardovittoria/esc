@@ -7,6 +7,7 @@ import java.util.List;
 
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Sportivo;
+import it.univaq.esc.model.UtentePolisportivaAbstract;
 
 public class AppuntamentoDTO {
     
@@ -55,7 +56,7 @@ public class AppuntamentoDTO {
         setDataAppuntamento(appuntamento.getDataAppuntamento());
         setOraInizioAppuntamento(appuntamento.getOraInizioAppuntamento());
         setOraFineAppuntamento(appuntamento.getOraFineAppuntamento());
-        for(Sportivo partecipante : appuntamento.getListaPartecipanti()){
+        for(UtentePolisportivaAbstract partecipante : appuntamento.getListaPartecipanti()){
             SportivoDTO partecipanteDTO = new SportivoDTO();
             partecipanteDTO.impostaValoriDTO(partecipante);
             this.aggiungiPartecipante(partecipanteDTO);

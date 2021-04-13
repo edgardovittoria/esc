@@ -19,7 +19,7 @@ public class UtentePolisportiva extends UtentePolisportivaAbstract implements Se
     private String nome;
     @Column
     private String cognome;
-    @Id
+    @Column
     private String email;
     @Column
     private String password;

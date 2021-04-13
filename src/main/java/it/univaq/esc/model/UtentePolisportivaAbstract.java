@@ -7,16 +7,20 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
 //@Inheritance(strategy=InheritanceType.JOINED)
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class UtentePolisportivaAbstract {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public abstract void setProprieta(Map<String, Object> mappaProprieta);

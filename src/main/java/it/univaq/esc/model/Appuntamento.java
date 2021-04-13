@@ -44,7 +44,7 @@ public class Appuntamento {
     @ManyToMany()
     @JoinColumn()
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Sportivo> partecipanti = new ArrayList<Sportivo>();
+    private List<UtentePolisportivaAbstract> partecipanti = new ArrayList<UtentePolisportivaAbstract>();
 
 
     public Appuntamento(){}
@@ -59,11 +59,11 @@ public class Appuntamento {
         return (Impianto)this.getPrenotazioneSpecsAppuntamento().getValoriSpecificheExtraPrenotazione().get("impianto");
     }
 
-    public List<Sportivo> getListaPartecipanti() {
+    public List<UtentePolisportivaAbstract> getListaPartecipanti() {
         return this.partecipanti;
     }
 
-    public void aggiungiPartecipante(Sportivo sportivoPartecipante) {
+    public void aggiungiPartecipante(UtentePolisportivaAbstract sportivoPartecipante) {
         getListaPartecipanti().add(sportivoPartecipante);
     }
     

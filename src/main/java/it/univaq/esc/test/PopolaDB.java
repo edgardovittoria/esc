@@ -20,15 +20,18 @@ import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.Sportivo;
 import it.univaq.esc.model.TipiPrenotazione;
+import it.univaq.esc.model.UtentePolisportivaAbstract;
+import it.univaq.esc.model.UtentePolisportivaBuilder;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.ImpiantoRepository;
 import it.univaq.esc.repository.PrenotazioneRepository;
 import it.univaq.esc.repository.SportivoRepository;
+import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
 @Component
 public class PopolaDB {
 
     @Autowired
-    private SportivoRepository sportivoRepository;
+    private UtentePolisportivaAbstractRepository utentePolisportivaRepository;
 
     // @Autowired
     // private CalendarioRepository calendarioRepository;
@@ -46,46 +49,57 @@ public class PopolaDB {
     public PopolaDB(){}
 
     public  void popola(){
-        Sportivo sportivoPrenotante = new Sportivo();
-        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
-        mappaProprieta.put("nome", "Pippo");
-        mappaProprieta.put("cognome", "Franco");
-        mappaProprieta.put("email", "pippofranco@bagaglino.com");
-        sportivoPrenotante.setProprieta(mappaProprieta);
-        Sportivo sportivo1 = new Sportivo();
-        mappaProprieta.put("nome", "Gianni");
-        mappaProprieta.put("cognome", "cognome");
-        mappaProprieta.put("email", "poppins@bianconiglio.com");
-        sportivo1.setProprieta(mappaProprieta);
-        Sportivo sportivo2 = new Sportivo();
-        mappaProprieta.put("nome", "mariangelo");
-        mappaProprieta.put("cognome", "sasso");
-        mappaProprieta.put("email", "marsasso@boh.com");
-        sportivo2.setProprieta(mappaProprieta);
-        Sportivo sportivo3 = new Sportivo();
-        mappaProprieta.put("nome", "tardigrado");
-        mappaProprieta.put("cognome", "acqua");
-        mappaProprieta.put("email", "matita@boh.com");
-        sportivo3.setProprieta(mappaProprieta);
 
         Sport calcetto = new Sport("calcetto", 10);
         Sport tennis = new Sport("tennis", 2);
         Sport pallavolo = new Sport("pallavolo", 12);
         
-        
-        sportivoPrenotante.aggiungiSporPraticatoDalloSportivo(tennis);
-        sportivo1.aggiungiSporPraticatoDalloSportivo(calcetto);
-        sportivo1.aggiungiSporPraticatoDalloSportivo(tennis);
-        sportivo1.aggiungiSporPraticatoDalloSportivo(pallavolo);
-        sportivo2.aggiungiSporPraticatoDalloSportivo(calcetto);
-        sportivo2.aggiungiSporPraticatoDalloSportivo(tennis);
-        sportivo3.aggiungiSporPraticatoDalloSportivo(calcetto);
-        sportivo3.aggiungiSporPraticatoDalloSportivo(pallavolo);
+        UtentePolisportivaAbstract sportivoPrenotante = new UtentePolisportivaBuilder().assegnaRuoloSportivo().build();
+        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
+        mappaProprieta.put("nome", "Pippo");
+        mappaProprieta.put("cognome", "Franco");
+        mappaProprieta.put("email", "pippofranco@bagaglino.com");
+        List<Sport> listaSportPraticati = new ArrayList<Sport>();
+        listaSportPraticati.add(tennis);
+        mappaProprieta.put("sportPraticati", listaSportPraticati);
+        sportivoPrenotante.setProprieta(mappaProprieta);
 
-        sportivoRepository.save(sportivoPrenotante);
-        sportivoRepository.save(sportivo1);
-        sportivoRepository.save(sportivo2);
-        sportivoRepository.save(sportivo3);
+        UtentePolisportivaAbstract sportivo1 = new UtentePolisportivaBuilder().assegnaRuoloSportivo().build();
+        mappaProprieta.put("nome", "Gianni");
+        mappaProprieta.put("cognome", "cognome");
+        mappaProprieta.put("email", "poppins@bianconiglio.com");
+        List<Sport> listaSportPraticati1 = new ArrayList<Sport>();
+        listaSportPraticati1.add(tennis);
+        listaSportPraticati1.add(calcetto);
+        listaSportPraticati1.add(pallavolo);
+        mappaProprieta.put("sportPraticati", listaSportPraticati1);
+        sportivo1.setProprieta(mappaProprieta);
+
+        UtentePolisportivaAbstract sportivo2 = new UtentePolisportivaBuilder().assegnaRuoloSportivo().build();
+        mappaProprieta.put("nome", "mariangelo");
+        mappaProprieta.put("cognome", "sasso");
+        mappaProprieta.put("email", "marsasso@boh.com");
+        List<Sport> listaSportPraticati2 = new ArrayList<Sport>();
+        listaSportPraticati2.add(tennis);
+        listaSportPraticati2.add(calcetto);
+        mappaProprieta.put("sportPraticati", listaSportPraticati2);
+        sportivo2.setProprieta(mappaProprieta);
+
+        UtentePolisportivaAbstract sportivo3 = new UtentePolisportivaBuilder().assegnaRuoloSportivo().build();
+        mappaProprieta.put("nome", "tardigrado");
+        mappaProprieta.put("cognome", "acqua");
+        mappaProprieta.put("email", "matita@boh.com");
+        List<Sport> listaSportPraticati3 = new ArrayList<Sport>();
+        listaSportPraticati3.add(pallavolo);
+        listaSportPraticati3.add(calcetto);
+        mappaProprieta.put("sportPraticati", listaSportPraticati3);
+        sportivo3.setProprieta(mappaProprieta);
+
+
+        utentePolisportivaRepository.save(sportivoPrenotante);
+        utentePolisportivaRepository.save(sportivo1);
+        utentePolisportivaRepository.save(sportivo2);
+        utentePolisportivaRepository.save(sportivo3);
 
         List<Sport> sportPraticatiImpianto1 = new ArrayList<Sport>();
         sportPraticatiImpianto1.add(calcetto);

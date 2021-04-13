@@ -35,7 +35,7 @@ public class Prenotazione {
 
     @ManyToOne()
     @JoinColumn()
-    private Sportivo sportivoPrenotante;
+    private UtentePolisportivaAbstract sportivoPrenotante;
 
     @Column
     private LocalDateTime oraDataPrenotazione;
@@ -66,11 +66,11 @@ public class Prenotazione {
 
     
 
-    public void setSportivoPrenotante(Sportivo sportivoPrenotante) {
+    public void setSportivoPrenotante(UtentePolisportivaAbstract sportivoPrenotante) {
         this.sportivoPrenotante = sportivoPrenotante;
     }
 
-    public Sportivo getSportivoPrenotante() {
+    public UtentePolisportivaAbstract getSportivoPrenotante() {
         return this.sportivoPrenotante;
     }
 

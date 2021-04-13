@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
@@ -13,7 +14,7 @@ import javax.persistence.Transient;
 @DiscriminatorValue(value = "Istruttore")
 public class Istruttore extends RuoloUtentePolisportivaDecorator{
 
-    @OneToMany
+    @ManyToMany
     @JoinColumn
     private List<Sport> sportInsegnati;
 
@@ -23,7 +24,8 @@ public class Istruttore extends RuoloUtentePolisportivaDecorator{
 
     
 
-    public Istruttore(List<Sport> sportInsegnati){
+    public Istruttore(UtentePolisportivaAbstract utenteDaDecorare, List<Sport> sportInsegnati){
+        super(utenteDaDecorare);
         this.setSportInsegnati(sportInsegnati);
     }
 

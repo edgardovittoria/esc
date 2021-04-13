@@ -1,6 +1,7 @@
 package it.univaq.esc.dtoObjects;
 
 import it.univaq.esc.model.Sportivo;
+import it.univaq.esc.model.UtentePolisportivaAbstract;
 
 public class SportivoDTO {
 
@@ -34,7 +35,7 @@ public class SportivoDTO {
         this.email = email;
     }
 
-    public void impostaValoriDTO(Sportivo sportivo){
+    public void impostaValoriDTO(UtentePolisportivaAbstract sportivo){
         this.nome = (String)sportivo.getProprieta().get("nome");
         this.cognome = (String)sportivo.getProprieta().get("cognome");
         this.email = (String)sportivo.getProprieta().get("email");

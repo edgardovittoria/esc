@@ -25,7 +25,9 @@ public abstract class RuoloUtentePolisportivaDecorator extends UtentePolisportiv
     private UtentePolisportivaAbstract utentePolisportiva;
 
     
-
+    protected RuoloUtentePolisportivaDecorator(UtentePolisportivaAbstract utenteDaDecorare){
+        this.setUtentePolisportiva(utenteDaDecorare);
+    }
     
     /**
      * @return IUtentePolisportiva return the utentePolisportiva
