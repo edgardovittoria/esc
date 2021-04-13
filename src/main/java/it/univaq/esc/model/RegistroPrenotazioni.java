@@ -51,7 +51,7 @@ public class RegistroPrenotazioni {
     public List<Prenotazione> getPrenotazioniByEmailSportivo(String email){
         List<Prenotazione> prenotazioniSportivo = new ArrayList<Prenotazione>();
         for (Prenotazione prenotazione : this.getTutteLePrenotazioni()){
-            if(prenotazione.getSportivoPrenotante().getEmail().equals(email)){
+            if(((String)prenotazione.getSportivoPrenotante().getProprieta().get("email")).equals(email)){
                 prenotazioniSportivo.add(prenotazione);
             }
         }

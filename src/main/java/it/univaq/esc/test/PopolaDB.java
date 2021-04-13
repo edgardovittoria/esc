@@ -46,10 +46,27 @@ public class PopolaDB {
     public PopolaDB(){}
 
     public  void popola(){
-        Sportivo sportivoPrenotante = new Sportivo("Pippo", "Franco", "pippofranco@bagaglino.com");
-        Sportivo sportivo1 = new Sportivo("Gianni", "cognome", "poppins@bianconiglio.com");
-        Sportivo sportivo2 = new Sportivo("mariangelo", "sasso", "marsasso@boh.com");
-        Sportivo sportivo3 = new Sportivo("tardigrado", "acqua", "matita@boh.com");
+        Sportivo sportivoPrenotante = new Sportivo();
+        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
+        mappaProprieta.put("nome", "Pippo");
+        mappaProprieta.put("cognome", "Franco");
+        mappaProprieta.put("email", "pippofranco@bagaglino.com");
+        sportivoPrenotante.setProprieta(mappaProprieta);
+        Sportivo sportivo1 = new Sportivo();
+        mappaProprieta.put("nome", "Gianni");
+        mappaProprieta.put("cognome", "cognome");
+        mappaProprieta.put("email", "poppins@bianconiglio.com");
+        sportivo1.setProprieta(mappaProprieta);
+        Sportivo sportivo2 = new Sportivo();
+        mappaProprieta.put("nome", "mariangelo");
+        mappaProprieta.put("cognome", "sasso");
+        mappaProprieta.put("email", "marsasso@boh.com");
+        sportivo2.setProprieta(mappaProprieta);
+        Sportivo sportivo3 = new Sportivo();
+        mappaProprieta.put("nome", "tardigrado");
+        mappaProprieta.put("cognome", "acqua");
+        mappaProprieta.put("email", "matita@boh.com");
+        sportivo3.setProprieta(mappaProprieta);
 
         Sport calcetto = new Sport("calcetto", 10);
         Sport tennis = new Sport("tennis", 2);

@@ -35,9 +35,9 @@ public class SportivoDTO {
     }
 
     public void impostaValoriDTO(Sportivo sportivo){
-        this.nome = sportivo.getNome();
-        this.cognome = sportivo.getCognome();
-        this.email = sportivo.getEmail();
+        this.nome = (String)sportivo.getProprieta().get("nome");
+        this.cognome = (String)sportivo.getProprieta().get("cognome");
+        this.email = (String)sportivo.getProprieta().get("email");
     }
 
     

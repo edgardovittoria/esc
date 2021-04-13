@@ -1,64 +1,59 @@
 package it.univaq.esc.model;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "manutentori")
-public class Manutentore {
-    @Column
-    private String nome;
-    @Column
-    private String cognome;
-    @Id
-    private String email;
+@DiscriminatorValue(value = "Manutentore")
+public class Manutentore extends RuoloUtentePolisportivaDecorator{
     
     @Transient
-    private Calendario calendario;
+    private Calendario calendario = new Calendario();
 
     public Manutentore(){}
 
-    public Manutentore(String nome, String cognome, String email, Calendario calendario){
-        setNome(nome);
-        setCognome(cognome);
-        setEmail(email);
+    public Manutentore(Calendario calendario){
+        
         this.calendario = calendario;
     }
 
-    public String getNome(){
-        return this.nome;
-    }
-
-    public String getCognome() {
-        return this.cognome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public Calendario getCalendario() {
         return calendario;
     }
 
     public void setCalendario(Calendario calendario) {
-        this.calendario = calendario;
+        this.getCalendario().unisciCalendario(calendario);
+    }
+
+    @Override
+    public void setProprieta(Map<String, Object> mappaProprieta) {
+        this.getCalendario().unisciCalendario((Calendario)mappaProprieta.get("calendarioManutentore"));
+        this.getUtentePolisportiva().setProprieta(mappaProprieta);
+    }
+
+    @Override
+    public Map<String, Object> getProprieta() {
+        Map<String, Object> mappaProprieta = this.getUtentePolisportiva().getProprieta();
+        mappaProprieta.put("calendarioManutentore", this.getCalendario());
+
+        return mappaProprieta;
+    }
+
+    @Override
+    public List<String> getRuoliUtentePolisportiva() {
+        List<String> listaRuoli = this.getUtentePolisportiva().getRuoliUtentePolisportiva();
+        listaRuoli.add(TipoRuolo.MANUTENTORE.toString());
+
+        return listaRuoli;
     }
 
     

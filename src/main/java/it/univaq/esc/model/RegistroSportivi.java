@@ -41,7 +41,7 @@ public class RegistroSportivi {
 
     public Sportivo getSportivoDaEmail(String emailSportivo){
         for(Sportivo sportivo : getListaSportivi()){
-            if(sportivo.getEmail().equals(emailSportivo)){
+            if(((String)sportivo.getProprieta().get("email")).equals(emailSportivo)){
                 return sportivo;
             }
         }

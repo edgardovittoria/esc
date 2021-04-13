@@ -2,29 +2,27 @@ package it.univaq.esc.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
-@Table(name = "sportivi")
-public class Sportivo {
+@DiscriminatorValue(value = "Sportivo")
+public class Sportivo extends RuoloUtentePolisportivaDecorator{
 
-    @Column
-    private String nome;
-    @Column
-    private String cognome;
-    @Id
-    private String email;
+    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "sport_praticati_sportivi",
                 joinColumns = {@JoinColumn(name="email")},
@@ -34,35 +32,11 @@ public class Sportivo {
 
     public Sportivo(){}
 
-    public Sportivo(String nome, String cognome, String email) {
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
+    public Sportivo(List<Sport> sportPraticati) {
+        this.setSportPraticatiDalloSportivo(sportPraticati);
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCognome() {
-        return cognome;
-    }
-
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+   
 
     public List<Sport> getSportPraticatiDalloSportivo() {
         return sportPraticatiDalloSportivo;
@@ -75,6 +49,29 @@ public class Sportivo {
     public void aggiungiSporPraticatoDalloSportivo(Sport sportPraticato){
         this.sportPraticatiDalloSportivo.add(sportPraticato);
     }
+
+    @Override
+    public void setProprieta(Map<String, Object> mappaProprieta) {
+        this.setSportPraticatiDalloSportivo((List<Sport>)mappaProprieta.get("sportPraticati"));
+        this.getUtentePolisportiva().setProprieta(mappaProprieta);
+    }
+
+    @Override
+    public Map<String, Object> getProprieta() {
+        Map<String, Object> mappaProprieta = this.getUtentePolisportiva().getProprieta();
+        mappaProprieta.put("sportPraticati", this.getSportPraticatiDalloSportivo());
+        return mappaProprieta;
+    }
+
+    @Override
+    public List<String> getRuoliUtentePolisportiva() {
+        List<String> listaRuoli = this.getUtentePolisportiva().getRuoliUtentePolisportiva();
+        listaRuoli.add(TipoRuolo.SPORTIVO.toString());
+
+        return listaRuoli;
+    }
+
+    
     
     
 }
