@@ -1,5 +1,6 @@
 package it.univaq.esc.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @DiscriminatorValue(value = "UtenteBase")
-public class UtentePolisportiva extends UtentePolisportivaAbstract{
+public class UtentePolisportiva extends UtentePolisportivaAbstract implements Serializable{
     @Column
     private String nome;
     @Column

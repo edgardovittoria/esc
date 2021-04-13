@@ -12,9 +12,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-@Entity
-
-
+//@Inheritance(strategy=InheritanceType.JOINED)
+@MappedSuperclass
 public abstract class UtentePolisportivaAbstract {
     
     @Id

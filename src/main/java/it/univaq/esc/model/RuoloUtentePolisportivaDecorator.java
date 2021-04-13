@@ -12,8 +12,12 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Transient;
 
-@Entity
-@DiscriminatorValue(value="TipoUtente")
+
+@Inheritance(strategy=InheritanceType.JOINED)
+//@MappedSuperclass
+@DiscriminatorColumn(name="RuoloUtenteDecorator")
+//@SecondaryTable(name="USERS")
+//@DiscriminatorValue("utenteDecorator")
 public abstract class RuoloUtentePolisportivaDecorator extends UtentePolisportivaAbstract{
     
     
