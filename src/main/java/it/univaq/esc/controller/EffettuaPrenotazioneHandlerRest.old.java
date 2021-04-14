@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.univaq.esc.dtoObjects.SportDTO;
+import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.RegistroImpianti;
@@ -29,7 +31,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
     @GetMapping("/sportPraticabili")
     @CrossOrigin
-    public @ResponseBody List<Sport> getSportPraticabiliPolisportiva(){
+    public @ResponseBody List<SportDTO> getSportPraticabiliPolisportiva(){
         List<Sport> listaSportPraticabili = new ArrayList<Sport>();
         Set<Sport> setSportPraticabili = new HashSet<Sport>();
         for (Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()) {
@@ -38,6 +40,27 @@ public class EffettuaPrenotazioneHandlerRest {
             }
         }
         listaSportPraticabili.addAll(setSportPraticabili);
-        return listaSportPraticabili;
+        List<SportDTO> listaSportPraticabiliDTO = new ArrayList<SportDTO>();
+        for(Sport sport : listaSportPraticabili){
+            SportDTO sportDTO = new SportDTO();
+            sportDTO.impostaValoriDTO(sport);
+            listaSportPraticabiliDTO.add(sportDTO);
+        }
+        return listaSportPraticabiliDTO;
+    }
+
+
+    @GetMapping("/impiantiDisponibili")
+    @CrossOrigin
+    public @ResponseBody List<Impianto> getImpiantiDisponibili(){
+        Calendario calendario = new Calendario();
+        List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();        
+        for(Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()){
+            if(!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(calendario)){
+                listaImpiantiDisponibili.add(impianto);
+            }
+        }
+        return listaImpiantiDisponibili;
+        
     }
 }
