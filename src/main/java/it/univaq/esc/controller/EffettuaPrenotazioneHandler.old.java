@@ -53,7 +53,7 @@ public class EffettuaPrenotazioneHandler {
         this.prenotazioneInAtto = prenotazioneInAtto;
     }
 
-    public void avviaNuovaPrenotazione(UtentePolisportivaAbstract sportivo, String tipoPrenotazione) {
+    public void avviaNuovaPrenotazione(Sportivo sportivo, String tipoPrenotazione) {
         int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
         PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
         setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
