@@ -1,5 +1,6 @@
 package it.univaq.esc.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
@@ -12,18 +13,19 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Transient;
 
-
+@Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 //@MappedSuperclass
 @DiscriminatorColumn(name="RuoloUtenteDecorator")
 //@SecondaryTable(name="USERS")
-//@DiscriminatorValue("utenteDecorator")
+@DiscriminatorValue("utenteDecorator")
 public abstract class RuoloUtentePolisportivaDecorator extends UtentePolisportivaAbstract{
     
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private UtentePolisportivaAbstract utentePolisportiva;
 
+    protected RuoloUtentePolisportivaDecorator(){}
     
     protected RuoloUtentePolisportivaDecorator(UtentePolisportivaAbstract utenteDaDecorare){
         this.setUtentePolisportiva(utenteDaDecorare);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.repository.SportivoRepository;
+import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
 
 
 @Component
@@ -17,21 +18,25 @@ import it.univaq.esc.repository.SportivoRepository;
 public class RegistroSportivi {
 
     @Autowired
-    private SportivoRepository sportivoRepository;
+    private UtentePolisportivaAbstractRepository utentiRepository;
     
     //private static RegistroSportivi instance = null;
-    private List<Sportivo> registroSportivi = new ArrayList<Sportivo>();
+    private List<UtentePolisportivaAbstract> registroSportivi = new ArrayList<UtentePolisportivaAbstract>();
 
 
     public RegistroSportivi() {}
 
     @PostConstruct
     public void popola(){
-        this.getListaSportivi().addAll(sportivoRepository.findAll());
+        for(UtentePolisportivaAbstract utente : utentiRepository.findAll()){
+            if(utente.getRuoliUtentePolisportiva().contains(TipoRuolo.SPORTIVO.toString())){
+                this.getListaSportivi().add(utente);
+            }
+        }
     }
 
 
-    public List<Sportivo> getListaSportivi() {
+    public List<UtentePolisportivaAbstract> getListaSportivi() {
         return this.registroSportivi;
     }
 
@@ -39,8 +44,8 @@ public class RegistroSportivi {
         getListaSportivi().add(sportivoDaRegistrare);
     }
 
-    public Sportivo getSportivoDaEmail(String emailSportivo){
-        for(Sportivo sportivo : getListaSportivi()){
+    public UtentePolisportivaAbstract getSportivoDaEmail(String emailSportivo){
+        for(UtentePolisportivaAbstract sportivo : getListaSportivi()){
             if(((String)sportivo.getProprieta().get("email")).equals(emailSportivo)){
                 return sportivo;
             }

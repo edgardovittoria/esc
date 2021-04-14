@@ -30,6 +30,8 @@ public class Sportivo extends RuoloUtentePolisportivaDecorator{
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Sport> sportPraticatiDalloSportivo = new ArrayList<Sport>();
 
+    public Sportivo(){}
+
     public Sportivo(UtentePolisportivaAbstract utenteDaDecorare){
         super(utenteDaDecorare);
     }
