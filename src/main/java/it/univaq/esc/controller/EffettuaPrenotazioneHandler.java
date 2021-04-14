@@ -180,6 +180,7 @@ public class EffettuaPrenotazioneHandler {
         //this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
 
         Appuntamento appuntamento = new Appuntamento(dataInizio, dataFine, this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0));
+        appuntamento.aggiungiPartecipante(this.getPrenotazioneInAtto().getSportivoPrenotante());
 
         List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
         for(String email : formPrenotaImpianto.getSportiviInvitati()){

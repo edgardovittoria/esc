@@ -53,7 +53,13 @@ public class ControllerAvvio {
             impiantiDisponibili.put(impianto.getIdImpianto(), impianto.getTipoPavimentazione().toString());
         }
         opzioniPrenotazioneImpianto.put("impiantiDisponibili", impiantiDisponibili);
-        opzioniPrenotazioneImpianto.put("sportiviIscrittiPolisportiva", this.effettuaPrenotazioneHandler.getSportivi());
+        List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
+        for(UtentePolisportivaAbstract sportivo : this.effettuaPrenotazioneHandler.getSportivi()){
+            SportivoDTO sportivoDTO = new SportivoDTO();
+            sportivoDTO.impostaValoriDTO(sportivo);
+            listaSportiviDTO.add(sportivoDTO);
+        }
+        opzioniPrenotazioneImpianto.put("sportiviIscrittiPolisportiva", listaSportiviDTO);
         
         
 
@@ -113,7 +119,10 @@ public class ControllerAvvio {
     public ModelAndView avviaPrenotazione(@RequestParam(name="email") String emailSportivoPrenotante, @RequestParam(name="tipoPrenotazione") String tipoPrenotazione){
         this.effettuaPrenotazioneHandler.avviaNuovaPrenotazione(this.effettuaPrenotazioneHandler.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
         HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto();
-        opzioniPrenotazione.put("sportivoPrenotante", this.effettuaPrenotazioneHandler.getPrenotazioneInAtto().getSportivoPrenotante());     
+        SportivoDTO sportivoPrenotanteDTO = new SportivoDTO();
+        sportivoPrenotanteDTO.impostaValoriDTO(this.effettuaPrenotazioneHandler.getPrenotazioneInAtto().getSportivoPrenotante());
+        System.out.println("EMAIL SPORTIVO : ");
+        opzioniPrenotazione.put("sportivoPrenotante", sportivoPrenotanteDTO);     
         opzioniPrenotazione.put("formPrenotaImpianto", new FormPrenotaImpianto());
         ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", opzioniPrenotazione);
         return opzioniPrenotazioneImpianto;
