@@ -98,7 +98,7 @@ public class UtentePolisportiva extends UtentePolisportivaAbstract implements Se
                 case "nome":
                     this.setNome((String)mappaProprieta.get(chiave));
                     break;
-                case "cognome":
+                case "conome":
                     this.setCognome((String)mappaProprieta.get(chiave));
                     break;
                 case "email":

@@ -25,7 +25,6 @@ import it.univaq.esc.model.UtentePolisportivaBuilder;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.ImpiantoRepository;
 import it.univaq.esc.repository.PrenotazioneRepository;
-import it.univaq.esc.repository.SportRepository;
 import it.univaq.esc.repository.SportivoRepository;
 import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
 @Component
@@ -46,9 +45,6 @@ public class PopolaDB {
     @Autowired
     private AppuntamentoRepository appuntamentoRepository;
 
-    @Autowired
-    private SportRepository sportRepo;
-
     
     public PopolaDB(){}
 
@@ -57,11 +53,6 @@ public class PopolaDB {
         Sport calcetto = new Sport("calcetto", 10);
         Sport tennis = new Sport("tennis", 2);
         Sport pallavolo = new Sport("pallavolo", 12);
-
-        sportRepo.save(calcetto);
-        sportRepo.save(tennis);
-        sportRepo.save(pallavolo);
-
         
         UtentePolisportivaAbstract sportivoPrenotante = new UtentePolisportivaBuilder().assegnaRuoloSportivo().build();
         Map<String, Object> mappaProprieta = new HashMap<String, Object>();

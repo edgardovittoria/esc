@@ -23,7 +23,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Sportivo extends RuoloUtentePolisportivaDecorator{
 
     
-    @ManyToMany()
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "sport_praticati_sportivi",
                 joinColumns = {@JoinColumn(name="email")},
                 inverseJoinColumns = {@JoinColumn(name="sport_praticato")})
