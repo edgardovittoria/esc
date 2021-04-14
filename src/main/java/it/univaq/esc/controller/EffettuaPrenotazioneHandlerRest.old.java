@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
@@ -52,7 +53,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
     @GetMapping("/impiantiDisponibili")
     @CrossOrigin
-    public @ResponseBody List<Impianto> getImpiantiDisponibili(){
+    public @ResponseBody List<ImpiantoDTO> getImpiantiDisponibili(){
         Calendario calendario = new Calendario();
         List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();        
         for(Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()){
@@ -60,7 +61,13 @@ public class EffettuaPrenotazioneHandlerRest {
                 listaImpiantiDisponibili.add(impianto);
             }
         }
-        return listaImpiantiDisponibili;
+        List<ImpiantoDTO> listaImpiantiDisponibiliDTO = new ArrayList<ImpiantoDTO>();  
+        for(Impianto impianto : listaImpiantiDisponibili){
+            ImpiantoDTO impiantoDTO = new ImpiantoDTO();
+            impiantoDTO.impostaValoriDTO(impianto);
+            listaImpiantiDisponibiliDTO.add(impiantoDTO);
+        }
+        return listaImpiantiDisponibiliDTO;
         
     }
 }

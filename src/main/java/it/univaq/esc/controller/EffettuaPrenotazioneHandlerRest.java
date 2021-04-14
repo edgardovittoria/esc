@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
+import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.RegistroImpianti;
+import it.univaq.esc.model.RegistroSportivi;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.UtentePolisportivaAbstract;
 
 @RestController
 @RequestMapping("/effettuaPrenotazione")
@@ -26,6 +29,9 @@ public class EffettuaPrenotazioneHandlerRest {
 
     @Autowired
     private RegistroImpianti registroImpianti;
+
+    @Autowired
+    private RegistroSportivi registroSportivi;
     
     public EffettuaPrenotazioneHandlerRest(){}
 
@@ -69,5 +75,18 @@ public class EffettuaPrenotazioneHandlerRest {
         }
         return listaImpiantiDisponibiliDTO;
         
+    }
+
+    @GetMapping("/sportiviPolisportiva")
+    @CrossOrigin
+    public @ResponseBody List<SportivoDTO> getSportiviPolisportiva(){
+        List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
+        for(UtentePolisportivaAbstract utente : this.registroSportivi.getListaSportivi()){
+            SportivoDTO sportivoDTO = new SportivoDTO();
+            sportivoDTO.impostaValoriDTO(utente);
+            listaSportiviDTO.add(sportivoDTO);
+        }
+
+        return listaSportiviDTO;
     }
 }
