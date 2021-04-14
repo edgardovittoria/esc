@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.RegistroImpianti;
@@ -39,5 +40,20 @@ public class EffettuaPrenotazioneHandlerRest {
         }
         listaSportPraticabili.addAll(setSportPraticabili);
         return listaSportPraticabili;
+    }
+
+
+    @GetMapping("/impiantiDisponibili")
+    @CrossOrigin
+    public @ResponseBody List<Impianto> getImpiantiDisponibili(){
+        Calendario calendario = new Calendario();
+        List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();        
+        for(Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()){
+            if(!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(calendario)){
+                listaImpiantiDisponibili.add(impianto);
+            }
+        }
+        return listaImpiantiDisponibili;
+        
     }
 }
