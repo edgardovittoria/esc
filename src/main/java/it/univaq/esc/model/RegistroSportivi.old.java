@@ -30,6 +30,9 @@ public class RegistroSportivi {
     public void popola(){
         for(UtentePolisportivaAbstract utente : utentiRepository.findAll()){
             if(utente.getRuoliUtentePolisportiva().contains(TipoRuolo.SPORTIVO.toString())){
+                for(String ruolo : utente.getRuoliUtentePolisportiva()){
+                    System.out.println("Ruolo: " + ruolo);
+                }
                 
                 this.getListaSportivi().add(utente);
             }
