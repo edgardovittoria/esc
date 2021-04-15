@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
+import it.univaq.esc.dtoObjects.RegistroAppuntamentiDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
@@ -42,6 +43,8 @@ import it.univaq.esc.model.UtentePolisportivaAbstract;
 @RestController
 @RequestMapping("/effettuaPrenotazione")
 public class EffettuaPrenotazioneHandlerRest {
+    @Autowired
+    private RegistroAppuntamentiDTO RegistroAppuntamentiDTO;
 
     @Autowired
     private RegistroImpianti registroImpianti;
@@ -55,6 +58,14 @@ public class EffettuaPrenotazioneHandlerRest {
     private Prenotazione prenotazioneInAtto;
     
     public EffettuaPrenotazioneHandlerRest(){}
+
+
+    private RegistroAppuntamentiDTO getRegistroAppuntamentiDTO() {
+        return RegistroAppuntamentiDTO;
+    }
+
+
+    
 
 
     // @GetMapping("/sportPraticabili")
@@ -176,8 +187,9 @@ public class EffettuaPrenotazioneHandlerRest {
         
         this.registroImpianti.aggiornaCalendarioImpianto((Impianto)this.getPrenotazioneInAtto().getSingolaSpecificaExtra("impianto", this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)), calendarioDaUnire);
 
+        
         PrenotazioneDTO prenDTO = new PrenotazioneDTO();
-        prenDTO.impostaValoriDTO(this.prenotazioneInAtto);
+        prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getRegistroAppuntamentiDTO());
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
     }
 

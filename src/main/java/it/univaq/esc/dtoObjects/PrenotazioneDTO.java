@@ -14,8 +14,7 @@ import it.univaq.esc.model.Sport;
 
 public class PrenotazioneDTO {
 
-    @Autowired
-    private RegistroAppuntamentiDTO registroAppuntamentiDTO;
+    
 
     private SportivoDTO sportivoPrenotante;  
     private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();   
@@ -59,15 +58,15 @@ public class PrenotazioneDTO {
         this.getgetAppuntamenti().add(appuntamento);
     }
 
-    public void impostaValoriDTO(Prenotazione prenotazione){
+    public void impostaValoriDTO(Prenotazione prenotazione, RegistroAppuntamentiDTO registroAppuntamentiDTO){
         this.sportivoPrenotante = new SportivoDTO();
         this.sportivoPrenotante.impostaValoriDTO(prenotazione.getSportivoPrenotante());
        
         for(PrenotazioneSpecs specs : prenotazione.getListaSpecifichePrenotazione()){
             PrenotazioneSpecsDTO specificaDTO = FactorySpecifichePrenotazione.getSpecifichePrenotazioneDTO(specs.getTipoPrenotazione());
             specificaDTO.impostaValoriDTO(specs);
-            System.out.println(this.registroAppuntamentiDTO.toString());
-            for(AppuntamentoDTO appDTO : this.registroAppuntamentiDTO.getListaAppuntamenti()){
+            System.out.println(registroAppuntamentiDTO.toString());
+            for(AppuntamentoDTO appDTO : registroAppuntamentiDTO.getListaAppuntamenti()){
                 if(appDTO.getSpecificaPrenotazione().getIdPrenotazioneSPecsDTO() == specificaDTO.getIdPrenotazioneSPecsDTO()){
                     this.aggiungiAppuntamento(appDTO);
                 }

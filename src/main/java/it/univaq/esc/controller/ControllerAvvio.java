@@ -105,7 +105,7 @@ public class ControllerAvvio {
             specifichePrenotazione.impostaValoriDTO(prenotazione.getListaSpecifichePrenotazione().get(0));
             specifichePrenotazione.impostaValoriSpecificheExtraPrenotazioneDTO(prenotazione.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione());
             PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO();
-            prenotazioneDTO.impostaValoriDTO(prenotazione);
+            // prenotazioneDTO.impostaValoriDTO(prenotazione);
             prenotazioniDTO.add(prenotazioneDTO);
         }
         dettagliProfiloSportivo.put("prenotazioniEffettuate", prenotazioniDTO);
