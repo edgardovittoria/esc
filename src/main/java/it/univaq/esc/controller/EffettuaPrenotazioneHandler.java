@@ -8,13 +8,17 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
+import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.*;
@@ -158,7 +162,7 @@ public class EffettuaPrenotazioneHandler {
     }
 
     @PostMapping("/confermaPrenotazione")
-    public String confermaPrenotazione(@ModelAttribute FormPrenotaImpianto formPrenotaImpianto, RedirectAttributes redirectAttributes){
+    public ResponseEntity<PrenotazioneDTO> confermaPrenotazione(@RequestBody FormPrenotaImpianto formPrenotaImpianto){
         
         HashMap<String, Object> mappaValori = new HashMap<String, Object>();
         for(Sport sport : this.getSportPraticabili()){
@@ -200,9 +204,9 @@ public class EffettuaPrenotazioneHandler {
         
         this.registroImpianti.aggiornaCalendarioImpianto((Impianto)this.getPrenotazioneInAtto().getSingolaSpecificaExtra("impianto", this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)), calendarioDaUnire);
 
-        
-        redirectAttributes.addFlashAttribute("message", "La prenotazione è stata registrata con successo!");
-        return "redirect:/profilo";
+        PrenotazioneDTO prenDTO = new PrenotazioneDTO();
+        prenDTO.impostaValoriDTO(this.prenotazioneInAtto);
+        return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
     }
 
     

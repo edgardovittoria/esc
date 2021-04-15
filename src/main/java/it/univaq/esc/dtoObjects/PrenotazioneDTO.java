@@ -2,6 +2,10 @@ package it.univaq.esc.dtoObjects;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Prenotazione;
@@ -12,17 +16,17 @@ import it.univaq.esc.model.Sport;
 
 public class PrenotazioneDTO {
 
+    @Autowired
+    private RegistroAppuntamentiDTO registroAppuntamentiDTO;
 
     private SportivoDTO sportivoPrenotante;  
-    private List<PrenotazioneSpecsDTO> listaSpecifichePrenotazione = new ArrayList<PrenotazioneSpecsDTO>();    
+    private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();   
     
     
 
     public PrenotazioneDTO(){}
 
-    public PrenotazioneDTO(PrenotazioneSpecsDTO specifichePrenotazione){
-        this.aggiungiSpecificaPrenotazione(specifichePrenotazione);
-    }
+    
 
 
     // public List<ImpiantoDTO> getImpiantiPrenotati(){
@@ -46,39 +50,38 @@ public class PrenotazioneDTO {
         this.sportivoPrenotante = sportivoPrenotante;
     }
 
-    public List<PrenotazioneSpecsDTO> getSpecifichePrenotazione() {
-        return this.listaSpecifichePrenotazione;
+    public List<AppuntamentoDTO> getgetAppuntamenti() {
+        return this.appuntamenti;
     }
 
 
-    public void setListaSpecifichePrenotazione(List<PrenotazioneSpecsDTO> specifichePrenotazione) {
-        this.getSpecifichePrenotazione().addAll(specifichePrenotazione);
-    }
+    
 
-    public void aggiungiSpecificaPrenotazione(PrenotazioneSpecsDTO specifica){
-        this.getSpecifichePrenotazione().add(specifica);
+    public void aggiungiAppuntamento(AppuntamentoDTO appuntamento){
+        this.getgetAppuntamenti().add(appuntamento);
     }
 
     public void impostaValoriDTO(Prenotazione prenotazione){
         this.sportivoPrenotante = new SportivoDTO();
         this.sportivoPrenotante.impostaValoriDTO(prenotazione.getSportivoPrenotante());
-                
-        
+       
+        for(PrenotazioneSpecs specs : prenotazione.getListaSpecifichePrenotazione()){
+            PrenotazioneSpecsDTO specificaDTO = FactorySpecifichePrenotazione.getSpecifichePrenotazioneDTO(specs.getTipoPrenotazione());
+            specificaDTO.impostaValoriDTO(specs);
+            for(AppuntamentoDTO appDTO : this.registroAppuntamentiDTO.getListaAppuntamenti()){
+                if(appDTO.getSpecificaPrenotazione().getIdPrenotazioneSPecsDTO() == specificaDTO.getIdPrenotazioneSPecsDTO()){
+                    this.aggiungiAppuntamento(appDTO);
+                }
+            }
+        }
+         
     }
 
-    public Object getSingolaSpecificaDTO(String etichettaSpecificaDTO, PrenotazioneSpecsDTO specifica){
-        return specifica.getValoriSpecificheExtraPrenotazioneDTO().get(etichettaSpecificaDTO);
-    }
+    
 
     
 
 
 
-    /**
-     * @return List<PrenotazioneSpecsDTO> return the listaSpecifichePrenotazione
-     */
-    public List<PrenotazioneSpecsDTO> getListaSpecifichePrenotazione() {
-        return listaSpecifichePrenotazione;
-    }
-
+   
 }

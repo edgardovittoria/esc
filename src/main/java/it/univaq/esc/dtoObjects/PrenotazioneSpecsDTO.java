@@ -12,6 +12,8 @@ import it.univaq.esc.model.Sportivo;
 
 public abstract class PrenotazioneSpecsDTO {
 
+    private Long idPrenotazioneSpecsDTO;
+
     private boolean confermata = false;
 
     private float costo;
@@ -82,10 +84,18 @@ public abstract class PrenotazioneSpecsDTO {
         this.tipoSpecifica = tipoSpecifica;
     }
 
+    public void setIdPrenotazioneSpecsDTO(Long id){
+        this.idPrenotazioneSpecsDTO = id;
+    }
+
+    public Long getIdPrenotazioneSPecsDTO(){
+        return this.idPrenotazioneSpecsDTO;
+    }
 
     public void impostaValoriDTO(PrenotazioneSpecs prenotazioneSpecs){
         SportDTO sportAssociato = new SportDTO();
         sportAssociato.impostaValoriDTO(prenotazioneSpecs.getSportAssociato());
+        this.setIdPrenotazioneSpecsDTO(prenotazioneSpecs.getIDPrenotazioneSpecs());
     };
 
     public abstract void impostaValoriSpecificheExtraPrenotazioneDTO(Map<String, Object> mappaValori);

@@ -81,6 +81,10 @@ public abstract class PrenotazioneSpecs {
         return this.sportAssociato;
     }
 
+    public Long getIDPrenotazioneSpecs(){
+        return this.id;
+    }
+
 
     public abstract void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori);
     
@@ -95,5 +99,6 @@ public abstract class PrenotazioneSpecs {
     }
 
     public abstract String getTipoPrenotazione();
+
 
     }

@@ -104,7 +104,7 @@ public class ControllerAvvio {
             PrenotazioneSpecsDTO specifichePrenotazione = this.effettuaPrenotazioneHandler.getSpecifichePrenotazioneDTOByTipoPrenotazione(prenotazione.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione());
             specifichePrenotazione.impostaValoriDTO(prenotazione.getListaSpecifichePrenotazione().get(0));
             specifichePrenotazione.impostaValoriSpecificheExtraPrenotazioneDTO(prenotazione.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione());
-            PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO(specifichePrenotazione);
+            PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO();
             prenotazioneDTO.impostaValoriDTO(prenotazione);
             prenotazioniDTO.add(prenotazioneDTO);
         }
