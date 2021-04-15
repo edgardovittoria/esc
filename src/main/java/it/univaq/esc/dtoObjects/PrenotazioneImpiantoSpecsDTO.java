@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.Sportivo;
 
 public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
@@ -35,26 +35,20 @@ public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
    
 
     @Override
-    public void impostaValoriSpecificheExtraPrenotazioneDTO(Map<String, Object> mappaValori) {
+    public void impostaValoriDTO(PrenotazioneSpecs specifica) {
         
         // I posti liberi sono da eliminare perché si possono calcolare in automatico
         setPostiLiberi(12);
         
-        for(Sportivo invitato : (List<Sportivo>) mappaValori.get("invitati")){
+        for(Sportivo invitato : (List<Sportivo>) specifica.getValoriSpecificheExtraPrenotazione().get("invitati")){
             SportivoDTO invitatoDTO = new SportivoDTO();
             invitatoDTO.impostaValoriDTO(invitato);
             this.getInvitati().add(invitatoDTO);
         }
+        super.impostaValoriDTO(specifica);
         
     }
 
-    @Override
-    public Map<String, Object> getValoriSpecificheExtraPrenotazioneDTO() {
-        HashMap<String, Object> mappaValori = new  HashMap<String, Object>();
-        mappaValori.put("postiLiberi", this.getPostiLiberi());
-        mappaValori.put("invitati", this.getInvitati());
-        return mappaValori;
-    }
 
 
     

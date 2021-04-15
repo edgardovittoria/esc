@@ -43,6 +43,7 @@ import it.univaq.esc.model.UtentePolisportivaAbstract;
 @RestController
 @RequestMapping("/effettuaPrenotazione")
 public class EffettuaPrenotazioneHandlerRest {
+    
     @Autowired
     private RegistroAppuntamentiDTO RegistroAppuntamentiDTO;
 
@@ -128,6 +129,7 @@ public class EffettuaPrenotazioneHandlerRest {
             UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante);
             int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
             PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
+            prenotazioneSpecs.setTipoPrenotazione();
             setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
             prenotazioneSpecs.setPrenotazioneAssociata(getPrenotazioneInAtto());
             getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
@@ -184,7 +186,7 @@ public class EffettuaPrenotazioneHandlerRest {
         Calendario calendarioDaUnire = new Calendario(appuntamenti);
 
         this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto(), appuntamenti);
-        
+        this.getRegistroAppuntamentiDTO().aggiungiAppuntamento(appuntamento);
         this.registroImpianti.aggiornaCalendarioImpianto((Impianto)this.getPrenotazioneInAtto().getSingolaSpecificaExtra("impianto", this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)), calendarioDaUnire);
 
         

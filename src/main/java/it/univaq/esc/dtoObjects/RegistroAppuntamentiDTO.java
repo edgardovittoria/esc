@@ -37,4 +37,10 @@ public class RegistroAppuntamentiDTO {
     public List<AppuntamentoDTO> getListaAppuntamenti(){
         return this.appuntamenti;
     }
+
+    public void aggiungiAppuntamento(Appuntamento appuntamento){
+        AppuntamentoDTO appuntamentoDTO = new AppuntamentoDTO();
+        appuntamentoDTO.impostaValoriDTO(appuntamento);
+        appuntamenti.add(appuntamentoDTO);
+    }
 }

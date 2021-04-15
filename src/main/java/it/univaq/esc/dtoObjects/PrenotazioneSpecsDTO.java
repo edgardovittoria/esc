@@ -30,7 +30,7 @@ public abstract class PrenotazioneSpecsDTO {
     /**
      * @return boolean return the confermata
      */
-    public boolean isConfermata() {
+    public boolean getConfermata() {
         return confermata;
     }
 
@@ -95,11 +95,12 @@ public abstract class PrenotazioneSpecsDTO {
     public void impostaValoriDTO(PrenotazioneSpecs prenotazioneSpecs){
         SportDTO sportAssociato = new SportDTO();
         sportAssociato.impostaValoriDTO(prenotazioneSpecs.getSportAssociato());
+        this.setSportAssociato(sportAssociato);
         this.setIdPrenotazioneSpecsDTO(prenotazioneSpecs.getIDPrenotazioneSpecs());
     };
 
-    public abstract void impostaValoriSpecificheExtraPrenotazioneDTO(Map<String, Object> mappaValori);
-
-    public abstract Map<String, Object> getValoriSpecificheExtraPrenotazioneDTO();
+    public Long getIdPrenotazioneSpecsDTO() {
+        return idPrenotazioneSpecsDTO;
+    }
 
 }

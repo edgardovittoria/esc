@@ -121,9 +121,8 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
 
 
     @Override
-    public String getTipoPrenotazione() {
-        
-        return TipiPrenotazione.IMPIANTO.toString();
+    public void setTipoPrenotazione() {
+        this.tipoPrenotazione = TipiPrenotazione.IMPIANTO.toString();
     }
 
 }

@@ -36,7 +36,7 @@ public abstract class PrenotazioneSpecs {
     
     
     @Column
-    private String tipoPrenotazione;
+    protected String tipoPrenotazione;
 
     @ManyToOne()
     @JoinColumn()
@@ -98,7 +98,11 @@ public abstract class PrenotazioneSpecs {
         this.prenotazioneAssociata = prenotazioneAssociata;
     }
 
-    public abstract String getTipoPrenotazione();
+    public String getTipoPrenotazione(){
+        return this.tipoPrenotazione;
+    };
+
+    public abstract void setTipoPrenotazione();
 
 
     }

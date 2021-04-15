@@ -22,18 +22,7 @@ public class PrenotazioneDTO {
     
 
     public PrenotazioneDTO(){}
-
-    
-
-
-    // public List<ImpiantoDTO> getImpiantiPrenotati(){
-    //     List<ImpiantoDTO> impiantiPrenotati = new ArrayList<ImpiantoDTO>();
-    //     for (PrenotazioneSpecsDTO specifica : this.getListaSpecifichePrenotazione()){
-    //         impiantiPrenotati.add(specifica.getImpiantoPrenotato());
-    //     }
-    //     return impiantiPrenotati;
-    // }
-    
+ 
 
     
 
@@ -47,7 +36,7 @@ public class PrenotazioneDTO {
         this.sportivoPrenotante = sportivoPrenotante;
     }
 
-    public List<AppuntamentoDTO> getgetAppuntamenti() {
+    public List<AppuntamentoDTO> getAppuntamenti() {
         return this.appuntamenti;
     }
 
@@ -55,7 +44,7 @@ public class PrenotazioneDTO {
     
 
     public void aggiungiAppuntamento(AppuntamentoDTO appuntamento){
-        this.getgetAppuntamenti().add(appuntamento);
+        this.getAppuntamenti().add(appuntamento);
     }
 
     public void impostaValoriDTO(Prenotazione prenotazione, RegistroAppuntamentiDTO registroAppuntamentiDTO){
@@ -67,12 +56,17 @@ public class PrenotazioneDTO {
             specificaDTO.impostaValoriDTO(specs);
             System.out.println(registroAppuntamentiDTO.toString());
             for(AppuntamentoDTO appDTO : registroAppuntamentiDTO.getListaAppuntamenti()){
+                System.out.println("ID_SPECIFICA:" +appDTO.getSpecificaPrenotazione().getIdPrenotazioneSPecsDTO());
                 if(appDTO.getSpecificaPrenotazione().getIdPrenotazioneSPecsDTO() == specificaDTO.getIdPrenotazioneSPecsDTO()){
                     this.aggiungiAppuntamento(appDTO);
                 }
             }
         }
          
+    }
+
+    public void setAppuntamenti(List<AppuntamentoDTO> appuntamenti) {
+        this.appuntamenti = appuntamenti;
     }
 
     
