@@ -1,5 +1,6 @@
 package it.univaq.esc.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +11,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -124,6 +127,40 @@ public class EffettuaPrenotazioneHandlerRest {
 
             return mappaValori;
         }
+
+
+        @PostMapping("/aggiornaImpianti")
+        public @ResponseBody List<ImpiantoDTO> getListaImpianti(@RequestBody HashMap<String, Object> dati){        
+
+        
+        List<String> orario = (ArrayList<String>)dati.get("orario");
+        
+        List<Impianto> impiantiDisponibili =  this.getImpiantiDisponibiliByOrario(LocalDateTime.parse(orario.get(0)), LocalDateTime.parse(orario.get(1)));
+        List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
+        for(Impianto impianto : impiantiDisponibili){
+            for(ImpiantoSpecs specifica : impianto.getSpecificheImpianto()){
+                if(specifica.getSportPraticabile().getNome().equals(dati.get("sport"))){
+                    ImpiantoDTO impiantoDTO = new ImpiantoDTO();
+                    impiantoDTO.impostaValoriDTO(impianto);
+                    listaImpiantiDTODisponibili.add(impiantoDTO);
+                }
+            }
+            
+        } 
+
+        return listaImpiantiDTODisponibili;
+    }
+
+    private List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine){
+        List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
+        for(Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()){
+            if(!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)){
+                listaImpiantiDisponibili.add(impianto);
+            }
+        }
+        return listaImpiantiDisponibili;
+    }
+
 
 
         private RegistroSportivi getRegistroSportivi(){

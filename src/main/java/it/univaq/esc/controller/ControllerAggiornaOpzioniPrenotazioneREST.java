@@ -39,24 +39,5 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
         sportivoDTO.impostaValoriDTO(controller.getRegistroSportivi().getSportivoDaEmail(email));
         return sportivoDTO;
     }
-
-    @PostMapping("/impianti")
-    public @ResponseBody HashMap<Integer, String> getListaImpianti(@RequestBody HashMap<String, Object> dati){        
-
-        
-        List<String> orario = (ArrayList<String>)dati.get("orario");
-        
-        List<Impianto> impiantiDisponibili =  controller.getImpiantiDisponibiliByOrario(LocalDateTime.parse(orario.get(0)), LocalDateTime.parse(orario.get(1)));
-        HashMap<Integer, String> datiImpiantiDisponibili = new HashMap<Integer, String>();
-        for(Impianto impianto : impiantiDisponibili){
-            for(ImpiantoSpecs specifica : impianto.getSpecificheImpianto()){
-                if(specifica.getSportPraticabile().getNome().equals(dati.get("sport"))){
-                    datiImpiantiDisponibili.put(impianto.getIdImpianto(), impianto.getSpecificheImpianto().get(0).getTipoPavimentazione().toString());
-                }
-            }
-            
-        } 
-
-        return datiImpiantiDisponibili;
-    }
 }
+    
