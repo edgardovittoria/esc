@@ -10,6 +10,7 @@ import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.PrenotazioneSpecs;
+import it.univaq.esc.model.RegistroAppuntamenti;
 import it.univaq.esc.model.Sport;
 
 public class PrenotazioneDTO {
@@ -47,17 +48,16 @@ public class PrenotazioneDTO {
         this.getAppuntamenti().add(appuntamento);
     }
 
-    public void impostaValoriDTO(Prenotazione prenotazione, RegistroAppuntamentiDTO registroAppuntamentiDTO){
+    public void impostaValoriDTO(Prenotazione prenotazione, RegistroAppuntamenti registroAppuntamenti){
         this.sportivoPrenotante = new SportivoDTO();
         this.sportivoPrenotante.impostaValoriDTO(prenotazione.getSportivoPrenotante());
        
-        for(PrenotazioneSpecs specs : prenotazione.getListaSpecifichePrenotazione()){
-            PrenotazioneSpecsDTO specificaDTO = FactorySpecifichePrenotazione.getSpecifichePrenotazioneDTO(specs.getTipoPrenotazione());
-            specificaDTO.impostaValoriDTO(specs);
-            System.out.println(registroAppuntamentiDTO.toString());
-            for(AppuntamentoDTO appDTO : registroAppuntamentiDTO.getListaAppuntamenti()){
-                System.out.println("ID_SPECIFICA:" +appDTO.getSpecificaPrenotazione().getIdPrenotazioneSPecsDTO());
-                if(appDTO.getSpecificaPrenotazione().getIdPrenotazioneSPecsDTO() == specificaDTO.getIdPrenotazioneSPecsDTO()){
+        for(PrenotazioneSpecs specs : prenotazione.getListaSpecifichePrenotazione()){           
+            for(Appuntamento app : registroAppuntamenti.getListaAppuntamenti()){
+               
+                if(app.getPrenotazioneSpecsAppuntamento().getIDPrenotazioneSpecs() == specs.getIDPrenotazioneSpecs()){
+                    AppuntamentoDTO appDTO = new AppuntamentoDTO();
+                    appDTO.impostaValoriDTO(app);
                     this.aggiungiAppuntamento(appDTO);
                 }
             }

@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
-import it.univaq.esc.dtoObjects.RegistroAppuntamentiDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
@@ -33,11 +32,11 @@ import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.PrenotazioneSpecs;
+import it.univaq.esc.model.RegistroAppuntamenti;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroPrenotazioni;
 import it.univaq.esc.model.RegistroSportivi;
 import it.univaq.esc.model.Sport;
-import it.univaq.esc.model.Sportivo;
 import it.univaq.esc.model.UtentePolisportivaAbstract;
 
 @RestController
@@ -45,7 +44,7 @@ import it.univaq.esc.model.UtentePolisportivaAbstract;
 public class EffettuaPrenotazioneHandlerRest {
     
     @Autowired
-    private RegistroAppuntamentiDTO RegistroAppuntamentiDTO;
+    private RegistroAppuntamenti registroAppuntamenti;
 
     @Autowired
     private RegistroImpianti registroImpianti;
@@ -61,8 +60,8 @@ public class EffettuaPrenotazioneHandlerRest {
     public EffettuaPrenotazioneHandlerRest(){}
 
 
-    private RegistroAppuntamentiDTO getRegistroAppuntamentiDTO() {
-        return RegistroAppuntamentiDTO;
+    private RegistroAppuntamenti getRegistroAppuntamenti() {
+        return this.registroAppuntamenti;
     }
 
 
@@ -129,7 +128,6 @@ public class EffettuaPrenotazioneHandlerRest {
             UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante);
             int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
             PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
-            prenotazioneSpecs.setTipoPrenotazione();
             setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
             prenotazioneSpecs.setPrenotazioneAssociata(getPrenotazioneInAtto());
             getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
@@ -185,13 +183,13 @@ public class EffettuaPrenotazioneHandlerRest {
         appuntamenti.add(appuntamento);
         Calendario calendarioDaUnire = new Calendario(appuntamenti);
 
-        this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto(), appuntamenti);
-        this.getRegistroAppuntamentiDTO().aggiungiAppuntamento(appuntamento);
+        this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
+        this.getRegistroAppuntamenti().salvaListaAppuntamenti(appuntamenti);
         this.registroImpianti.aggiornaCalendarioImpianto((Impianto)this.getPrenotazioneInAtto().getSingolaSpecificaExtra("impianto", this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)), calendarioDaUnire);
 
         
         PrenotazioneDTO prenDTO = new PrenotazioneDTO();
-        prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getRegistroAppuntamentiDTO());
+        prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getRegistroAppuntamenti());
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
     }
 

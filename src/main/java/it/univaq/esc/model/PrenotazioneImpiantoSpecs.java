@@ -39,7 +39,9 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     @JoinColumn()
     private Manutentore manutentore;
  
-    public PrenotazioneImpiantoSpecs(){}
+    public PrenotazioneImpiantoSpecs(){
+        super();
+    }
 
     
 
@@ -121,7 +123,7 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
 
 
     @Override
-    public void setTipoPrenotazione() {
+    protected void setTipoPrenotazione() {
         this.tipoPrenotazione = TipiPrenotazione.IMPIANTO.toString();
     }
 

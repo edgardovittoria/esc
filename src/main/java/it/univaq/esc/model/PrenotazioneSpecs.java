@@ -85,6 +85,9 @@ public abstract class PrenotazioneSpecs {
         return this.id;
     }
 
+    public PrenotazioneSpecs(){
+        this.setTipoPrenotazione();
+    }
 
     public abstract void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori);
     
@@ -102,7 +105,7 @@ public abstract class PrenotazioneSpecs {
         return this.tipoPrenotazione;
     };
 
-    public abstract void setTipoPrenotazione();
+    protected abstract void setTipoPrenotazione();
 
 
     }
