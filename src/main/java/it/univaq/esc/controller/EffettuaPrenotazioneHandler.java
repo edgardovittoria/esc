@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -161,54 +162,7 @@ public class EffettuaPrenotazioneHandler {
         return this.getRegistroPrenotazioni().getPrenotazioniByEmailSportivo(email);
     }
 
-    @PostMapping("/confermaPrenotazione")
-    public ResponseEntity<PrenotazioneDTO> confermaPrenotazione(@RequestBody FormPrenotaImpianto formPrenotaImpianto){
-        
-        HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-        for(Sport sport : this.getSportPraticabili()){
-            if(sport.getNome().equals(formPrenotaImpianto.getSportSelezionato())){
-                this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).setSportAssociato(sport);
-            }
-        }
-        
-        
-
-        // impianti.add(this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
-        // mappaValori.put("impianto", impianti);
-        
-        // Calendario calendarioPrenotazione = new Calendario();
-        LocalDateTime dataInizio = LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraInizio());
-        LocalDateTime dataFine = LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraFine());
-
-        // calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine , this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
-        //this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
-
-        Appuntamento appuntamento = new Appuntamento(dataInizio, dataFine, this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0));
-        appuntamento.aggiungiPartecipante(this.getPrenotazioneInAtto().getSportivoPrenotante());
-
-        List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
-        for(String email : formPrenotaImpianto.getSportiviInvitati()){
-            sportivi.add(this.getRegistroSportivi().getSportivoDaEmail(email));
-        }
-
-        mappaValori.put("invitati", sportivi);
-        mappaValori.put("impianto", this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
-
-        this.getPrenotazioneInAtto().impostaValoriSpecificheExtraSingolaPrenotazioneSpecs(mappaValori, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
-
-        List<Appuntamento> appuntamenti = new ArrayList<Appuntamento>();
-        appuntamenti.add(appuntamento);
-        Calendario calendarioDaUnire = new Calendario(appuntamenti);
-
-        this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto(), appuntamenti);
-        
-        this.registroImpianti.aggiornaCalendarioImpianto((Impianto)this.getPrenotazioneInAtto().getSingolaSpecificaExtra("impianto", this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)), calendarioDaUnire);
-
-        PrenotazioneDTO prenDTO = new PrenotazioneDTO();
-        prenDTO.impostaValoriDTO(this.prenotazioneInAtto);
-        return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
-    }
-
+    
     
 
     // fine temporaneo

@@ -12,8 +12,6 @@ import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.Sport;
 
-
-
 public class PrenotazioneDTO {
 
     @Autowired
@@ -68,6 +66,7 @@ public class PrenotazioneDTO {
         for(PrenotazioneSpecs specs : prenotazione.getListaSpecifichePrenotazione()){
             PrenotazioneSpecsDTO specificaDTO = FactorySpecifichePrenotazione.getSpecifichePrenotazioneDTO(specs.getTipoPrenotazione());
             specificaDTO.impostaValoriDTO(specs);
+            System.out.println(this.registroAppuntamentiDTO.toString());
             for(AppuntamentoDTO appDTO : this.registroAppuntamentiDTO.getListaAppuntamenti()){
                 if(appDTO.getSpecificaPrenotazione().getIdPrenotazioneSPecsDTO() == specificaDTO.getIdPrenotazioneSPecsDTO()){
                     this.aggiungiAppuntamento(appDTO);
