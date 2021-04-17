@@ -3,8 +3,7 @@ package it.univaq.esc.test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import it.univaq.esc.model.Appuntamento;
-import it.univaq.esc.model.Prenotazione;
+
 import it.univaq.esc.model.RegistroPrenotazioni;
 
 @Component

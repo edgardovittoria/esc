@@ -219,7 +219,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
     private List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine){
         List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
-        for(Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()){
+        for(Impianto impianto : this.getRegistroImpianti().getListaImpiantiPolisportiva()){
             if(!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)){
                 listaImpiantiDisponibili.add(impianto);
             }

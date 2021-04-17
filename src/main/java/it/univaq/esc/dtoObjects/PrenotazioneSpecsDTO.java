@@ -1,14 +1,10 @@
 package it.univaq.esc.dtoObjects;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
-import it.univaq.esc.model.Appuntamento;
 
 import it.univaq.esc.model.PrenotazioneSpecs;
 
-import it.univaq.esc.model.Sportivo;
+
 
 public abstract class PrenotazioneSpecsDTO {
 

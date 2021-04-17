@@ -18,15 +18,12 @@ import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.PrenotazioneImpiantoSpecs;
 import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.Sport;
-import it.univaq.esc.model.Sportivo;
-import it.univaq.esc.model.TipiPrenotazione;
 import it.univaq.esc.model.UtentePolisportivaAbstract;
 import it.univaq.esc.model.UtentePolisportivaBuilder;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.ImpiantoRepository;
-import it.univaq.esc.repository.PrenotazioneRepository;
+
 import it.univaq.esc.repository.SportRepository;
-import it.univaq.esc.repository.SportivoRepository;
 import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
 @Component
 public class PopolaDB {
@@ -40,8 +37,7 @@ public class PopolaDB {
     @Autowired
     private ImpiantoRepository impiantoRepository;
 
-    @Autowired
-    private PrenotazioneRepository prenotazioneRepository;
+    
 
     @Autowired
     private AppuntamentoRepository appuntamentoRepository;

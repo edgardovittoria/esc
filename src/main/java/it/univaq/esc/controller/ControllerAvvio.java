@@ -3,7 +3,7 @@ package it.univaq.esc.controller;
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
-import it.univaq.esc.dtoObjects.SportDTO;
+
 import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.*;
 

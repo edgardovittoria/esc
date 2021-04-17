@@ -7,8 +7,7 @@ import java.util.List;
 
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.Appuntamento;
-import it.univaq.esc.model.PrenotazioneSpecs;
-import it.univaq.esc.model.Sportivo;
+
 import it.univaq.esc.model.UtentePolisportivaAbstract;
 
 public class AppuntamentoDTO {

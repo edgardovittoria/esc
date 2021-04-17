@@ -1,6 +1,6 @@
 package it.univaq.esc.dtoObjects;
 
-import it.univaq.esc.model.Sportivo;
+
 import it.univaq.esc.model.UtentePolisportivaAbstract;
 
 public class SportivoDTO {

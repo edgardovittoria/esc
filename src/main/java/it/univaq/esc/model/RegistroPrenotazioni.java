@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
-import it.univaq.esc.repository.AppuntamentoRepository;
+
 import it.univaq.esc.repository.PrenotazioneRepository;
 
 
@@ -20,8 +20,6 @@ public class RegistroPrenotazioni {
     @Autowired 
     private PrenotazioneRepository prenotazioneRepository;
 
-    @Autowired
-    private AppuntamentoRepository appuntamentoRepository;
 
     private List<Prenotazione> prenotazioniEffettuate = new ArrayList<Prenotazione>();
     //private static RegistroPrenotazioni instance = null;

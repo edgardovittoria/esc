@@ -1,9 +1,9 @@
 package it.univaq.esc.dtoObjects;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.Sportivo;

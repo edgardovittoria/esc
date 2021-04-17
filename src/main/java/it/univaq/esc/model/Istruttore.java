@@ -7,8 +7,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
 @Entity
 @DiscriminatorValue(value = "Istruttore")
@@ -33,14 +31,14 @@ public class Istruttore extends RuoloUtentePolisportivaDecorator{
         return calendarioLezioni;
     }
 
-    private void setCalendarioLezioni(Calendario calendarioLezioni) {
-        this.calendarioLezioni = calendarioLezioni;
+    private void setCalendarioLezioni(Calendario calendarioLezioniDaAggiungere) {
+        this.getCalendarioLezioni().unisciCalendario(calendarioLezioniDaAggiungere);
     }
 
     @Override
     public void setProprieta(Map<String, Object> mappaProprieta) {
         this.getSportInsegnati().addAll((List<Sport>)mappaProprieta.get("sportInsegnati"));
-        this.getCalendarioLezioni().unisciCalendario((Calendario)mappaProprieta.get("calendarioLezioni"));
+        this.setCalendarioLezioni((Calendario)mappaProprieta.get("calendarioLezioni"));
         this.getUtentePolisportiva().setProprieta(mappaProprieta);
     }
 

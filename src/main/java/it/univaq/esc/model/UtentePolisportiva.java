@@ -9,8 +9,7 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.PrimaryKeyJoinColumn;
+
 
 @Entity
 @DiscriminatorValue(value = "UtenteBase")
@@ -127,7 +126,7 @@ public class UtentePolisportiva extends UtentePolisportivaAbstract implements Se
 
     @Override
     public List<String> getRuoliUtentePolisportiva() {
-        // TODO Auto-generated method stub
+        
         return new ArrayList<String>();
     }
 

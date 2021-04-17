@@ -3,15 +3,14 @@ package it.univaq.esc.dtoObjects;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import it.univaq.esc.factory.FactorySpecifichePrenotazione;
+
+
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.RegistroAppuntamenti;
-import it.univaq.esc.model.Sport;
+
 
 public class PrenotazioneDTO {
 
