@@ -93,6 +93,7 @@ public abstract class PrenotazioneSpecsDTO {
         sportAssociato.impostaValoriDTO(prenotazioneSpecs.getSportAssociato());
         this.setSportAssociato(sportAssociato);
         this.setIdPrenotazioneSpecsDTO(prenotazioneSpecs.getIDPrenotazioneSpecs());
+        this.setTipoSpecifica(prenotazioneSpecs.getTipoPrenotazione());
     };
 
     public Long getIdPrenotazioneSpecsDTO() {
