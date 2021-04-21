@@ -1,9 +1,4 @@
 package it.univaq.esc.model;
-
-
-
-
-import java.beans.Transient;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -18,10 +13,8 @@ import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import it.univaq.esc.model.costi.ListinoPrezziDescrizioniPolisportiva;
 import it.univaq.esc.model.costi.SpecificaDesc;
+
 
 
 
@@ -50,6 +43,7 @@ public abstract class PrenotazioneSpecs {
     @JoinColumn
     private SpecificaDesc specificaDescription;
 
+    
    
 
     @ManyToOne(cascade = CascadeType.ALL)

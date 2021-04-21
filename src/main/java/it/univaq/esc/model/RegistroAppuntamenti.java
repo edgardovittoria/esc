@@ -55,6 +55,11 @@ public class RegistroAppuntamenti {
         return appuntamentoRepository;
     }
 
+
+    public Appuntamento getAppuntamentoBySpecificaAssociata(PrenotazioneSpecs prenotazioneSpecs){
+        return this.getAppuntamentoRepository().findByPrenotazioneSpecsAppuntamento_Id(prenotazioneSpecs.getIDPrenotazioneSpecs());
+    }
+
    
 
 }

@@ -17,12 +17,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 
@@ -43,6 +45,9 @@ public class Appuntamento {
     @JsonIdentityReference(alwaysAsId = true)
     private PrenotazioneSpecs prenotazioneSpecsAppuntamento;
 
+    @Transient
+    private CalcolatoreCosto calcolatoreCosto;
+
     @ManyToMany()
     @JoinColumn()
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -59,6 +64,18 @@ public class Appuntamento {
 
     public Impianto getImpiantoPrenotato(){
         return (Impianto)this.getPrenotazioneSpecsAppuntamento().getValoriSpecificheExtraPrenotazione().get("impianto");
+    }
+
+    private CalcolatoreCosto getCalcolatoreCosto(){
+        return this.calcolatoreCosto;
+    } 
+
+    public void calcolaCosto(){
+        this.getPrenotazioneSpecsAppuntamento().setCosto(getCalcolatoreCosto().calcolaCosto(this));
+    }
+
+    public void setCalcolatoreCosto(CalcolatoreCosto calcolatoreCosto){
+        this.calcolatoreCosto = calcolatoreCosto;
     }
 
     public List<UtentePolisportivaAbstract> getListaPartecipanti() {

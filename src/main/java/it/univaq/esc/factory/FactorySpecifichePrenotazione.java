@@ -6,6 +6,7 @@ import it.univaq.esc.dtoObjects.PrenotazioneImpiantoSpecsDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 import it.univaq.esc.model.PrenotazioneImpiantoSpecs;
 import it.univaq.esc.model.PrenotazioneSpecs;
+import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 
 
 

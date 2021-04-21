@@ -11,4 +11,5 @@ public interface AppuntamentoRepository extends JpaRepository<Appuntamento, Inte
 
     //public List<Appuntamento> findByPrenotazioneSpecsAppuntamento_ImpiantoPrenotato(Impianto impiantoPrenotato);
 
+    public Appuntamento findByPrenotazioneSpecsAppuntamento_Id(Long idPrenotazioneSPecs);
 }

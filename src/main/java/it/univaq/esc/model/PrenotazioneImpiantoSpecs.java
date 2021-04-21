@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+
+
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 @Entity
@@ -21,6 +23,10 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
 
 
     
+    public PrenotazioneImpiantoSpecs(){}
+
+
+
     @ManyToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<UtentePolisportivaAbstract> invitati = new ArrayList<UtentePolisportivaAbstract>();
@@ -37,7 +43,7 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     @JoinColumn()
     private UtentePolisportivaAbstract manutentore;
  
-    public PrenotazioneImpiantoSpecs(){}
+    
 
     
 

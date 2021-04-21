@@ -37,6 +37,9 @@ import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroPrenotazioni;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.costi.ListinoPrezziDescrizioniPolisportiva;
+import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
+import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
+import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.utenti.RegistroSportivi;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
@@ -137,12 +140,20 @@ public class EffettuaPrenotazioneHandlerRest {
         public @ResponseBody Map<String, Object> avviaNuovaPrenotazioneImpianto(@RequestParam(name="email") String emailSportivoPrenotante, @RequestParam(name="tipoPrenotazione") String tipoPrenotazione){
             UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante);
             int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
+            
             PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
             setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
             prenotazioneSpecs.setPrenotazioneAssociata(getPrenotazioneInAtto());
             getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
+
+            // Creazione calcolatore che poi dovrà finire altrove
+            CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
+            calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
+            //---------------------------------------------------------------------------------------
+
             Appuntamento appuntamento = new Appuntamento();
             appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
+            appuntamento.setCalcolatoreCosto(calcolatoreCosto);
             appuntamento.aggiungiPartecipante(sportivoPrenotante);
            
             Map<String, Object> mappaValori = new HashMap<String, Object>();
@@ -193,6 +204,10 @@ public class EffettuaPrenotazioneHandlerRest {
         mappaValori.put("impianto", this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
 
         this.getPrenotazioneInAtto().impostaValoriSpecificheExtraSingolaPrenotazioneSpecs(mappaValori, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+
+        //Calcolo costo prenotazioneSpecs
+        appuntamento.calcolaCosto();
+        //----------------------------------
 
         List<Appuntamento> appuntamenti = new ArrayList<Appuntamento>();
         appuntamenti.add(appuntamento);
