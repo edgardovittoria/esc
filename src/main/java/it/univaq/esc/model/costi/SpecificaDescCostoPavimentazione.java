@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.costi;
 
 import java.util.Map;
 
@@ -7,18 +7,17 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue(value = "CostoPavimentazione")
+@DiscriminatorValue(value = "COSTO_PAVIMENTAZIONE")
 public class SpecificaDescCostoPavimentazione extends SpecificaDescDecorator{
     
     @Column
     private String tipoPavimentazione;
     
 
-    @Override
-    public float getCosto() {
-        float costoBase = this.getSpecifica().getCosto();
-        return (costoBase*this.costo)/100;
+    public SpecificaDescCostoPavimentazione(){
+        super();
     }
+    
 
     private String getTipoPavimentazione() {
         return tipoPavimentazione;
@@ -27,10 +26,6 @@ public class SpecificaDescCostoPavimentazione extends SpecificaDescDecorator{
     private void setTipoPavimentazione(String tipoPavimentazione) {
         this.tipoPavimentazione = tipoPavimentazione;
     }
-
-    
-
-    
 
     
 
@@ -48,10 +43,24 @@ public class SpecificaDescCostoPavimentazione extends SpecificaDescDecorator{
         return mappaProprieta;
     }
 
-    @Override
-    public void setTipoSpecificaDesc() {
-        this.tipoSpecificaDesc = TipoSpecificaDesc.COSTO_PAVIMENTAZIONE.toString();
+    // @Override
+    // public void setTipoSpecificaDesc() {
+    //     this.tipoSpecificaDesc = TipoSpecificaDesc.COSTO_PAVIMENTAZIONE.toString();
         
+    // }
+
+    @Override
+    public Map<String, Float> getMappaCosti() {
+        Map<String, Float> mappaCosti = this.getSpecifica().getMappaCosti();
+        mappaCosti.put(this.getTipoPavimentazione(), this.getCosto());
+
+        return mappaCosti;
+    }
+
+
+    @Override
+    public String getTipoSpecificaDesc() {
+        return TipoSpecificaDesc.COSTO_PAVIMENTAZIONE.toString();
     }
 
 }

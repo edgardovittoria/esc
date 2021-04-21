@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.utenti;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
-
 import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
 
 

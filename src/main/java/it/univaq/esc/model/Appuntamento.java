@@ -23,6 +23,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+
 
 @Entity
 @Table(name = "appuntamenti")

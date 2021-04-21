@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.costi;
 
 public enum TipoSpecificaDesc {
     

@@ -1,10 +1,12 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.utenti;
 
 import java.util.List;
 import java.util.Map;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+
+import it.univaq.esc.model.Calendario;
 
 @Entity
 @DiscriminatorValue(value = "Manutentore")

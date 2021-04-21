@@ -24,6 +24,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+
 
 @Entity
 @Table(name = "prenotazioni")

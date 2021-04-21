@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.utenti;
 
 import java.io.Serializable;
 import java.util.ArrayList;

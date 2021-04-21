@@ -1,7 +1,9 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.costi;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Column;
@@ -10,8 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import it.univaq.esc.model.Sport;
+
 @Entity
-@DiscriminatorValue(value = "CostoOrario")
+@DiscriminatorValue(value = "COSTO_ORARIO")
 public class SpecificaDescCostoOrario extends SpecificaDesc implements Serializable{
 
     @Column
@@ -20,11 +24,10 @@ public class SpecificaDescCostoOrario extends SpecificaDesc implements Serializa
     @JoinColumn
     private Sport sport;
 
-    
-    @Override
-    public float getCosto() {
-        return this.costo;
+    public SpecificaDescCostoOrario(){
+       // super();
     }
+    
     @Override
     public void setTipoPrenotazione(String tipoPrenotazione) {
         this.tipoPrenotazione = tipoPrenotazione;
@@ -52,15 +55,34 @@ public class SpecificaDescCostoOrario extends SpecificaDesc implements Serializa
     public Map<String, Object> getProprieta() {
         return new HashMap<String, Object>();
     }
-    @Override
-    public void setTipoSpecificaDesc() {
-        this.tipoSpecificaDesc = TipoSpecificaDesc.COSTO_ORARIO.toString();
+    // @Override
+    // public void setTipoSpecificaDesc() {
+    //     this.tipoSpecificaDesc = TipoSpecificaDesc.COSTO_ORARIO.toString();
         
-    }
+    // }
     @Override
     public void setCosto(float costo, String tipoSpecifica) {
         this.costo = costo;
         
+    }
+    @Override
+    public List<String> getListaTipiSpecificheDesc() {
+        List<String> listaTipiSpecificheDesc = new ArrayList<String>();
+        listaTipiSpecificheDesc.add(this.getTipoSpecificaDesc());
+
+        return listaTipiSpecificheDesc;
+    }
+    @Override
+    public Map<String, Float> getMappaCosti() {
+        Map<String, Float> mappaCosti = new HashMap<String, Float>();
+        mappaCosti.put("costoOrario", this.getCosto());
+
+        return mappaCosti;
+    }
+
+    @Override
+    public String getTipoSpecificaDesc() {
+        return TipoSpecificaDesc.COSTO_ORARIO.toString();
     }
 
 

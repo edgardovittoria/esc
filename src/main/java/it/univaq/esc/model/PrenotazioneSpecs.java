@@ -3,6 +3,7 @@ package it.univaq.esc.model;
 
 
 
+import java.beans.Transient;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import it.univaq.esc.model.costi.ListinoPrezziDescrizioniPolisportiva;
+import it.univaq.esc.model.costi.SpecificaDesc;
 
 
 
@@ -34,13 +40,15 @@ public abstract class PrenotazioneSpecs {
 
     
     
-    @Column
-    protected String tipoPrenotazione;
+    // @Column
+    // protected String tipoPrenotazione;
 
-    @ManyToOne()
-    @JoinColumn()
-    private Sport sportAssociato;
-
+    // @ManyToOne()
+    // @JoinColumn()
+    // private Sport sportAssociato;
+    @ManyToOne
+    @JoinColumn
+    private SpecificaDesc specificaDescription;
 
    
 
@@ -49,8 +57,16 @@ public abstract class PrenotazioneSpecs {
     private Prenotazione prenotazioneAssociata;
 
 
-
+    public PrenotazioneSpecs(){}
     
+
+    public SpecificaDesc getSpecificaDescription(){
+        return this.specificaDescription;
+    }
+
+    public void setSpecificaDescrtiption(SpecificaDesc specificaDescription){
+        this.specificaDescription = specificaDescription;
+    }
 
     public void setConfermata() {
         this.confermata = true;
@@ -72,21 +88,19 @@ public abstract class PrenotazioneSpecs {
         this.costo = costo;
     }
 
-    public void setSportAssociato(Sport sport){
-        this.sportAssociato = sport;
-    }
+    // public void setSportAssociato(Sport sport){
+    //     this.sportAssociato = sport;
+    // }
 
     public Sport getSportAssociato(){
-        return this.sportAssociato;
+        return this.getSpecificaDescription().getSport();
     }
 
     public Long getIDPrenotazioneSpecs(){
         return this.id;
     }
 
-    public PrenotazioneSpecs(){
-        this.setTipoPrenotazione();
-    }
+    
 
     public abstract void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori);
     
@@ -100,11 +114,9 @@ public abstract class PrenotazioneSpecs {
         this.prenotazioneAssociata = prenotazioneAssociata;
     }
 
-    public String getTipoPrenotazione(){
-        return this.tipoPrenotazione;
-    };
+    public abstract String getTipoPrenotazione();
 
-    protected abstract void setTipoPrenotazione();
+    //protected abstract void setTipoPrenotazione();
 
 
     }

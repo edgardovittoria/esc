@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
 
+import it.univaq.esc.model.utenti.Sportivo;
+
 @Entity
 @Table(name = "quotePartecipazione")
 public class QuotaPartecipazione {

@@ -1,4 +1,8 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.costi;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
@@ -8,9 +12,11 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 
+import it.univaq.esc.model.Sport;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "TipoSpecificaDesc")
+@DiscriminatorColumn(name = "TipoSpecificaDescDecorator")
 @DiscriminatorValue(value = "SpecificaDescDecorator")
 public abstract class SpecificaDescDecorator extends SpecificaDesc{
 
@@ -19,7 +25,9 @@ public abstract class SpecificaDescDecorator extends SpecificaDesc{
 
     
 
-    protected SpecificaDescDecorator(){}
+    protected SpecificaDescDecorator(){
+        //super();
+    }
     /**
      * @return SpecificaDesc return the specifica
      */
@@ -64,6 +72,16 @@ public abstract class SpecificaDescDecorator extends SpecificaDesc{
             this.getSpecifica().setCosto(costo, tipoSpecifica);
         }
     }
+
+    @Override
+    public List<String> getListaTipiSpecificheDesc(){
+        List<String> listaTipiSpecificheDesc = this.getSpecifica().getListaTipiSpecificheDesc();
+        listaTipiSpecificheDesc.add(this.getTipoSpecificaDesc());
+
+        return listaTipiSpecificheDesc;
+    }
+
+    
 
 
 }

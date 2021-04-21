@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.utenti;
 
 import java.util.List;
 import java.util.Map;

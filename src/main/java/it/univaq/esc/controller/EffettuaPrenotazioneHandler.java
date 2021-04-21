@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.*;
+import it.univaq.esc.model.utenti.RegistroSportivi;
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 
 @Controller

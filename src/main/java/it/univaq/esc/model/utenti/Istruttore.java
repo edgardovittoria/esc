@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.utenti;
 
 import java.util.List;
 import java.util.Map;
@@ -8,6 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
+
+import it.univaq.esc.model.Calendario;
+
+import it.univaq.esc.model.Sport;
 @Entity
 @DiscriminatorValue(value = "Istruttore")
 public class Istruttore extends RuoloUtentePolisportivaDecorator{

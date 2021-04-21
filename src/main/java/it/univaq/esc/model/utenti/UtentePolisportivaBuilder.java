@@ -1,6 +1,9 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.utenti;
 
 import java.util.List;
+
+
+import it.univaq.esc.model.Sport;
 
 public class UtentePolisportivaBuilder {
     

@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.utenti;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,9 @@ import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+
+
+import it.univaq.esc.model.Sport;
 
 @Entity
 @DiscriminatorValue(value = "Sportivo")

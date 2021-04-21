@@ -6,7 +6,7 @@ import java.util.List;
 
 
 import it.univaq.esc.model.PrenotazioneSpecs;
-import it.univaq.esc.model.Sportivo;
+import it.univaq.esc.model.utenti.Sportivo;
 
 public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
     

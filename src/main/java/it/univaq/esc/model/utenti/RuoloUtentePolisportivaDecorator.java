@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.utenti;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
@@ -8,6 +8,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import javax.persistence.OneToOne;
+
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)

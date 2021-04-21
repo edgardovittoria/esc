@@ -35,9 +35,10 @@ import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.RegistroAppuntamenti;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroPrenotazioni;
-import it.univaq.esc.model.RegistroSportivi;
 import it.univaq.esc.model.Sport;
-import it.univaq.esc.model.UtentePolisportivaAbstract;
+import it.univaq.esc.model.costi.ListinoPrezziDescrizioniPolisportiva;
+import it.univaq.esc.model.utenti.RegistroSportivi;
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 @RestController
 @RequestMapping("/effettuaPrenotazione")
@@ -55,9 +56,18 @@ public class EffettuaPrenotazioneHandlerRest {
     @Autowired
     private RegistroPrenotazioni registroPrenotazioni;
 
+    @Autowired
+    private ListinoPrezziDescrizioniPolisportiva listinoPrezziDescrizioniPolisportiva;
+
     private Prenotazione prenotazioneInAtto;
     
     public EffettuaPrenotazioneHandlerRest(){}
+
+
+    public ListinoPrezziDescrizioniPolisportiva getListinoPrezziDescrizioniPolisportiva() {
+        return listinoPrezziDescrizioniPolisportiva;
+    }
+
 
 
     private RegistroAppuntamenti getRegistroAppuntamenti() {
@@ -148,9 +158,14 @@ public class EffettuaPrenotazioneHandlerRest {
     public ResponseEntity<PrenotazioneDTO> confermaPrenotazione(@RequestBody FormPrenotaImpianto formPrenotaImpianto){
         
         HashMap<String, Object> mappaValori = new HashMap<String, Object>();
+        
+        
+        
         for(Sport sport : this.getSportPraticabili()){
             if(sport.getNome().equals(formPrenotaImpianto.getSportSelezionato())){
-                this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).setSportAssociato(sport);
+                String tipoPrenotazione = this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione();
+                this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(this.getListinoPrezziDescrizioniPolisportiva().getSpecificaDescByTipoPrenotazioneESport(tipoPrenotazione, sport));
+                //this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).setSportAssociato(sport);
             }
         }
         

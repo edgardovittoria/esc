@@ -18,8 +18,10 @@ import it.univaq.esc.model.Prenotazione;
 import it.univaq.esc.model.PrenotazioneImpiantoSpecs;
 import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.Sport;
-import it.univaq.esc.model.UtentePolisportivaAbstract;
-import it.univaq.esc.model.UtentePolisportivaBuilder;
+import it.univaq.esc.model.TipiPrenotazione;
+import it.univaq.esc.model.costi.ListinoPrezziDescrizioniPolisportiva;
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportivaBuilder;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.ImpiantoRepository;
 
@@ -38,6 +40,8 @@ public class PopolaDB {
     private ImpiantoRepository impiantoRepository;
 
     
+    @Autowired
+    private ListinoPrezziDescrizioniPolisportiva listinoPrezziDescrizioniPolisportiva;
 
     @Autowired
     private AppuntamentoRepository appuntamentoRepository;
@@ -156,7 +160,32 @@ public class PopolaDB {
        
 
 
-        // Calendario calendarioImpianto1 = new Calendario();
+        this.listinoPrezziDescrizioniPolisportiva
+            .aggiunginuovaSpecificaDesc(TipiPrenotazione.IMPIANTO.toString(), tennis)
+            .impostaPrezzoOrario(10)
+            .impostaPrezzoPavimentazione(Pavimentazione.CEMENTO.toString(), 30)
+            .impostaPrezzoPavimentazione(Pavimentazione.TERRA_BATTUTA.toString(), 50)
+            .impostaPrezzoPavimentazione(Pavimentazione.SINTETICO.toString(), 20)
+            .ritornaSpecificaCreata();
+
+            this.listinoPrezziDescrizioniPolisportiva
+            .aggiunginuovaSpecificaDesc(TipiPrenotazione.IMPIANTO.toString(), calcetto)
+            .impostaPrezzoOrario(10)
+            .impostaPrezzoPavimentazione(Pavimentazione.CEMENTO.toString(), 10)
+            .impostaPrezzoPavimentazione(Pavimentazione.SINTETICO.toString(), 20)
+            .ritornaSpecificaCreata();
+
+            this.listinoPrezziDescrizioniPolisportiva
+            .aggiunginuovaSpecificaDesc(TipiPrenotazione.IMPIANTO.toString(), pallavolo)
+            .impostaPrezzoOrario(10)
+            .impostaPrezzoPavimentazione(Pavimentazione.CEMENTO.toString(), 20)
+            .impostaPrezzoPavimentazione(Pavimentazione.SINTETICO.toString(), 30)
+            .ritornaSpecificaCreata();
+
+            
+
+
+            
         // Calendario calendarioImpianto2 = new Calendario();
         // Calendario calendarioImpianto3 = new Calendario();
         
@@ -207,7 +236,8 @@ public class PopolaDB {
         prenotazione1.getListaSpecifichePrenotazione().get(0).setPrenotazioneAssociata(prenotazione1);
         prenotazione1.setSportivoPrenotante(sportivo1);
         
-        prenotazione1.getListaSpecifichePrenotazione().get(0).setSportAssociato(tennis);
+        prenotazione1.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(
+            this.listinoPrezziDescrizioniPolisportiva.getSpecificaDescByTipoPrenotazioneESport(TipiPrenotazione.IMPIANTO.toString(), tennis));
         Map<String, Object> mappaValori = new HashMap<String, Object>();
         mappaValori.put("impianto", impianto1);
         prenotazione1.getListaSpecifichePrenotazione().get(0).impostaValoriSpecificheExtraPrenotazione(mappaValori);
@@ -241,7 +271,8 @@ public class PopolaDB {
         // prenotazione2.setCalendarioSpecifica(calendarioSpecs2, prenotazioneSpecs2);
         // prenotazione2.impostaCalendarioPrenotazioneDaSpecifiche();
         
-        prenotazione2.getListaSpecifichePrenotazione().get(0).setSportAssociato(tennis);
+        prenotazione2.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(
+            this.listinoPrezziDescrizioniPolisportiva.getSpecificaDescByTipoPrenotazioneESport(TipiPrenotazione.IMPIANTO.toString(), tennis));
         Map<String, Object> mappaValori2 = new HashMap<String, Object>();
         mappaValori2.put("impianto", impianto3);
         prenotazione2.getListaSpecifichePrenotazione().get(0).impostaValoriSpecificheExtraPrenotazione(mappaValori);
