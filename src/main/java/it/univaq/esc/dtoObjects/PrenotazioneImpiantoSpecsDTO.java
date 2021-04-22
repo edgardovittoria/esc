@@ -7,6 +7,7 @@ import java.util.List;
 
 import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.utenti.Sportivo;
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
     
@@ -40,7 +41,7 @@ public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
         // I posti liberi sono da eliminare perché si possono calcolare in automatico
         setPostiLiberi(12);
         
-        for(Sportivo invitato : (List<Sportivo>) specifica.getValoriSpecificheExtraPrenotazione().get("invitati")){
+        for(UtentePolisportivaAbstract invitato : (List<UtentePolisportivaAbstract>) specifica.getValoriSpecificheExtraPrenotazione().get("invitati")){
             SportivoDTO invitatoDTO = new SportivoDTO();
             invitatoDTO.impostaValoriDTO(invitato);
             this.getInvitati().add(invitatoDTO);

@@ -29,14 +29,25 @@ public class ListinoPrezziDescrizioniPolisportiva {
 
     @PostConstruct
     public void popola(){
-        outer: for(SpecificaDesc spec : this.getSpecificaDescRepository().findAll()){
-            for(SpecificaDesc specifica : this.getListaDescrizioniPrezzi()){
-                if(specifica.getTipoPrenotazione().equals(spec.getTipoPrenotazione()) && specifica.getSport().getNome().equals(spec.getSport().getNome())){
-                    continue outer;
+        this.getListaDescrizioniPrezzi().addAll(this.getSpecificaDescRepository().findAll());
+        List<Integer> listaindiciDaEliminare = new ArrayList<Integer>();
+        for(SpecificaDesc specifica : this.getListaDescrizioniPrezzi().subList(0, this.getListaDescrizioniPrezzi().size() - 1)){
+            int j=0;
+            for(SpecificaDesc specificaSuccessivo : this.getListaDescrizioniPrezzi().subList(this.getListaDescrizioniPrezzi().indexOf(specifica)+1, this.getListaDescrizioniPrezzi().size())){
+                if(specifica.getTipoPrenotazione().equals(specificaSuccessivo.getTipoPrenotazione()) && specifica.getSport().getNome().equals(specificaSuccessivo.getSport().getNome())){
+                    j++;
                 }
             }
-            this.getListaDescrizioniPrezzi().add(spec);
+            if(j>0){
+                listaindiciDaEliminare.add(this.getListaDescrizioniPrezzi().indexOf(specifica));
+            }
+
         }
+        List<SpecificaDesc> utentiDaEliminare = new ArrayList<SpecificaDesc>();
+        for(Integer index : listaindiciDaEliminare){
+            utentiDaEliminare.add(this.getListaDescrizioniPrezzi().get(index));
+        }
+        this.getListaDescrizioniPrezzi().removeAll(utentiDaEliminare);
     }
 
 

@@ -23,12 +23,13 @@ public class CalcolatoreCostoBase extends CalcolatoreCosto{
         PrenotazioneSpecs prenotazioneSpecs = appuntamento.getPrenotazioneSpecsAppuntamento();
         LocalTime oraInizio = appuntamento.getOraInizioAppuntamento();
         LocalTime oraFine = appuntamento.getOraFineAppuntamento();
-        Long minutiDurataAppuntamento = MINUTES.between(oraFine, oraInizio);
+        Long minutiDurataAppuntamento = MINUTES.between(oraInizio, oraFine);
         Impianto impiantoAppuntamento = (Impianto)prenotazioneSpecs.getValoriSpecificheExtraPrenotazione().get("impianto");
         String pavimentazione = impiantoAppuntamento.getTipoPavimentazione().toString();
         Map<String, Float> mappaCosti = prenotazioneSpecs.getSpecificaDescription().getMappaCosti();
         Float costoOrario = mappaCosti.get("costoOrario");
         Float costoPavimentazione = mappaCosti.get(pavimentazione);
+
 
         Float costo = ((costoOrario + (costoOrario*costoPavimentazione/100))/60)*minutiDurataAppuntamento;
 

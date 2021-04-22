@@ -27,15 +27,26 @@ public class RegistroUtentiPolisportiva {
 
     @PostConstruct
     public void popola(){
-        outer: for(UtentePolisportivaAbstract utente : utentiRepository.findAll()){
-            for(UtentePolisportivaAbstract utenteP : this.getListaSportivi()){
-                if(utenteP.getProprieta().get("email").equals(utente.getProprieta().get("email"))){
-                    continue outer;
+        this.getListaSportivi().addAll(this.utentiRepository.findAll());
+        List<Integer> listaindiciDaEliminare = new ArrayList<Integer>();
+        for(UtentePolisportivaAbstract utente : this.getListaSportivi().subList(0, this.getListaSportivi().size() - 1)){
+            int j=0;
+            for(UtentePolisportivaAbstract utenteSuccessivo : this.getListaSportivi().subList(this.getListaSportivi().indexOf(utente)+1, this.getListaSportivi().size())){
+                if(utente.getProprieta().get("email").equals(utenteSuccessivo.getProprieta().get("email"))){
+                    j++;
                 }
             }
-            this.getListaSportivi().add(utente);
+            if(j>0){
+                listaindiciDaEliminare.add(this.getListaSportivi().indexOf(utente));
+            }
 
         }
+        List<UtentePolisportivaAbstract> utentiDaEliminare = new ArrayList<UtentePolisportivaAbstract>();
+        for(Integer index : listaindiciDaEliminare){
+            utentiDaEliminare.add(this.getListaSportivi().get(index));
+        }
+        this.getListaSportivi().removeAll(utentiDaEliminare);
+        
     }
 
 

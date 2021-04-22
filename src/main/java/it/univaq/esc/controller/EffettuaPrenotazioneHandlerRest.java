@@ -37,6 +37,7 @@ import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroPrenotazioni;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.costi.ListinoPrezziDescrizioniPolisportiva;
+import it.univaq.esc.model.costi.SpecificaDesc;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
@@ -180,7 +181,10 @@ public class EffettuaPrenotazioneHandlerRest {
 
 
             for(UtentePolisportivaAbstract user : this.getRegistroSportivi().getListaSportivi()){
-                System.out.println("SPORTIVO NOME: " + user.getProprieta().get("nome"));
+                System.out.println("SPORTIVO NOME: " + user.getRuoliUtentePolisportiva().size());
+            }
+            for(SpecificaDesc specifica : this.getListinoPrezziDescrizioniPolisportiva().getListaDescrizioniPrezzi()){
+                System.out.println("TIPO SPECIFICA: " + specifica.getTipoSpecificaDesc());
             }
             System.out.println("SIZE LISTINO: " + this.getListinoPrezziDescrizioniPolisportiva().getListaDescrizioniPrezzi().size());
            
