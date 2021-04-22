@@ -1,5 +1,6 @@
 package it.univaq.esc.model.utenti;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,13 +19,13 @@ public class Istruttore extends RuoloUtentePolisportivaDecorator{
 
     @ManyToMany
     @JoinColumn
-    private List<Sport> sportInsegnati;
+    private List<Sport> sportInsegnati = new ArrayList<Sport>();
 
     @Transient
     private Calendario calendarioLezioni = new Calendario();
 
 
-    
+    public Istruttore(){}
 
     public Istruttore(UtentePolisportivaAbstract utenteDaDecorare, List<Sport> sportInsegnati){
         super(utenteDaDecorare);
@@ -41,8 +42,18 @@ public class Istruttore extends RuoloUtentePolisportivaDecorator{
 
     @Override
     public void setProprieta(Map<String, Object> mappaProprieta) {
-        this.getSportInsegnati().addAll((List<Sport>)mappaProprieta.get("sportInsegnati"));
-        this.setCalendarioLezioni((Calendario)mappaProprieta.get("calendarioLezioni"));
+        for(String chiave : mappaProprieta.keySet()){
+            switch (chiave) {
+                case "sportInsegnati":
+                this.getSportInsegnati().addAll((List<Sport>)mappaProprieta.get("sportInsegnati"));
+                    break;
+                case "calendarioLezioni":
+                this.setCalendarioLezioni((Calendario)mappaProprieta.get("calendarioLezioni"));
+                break;
+                default:
+                    break;
+            }
+        }
         this.getUtentePolisportiva().setProprieta(mappaProprieta);
     }
 

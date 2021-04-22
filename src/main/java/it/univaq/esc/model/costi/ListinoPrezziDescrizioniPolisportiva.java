@@ -29,7 +29,14 @@ public class ListinoPrezziDescrizioniPolisportiva {
 
     @PostConstruct
     public void popola(){
-        this.setListaDescrizioniPrezzi(getSpecificaDescRepository().findAll());
+        outer: for(SpecificaDesc spec : this.getSpecificaDescRepository().findAll()){
+            for(SpecificaDesc specifica : this.getListaDescrizioniPrezzi()){
+                if(specifica.getTipoPrenotazione().equals(spec.getTipoPrenotazione()) && specifica.getSport().getNome().equals(spec.getSport().getNome())){
+                    continue outer;
+                }
+            }
+            this.getListaDescrizioniPrezzi().add(spec);
+        }
     }
 
 
@@ -46,7 +53,7 @@ public class ListinoPrezziDescrizioniPolisportiva {
     }
 
 
-    private List<SpecificaDesc> getListaDescrizioniPrezzi() {
+    public List<SpecificaDesc> getListaDescrizioniPrezzi() {
         return listaDescrizioniPrezzi;
     }
 

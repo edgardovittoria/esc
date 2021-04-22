@@ -13,9 +13,10 @@ public class SpecificaDescCostoPavimentazione extends SpecificaDescDecorator{
     @Column
     private String tipoPavimentazione;
     
+    public SpecificaDescCostoPavimentazione(){}
 
-    public SpecificaDescCostoPavimentazione(){
-        super();
+    public SpecificaDescCostoPavimentazione(SpecificaDesc specificaAssociata){
+        super(specificaAssociata);
     }
     
 

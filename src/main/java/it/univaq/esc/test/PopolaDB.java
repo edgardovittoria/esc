@@ -20,6 +20,7 @@ import it.univaq.esc.model.PrenotazioneSpecs;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.TipiPrenotazione;
 import it.univaq.esc.model.costi.ListinoPrezziDescrizioniPolisportiva;
+
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.model.utenti.UtentePolisportivaBuilder;
 import it.univaq.esc.repository.AppuntamentoRepository;
@@ -85,7 +86,7 @@ public class PopolaDB {
         mappaProprieta1.put("sportPraticati", listaSportPraticati1);
         sportivo1.setProprieta(mappaProprieta1);
 
-        UtentePolisportivaAbstract sportivo2 = new UtentePolisportivaBuilder().assegnaRuoloSportivo().build();
+        UtentePolisportivaAbstract sportivo2 = new UtentePolisportivaBuilder().assegnaRuoloSportivo().assegnaRuoloIstruttore(listaSportPraticati1).build();
         Map<String, Object> mappaProprieta2 = new HashMap<String, Object>();
         mappaProprieta2.put("nome", "mariangelo");
         mappaProprieta2.put("cognome", "sasso");
@@ -183,7 +184,7 @@ public class PopolaDB {
             .ritornaSpecificaCreata();
 
             
-
+            
 
             
         // Calendario calendarioImpianto2 = new Calendario();

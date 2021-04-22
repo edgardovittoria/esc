@@ -40,7 +40,7 @@ import it.univaq.esc.model.costi.ListinoPrezziDescrizioniPolisportiva;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
-import it.univaq.esc.model.utenti.RegistroSportivi;
+import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 @RestController
@@ -54,7 +54,7 @@ public class EffettuaPrenotazioneHandlerRest {
     private RegistroImpianti registroImpianti;
 
     @Autowired
-    private RegistroSportivi registroSportivi;
+    private RegistroUtentiPolisportiva registroSportivi;
 
     @Autowired
     private RegistroPrenotazioni registroPrenotazioni;
@@ -63,11 +63,26 @@ public class EffettuaPrenotazioneHandlerRest {
     private ListinoPrezziDescrizioniPolisportiva listinoPrezziDescrizioniPolisportiva;
 
     private Prenotazione prenotazioneInAtto;
+
+    private List<Appuntamento> listaAppuntamentiPrenotazioneInAtto = new ArrayList<Appuntamento>();
     
     public EffettuaPrenotazioneHandlerRest(){}
 
 
-    public ListinoPrezziDescrizioniPolisportiva getListinoPrezziDescrizioniPolisportiva() {
+    public List<Appuntamento> getListaAppuntamentiPrenotazioneInAtto() {
+        return listaAppuntamentiPrenotazioneInAtto;
+    }
+
+
+    private void setListaAppuntamentiPrenotazioneInAtto(List<Appuntamento> listaAppuntamentiPrenotazioneInAtto) {
+        this.listaAppuntamentiPrenotazioneInAtto = listaAppuntamentiPrenotazioneInAtto;
+    }
+
+    private void aggiungiAppuntamento(Appuntamento appuntamento){
+        this.getListaAppuntamentiPrenotazioneInAtto().add(appuntamento);
+    }
+
+    private ListinoPrezziDescrizioniPolisportiva getListinoPrezziDescrizioniPolisportiva() {
         return listinoPrezziDescrizioniPolisportiva;
     }
 
@@ -155,11 +170,21 @@ public class EffettuaPrenotazioneHandlerRest {
             appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
             appuntamento.setCalcolatoreCosto(calcolatoreCosto);
             appuntamento.aggiungiPartecipante(sportivoPrenotante);
+
+            this.aggiungiAppuntamento(appuntamento);
            
             Map<String, Object> mappaValori = new HashMap<String, Object>();
             mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
             mappaValori.put("impiantiDisponibili", this.getImpiantiDisponibili());
             mappaValori.put("sportiviPolisportiva", this.getSportiviPolisportiva());
+
+
+            for(UtentePolisportivaAbstract user : this.getRegistroSportivi().getListaSportivi()){
+                System.out.println("SPORTIVO NOME: " + user.getProprieta().get("nome"));
+            }
+            System.out.println("SIZE LISTINO: " + this.getListinoPrezziDescrizioniPolisportiva().getListaDescrizioniPrezzi().size());
+           
+
 
             return mappaValori;
         }
@@ -180,8 +205,6 @@ public class EffettuaPrenotazioneHandlerRest {
             }
         }
         
-        
-
         // impianti.add(this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
         // mappaValori.put("impianto", impianti);
         
@@ -192,8 +215,9 @@ public class EffettuaPrenotazioneHandlerRest {
         // calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine , this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
         //this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
 
-        Appuntamento appuntamento = new Appuntamento(dataInizio, dataFine, this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0));
-        appuntamento.aggiungiPartecipante(this.getPrenotazioneInAtto().getSportivoPrenotante());
+        Appuntamento appuntamento = this.getListaAppuntamentiPrenotazioneInAtto().get(0);
+        appuntamento.setDataOraInizioAppuntamento(dataInizio);
+        appuntamento.setDataOraFineAppuntamento(dataFine);
 
         List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
         for(String email : formPrenotaImpianto.getSportiviInvitati()){
@@ -259,7 +283,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
 
 
-        private RegistroSportivi getRegistroSportivi(){
+        private RegistroUtentiPolisportiva getRegistroSportivi(){
             return this.registroSportivi;
         }
 

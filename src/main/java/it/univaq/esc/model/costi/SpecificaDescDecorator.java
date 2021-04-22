@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 import it.univaq.esc.model.Sport;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TipoSpecificaDescDecorator")
 @DiscriminatorValue(value = "SpecificaDescDecorator")
 public abstract class SpecificaDescDecorator extends SpecificaDesc{
@@ -23,10 +23,10 @@ public abstract class SpecificaDescDecorator extends SpecificaDesc{
     @OneToOne(cascade = CascadeType.ALL)
     private SpecificaDesc specifica;
 
-    
+    protected SpecificaDescDecorator(){}
 
-    protected SpecificaDescDecorator(){
-        //super();
+    protected SpecificaDescDecorator(SpecificaDesc specificaAssociata){
+        this.setSpecifica(specificaAssociata);
     }
     /**
      * @return SpecificaDesc return the specifica
@@ -38,7 +38,7 @@ public abstract class SpecificaDescDecorator extends SpecificaDesc{
     /**
      * @param specifica the specifica to set
      */
-    public void setSpecifica(SpecificaDesc specifica) {
+    protected void setSpecifica(SpecificaDesc specifica) {
         this.specifica = specifica;
     }
 

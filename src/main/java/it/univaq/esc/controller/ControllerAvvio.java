@@ -6,7 +6,7 @@ import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 
 import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.*;
-import it.univaq.esc.model.utenti.RegistroSportivi;
+import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class ControllerAvvio {
     private EffettuaPrenotazioneHandler effettuaPrenotazioneHandler;
 
     @Autowired
-    private RegistroSportivi registroSportivi;
+    private RegistroUtentiPolisportiva registroSportivi;
 
     
     // @RequestMapping(value = "/test")

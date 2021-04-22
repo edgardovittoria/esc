@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.*;
-import it.univaq.esc.model.utenti.RegistroSportivi;
+import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 
@@ -29,7 +29,7 @@ public class EffettuaPrenotazioneHandler {
     private RegistroPrenotazioni registroPrenotazioni;
 
     @Autowired
-    private RegistroSportivi registroSportivi;
+    private RegistroUtentiPolisportiva registroSportivi;
 
     @Autowired
     private RegistroImpianti registroImpianti;
@@ -132,7 +132,7 @@ public class EffettuaPrenotazioneHandler {
     }
 
     // temporaneo
-    public RegistroSportivi getRegistroSportivi(){
+    public RegistroUtentiPolisportiva getRegistroSportivi(){
         return registroSportivi;
     }
     

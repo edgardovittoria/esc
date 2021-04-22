@@ -39,12 +39,10 @@ public class SpecificaDescBuilder {
     }
 
     public  SpecificaDescBuilder impostaCostoPavimentazione(String tipoPavimentazione ,float costoPavimentazione){
-        SpecificaDescCostoPavimentazione specPavimentazione = new SpecificaDescCostoPavimentazione();
+        this.setSpecifica(new SpecificaDescCostoPavimentazione(this.getSpecifica()));
         Map<String, Object> valori = new HashMap<String, Object>();
         valori.put("tipoPavimentazione", tipoPavimentazione);
-        specPavimentazione.impostaProprieta(valori);
-        specPavimentazione.setSpecifica(this.getSpecifica());
-        this.setSpecifica(specPavimentazione);
+        this.getSpecifica().impostaProprieta(valori);
         this.getSpecifica().setCosto(costoPavimentazione, TipoSpecificaDesc.COSTO_PAVIMENTAZIONE.toString());
 
         return this;

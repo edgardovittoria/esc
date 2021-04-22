@@ -14,7 +14,7 @@ import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
 
 @Component
 @Singleton
-public class RegistroSportivi {
+public class RegistroUtentiPolisportiva {
 
     @Autowired
     private UtentePolisportivaAbstractRepository utentiRepository;
@@ -23,15 +23,18 @@ public class RegistroSportivi {
     private List<UtentePolisportivaAbstract> registroSportivi = new ArrayList<UtentePolisportivaAbstract>();
 
 
-    public RegistroSportivi() {}
+    public RegistroUtentiPolisportiva() {}
 
     @PostConstruct
     public void popola(){
-        for(UtentePolisportivaAbstract utente : utentiRepository.findAll()){
-            if(utente.getRuoliUtentePolisportiva().contains(TipoRuolo.SPORTIVO.toString())){
-                
-                this.getListaSportivi().add(utente);
+        outer: for(UtentePolisportivaAbstract utente : utentiRepository.findAll()){
+            for(UtentePolisportivaAbstract utenteP : this.getListaSportivi()){
+                if(utenteP.getProprieta().get("email").equals(utente.getProprieta().get("email"))){
+                    continue outer;
+                }
             }
+            this.getListaSportivi().add(utente);
+
         }
     }
 

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,9 +28,7 @@ public abstract class SpecificaDesc {
     protected float costo;
 
     
-    public SpecificaDesc(){
-        //this.setTipoSpecificaDesc();
-    }
+    
 
     /**
      * @return String return the tipoSpecificaDesc
