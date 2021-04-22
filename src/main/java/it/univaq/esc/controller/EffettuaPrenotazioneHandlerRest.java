@@ -193,11 +193,12 @@ public class EffettuaPrenotazioneHandlerRest {
             return mappaValori;
         }
 
-        @PostMapping("/confermaPrenotazione")
-    @CrossOrigin
-    public ResponseEntity<PrenotazioneDTO> confermaPrenotazione(@RequestBody FormPrenotaImpianto formPrenotaImpianto){
         
-        HashMap<String, Object> mappaValori = new HashMap<String, Object>();
+        @PostMapping("/riepilogoPrenotazione")
+        @CrossOrigin
+        public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazioneConCosto(@RequestBody FormPrenotaImpianto formPrenotaImpianto){
+
+            HashMap<String, Object> mappaValori = new HashMap<String, Object>();
         
         
         
@@ -237,6 +238,25 @@ public class EffettuaPrenotazioneHandlerRest {
         appuntamento.calcolaCosto();
         //----------------------------------
 
+        PrenotazioneDTO prenDTO = new PrenotazioneDTO();
+        prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getListaAppuntamentiPrenotazioneInAtto());
+        return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.OK);
+       
+    }
+
+
+
+
+
+
+
+        @PostMapping("/confermaPrenotazione")
+    @CrossOrigin
+    public ResponseEntity<PrenotazioneDTO> confermaPrenotazione(@RequestBody FormPrenotaImpianto formPrenotaImpianto){
+        
+        
+        Appuntamento appuntamento = this.getListaAppuntamentiPrenotazioneInAtto().get(0);
+
         List<Appuntamento> appuntamenti = new ArrayList<Appuntamento>();
         appuntamenti.add(appuntamento);
         Calendario calendarioDaUnire = new Calendario(appuntamenti);
@@ -247,7 +267,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
         
         PrenotazioneDTO prenDTO = new PrenotazioneDTO();
-        prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getRegistroAppuntamenti());
+        prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getListaAppuntamentiPrenotazioneInAtto());
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
     }
 

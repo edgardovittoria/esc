@@ -47,20 +47,17 @@ public class PrenotazioneDTO {
         this.getAppuntamenti().add(appuntamento);
     }
 
-    public void impostaValoriDTO(Prenotazione prenotazione, RegistroAppuntamenti registroAppuntamenti){
+    public void impostaValoriDTO(Prenotazione prenotazione, List<Appuntamento> listaAppuntamentiPrenotazione){
         this.sportivoPrenotante = new SportivoDTO();
         this.sportivoPrenotante.impostaValoriDTO(prenotazione.getSportivoPrenotante());
        
-        for(PrenotazioneSpecs specs : prenotazione.getListaSpecifichePrenotazione()){           
-            for(Appuntamento app : registroAppuntamenti.getListaAppuntamenti()){
-               
-                if(app.getPrenotazioneSpecsAppuntamento().getIDPrenotazioneSpecs() == specs.getIDPrenotazioneSpecs()){
-                    AppuntamentoDTO appDTO = new AppuntamentoDTO();
+        for(Appuntamento app : listaAppuntamentiPrenotazione){
+            AppuntamentoDTO appDTO = new AppuntamentoDTO();
                     appDTO.impostaValoriDTO(app);
                     this.aggiungiAppuntamento(appDTO);
-                }
-            }
         }
+
+        
          
     }
 
