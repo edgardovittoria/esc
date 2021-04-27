@@ -252,7 +252,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
         @PostMapping("/confermaPrenotazione")
     @CrossOrigin
-    public ResponseEntity<PrenotazioneDTO> confermaPrenotazione(@RequestBody FormPrenotaImpianto formPrenotaImpianto){
+    public ResponseEntity<PrenotazioneDTO> confermaPrenotazione(){
         
         
         Appuntamento appuntamento = this.getListaAppuntamentiPrenotazioneInAtto().get(0);
