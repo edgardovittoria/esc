@@ -257,14 +257,11 @@ public class EffettuaPrenotazioneHandlerRest {
     public ResponseEntity<PrenotazioneDTO> confermaPrenotazione(){
         
         
-        Appuntamento appuntamento = this.getListaAppuntamentiPrenotazioneInAtto().get(0);
-
-        List<Appuntamento> appuntamenti = new ArrayList<Appuntamento>();
-        appuntamenti.add(appuntamento);
-        Calendario calendarioDaUnire = new Calendario(appuntamenti);
+        
+        Calendario calendarioDaUnire = new Calendario(this.getListaAppuntamentiPrenotazioneInAtto());
 
         this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
-        this.getRegistroAppuntamenti().salvaListaAppuntamenti(appuntamenti);
+        this.getRegistroAppuntamenti().salvaListaAppuntamenti(this.getListaAppuntamentiPrenotazioneInAtto());
         this.registroImpianti.aggiornaCalendarioImpianto((Impianto)this.getPrenotazioneInAtto().getSingolaSpecificaExtra("impianto", this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)), calendarioDaUnire);
 
         
