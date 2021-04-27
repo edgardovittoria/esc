@@ -4,17 +4,26 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-
+import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.PrenotazioneSpecs;
-import it.univaq.esc.model.utenti.Sportivo;
+
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
     
     private List<SportivoDTO> invitati = new ArrayList<SportivoDTO>();
     private int postiLiberi;
+    private ImpiantoDTO impiantoPrenotato;
 
     public PrenotazioneImpiantoSpecsDTO(){}
+
+    public ImpiantoDTO getImpiantoPrenotato() {
+        return impiantoPrenotato;
+    }
+
+    public void setImpiantoPrenotato(ImpiantoDTO impiantoPrenotato) {
+        this.impiantoPrenotato = impiantoPrenotato;
+    }
 
     public List<SportivoDTO> getInvitati() {
         return invitati;
@@ -46,6 +55,9 @@ public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
             invitatoDTO.impostaValoriDTO(invitato);
             this.getInvitati().add(invitatoDTO);
         }
+        ImpiantoDTO impiantoDTO = new ImpiantoDTO();
+        impiantoDTO.impostaValoriDTO((Impianto)specifica.getValoriSpecificheExtraPrenotazione().get("impianto"));
+        this.setImpiantoPrenotato(impiantoDTO);
         super.impostaValoriDTO(specifica);
         
     }

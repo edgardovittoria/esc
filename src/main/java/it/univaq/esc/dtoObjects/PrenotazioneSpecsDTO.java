@@ -84,9 +84,7 @@ public abstract class PrenotazioneSpecsDTO {
         this.idPrenotazioneSpecsDTO = id;
     }
 
-    public Long getIdPrenotazioneSPecsDTO(){
-        return this.idPrenotazioneSpecsDTO;
-    }
+    
 
     public void impostaValoriDTO(PrenotazioneSpecs prenotazioneSpecs){
         SportDTO sportAssociato = new SportDTO();
@@ -95,6 +93,7 @@ public abstract class PrenotazioneSpecsDTO {
         this.setIdPrenotazioneSpecsDTO(prenotazioneSpecs.getIDPrenotazioneSpecs());
         this.setTipoSpecifica(prenotazioneSpecs.getTipoPrenotazione());
         this.setCosto(prenotazioneSpecs.getCosto());
+        this.setIdPrenotazioneSpecsDTO(prenotazioneSpecs.getIDPrenotazioneSpecs());
     };
 
     public Long getIdPrenotazioneSpecsDTO() {
