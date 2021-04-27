@@ -172,6 +172,8 @@ public class EffettuaPrenotazioneHandlerRest {
             appuntamento.setCalcolatoreCosto(calcolatoreCosto);
             appuntamento.aggiungiPartecipante(sportivoPrenotante);
 
+            this.getListaAppuntamentiPrenotazioneInAtto().clear();
+
             this.aggiungiAppuntamento(appuntamento);
            
             Map<String, Object> mappaValori = new HashMap<String, Object>();
