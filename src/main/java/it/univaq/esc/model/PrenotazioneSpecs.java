@@ -13,7 +13,8 @@ import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
 
-import it.univaq.esc.model.costi.SpecificaDesc;
+import it.univaq.esc.model.costi.PrenotabileDescrizione;
+
 
 
 
@@ -41,7 +42,7 @@ public abstract class PrenotazioneSpecs {
     // private Sport sportAssociato;
     @ManyToOne
     @JoinColumn
-    private SpecificaDesc specificaDescription;
+    private PrenotabileDescrizione specificaDescription;
 
     
    
@@ -54,11 +55,11 @@ public abstract class PrenotazioneSpecs {
     public PrenotazioneSpecs(){}
     
 
-    public SpecificaDesc getSpecificaDescription(){
+    public PrenotabileDescrizione getSpecificaDescription(){
         return this.specificaDescription;
     }
 
-    public void setSpecificaDescrtiption(SpecificaDesc specificaDescription){
+    public void setSpecificaDescrtiption(PrenotabileDescrizione specificaDescription){
         this.specificaDescription = specificaDescription;
     }
 
@@ -87,7 +88,7 @@ public abstract class PrenotazioneSpecs {
     // }
 
     public Sport getSportAssociato(){
-        return this.getSpecificaDescription().getSport();
+        return this.getSpecificaDescription().getSportAssociato();
     }
 
     public Long getIDPrenotazioneSpecs(){

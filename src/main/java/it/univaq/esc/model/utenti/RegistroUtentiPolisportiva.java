@@ -28,6 +28,7 @@ public class RegistroUtentiPolisportiva {
     @PostConstruct
     public void popola(){
         this.getListaSportivi().addAll(this.utentiRepository.findAll());
+        if(!this.getListaSportivi().isEmpty()){
         List<Integer> listaindiciDaEliminare = new ArrayList<Integer>();
         for(UtentePolisportivaAbstract utente : this.getListaSportivi().subList(0, this.getListaSportivi().size() - 1)){
             int j=0;
@@ -46,6 +47,7 @@ public class RegistroUtentiPolisportiva {
             utentiDaEliminare.add(this.getListaSportivi().get(index));
         }
         this.getListaSportivi().removeAll(utentiDaEliminare);
+    }
         
     }
 

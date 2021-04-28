@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
+
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
@@ -36,8 +38,8 @@ import it.univaq.esc.model.RegistroAppuntamenti;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroPrenotazioni;
 import it.univaq.esc.model.Sport;
-import it.univaq.esc.model.costi.ListinoPrezziDescrizioniPolisportiva;
-import it.univaq.esc.model.costi.SpecificaDesc;
+import it.univaq.esc.model.costi.CatalogoPrenotabili;
+import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
@@ -61,7 +63,7 @@ public class EffettuaPrenotazioneHandlerRest {
     private RegistroPrenotazioni registroPrenotazioni;
 
     @Autowired
-    private ListinoPrezziDescrizioniPolisportiva listinoPrezziDescrizioniPolisportiva;
+    private CatalogoPrenotabili listinoPrezziDescrizioniPolisportiva;
 
     private Prenotazione prenotazioneInAtto;
 
@@ -83,7 +85,7 @@ public class EffettuaPrenotazioneHandlerRest {
         this.getListaAppuntamentiPrenotazioneInAtto().add(appuntamento);
     }
 
-    private ListinoPrezziDescrizioniPolisportiva getListinoPrezziDescrizioniPolisportiva() {
+    private CatalogoPrenotabili getListinoPrezziDescrizioniPolisportiva() {
         return listinoPrezziDescrizioniPolisportiva;
     }
 
@@ -182,14 +184,7 @@ public class EffettuaPrenotazioneHandlerRest {
             mappaValori.put("sportiviPolisportiva", this.getSportiviPolisportiva());
 
 
-            for(UtentePolisportivaAbstract user : this.getRegistroSportivi().getListaSportivi()){
-                System.out.println("SPORTIVO NOME: " + user.getRuoliUtentePolisportiva().size());
-            }
-            for(SpecificaDesc specifica : this.getListinoPrezziDescrizioniPolisportiva().getListaDescrizioniPrezzi()){
-                System.out.println("TIPO SPECIFICA: " + specifica.getTipoSpecificaDesc());
-            }
-            System.out.println("SIZE LISTINO: " + this.getListinoPrezziDescrizioniPolisportiva().getListaDescrizioniPrezzi().size());
-           
+            
 
 
             return mappaValori;
@@ -204,16 +199,15 @@ public class EffettuaPrenotazioneHandlerRest {
         
         
         
-        for(Sport sport : this.getSportPraticabili()){
-            if(sport.getNome().equals(formPrenotaImpianto.getSportSelezionato())){
-                String tipoPrenotazione = this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione();
-                this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(this.getListinoPrezziDescrizioniPolisportiva().getSpecificaDescByTipoPrenotazioneESport(tipoPrenotazione, sport));
-                //this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).setSportAssociato(sport);
+        for(PrenotabileDescrizione desc : this.getListinoPrezziDescrizioniPolisportiva().getCatalogoPrenotabili()){
+            if(desc.getSportAssociato().getNome().equals(formPrenotaImpianto.getSportSelezionato()) && desc.getTipoPrenotazione().equals(this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione())){
+                this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(desc);
             }
         }
+
         
-        // impianti.add(this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
-        // mappaValori.put("impianto", impianti);
+        
+        
         
         // Calendario calendarioPrenotazione = new Calendario();
         LocalDateTime dataInizio = LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraInizio());
@@ -325,6 +319,7 @@ public class EffettuaPrenotazioneHandlerRest {
         private void setPrenotazioneInAtto(Prenotazione prenotazione){
             this.prenotazioneInAtto = prenotazione;
         }
+        
         private List<Sport> getSportPraticabili() {
             List<Sport> listaSportPraticabili = new ArrayList<Sport>();
             Set<Sport> setSportPraticabili = new HashSet<Sport>();

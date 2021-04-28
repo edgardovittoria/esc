@@ -10,6 +10,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.PrenotazioneSpecs;
+import it.univaq.esc.model.costi.TipoCostoPrenotabile;
 
 
 public class CalcolatoreCostoBase extends CalcolatoreCosto{
@@ -27,11 +28,16 @@ public class CalcolatoreCostoBase extends CalcolatoreCosto{
         Impianto impiantoAppuntamento = (Impianto)prenotazioneSpecs.getValoriSpecificheExtraPrenotazione().get("impianto");
         String pavimentazione = impiantoAppuntamento.getTipoPavimentazione().toString();
         Map<String, Float> mappaCosti = prenotazioneSpecs.getSpecificaDescription().getMappaCosti();
-        Float costoOrario = mappaCosti.get("costoOrario");
-        Float costoPavimentazione = mappaCosti.get(pavimentazione);
-
-
-        Float costo = ((costoOrario + (costoOrario*costoPavimentazione/100))/60)*minutiDurataAppuntamento;
+        Float costo;
+        if(mappaCosti.containsKey(TipoCostoPrenotabile.COSTO_ORARIO.toString())){
+            Float costoOrario = mappaCosti.get(TipoCostoPrenotabile.COSTO_ORARIO.toString());
+            Float costoPavimentazione = mappaCosti.get(pavimentazione);
+            costo = ((costoOrario + (costoOrario*costoPavimentazione/100))/60)*minutiDurataAppuntamento;
+        }
+        else{
+            Float costoUnaTantum = mappaCosti.get(TipoCostoPrenotabile.COSTO_UNA_TANTUM.toString());
+            costo = costoUnaTantum;
+        }
 
         return costo;
     }
