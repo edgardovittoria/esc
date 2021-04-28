@@ -15,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 @Entity
@@ -30,6 +33,7 @@ public class PrenotabileDescrizione {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<CostoPrenotabile> listaCosti = new ArrayList<CostoPrenotabile>();
 
     PrenotabileDescrizione(){}
