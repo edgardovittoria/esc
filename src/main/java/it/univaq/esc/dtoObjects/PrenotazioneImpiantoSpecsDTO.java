@@ -14,8 +14,17 @@ public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
     private List<SportivoDTO> invitati = new ArrayList<SportivoDTO>();
     private int postiLiberi;
     private Integer idImpiantoPrenotato;
+    private String pavimentazioneImpianto;
 
     public PrenotazioneImpiantoSpecsDTO(){}
+
+    public String getPavimentazioneImpianto() {
+        return pavimentazioneImpianto;
+    }
+
+    public void setPavimentazioneImpianto(String pavimentazioneImpianto) {
+        this.pavimentazioneImpianto = pavimentazioneImpianto;
+    }
 
     public Integer getIdImpiantoPrenotato() {
         return idImpiantoPrenotato;
@@ -57,6 +66,7 @@ public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
         }
         
         this.setIdImpiantoPrenotato(((Impianto)specifica.getValoriSpecificheExtraPrenotazione().get("impianto")).getIdImpianto());
+        this.setPavimentazioneImpianto(((Impianto)specifica.getValoriSpecificheExtraPrenotazione().get("impianto")).getTipoPavimentazione().toString());
         super.impostaValoriDTO(specifica);
         
     }
