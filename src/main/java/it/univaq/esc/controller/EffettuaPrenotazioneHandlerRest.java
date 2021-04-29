@@ -271,9 +271,9 @@ public class EffettuaPrenotazioneHandlerRest {
         public @ResponseBody List<ImpiantoDTO> getListaImpianti(@RequestBody HashMap<String, Object> dati){        
 
         
-        List<String> orario = (ArrayList<String>)dati.get("orario");
+        Map<String, String> orario = (HashMap<String, String>)dati.get("orario");
         
-        List<Impianto> impiantiDisponibili =  this.getImpiantiDisponibiliByOrario(LocalDateTime.parse(orario.get(0)), LocalDateTime.parse(orario.get(1)));
+        List<Impianto> impiantiDisponibili =  this.getImpiantiDisponibiliByOrario(LocalDateTime.parse(orario.get("dataOraInizio")), LocalDateTime.parse(orario.get("dataOraFine")));
         List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
         for(Impianto impianto : impiantiDisponibili){
             for(ImpiantoSpecs specifica : impianto.getSpecificheImpianto()){
