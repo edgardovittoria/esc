@@ -267,6 +267,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
 
         @PostMapping("/aggiornaImpianti")
+        @CrossOrigin
         public @ResponseBody List<ImpiantoDTO> getListaImpianti(@RequestBody HashMap<String, Object> dati){        
 
         
