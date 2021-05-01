@@ -1,6 +1,7 @@
 package it.univaq.esc.controller;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -273,7 +274,7 @@ public class EffettuaPrenotazioneHandlerRest {
         
         Map<String, String> orario = (HashMap<String, String>)dati.get("orario");
         
-        List<Impianto> impiantiDisponibili =  this.getImpiantiDisponibiliByOrario(LocalDateTime.parse(orario.get("dataOraInizio")), LocalDateTime.parse(orario.get("dataOraFine")));
+        List<Impianto> impiantiDisponibili =  this.getImpiantiDisponibiliByOrario(LocalDateTime.parse(orario.get("dataOraInizio"), DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" )), LocalDateTime.parse(orario.get("dataOraFine"), DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" )));
         List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
         for(Impianto impianto : impiantiDisponibili){
             for(ImpiantoSpecs specifica : impianto.getSpecificheImpianto()){

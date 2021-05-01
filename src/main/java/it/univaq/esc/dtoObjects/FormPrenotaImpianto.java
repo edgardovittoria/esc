@@ -2,6 +2,7 @@ package it.univaq.esc.dtoObjects;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
      * @param dataPrenotazione the dataPrenotazione to set
      */
     public void setDataPrenotazione(String dataPrenotazione) {
-        this.dataPrenotazione = LocalDate.parse(dataPrenotazione);
+        this.dataPrenotazione = LocalDate.parse(dataPrenotazione, DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" ));
     }
 
     /**
@@ -75,7 +76,7 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
      * @param oraInizio the oraInizio to set
      */
     public void setOraInizio(String oraInizio) {
-        this.oraInizio = LocalTime.parse(oraInizio);
+        this.oraInizio = LocalTime.parse(oraInizio, DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" ));
     }
 
     /**
@@ -89,7 +90,7 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
      * @param oraFine the oraFine to set
      */
     public void setOraFine(String oraFine) {
-        this.oraFine = LocalTime.parse(oraFine);
+        this.oraFine = LocalTime.parse(oraFine, DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" ));
     }
 
     /**
