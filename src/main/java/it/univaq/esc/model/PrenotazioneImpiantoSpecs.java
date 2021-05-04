@@ -23,7 +23,7 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
 
 
     
-    public PrenotazioneImpiantoSpecs(){}
+    
 
 
 
@@ -45,7 +45,7 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
  
     
 
-    
+    public PrenotazioneImpiantoSpecs(){}
 
     public List<UtentePolisportivaAbstract> getListaInvitati() {
         return this.invitati;

@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import it.univaq.esc.model.utenti.Sportivo;
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 @Entity
 @Table(name = "quotePartecipazione")
@@ -25,7 +26,7 @@ public class QuotaPartecipazione {
     private float costo;
     @ManyToOne()
     @JoinColumn(name = "sportivo_email",nullable = false)
-    private Sportivo sportivoAssociato;
+    private UtentePolisportivaAbstract sportivoAssociato;
 
     @ManyToOne
     @JoinColumn(name = "prenotazioneSpecs_ID", nullable = false)
@@ -70,11 +71,11 @@ public class QuotaPartecipazione {
         this.costo = costo;
     }
 
-    public Sportivo getSportivoAssociato() {
+    public UtentePolisportivaAbstract getSportivoAssociato() {
         return sportivoAssociato;
     }
 
-    public void setSportivoAssociato(Sportivo sportivoAssociato) {
+    public void setSportivoAssociato(UtentePolisportivaAbstract sportivoAssociato) {
         this.sportivoAssociato = sportivoAssociato;
     }
 

@@ -181,7 +181,7 @@ public class EffettuaPrenotazioneHandlerRest {
            
             Map<String, Object> mappaValori = new HashMap<String, Object>();
             mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
-            mappaValori.put("impiantiDisponibili", this.getImpiantiDisponibili());
+            //mappaValori.put("impiantiDisponibili", this.getImpiantiDisponibili());
             mappaValori.put("sportiviPolisportiva", this.getSportiviPolisportiva());
 
 
