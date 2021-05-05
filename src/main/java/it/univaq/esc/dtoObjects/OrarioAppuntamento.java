@@ -12,7 +12,7 @@ public class OrarioAppuntamento {
     private Integer id;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate dataPrenotazione = LocalDate.now();
+    private LocalDate dataPrenotazione;
 
     @DateTimeFormat(pattern = "HH:MM")
     private LocalTime oraInizio;
