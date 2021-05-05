@@ -68,6 +68,8 @@ public class EffettuaPrenotazioneHandlerRest {
 
     private Prenotazione prenotazioneInAtto;
 
+    private String tipoPrenotazioneInAtto;
+
     private List<Appuntamento> listaAppuntamentiPrenotazioneInAtto = new ArrayList<Appuntamento>();
     
     public EffettuaPrenotazioneHandlerRest(){}
@@ -77,6 +79,14 @@ public class EffettuaPrenotazioneHandlerRest {
         return listaAppuntamentiPrenotazioneInAtto;
     }
 
+
+    private void setTipoPrenotazioneInAtto(String tipoPrenotazione){
+        this.tipoPrenotazioneInAtto = tipoPrenotazione;
+    }
+
+    private String getTipoPrenotazioneInAtto(){
+        return this.tipoPrenotazioneInAtto;
+    }
 
     private void setListaAppuntamentiPrenotazioneInAtto(List<Appuntamento> listaAppuntamentiPrenotazioneInAtto) {
         this.listaAppuntamentiPrenotazioneInAtto = listaAppuntamentiPrenotazioneInAtto;
@@ -160,24 +170,14 @@ public class EffettuaPrenotazioneHandlerRest {
             UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante);
             int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
             
-            PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
-            setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
-            prenotazioneSpecs.setPrenotazioneAssociata(getPrenotazioneInAtto());
+            //PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
+            setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
+            // prenotazioneSpecs.setPrenotazioneAssociata(getPrenotazioneInAtto());
             getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
 
-            // Creazione calcolatore che poi dovrà finire altrove
-            CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
-            calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
-            //---------------------------------------------------------------------------------------
+            
 
-            Appuntamento appuntamento = new Appuntamento();
-            appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
-            appuntamento.setCalcolatoreCosto(calcolatoreCosto);
-            appuntamento.aggiungiPartecipante(sportivoPrenotante);
-
-            this.getListaAppuntamentiPrenotazioneInAtto().clear();
-
-            this.aggiungiAppuntamento(appuntamento);
+            this.setTipoPrenotazioneInAtto(tipoPrenotazione);
            
             Map<String, Object> mappaValori = new HashMap<String, Object>();
             mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
@@ -195,6 +195,28 @@ public class EffettuaPrenotazioneHandlerRest {
         @PostMapping("/riepilogoPrenotazione")
         @CrossOrigin
         public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazioneConCosto(@RequestBody FormPrenotaImpianto formPrenotaImpianto){
+
+            PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione.getSpecifichePrenotazione(this.getTipoPrenotazioneInAtto());
+            this.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
+            prenotazioneSpecs.setPrenotazioneAssociata(this.getPrenotazioneInAtto());
+
+            // Creazione calcolatore che poi dovrà finire altrove
+            CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
+            calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
+            //---------------------------------------------------------------------------------------
+
+            Appuntamento appuntamento = new Appuntamento();
+            appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
+            appuntamento.setCalcolatoreCosto(calcolatoreCosto);
+            appuntamento.aggiungiPartecipante(this.getPrenotazioneInAtto().getSportivoPrenotante());
+
+            this.getListaAppuntamentiPrenotazioneInAtto().clear();
+
+            this.aggiungiAppuntamento(appuntamento);
+
+
+
+
 
             HashMap<String, Object> mappaValori = new HashMap<String, Object>();
         
@@ -217,7 +239,7 @@ public class EffettuaPrenotazioneHandlerRest {
         // calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine , this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
         //this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
 
-        Appuntamento appuntamento = this.getListaAppuntamentiPrenotazioneInAtto().get(0);
+        
         appuntamento.setDataOraInizioAppuntamento(dataInizio);
         appuntamento.setDataOraFineAppuntamento(dataFine);
 
@@ -274,7 +296,7 @@ public class EffettuaPrenotazioneHandlerRest {
         
         Map<String, String> orario = (HashMap<String, String>)dati.get("orario");
         
-        List<Impianto> impiantiDisponibili =  this.getImpiantiDisponibiliByOrario(LocalDateTime.parse(orario.get("dataOraInizio"), DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" )), LocalDateTime.parse(orario.get("dataOraFine"), DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" )));
+        List<Impianto> impiantiDisponibili =  this.getImpiantiDisponibiliByOrario(LocalDateTime.parse(orario.get("oraInizio"), DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" )), LocalDateTime.parse(orario.get("oraFine"), DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" )));
         List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
         for(Impianto impianto : impiantiDisponibili){
             for(ImpiantoSpecs specifica : impianto.getSpecificheImpianto()){

@@ -52,6 +52,10 @@ public class Prenotazione {
 
     public Prenotazione(){}
 
+    public Prenotazione(int lastIdPrenotazione){
+        setIdPrenotazione(lastIdPrenotazione);
+    }
+
     public Prenotazione(int lastIdPrenotazione, PrenotazioneSpecs prenotazioneSpecs) {
         setIdPrenotazione(lastIdPrenotazione);
         //aggiungiQuotaPartecipazione(sportivoPrenotante, 0, false);
@@ -67,6 +71,9 @@ public class Prenotazione {
     }
 
     
+    public void aggiungiSpecifica(PrenotazioneSpecs specifica){
+        this.getListaSpecifichePrenotazione().add(specifica);
+    }
 
     public void setSportivoPrenotante(UtentePolisportivaAbstract sportivoPrenotante) {
         this.sportivoPrenotante = sportivoPrenotante;
