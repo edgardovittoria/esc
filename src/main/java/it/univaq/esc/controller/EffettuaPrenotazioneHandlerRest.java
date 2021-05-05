@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,10 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
+import it.univaq.esc.dtoObjects.FormPrenotaImpiantoRicorrente;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
+import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
+import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
@@ -50,7 +52,7 @@ import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 @RestController
 @RequestMapping("/effettuaPrenotazione")
 public class EffettuaPrenotazioneHandlerRest {
-    
+
     @Autowired
     private RegistroAppuntamenti registroAppuntamenti;
 
@@ -71,20 +73,19 @@ public class EffettuaPrenotazioneHandlerRest {
     private String tipoPrenotazioneInAtto;
 
     private List<Appuntamento> listaAppuntamentiPrenotazioneInAtto = new ArrayList<Appuntamento>();
-    
-    public EffettuaPrenotazioneHandlerRest(){}
 
+    public EffettuaPrenotazioneHandlerRest() {
+    }
 
     public List<Appuntamento> getListaAppuntamentiPrenotazioneInAtto() {
         return listaAppuntamentiPrenotazioneInAtto;
     }
 
-
-    private void setTipoPrenotazioneInAtto(String tipoPrenotazione){
+    private void setTipoPrenotazioneInAtto(String tipoPrenotazione) {
         this.tipoPrenotazioneInAtto = tipoPrenotazione;
     }
 
-    private String getTipoPrenotazioneInAtto(){
+    private String getTipoPrenotazioneInAtto() {
         return this.tipoPrenotazioneInAtto;
     }
 
@@ -92,7 +93,7 @@ public class EffettuaPrenotazioneHandlerRest {
         this.listaAppuntamentiPrenotazioneInAtto = listaAppuntamentiPrenotazioneInAtto;
     }
 
-    private void aggiungiAppuntamento(Appuntamento appuntamento){
+    private void aggiungiAppuntamento(Appuntamento appuntamento) {
         this.getListaAppuntamentiPrenotazioneInAtto().add(appuntamento);
     }
 
@@ -100,29 +101,23 @@ public class EffettuaPrenotazioneHandlerRest {
         return listinoPrezziDescrizioniPolisportiva;
     }
 
-
-
     private RegistroAppuntamenti getRegistroAppuntamenti() {
         return this.registroAppuntamenti;
     }
 
-
-    
-
-
     // @GetMapping("/sportPraticabili")
     // @CrossOrigin
-    private List<SportDTO> getSportPraticabiliPolisportiva(){
+    private List<SportDTO> getSportPraticabiliPolisportiva() {
         List<Sport> listaSportPraticabili = new ArrayList<Sport>();
         Set<Sport> setSportPraticabili = new HashSet<Sport>();
         for (Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()) {
-            for(ImpiantoSpecs specifica : impianto.getSpecificheImpianto()){
+            for (ImpiantoSpecs specifica : impianto.getSpecificheImpianto()) {
                 setSportPraticabili.add(specifica.getSportPraticabile());
             }
         }
         listaSportPraticabili.addAll(setSportPraticabili);
         List<SportDTO> listaSportPraticabiliDTO = new ArrayList<SportDTO>();
-        for(Sport sport : listaSportPraticabili){
+        for (Sport sport : listaSportPraticabili) {
             SportDTO sportDTO = new SportDTO();
             sportDTO.impostaValoriDTO(sport);
             listaSportPraticabiliDTO.add(sportDTO);
@@ -130,32 +125,31 @@ public class EffettuaPrenotazioneHandlerRest {
         return listaSportPraticabiliDTO;
     }
 
-
     // @GetMapping("/impiantiDisponibili")
     // @CrossOrigin
-    private List<ImpiantoDTO> getImpiantiDisponibili(){
+    private List<ImpiantoDTO> getImpiantiDisponibili() {
         Calendario calendario = new Calendario();
-        List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();        
-        for(Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()){
-            if(!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(calendario)){
+        List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
+        for (Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()) {
+            if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(calendario)) {
                 listaImpiantiDisponibili.add(impianto);
             }
         }
-        List<ImpiantoDTO> listaImpiantiDisponibiliDTO = new ArrayList<ImpiantoDTO>();  
-        for(Impianto impianto : listaImpiantiDisponibili){
+        List<ImpiantoDTO> listaImpiantiDisponibiliDTO = new ArrayList<ImpiantoDTO>();
+        for (Impianto impianto : listaImpiantiDisponibili) {
             ImpiantoDTO impiantoDTO = new ImpiantoDTO();
             impiantoDTO.impostaValoriDTO(impianto);
             listaImpiantiDisponibiliDTO.add(impiantoDTO);
         }
         return listaImpiantiDisponibiliDTO;
-        
+
     }
 
     // @GetMapping("/sportiviPolisportiva")
     // @CrossOrigin
-    private List<SportivoDTO> getSportiviPolisportiva(){
+    private List<SportivoDTO> getSportiviPolisportiva() {
         List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
-        for(UtentePolisportivaAbstract utente : this.registroSportivi.getListaSportivi()){
+        for (UtentePolisportivaAbstract utente : this.registroSportivi.getListaSportivi()) {
             SportivoDTO sportivoDTO = new SportivoDTO();
             sportivoDTO.impostaValoriDTO(utente);
             listaSportiviDTO.add(sportivoDTO);
@@ -164,197 +158,272 @@ public class EffettuaPrenotazioneHandlerRest {
         return listaSportiviDTO;
     }
 
-        @GetMapping("/avviaNuovaPrenotazione")
-        @CrossOrigin
-        public @ResponseBody Map<String, Object> avviaNuovaPrenotazioneImpianto(@RequestParam(name="email") String emailSportivoPrenotante, @RequestParam(name="tipoPrenotazione") String tipoPrenotazione){
-            UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante);
-            int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
-            
-            //PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
-            setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
-            // prenotazioneSpecs.setPrenotazioneAssociata(getPrenotazioneInAtto());
-            getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
+    @GetMapping("/avviaNuovaPrenotazione")
+    @CrossOrigin
+    public @ResponseBody Map<String, Object> avviaNuovaPrenotazioneImpianto(
+            @RequestParam(name = "email") String emailSportivoPrenotante,
+            @RequestParam(name = "tipoPrenotazione") String tipoPrenotazione) {
+        UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroSportivi()
+                .getSportivoDaEmail(emailSportivoPrenotante);
+        int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
 
-            
+        // PrenotazioneSpecs prenotazioneSpecs =
+        // FactorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
+        setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
+        // prenotazioneSpecs.setPrenotazioneAssociata(getPrenotazioneInAtto());
+        getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
 
-            this.setTipoPrenotazioneInAtto(tipoPrenotazione);
-           
-            Map<String, Object> mappaValori = new HashMap<String, Object>();
-            mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
-            //mappaValori.put("impiantiDisponibili", this.getImpiantiDisponibili());
-            mappaValori.put("sportiviPolisportiva", this.getSportiviPolisportiva());
+        this.setTipoPrenotazioneInAtto(tipoPrenotazione);
 
+        Map<String, Object> mappaValori = new HashMap<String, Object>();
+        mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
+        // mappaValori.put("impiantiDisponibili", this.getImpiantiDisponibili());
+        mappaValori.put("sportiviPolisportiva", this.getSportiviPolisportiva());
 
-            
+        return mappaValori;
+    }
 
+    @PostMapping("/riepilogoPrenotazione")
+    @CrossOrigin
+    public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazioneConCosto(
+            @RequestBody FormPrenotaImpianto formPrenotaImpianto) {
 
-            return mappaValori;
+        PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione
+                .getSpecifichePrenotazione(this.getTipoPrenotazioneInAtto());
+        this.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
+        prenotazioneSpecs.setPrenotazioneAssociata(this.getPrenotazioneInAtto());
+
+        // Creazione calcolatore che poi dovrà finire altrove
+        CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
+        calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
+        // ---------------------------------------------------------------------------------------
+
+        Appuntamento appuntamento = new Appuntamento();
+        appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
+        appuntamento.setCalcolatoreCosto(calcolatoreCosto);
+        appuntamento.aggiungiPartecipante(this.getPrenotazioneInAtto().getSportivoPrenotante());
+
+        this.getListaAppuntamentiPrenotazioneInAtto().clear();
+
+        this.aggiungiAppuntamento(appuntamento);
+
+        HashMap<String, Object> mappaValori = new HashMap<String, Object>();
+
+        for (PrenotabileDescrizione desc : this.getListinoPrezziDescrizioniPolisportiva().getCatalogoPrenotabili()) {
+            if (desc.getSportAssociato().getNome().equals(formPrenotaImpianto.getSportSelezionato())
+                    && desc.getTipoPrenotazione().equals(
+                            this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione())) {
+                this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(desc);
+            }
         }
 
-        
-        @PostMapping("/riepilogoPrenotazione")
-        @CrossOrigin
-        public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazioneConCosto(@RequestBody FormPrenotaImpianto formPrenotaImpianto){
+        // Calendario calendarioPrenotazione = new Calendario();
+        LocalDateTime dataInizio = LocalDateTime.of(
+                formPrenotaImpianto.getOrarioPrenotazione().getLocalDataPrenotazione(),
+                formPrenotaImpianto.getOrarioPrenotazione().getOraInizio());
+        LocalDateTime dataFine = LocalDateTime.of(
+                formPrenotaImpianto.getOrarioPrenotazione().getLocalDataPrenotazione(),
+                formPrenotaImpianto.getOrarioPrenotazione().getOraFine());
 
-            PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione.getSpecifichePrenotazione(this.getTipoPrenotazioneInAtto());
+        // calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine ,
+        // this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+        // this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione,
+        // this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+
+        appuntamento.setDataOraInizioAppuntamento(dataInizio);
+        appuntamento.setDataOraFineAppuntamento(dataFine);
+
+        List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
+        for (String email : formPrenotaImpianto.getSportiviInvitati()) {
+            sportivi.add(this.getRegistroSportivi().getSportivoDaEmail(email));
+        }
+
+        mappaValori.put("invitati", sportivi);
+        mappaValori.put("impianto",
+                this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto().getIdImpianto()));
+
+        this.getPrenotazioneInAtto().impostaValoriSpecificheExtraSingolaPrenotazioneSpecs(mappaValori,
+                this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+
+        // Calcolo costo prenotazioneSpecs
+        appuntamento.calcolaCosto();
+        // ----------------------------------
+
+        PrenotazioneDTO prenDTO = new PrenotazioneDTO();
+        prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getListaAppuntamentiPrenotazioneInAtto());
+        return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.OK);
+
+    }
+
+    @PostMapping("/riepilogoPrenotazioneRicorrente")
+    @CrossOrigin
+    public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazioneRicorrenteConCosto(
+            @RequestBody FormPrenotaImpiantoRicorrente formPrenotaImpianto) {
+
+        List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
+        for (int i = 0; i < formPrenotaImpianto.getOrariSelezionati().size(); i++) {
+            PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione
+                    .getSpecifichePrenotazione(this.getTipoPrenotazioneInAtto());
             this.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
             prenotazioneSpecs.setPrenotazioneAssociata(this.getPrenotazioneInAtto());
 
             // Creazione calcolatore che poi dovrà finire altrove
             CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
             calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
-            //---------------------------------------------------------------------------------------
+            // ---------------------------------------------------------------------------------------
 
             Appuntamento appuntamento = new Appuntamento();
             appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
             appuntamento.setCalcolatoreCosto(calcolatoreCosto);
             appuntamento.aggiungiPartecipante(this.getPrenotazioneInAtto().getSportivoPrenotante());
+            listaAppuntamenti.add(appuntamento);
+        }
 
-            this.getListaAppuntamentiPrenotazioneInAtto().clear();
+        this.setListaAppuntamentiPrenotazioneInAtto(listaAppuntamenti);
 
-            this.aggiungiAppuntamento(appuntamento);
-
-
-
-
-
-            HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-        
-        
-        
-        for(PrenotabileDescrizione desc : this.getListinoPrezziDescrizioniPolisportiva().getCatalogoPrenotabili()){
-            if(desc.getSportAssociato().getNome().equals(formPrenotaImpianto.getSportSelezionato()) && desc.getTipoPrenotazione().equals(this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione())){
-                this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(desc);
+        PrenotabileDescrizione descrizioneSpecifica = null;
+        for (PrenotabileDescrizione desc : this.getListinoPrezziDescrizioniPolisportiva().getCatalogoPrenotabili()) {
+            if (desc.getSportAssociato().getNome().equals(formPrenotaImpianto.getSportSelezionato())
+                    && desc.getTipoPrenotazione().equals(
+                            this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione())) {
+                descrizioneSpecifica = desc;
             }
         }
 
-        
-        
-        
-        
-        // Calendario calendarioPrenotazione = new Calendario();
-        LocalDateTime dataInizio = LocalDateTime.of(formPrenotaImpianto.getOrarioPrenotazione().getLocalDataPrenotazione(), formPrenotaImpianto.getOrarioPrenotazione().getOraInizio());
-        LocalDateTime dataFine = LocalDateTime.of(formPrenotaImpianto.getOrarioPrenotazione().getLocalDataPrenotazione(), formPrenotaImpianto.getOrarioPrenotazione().getOraFine());
-
-        // calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine , this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
-        //this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
-
-        
-        appuntamento.setDataOraInizioAppuntamento(dataInizio);
-        appuntamento.setDataOraFineAppuntamento(dataFine);
-
         List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
-        for(String email : formPrenotaImpianto.getSportiviInvitati()){
+        for (String email : formPrenotaImpianto.getSportiviInvitati()) {
             sportivi.add(this.getRegistroSportivi().getSportivoDaEmail(email));
         }
+        
 
-        mappaValori.put("invitati", sportivi);
-        mappaValori.put("impianto", this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto().getIdImpianto()));
+        for (PrenotazioneSpecs spec : this.getPrenotazioneInAtto().getListaSpecifichePrenotazione()) {
+            spec.setSpecificaDescrtiption(descrizioneSpecifica);
+        }
 
-        this.getPrenotazioneInAtto().impostaValoriSpecificheExtraSingolaPrenotazioneSpecs(mappaValori, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+        for (OrarioAppuntamento orario : formPrenotaImpianto.getOrariSelezionati()) {
+            // Calendario calendarioPrenotazione = new Calendario();
+            LocalDateTime dataInizio = LocalDateTime.of(orario.getLocalDataPrenotazione(), orario.getOraInizio());
+            LocalDateTime dataFine = LocalDateTime.of(orario.getLocalDataPrenotazione(), orario.getOraFine());
 
-        //Calcolo costo prenotazioneSpecs
-        appuntamento.calcolaCosto();
-        //----------------------------------
+            // calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine ,
+            // this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+            // this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione,
+            // this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+
+            this.getListaAppuntamentiPrenotazioneInAtto().get(formPrenotaImpianto.getOrariSelezionati().indexOf(orario))
+                    .setDataOraInizioAppuntamento(dataInizio);
+            this.getListaAppuntamentiPrenotazioneInAtto().get(formPrenotaImpianto.getOrariSelezionati().indexOf(orario))
+                    .setDataOraFineAppuntamento(dataFine);
+            this.getListaAppuntamentiPrenotazioneInAtto().get(formPrenotaImpianto.getOrariSelezionati().indexOf(orario))
+                    .calcolaCosto();
+
+            HashMap<String, Object> mappaValori = new HashMap<String, Object>();
+            mappaValori.put("invitati", sportivi);
+
+        
+            Integer idImpianto = 0;
+            for(ImpiantoSelezionato impianto : formPrenotaImpianto.getImpianti()){
+                if(impianto.getIdSelezione() == orario.getId()){
+                    idImpianto = impianto.getIdImpianto();
+                }
+            }
+            
+            mappaValori.put("impianto", this.getRegistroImpianti().getImpiantoByID(idImpianto));
+                
+            this.getListaAppuntamentiPrenotazioneInAtto().get(formPrenotaImpianto.getOrariSelezionati().indexOf(orario)).getPrenotazioneSpecsAppuntamento().impostaValoriSpecificheExtraPrenotazione(mappaValori);
+
+        }
+
 
         PrenotazioneDTO prenDTO = new PrenotazioneDTO();
         prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getListaAppuntamentiPrenotazioneInAtto());
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.OK);
-       
+
     }
 
-
-
-
-
-
-
-        @PostMapping("/confermaPrenotazione")
+    @PostMapping("/confermaPrenotazione")
     @CrossOrigin
-    public ResponseEntity<PrenotazioneDTO> confermaPrenotazione(){
-        
-        
-        
+    public ResponseEntity<PrenotazioneDTO> confermaPrenotazione() {
+
         Calendario calendarioDaUnire = new Calendario(this.getListaAppuntamentiPrenotazioneInAtto());
 
         this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
         this.getRegistroAppuntamenti().salvaListaAppuntamenti(this.getListaAppuntamentiPrenotazioneInAtto());
-        this.registroImpianti.aggiornaCalendarioImpianto((Impianto)this.getPrenotazioneInAtto().getSingolaSpecificaExtra("impianto", this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)), calendarioDaUnire);
+        this.registroImpianti
+                .aggiornaCalendarioImpianto(
+                        (Impianto) this.getPrenotazioneInAtto().getSingolaSpecificaExtra("impianto",
+                                this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)),
+                        calendarioDaUnire);
 
-        
         PrenotazioneDTO prenDTO = new PrenotazioneDTO();
         prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getListaAppuntamentiPrenotazioneInAtto());
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
     }
 
+    @PostMapping("/aggiornaImpianti")
+    @CrossOrigin
+    public @ResponseBody List<ImpiantoDTO> getListaImpianti(@RequestBody HashMap<String, Object> dati) {
 
+        Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
 
-        @PostMapping("/aggiornaImpianti")
-        @CrossOrigin
-        public @ResponseBody List<ImpiantoDTO> getListaImpianti(@RequestBody HashMap<String, Object> dati){        
-
-        
-        Map<String, String> orario = (HashMap<String, String>)dati.get("orario");
-        
-        List<Impianto> impiantiDisponibili =  this.getImpiantiDisponibiliByOrario(LocalDateTime.parse(orario.get("oraInizio"), DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" )), LocalDateTime.parse(orario.get("oraFine"), DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" )));
+        List<Impianto> impiantiDisponibili = this.getImpiantiDisponibiliByOrario(
+                LocalDateTime.parse(orario.get("oraInizio"), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
+                LocalDateTime.parse(orario.get("oraFine"), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
         List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
-        for(Impianto impianto : impiantiDisponibili){
-            for(ImpiantoSpecs specifica : impianto.getSpecificheImpianto()){
-                if(specifica.getSportPraticabile().getNome().equals(dati.get("sport"))){
+        for (Impianto impianto : impiantiDisponibili) {
+            for (ImpiantoSpecs specifica : impianto.getSpecificheImpianto()) {
+                if (specifica.getSportPraticabile().getNome().equals(dati.get("sport"))) {
                     ImpiantoDTO impiantoDTO = new ImpiantoDTO();
                     impiantoDTO.impostaValoriDTO(impianto);
                     listaImpiantiDTODisponibili.add(impiantoDTO);
                 }
             }
-            
-        } 
+
+        }
 
         return listaImpiantiDTODisponibili;
     }
 
-    private List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine){
+    private List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine) {
         List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
-        for(Impianto impianto : this.getRegistroImpianti().getListaImpiantiPolisportiva()){
-            if(!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)){
+        for (Impianto impianto : this.getRegistroImpianti().getListaImpiantiPolisportiva()) {
+            if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)) {
                 listaImpiantiDisponibili.add(impianto);
             }
         }
         return listaImpiantiDisponibili;
     }
 
-
-
-        private RegistroUtentiPolisportiva getRegistroSportivi(){
-            return this.registroSportivi;
-        }
-
-        private RegistroImpianti getRegistroImpianti(){
-            return this.registroImpianti;
-        }
-
-        private RegistroPrenotazioni getRegistroPrenotazioni(){
-            return this.registroPrenotazioni;
-        }
-
-        private Prenotazione getPrenotazioneInAtto(){
-            return this.prenotazioneInAtto;
-        }
-
-        private void setPrenotazioneInAtto(Prenotazione prenotazione){
-            this.prenotazioneInAtto = prenotazione;
-        }
-        
-        private List<Sport> getSportPraticabili() {
-            List<Sport> listaSportPraticabili = new ArrayList<Sport>();
-            Set<Sport> setSportPraticabili = new HashSet<Sport>();
-            for (Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()) {
-                for(ImpiantoSpecs specifica : impianto.getSpecificheImpianto()){
-                    setSportPraticabili.add(specifica.getSportPraticabile());
-                }
-            }
-            listaSportPraticabili.addAll(setSportPraticabili);
-            return listaSportPraticabili;
-    
-        }
+    private RegistroUtentiPolisportiva getRegistroSportivi() {
+        return this.registroSportivi;
     }
 
+    private RegistroImpianti getRegistroImpianti() {
+        return this.registroImpianti;
+    }
+
+    private RegistroPrenotazioni getRegistroPrenotazioni() {
+        return this.registroPrenotazioni;
+    }
+
+    private Prenotazione getPrenotazioneInAtto() {
+        return this.prenotazioneInAtto;
+    }
+
+    private void setPrenotazioneInAtto(Prenotazione prenotazione) {
+        this.prenotazioneInAtto = prenotazione;
+    }
+
+    private List<Sport> getSportPraticabili() {
+        List<Sport> listaSportPraticabili = new ArrayList<Sport>();
+        Set<Sport> setSportPraticabili = new HashSet<Sport>();
+        for (Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()) {
+            for (ImpiantoSpecs specifica : impianto.getSpecificheImpianto()) {
+                setSportPraticabili.add(specifica.getSportPraticabile());
+            }
+        }
+        listaSportPraticabili.addAll(setSportPraticabili);
+        return listaSportPraticabili;
+
+    }
+}
