@@ -233,8 +233,8 @@ public class EffettuaPrenotazioneHandlerRest {
         
         
         // Calendario calendarioPrenotazione = new Calendario();
-        LocalDateTime dataInizio = LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraInizio());
-        LocalDateTime dataFine = LocalDateTime.of(formPrenotaImpianto.getLocalDataPrenotazione(), formPrenotaImpianto.getOraFine());
+        LocalDateTime dataInizio = LocalDateTime.of(formPrenotaImpianto.getOrarioPrenotazione().getLocalDataPrenotazione(), formPrenotaImpianto.getOrarioPrenotazione().getOraInizio());
+        LocalDateTime dataFine = LocalDateTime.of(formPrenotaImpianto.getOrarioPrenotazione().getLocalDataPrenotazione(), formPrenotaImpianto.getOrarioPrenotazione().getOraFine());
 
         // calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine , this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
         //this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
