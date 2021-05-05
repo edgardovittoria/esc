@@ -249,7 +249,7 @@ public class EffettuaPrenotazioneHandlerRest {
         }
 
         mappaValori.put("invitati", sportivi);
-        mappaValori.put("impianto", this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto()));
+        mappaValori.put("impianto", this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto().getIdImpianto()));
 
         this.getPrenotazioneInAtto().impostaValoriSpecificheExtraSingolaPrenotazioneSpecs(mappaValori, this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
 

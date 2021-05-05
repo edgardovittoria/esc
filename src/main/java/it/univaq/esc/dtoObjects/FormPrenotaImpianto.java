@@ -14,7 +14,7 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
 
     private OrarioAppuntamento orarioPrenotazione;
 
-    private Integer impianto;
+   private ImpiantoSelezionato impianto;
     private List<String> sportiviInvitati;
 
     private Integer postiLiberi;
@@ -22,6 +22,14 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
     private Integer numeroGiocatoriNonIscritti;
 
     public FormPrenotaImpianto() {
+    }
+
+    public ImpiantoSelezionato getImpianto() {
+        return impianto;
+    }
+
+    public void setImpianto(ImpiantoSelezionato impianto) {
+        this.impianto = impianto;
     }
 
     public OrarioAppuntamento getOrarioPrenotazione() {
@@ -47,19 +55,7 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
     }
 
 
-    /**
-     * @return Integer return the impianto
-     */
-    public Integer getImpianto() {
-        return impianto;
-    }
-
-    /**
-     * @param impianto the impianto to set
-     */
-    public void setImpianto(String impianto) {
-        this.impianto = Integer.parseInt(impianto);
-    }
+    
 
     /**
      * @return List<String> return the sportiviInvitati
@@ -83,7 +79,7 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
         mappaValori.put("dataPrenotazione", this.getOrarioPrenotazione().getDataPrenotazione());
         mappaValori.put("oraInizio", this.getOrarioPrenotazione().getOraInizio());
         mappaValori.put("oraFine", this.getOrarioPrenotazione().getOraFine());
-        mappaValori.put("impianto", this.getImpianto());
+        mappaValori.put("impianto", this.getImpianto().getIdImpianto());
         mappaValori.put("invitati", this.getSportiviInvitati());
         mappaValori.put("postiLiberi", this.getPostiLiberi());
         mappaValori.put("numeroPartecipantiNonIscritti", this.getNumeroGiocatoriNonIscritti());
