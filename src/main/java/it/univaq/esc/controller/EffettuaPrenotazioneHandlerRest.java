@@ -275,15 +275,20 @@ public class EffettuaPrenotazioneHandlerRest {
     @CrossOrigin
     public ResponseEntity<PrenotazioneDTO> confermaPrenotazione() {
 
-        Calendario calendarioDaUnire = new Calendario(this.getListaAppuntamentiPrenotazioneInAtto());
-
         this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
         this.getRegistroAppuntamenti().salvaListaAppuntamenti(this.getListaAppuntamentiPrenotazioneInAtto());
-        this.registroImpianti
-                .aggiornaCalendarioImpianto(
-                        (Impianto) this.getPrenotazioneInAtto().getSingolaSpecificaExtra("impianto",
-                                this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)),
-                        calendarioDaUnire);
+
+
+        for(Appuntamento app : this.getListaAppuntamentiPrenotazioneInAtto()){
+            Calendario calendarioDaUnire = new Calendario();
+            calendarioDaUnire.aggiungiAppuntamento(app);
+            this.registroImpianti
+            .aggiornaCalendarioImpianto(
+                    (Impianto) this.getPrenotazioneInAtto().getSingolaSpecificaExtra("impianto",
+                            app.getPrenotazioneSpecsAppuntamento()),
+                    calendarioDaUnire);
+        }
+        
 
         PrenotazioneDTO prenDTO = new PrenotazioneDTO();
         prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getListaAppuntamentiPrenotazioneInAtto());
