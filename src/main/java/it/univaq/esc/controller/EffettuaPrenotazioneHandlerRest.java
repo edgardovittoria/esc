@@ -244,8 +244,7 @@ public class EffettuaPrenotazioneHandlerRest {
                     .setDataOraInizioAppuntamento(dataInizio);
             this.getListaAppuntamentiPrenotazioneInAtto().get(formPrenotaImpianto.getOrariSelezionati().indexOf(orario))
                     .setDataOraFineAppuntamento(dataFine);
-            this.getListaAppuntamentiPrenotazioneInAtto().get(formPrenotaImpianto.getOrariSelezionati().indexOf(orario))
-                    .calcolaCosto();
+            
 
             HashMap<String, Object> mappaValori = new HashMap<String, Object>();
             mappaValori.put("invitati", sportivi);
@@ -261,7 +260,8 @@ public class EffettuaPrenotazioneHandlerRest {
             mappaValori.put("impianto", this.getRegistroImpianti().getImpiantoByID(idImpianto));
                 
             this.getListaAppuntamentiPrenotazioneInAtto().get(formPrenotaImpianto.getOrariSelezionati().indexOf(orario)).getPrenotazioneSpecsAppuntamento().impostaValoriSpecificheExtraPrenotazione(mappaValori);
-
+            this.getListaAppuntamentiPrenotazioneInAtto().get(formPrenotaImpianto.getOrariSelezionati().indexOf(orario))
+                    .calcolaCosto();
         }
 
 
