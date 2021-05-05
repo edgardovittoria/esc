@@ -1,85 +1,92 @@
 package it.univaq.esc.dtoObjects;
 
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
-import org.springframework.stereotype.Component;
-
-@Component
-public class FormPrenotaImpianto implements IFormPrenotabile {
-
+public class FormPrenotaImpianto implements IFormPrenotabile{
     private String sportSelezionato = "tennis";
 
-    private OrarioAppuntamento orarioPrenotazione;
+    private List<OrarioAppuntamento> orariSelezionati = new ArrayList<OrarioAppuntamento>();
 
-   private ImpiantoSelezionato impianto;
+    private List<ImpiantoSelezionato> impianti = new ArrayList<ImpiantoSelezionato>();
+
     private List<String> sportiviInvitati;
 
     private Integer postiLiberi;
 
     private Integer numeroGiocatoriNonIscritti;
 
-    public FormPrenotaImpianto() {
-    }
 
-    public ImpiantoSelezionato getImpianto() {
-        return impianto;
-    }
+    public FormPrenotaImpianto(){}
 
-    public void setImpianto(ImpiantoSelezionato impianto) {
-        this.impianto = impianto;
-    }
 
-    public OrarioAppuntamento getOrarioPrenotazione() {
-        return orarioPrenotazione;
-    }
-
-    public void setOrarioPrenotazione(OrarioAppuntamento orarioPrenotazione) {
-        this.orarioPrenotazione = orarioPrenotazione;
-    }
-
-    /**
-     * @return String return the sport
-     */
-    public String getSportSelezionato() {
-        return this.sportSelezionato;
-    }
-
-    /**
-     * @param sport the sport to set
-     */
-    public void setSportSelezionato(String sport) {
-        this.sportSelezionato = sport;
+    public Integer getNumeroGiocatoriNonIscritti() {
+        return numeroGiocatoriNonIscritti;
     }
 
 
-    
+    public void setNumeroGiocatoriNonIscritti(Integer numeroGiocatoriNonIscritti) {
+        this.numeroGiocatoriNonIscritti = numeroGiocatoriNonIscritti;
+    }
 
-    /**
-     * @return List<String> return the sportiviInvitati
-     */
+
+    public Integer getPostiLiberi() {
+        return postiLiberi;
+    }
+
+
+    public void setPostiLiberi(Integer postiLiberi) {
+        this.postiLiberi = postiLiberi;
+    }
+
+
     public List<String> getSportiviInvitati() {
         return sportiviInvitati;
     }
 
-    /**
-     * @param sportiviInvitati the sportiviInvitati to set
-     */
+
     public void setSportiviInvitati(List<String> sportiviInvitati) {
         this.sportiviInvitati = sportiviInvitati;
     }
 
+
+    public List<ImpiantoSelezionato> getImpianti() {
+        return impianti;
+    }
+
+
+    public void setImpianti(List<ImpiantoSelezionato> impianti) {
+        this.impianti = impianti;
+    }
+
+
+    public List<OrarioAppuntamento> getOrariSelezionati() {
+        return orariSelezionati;
+    }
+
+
+    public void setOrariSelezionati(List<OrarioAppuntamento> orariSelezionati) {
+        this.orariSelezionati = orariSelezionati;
+    }
+
+
+    public String getSportSelezionato() {
+        return sportSelezionato;
+    }
+
+
+    public void setSportSelezionato(String sportSelezionato) {
+        this.sportSelezionato = sportSelezionato;
+    }
+
+
     @Override
     public HashMap<String, Object> getValoriForm() {
-        
         HashMap<String, Object> mappaValori = new HashMap<String, Object>();
         mappaValori.put("sport", this.getSportSelezionato());
-        mappaValori.put("dataPrenotazione", this.getOrarioPrenotazione().getDataPrenotazione());
-        mappaValori.put("oraInizio", this.getOrarioPrenotazione().getOraInizio());
-        mappaValori.put("oraFine", this.getOrarioPrenotazione().getOraFine());
-        mappaValori.put("impianto", this.getImpianto().getIdImpianto());
+        mappaValori.put("listaOrariAppuntamenti", this.getOrariSelezionati());
+        mappaValori.put("impianti", this.getImpianti());
         mappaValori.put("invitati", this.getSportiviInvitati());
         mappaValori.put("postiLiberi", this.getPostiLiberi());
         mappaValori.put("numeroPartecipantiNonIscritti", this.getNumeroGiocatoriNonIscritti());
@@ -87,34 +94,5 @@ public class FormPrenotaImpianto implements IFormPrenotabile {
         return mappaValori;
     }
 
-
-    /**
-     * @return Integer return the postiLiberi
-     */
-    public Integer getPostiLiberi() {
-        return postiLiberi;
-    }
-
-    /**
-     * @param postiLiberi the postiLiberi to set
-     */
-    public void setPostiLiberi(Integer postiLiberi) {
-        this.postiLiberi = postiLiberi;
-    }
-
-
-    /**
-     * @return Integer return the numeroGiocatoriNonIscritti
-     */
-    public Integer getNumeroGiocatoriNonIscritti() {
-        return numeroGiocatoriNonIscritti;
-    }
-
-    /**
-     * @param numeroGiocatoriNonIscritti the numeroGiocatoriNonIscritti to set
-     */
-    public void setNumeroGiocatoriNonIscritti(Integer numeroGiocatoriNonIscritti) {
-        this.numeroGiocatoriNonIscritti = numeroGiocatoriNonIscritti;
-    }
 
 }

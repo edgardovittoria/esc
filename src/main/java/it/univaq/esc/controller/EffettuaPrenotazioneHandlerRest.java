@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
-import it.univaq.esc.dtoObjects.FormPrenotaImpiantoRicorrente;
+import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
@@ -183,82 +183,12 @@ public class EffettuaPrenotazioneHandlerRest {
         return mappaValori;
     }
 
+    
+
     @PostMapping("/riepilogoPrenotazione")
     @CrossOrigin
-    public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazioneConCosto(
-            @RequestBody FormPrenotaImpianto formPrenotaImpianto) {
-
-        PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione
-                .getSpecifichePrenotazione(this.getTipoPrenotazioneInAtto());
-        this.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
-        prenotazioneSpecs.setPrenotazioneAssociata(this.getPrenotazioneInAtto());
-
-        // Creazione calcolatore che poi dovrà finire altrove
-        CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
-        calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
-        // ---------------------------------------------------------------------------------------
-
-        Appuntamento appuntamento = new Appuntamento();
-        appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
-        appuntamento.setCalcolatoreCosto(calcolatoreCosto);
-        appuntamento.aggiungiPartecipante(this.getPrenotazioneInAtto().getSportivoPrenotante());
-
-        this.getListaAppuntamentiPrenotazioneInAtto().clear();
-
-        this.aggiungiAppuntamento(appuntamento);
-
-        HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-
-        for (PrenotabileDescrizione desc : this.getListinoPrezziDescrizioniPolisportiva().getCatalogoPrenotabili()) {
-            if (desc.getSportAssociato().getNome().equals(formPrenotaImpianto.getSportSelezionato())
-                    && desc.getTipoPrenotazione().equals(
-                            this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione())) {
-                this.prenotazioneInAtto.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(desc);
-            }
-        }
-
-        // Calendario calendarioPrenotazione = new Calendario();
-        LocalDateTime dataInizio = LocalDateTime.of(
-                formPrenotaImpianto.getOrarioPrenotazione().getLocalDataPrenotazione(),
-                formPrenotaImpianto.getOrarioPrenotazione().getOraInizio());
-        LocalDateTime dataFine = LocalDateTime.of(
-                formPrenotaImpianto.getOrarioPrenotazione().getLocalDataPrenotazione(),
-                formPrenotaImpianto.getOrarioPrenotazione().getOraFine());
-
-        // calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine ,
-        // this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
-        // this.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione,
-        // this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
-
-        appuntamento.setDataOraInizioAppuntamento(dataInizio);
-        appuntamento.setDataOraFineAppuntamento(dataFine);
-
-        List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
-        for (String email : formPrenotaImpianto.getSportiviInvitati()) {
-            sportivi.add(this.getRegistroSportivi().getSportivoDaEmail(email));
-        }
-
-        mappaValori.put("invitati", sportivi);
-        mappaValori.put("impianto",
-                this.registroImpianti.getImpiantoByID(formPrenotaImpianto.getImpianto().getIdImpianto()));
-
-        this.getPrenotazioneInAtto().impostaValoriSpecificheExtraSingolaPrenotazioneSpecs(mappaValori,
-                this.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
-
-        // Calcolo costo prenotazioneSpecs
-        appuntamento.calcolaCosto();
-        // ----------------------------------
-
-        PrenotazioneDTO prenDTO = new PrenotazioneDTO();
-        prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getListaAppuntamentiPrenotazioneInAtto());
-        return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.OK);
-
-    }
-
-    @PostMapping("/riepilogoPrenotazioneRicorrente")
-    @CrossOrigin
     public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazioneRicorrenteConCosto(
-            @RequestBody FormPrenotaImpiantoRicorrente formPrenotaImpianto) {
+            @RequestBody FormPrenotaImpianto formPrenotaImpianto) {
 
         List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
         for (int i = 0; i < formPrenotaImpianto.getOrariSelezionati().size(); i++) {
