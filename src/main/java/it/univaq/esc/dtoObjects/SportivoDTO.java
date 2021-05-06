@@ -1,6 +1,10 @@
 package it.univaq.esc.dtoObjects;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 public class SportivoDTO {
@@ -8,8 +12,23 @@ public class SportivoDTO {
     private String nome;
     private String cognome;
     private String email;
+    private List<String> sportPraticati = new ArrayList<String>();
 
     public SportivoDTO(){}
+
+    public List<String> getSportPraticati() {
+        return sportPraticati;
+    }
+
+    public void setSportPraticati(List<String> sportPraticati) {
+        this.sportPraticati = sportPraticati;
+    }
+
+    public void aggiungiSportPraticato(String nomeSport){
+        if(!this.getSportPraticati().contains(nomeSport)){
+            this.getSportPraticati().add(nomeSport);
+        }
+    }
 
     public String getNome() {
         return nome;
@@ -36,10 +55,16 @@ public class SportivoDTO {
     }
 
     public void impostaValoriDTO(UtentePolisportivaAbstract sportivo){
-        this.nome = (String)sportivo.getProprieta().get("nome");
-        this.cognome = (String)sportivo.getProprieta().get("cognome");
-        this.email = (String)sportivo.getProprieta().get("email");
+        this.setNome((String)sportivo.getProprieta().get("nome"));
+        this.setCognome((String)sportivo.getProprieta().get("cognome"));
+        this.setEmail((String)sportivo.getProprieta().get("email"));
+        List<String> sportPraticati = new ArrayList<String>();
+        for(Sport sport : (List<Sport>)sportivo.getProprieta().get("sportPraticati")){
+            sportPraticati.add(sport.getNome());
+        }
+        this.setSportPraticati(sportPraticati);
     }
+
 
     
     
