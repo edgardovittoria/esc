@@ -98,7 +98,7 @@ public class ControllerAvvio {
 
     private HashMap<String, Object> getDettagliProfiloSportivo(String email){
         SportivoDTO sportivoDTO = new SportivoDTO();
-        sportivoDTO.impostaValoriDTO(this.registroSportivi.getSportivoDaEmail(email));
+        sportivoDTO.impostaValoriDTO(this.registroSportivi.getUtenteByEmail(email));
         HashMap<String, Object> dettagliProfiloSportivo = new HashMap<String, Object>();
         dettagliProfiloSportivo.put("sportivo", sportivoDTO);
         List<PrenotazioneDTO> prenotazioniDTO = new ArrayList<PrenotazioneDTO>();
@@ -119,7 +119,7 @@ public class ControllerAvvio {
    
     @RequestMapping(value = "/nuovaPrenotazione")
     public ModelAndView avviaPrenotazione(@RequestParam(name="email") String emailSportivoPrenotante, @RequestParam(name="tipoPrenotazione") String tipoPrenotazione){
-        this.effettuaPrenotazioneHandler.avviaNuovaPrenotazione(this.effettuaPrenotazioneHandler.getRegistroSportivi().getSportivoDaEmail(emailSportivoPrenotante), tipoPrenotazione);
+        this.effettuaPrenotazioneHandler.avviaNuovaPrenotazione(this.effettuaPrenotazioneHandler.getRegistroSportivi().getUtenteByEmail(emailSportivoPrenotante), tipoPrenotazione);
         HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto();
         SportivoDTO sportivoPrenotanteDTO = new SportivoDTO();
         sportivoPrenotanteDTO.impostaValoriDTO(this.effettuaPrenotazioneHandler.getPrenotazioneInAtto().getSportivoPrenotante());

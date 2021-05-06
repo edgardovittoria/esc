@@ -42,7 +42,7 @@ public class EffettuaPrenotazioneHandler {
     public EffettuaPrenotazioneHandler() {}
 
     public List<UtentePolisportivaAbstract> getSportivi() {
-        return this.registroSportivi.getListaSportivi();
+        return this.registroSportivi.getListaUtenti();
     }
 
     public Prenotazione getPrenotazioneInAtto(){

@@ -37,7 +37,7 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
     @CrossOrigin
     public @ResponseBody SportivoDTO getSportivo(@RequestParam(name = "email") String email){
         SportivoDTO sportivoDTO = new SportivoDTO();
-        sportivoDTO.impostaValoriDTO(controller.getRegistroSportivi().getSportivoDaEmail(email));
+        sportivoDTO.impostaValoriDTO(controller.getRegistroSportivi().getUtenteByEmail(email));
         return sportivoDTO;
     }
 

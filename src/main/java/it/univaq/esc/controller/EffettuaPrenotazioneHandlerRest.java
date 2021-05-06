@@ -149,7 +149,7 @@ public class EffettuaPrenotazioneHandlerRest {
     // @CrossOrigin
     private List<SportivoDTO> getSportiviPolisportiva() {
         List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
-        for (UtentePolisportivaAbstract utente : this.registroSportivi.getListaSportivi()) {
+        for (UtentePolisportivaAbstract utente : this.registroSportivi.getListaUtenti()) {
             SportivoDTO sportivoDTO = new SportivoDTO();
             sportivoDTO.impostaValoriDTO(utente);
             listaSportiviDTO.add(sportivoDTO);
@@ -164,7 +164,7 @@ public class EffettuaPrenotazioneHandlerRest {
             @RequestParam(name = "email") String emailSportivoPrenotante,
             @RequestParam(name = "tipoPrenotazione") String tipoPrenotazione) {
         UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroSportivi()
-                .getSportivoDaEmail(emailSportivoPrenotante);
+                .getUtenteByEmail(emailSportivoPrenotante);
         int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
 
         // PrenotazioneSpecs prenotazioneSpecs =
@@ -222,7 +222,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
         List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
         for (String email : formPrenotaImpianto.getSportiviInvitati()) {
-            sportivi.add(this.getRegistroSportivi().getSportivoDaEmail(email));
+            sportivi.add(this.getRegistroSportivi().getUtenteByEmail(email));
         }
         
 
