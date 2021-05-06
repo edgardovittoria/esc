@@ -14,33 +14,42 @@ public class AppuntamentoDTO {
     private LocalDate dataAppuntamento;
     private LocalTime oraInizioAppuntamento;
     private LocalTime oraFineAppuntamento;
+    private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
     private List<SportivoDTO> partecipanti = new ArrayList<SportivoDTO>();
     private PrenotazioneSpecsDTO specificaPrenotazione;
 
     public AppuntamentoDTO(){}
 
+    private OrarioAppuntamento getOrarioAppuntamento() {
+        return orarioAppuntamento;
+    }
+
+    private void setOrarioAppuntamento(OrarioAppuntamento orarioAppuntamento) {
+        this.orarioAppuntamento = orarioAppuntamento;
+    }
+
     public LocalDate getDataAppuntamento() {
-        return dataAppuntamento;
+        return this.getOrarioAppuntamento().getLocalDataPrenotazione();
     }
 
     public void setDataAppuntamento(LocalDate dataAppuntamento) {
-        this.dataAppuntamento = dataAppuntamento;
+        this.getOrarioAppuntamento().setLocalDataPrenotaione(dataAppuntamento);
     }
 
     public LocalTime getOraInizioAppuntamento() {
-        return oraInizioAppuntamento;
+        return this.getOrarioAppuntamento().getOraInizio();
     }
 
     public void setOraInizioAppuntamento(LocalTime oraInizioAppuntamento) {
-        this.oraInizioAppuntamento = oraInizioAppuntamento;
+        this.getOrarioAppuntamento().setOraInizio(oraInizioAppuntamento);
     }
 
     public LocalTime getOraFineAppuntamento() {
-        return oraFineAppuntamento;
+        return this.getOrarioAppuntamento().getOraFine();
     }
 
     public void setOraFineAppuntamento(LocalTime oraFineAppuntamento) {
-        this.oraFineAppuntamento = oraFineAppuntamento;
+        this.getOrarioAppuntamento().setOraFine(oraFineAppuntamento);
     }
 
     public List<SportivoDTO> getListaPartecipanti(){

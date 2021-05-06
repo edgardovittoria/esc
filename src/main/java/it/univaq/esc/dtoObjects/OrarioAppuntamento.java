@@ -49,6 +49,10 @@ public class OrarioAppuntamento {
         this.dataPrenotazione = LocalDate.parse(dataPrenotazione, DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" ));
     }
 
+    public void setLocalDataPrenotaione(LocalDate data){
+        this.dataPrenotazione = data;
+    }
+
     /**
      * @return LocalTime return the oraInizio
      */
@@ -63,6 +67,10 @@ public class OrarioAppuntamento {
         this.oraInizio = LocalTime.parse(oraInizio, DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" ));
     }
 
+    public void setOraInizio(LocalTime oraInizio){
+        this.oraInizio = oraInizio;
+    }
+
     /**
      * @return LocalTime return the oraFine
      */
@@ -75,5 +83,9 @@ public class OrarioAppuntamento {
      */
     public void setOraFine(String oraFine) {
         this.oraFine = LocalTime.parse(oraFine, DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" ));
+    }
+
+    public void setOraFine(LocalTime oraFine){
+        this.oraFine = oraFine;
     }
 }
