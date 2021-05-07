@@ -320,7 +320,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
     @GetMapping("/istruttoriDisponibili")
     @CrossOrigin
-    public @ResponseBody List<IstruttoreDTO> getListaIstruttoriPerSport(@RequestBody String sport) {
+    public @ResponseBody List<IstruttoreDTO> getListaIstruttoriPerSport(@RequestParam(name = "sport") String sport) {
             List<IstruttoreDTO> listaIstruttori = new ArrayList<IstruttoreDTO>();
             Sport sportRichiesto = null;
             for(Sport sportPolisportiva : this.getSportPraticabili()){
