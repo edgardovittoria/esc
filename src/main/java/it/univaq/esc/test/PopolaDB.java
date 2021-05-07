@@ -150,9 +150,9 @@ public class PopolaDB {
         specificheImpianto3.add(specificaImpianto3);
         specificheImpianto3.add(specificaImpianto32);
 
-        Impianto impianto1 = new Impianto(1, specificheImpianto1);
-        Impianto impianto2 = new Impianto(2, specificheImpianto2);
-        Impianto impianto3 = new Impianto(3, specificheImpianto3);
+        Impianto impianto1 = new Impianto(specificheImpianto1);
+        Impianto impianto2 = new Impianto(specificheImpianto2);
+        Impianto impianto3 = new Impianto(specificheImpianto3);
         
         impiantoRepository.save(impianto1);
         impiantoRepository.save(impianto2);

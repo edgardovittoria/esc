@@ -48,8 +48,8 @@ public class Impianto {
 
     public Impianto() {}
 
-    public Impianto(int idImpianto, List<ImpiantoSpecs> caratteristicheImpianto) {
-        this.idImpianto = idImpianto;
+    public Impianto(List<ImpiantoSpecs> caratteristicheImpianto) {
+       
         this.specificheImpianto = caratteristicheImpianto;
     }
 
