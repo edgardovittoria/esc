@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import it.univaq.esc.model.Calendario;
 
 import it.univaq.esc.model.Sport;
@@ -19,6 +22,7 @@ public class Istruttore extends RuoloUtentePolisportivaDecorator{
 
     @ManyToMany
     @JoinColumn
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Sport> sportInsegnati = new ArrayList<Sport>();
 
     @Transient
