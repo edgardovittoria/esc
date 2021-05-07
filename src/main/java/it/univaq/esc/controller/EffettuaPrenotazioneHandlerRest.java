@@ -26,6 +26,7 @@ import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
+import it.univaq.esc.dtoObjects.IstruttoreDTO;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
@@ -60,7 +61,7 @@ public class EffettuaPrenotazioneHandlerRest {
     private RegistroImpianti registroImpianti;
 
     @Autowired
-    private RegistroUtentiPolisportiva registroSportivi;
+    private RegistroUtentiPolisportiva registroUtenti;
 
     @Autowired
     private RegistroPrenotazioni registroPrenotazioni;
@@ -100,6 +101,8 @@ public class EffettuaPrenotazioneHandlerRest {
     private CatalogoPrenotabili getListinoPrezziDescrizioniPolisportiva() {
         return listinoPrezziDescrizioniPolisportiva;
     }
+
+    
 
     private RegistroAppuntamenti getRegistroAppuntamenti() {
         return this.registroAppuntamenti;
@@ -149,7 +152,7 @@ public class EffettuaPrenotazioneHandlerRest {
     // @CrossOrigin
     private List<SportivoDTO> getSportiviPolisportiva() {
         List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
-        for (UtentePolisportivaAbstract utente : this.registroSportivi.getListaUtenti()) {
+        for (UtentePolisportivaAbstract utente : this.registroUtenti.getListaUtenti()) {
             SportivoDTO sportivoDTO = new SportivoDTO();
             sportivoDTO.impostaValoriDTO(utente);
             listaSportiviDTO.add(sportivoDTO);
@@ -163,7 +166,7 @@ public class EffettuaPrenotazioneHandlerRest {
     public @ResponseBody Map<String, Object> avviaNuovaPrenotazioneImpianto(
             @RequestParam(name = "email") String emailSportivoPrenotante,
             @RequestParam(name = "tipoPrenotazione") String tipoPrenotazione) {
-        UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroSportivi()
+        UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroUtenti()
                 .getUtenteByEmail(emailSportivoPrenotante);
         int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
 
@@ -218,7 +221,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
         List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
         for (String email : formPrenotaImpianto.getSportiviInvitati()) {
-            sportivi.add(this.getRegistroSportivi().getUtenteByEmail(email));
+            sportivi.add(this.getRegistroUtenti().getUtenteByEmail(email));
         }
         
 
@@ -315,6 +318,26 @@ public class EffettuaPrenotazioneHandlerRest {
         return listaImpiantiDTODisponibili;
     }
 
+    @GetMapping("/istruttoriDisponibili")
+    @CrossOrigin
+    public @ResponseBody List<IstruttoreDTO> getListaIstruttoriPerSport(@RequestBody String sport) {
+            List<IstruttoreDTO> listaIstruttori = new ArrayList<IstruttoreDTO>();
+            Sport sportRichiesto = null;
+            for(Sport sportPolisportiva : this.getSportPraticabili()){
+                if(sportPolisportiva.getNome().equals(sport)){
+                    sportRichiesto = sportPolisportiva;
+                }
+            }
+            List<UtentePolisportivaAbstract> istruttori = this.getRegistroUtenti().getIstruttoriPerSport(sportRichiesto);
+            for(UtentePolisportivaAbstract istruttore : istruttori){
+                IstruttoreDTO istDTO = new IstruttoreDTO();
+                istDTO.impostaValoriDTO(istruttore);
+                listaIstruttori.add(istDTO);
+            }
+
+        return listaIstruttori;
+    }
+
 
     private List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine) {
         List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
@@ -326,8 +349,8 @@ public class EffettuaPrenotazioneHandlerRest {
         return listaImpiantiDisponibili;
     }
 
-    private RegistroUtentiPolisportiva getRegistroSportivi() {
-        return this.registroSportivi;
+    private RegistroUtentiPolisportiva getRegistroUtenti() {
+        return this.registroUtenti;
     }
 
     private RegistroImpianti getRegistroImpianti() {
