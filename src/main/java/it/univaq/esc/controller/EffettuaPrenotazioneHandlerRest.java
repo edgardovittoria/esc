@@ -189,7 +189,7 @@ public class EffettuaPrenotazioneHandlerRest {
     public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazioneRicorrenteConCosto(
             @RequestBody FormPrenotaImpianto formPrenotaImpianto) {
 
-        List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
+        
         for (int i = 0; i < formPrenotaImpianto.getOrariSelezionati().size(); i++) {
             PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione
                     .getSpecifichePrenotazione(this.getTipoPrenotazioneInAtto());
@@ -208,7 +208,7 @@ public class EffettuaPrenotazioneHandlerRest {
             this.aggiungiAppuntamento(appuntamento);
         }
 
-        this.setListaAppuntamentiPrenotazioneInAtto(listaAppuntamenti);
+        
 
         PrenotabileDescrizione descrizioneSpecifica = null;
         for (PrenotabileDescrizione desc : this.getListinoPrezziDescrizioniPolisportiva().getCatalogoPrenotabili()) {
