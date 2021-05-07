@@ -11,9 +11,6 @@ import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 public class AppuntamentoDTO {
     
-    private LocalDate dataAppuntamento;
-    private LocalTime oraInizioAppuntamento;
-    private LocalTime oraFineAppuntamento;
     private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
     private List<SportivoDTO> partecipanti = new ArrayList<SportivoDTO>();
     private PrenotazioneSpecsDTO specificaPrenotazione;
