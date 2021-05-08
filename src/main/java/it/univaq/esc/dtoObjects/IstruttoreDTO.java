@@ -3,6 +3,7 @@ package it.univaq.esc.dtoObjects;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
@@ -13,8 +14,17 @@ public class IstruttoreDTO {
     private String email;
     private List<String> sportPraticati = new ArrayList<String>();
     private List<String> sportInsegnati = new ArrayList<String>();
+    private List<AppuntamentoDTO> appuntamentiLezioni = new ArrayList<AppuntamentoDTO>();
 
     public IstruttoreDTO(){}
+
+    public List<AppuntamentoDTO> getAppuntamentiLezioni() {
+        return appuntamentiLezioni;
+    }
+
+    public void setAppuntamentiLezioni(List<AppuntamentoDTO> appuntamentiLezioni) {
+        this.appuntamentiLezioni = appuntamentiLezioni;
+    }
 
     public List<String> getSportInsegnati() {
         return sportInsegnati;
@@ -82,6 +92,14 @@ public class IstruttoreDTO {
         for(Sport sport : (List<Sport>)sportivo.getProprieta().get("sportInsegnati")){
             this.aggiungiSportInsegnato(sport.getNome());
         }
+
+        List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
+        for(Appuntamento app : (List<Appuntamento>)sportivo.getProprieta().get("calendarioLezioni")){
+            AppuntamentoDTO appDTO = new AppuntamentoDTO();
+            appDTO.impostaValoriDTO(app);
+            listaAppuntamentiDTO.add(appDTO);
+        }
+        this.setAppuntamentiLezioni(listaAppuntamentiDTO);
     }
 
 

@@ -32,6 +32,7 @@ import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
+import it.univaq.esc.factory.FactoryStatoEffettuaPrenotazione;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
@@ -53,6 +54,8 @@ import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 @RestController
 @RequestMapping("/effettuaPrenotazione")
 public class EffettuaPrenotazioneHandlerRest {
+    @Autowired
+    private FactoryStatoEffettuaPrenotazione factoryStati;
 
     @Autowired
     private RegistroAppuntamenti registroAppuntamenti;
@@ -75,7 +78,23 @@ public class EffettuaPrenotazioneHandlerRest {
 
     private List<Appuntamento> listaAppuntamentiPrenotazioneInAtto = new ArrayList<Appuntamento>();
 
+    private EffettuaPrenotazioneState stato;
+
     public EffettuaPrenotazioneHandlerRest() {
+    }
+
+    private FactoryStatoEffettuaPrenotazione getFactoryStati() {
+        return factoryStati;
+    }
+
+
+
+    private EffettuaPrenotazioneState getStato() {
+        return stato;
+    }
+
+    private void setStato(EffettuaPrenotazioneState stato) {
+        this.stato = stato;
     }
 
     public List<Appuntamento> getListaAppuntamentiPrenotazioneInAtto() {
@@ -84,6 +103,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
     private void setTipoPrenotazioneInAtto(String tipoPrenotazione) {
         this.tipoPrenotazioneInAtto = tipoPrenotazione;
+        this.setStato(this.getFactoryStati().getStato(tipoPrenotazione));
     }
 
     private String getTipoPrenotazioneInAtto() {
@@ -108,25 +128,8 @@ public class EffettuaPrenotazioneHandlerRest {
         return this.registroAppuntamenti;
     }
 
-    // @GetMapping("/sportPraticabili")
-    // @CrossOrigin
-    private List<SportDTO> getSportPraticabiliPolisportiva() {
-        List<Sport> listaSportPraticabili = new ArrayList<Sport>();
-        Set<Sport> setSportPraticabili = new HashSet<Sport>();
-        for (Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()) {
-            for (ImpiantoSpecs specifica : impianto.getSpecificheImpianto()) {
-                setSportPraticabili.add(specifica.getSportPraticabile());
-            }
-        }
-        listaSportPraticabili.addAll(setSportPraticabili);
-        List<SportDTO> listaSportPraticabiliDTO = new ArrayList<SportDTO>();
-        for (Sport sport : listaSportPraticabili) {
-            SportDTO sportDTO = new SportDTO();
-            sportDTO.impostaValoriDTO(sport);
-            listaSportPraticabiliDTO.add(sportDTO);
-        }
-        return listaSportPraticabiliDTO;
-    }
+    
+   
 
     // @GetMapping("/impiantiDisponibili")
     // @CrossOrigin
@@ -170,17 +173,12 @@ public class EffettuaPrenotazioneHandlerRest {
                 .getUtenteByEmail(emailSportivoPrenotante);
         int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
 
-        // PrenotazioneSpecs prenotazioneSpecs =
-        // FactorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
         setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
-        // prenotazioneSpecs.setPrenotazioneAssociata(getPrenotazioneInAtto());
         getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
 
         this.setTipoPrenotazioneInAtto(tipoPrenotazione);
 
-        Map<String, Object> mappaValori = this.getDatiOpzioniPerTipoPrenotazione(tipoPrenotazione);
-
-        return mappaValori;
+        return this.getStato().getDatiOpzioni();
     }
     
 
@@ -369,43 +367,5 @@ public class EffettuaPrenotazioneHandlerRest {
         this.prenotazioneInAtto = prenotazione;
     }
 
-    private List<Sport> getSportPraticabili() {
-        List<Sport> listaSportPraticabili = new ArrayList<Sport>();
-        Set<Sport> setSportPraticabili = new HashSet<Sport>();
-        for (Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()) {
-            for (ImpiantoSpecs specifica : impianto.getSpecificheImpianto()) {
-                setSportPraticabili.add(specifica.getSportPraticabile());
-            }
-        }
-        listaSportPraticabili.addAll(setSportPraticabili);
-        return listaSportPraticabili;
 
-    }
-
-    private Map<String, Object> getDatiOpzioniPrenotazioneImpianto(){
-        Map<String, Object> mappaValori = new HashMap<String, Object>();
-        mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
-        // mappaValori.put("impiantiDisponibili", this.getImpiantiDisponibili());
-        mappaValori.put("sportiviPolisportiva", this.getSportiviPolisportiva());
-
-        return mappaValori;
-    }
-
-    private Map<String, Object> getDatiOpzioniPrenotazioneLezione(){
-        Map<String, Object> mappaValori = new HashMap<String, Object>();
-        mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
-        
-        return mappaValori;
-    }
-
-    private Map<String, Object> getDatiOpzioniPerTipoPrenotazione(String tipoPrenotazione){
-        switch (tipoPrenotazione) {
-            case "IMPIANTO":
-                return this.getDatiOpzioniPrenotazioneImpianto();
-            case "LEZIONE":
-                return this.getDatiOpzioniPrenotazioneLezione();
-            default:
-                return null;
-        }
-    }
 }
