@@ -8,7 +8,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
+import it.univaq.esc.dtoObjects.IFormPrenotabile;
+import it.univaq.esc.dtoObjects.IstruttoreDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.Impianto;
@@ -28,6 +29,10 @@ public abstract class EffettuaPrenotazioneState {
     public EffettuaPrenotazioneState(){}
 
     public abstract Map<String, Object> getDatiOpzioni();
+
+    public abstract void impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller);
+
+    public abstract void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandlerRest controller);
 
     protected List<SportDTO> getSportPraticabiliPolisportiva() {
         List<Sport> listaSportPraticabili = this.getSportPraticabili();
@@ -73,5 +78,23 @@ public abstract class EffettuaPrenotazioneState {
 
     protected RegistroUtentiPolisportiva getRegistroUtenti(){
         return this.registroUtenti;
+    }
+
+    protected List<IstruttoreDTO> getIstruttoriPerSport(String sport){
+        List<IstruttoreDTO> listaIstruttori = new ArrayList<IstruttoreDTO>();
+            Sport sportRichiesto = null;
+            for(Sport sportPolisportiva : this.getSportPraticabili()){
+                if(sportPolisportiva.getNome().equals(sport)){
+                    sportRichiesto = sportPolisportiva;
+                }
+            }
+            List<UtentePolisportivaAbstract> istruttori = this.getRegistroUtenti().getIstruttoriPerSport(sportRichiesto);
+            for(UtentePolisportivaAbstract istruttore : istruttori){
+                IstruttoreDTO istDTO = new IstruttoreDTO();
+                istDTO.impostaValoriDTO(istruttore);
+                listaIstruttori.add(istDTO);
+            }
+
+        return listaIstruttori;
     }
 }

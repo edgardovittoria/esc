@@ -1,11 +1,10 @@
 package it.univaq.esc.factory;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-
-import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,17 +18,15 @@ import it.univaq.esc.model.TipiPrenotazione;
 @Component
 @Singleton
 public class FactoryStatoEffettuaPrenotazione {
-    private Map<String, EffettuaPrenotazioneState> mappaStati;
+    private Map<String, EffettuaPrenotazioneState> mappaStati = new HashMap<String, EffettuaPrenotazioneState>();
     
     
-    public FactoryStatoEffettuaPrenotazione(){}
-
-    @PostConstruct
     @Autowired
-    public void setMappaStati(EffettuaPrenotazioneImpiantoState statoImpianto, EffettuaPrenotazioneLezioneState statoLezione){
+    public FactoryStatoEffettuaPrenotazione(EffettuaPrenotazioneImpiantoState statoImpianto, EffettuaPrenotazioneLezioneState statoLezione){
         getMappaStati().put(TipiPrenotazione.IMPIANTO.toString(), statoImpianto);
         getMappaStati().put(TipiPrenotazione.LEZIONE.toString(), statoLezione);
     }
+
 
     private Map<String, EffettuaPrenotazioneState> getMappaStati(){
         return this.mappaStati;
