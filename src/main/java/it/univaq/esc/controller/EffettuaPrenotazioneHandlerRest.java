@@ -181,6 +181,7 @@ public class EffettuaPrenotazioneHandlerRest {
     @CrossOrigin
     public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazioneRicorrenteConCosto(
             @RequestBody IFormPrenotabile formPrenotaImpianto) {
+                this.getListaAppuntamentiPrenotazioneInAtto().clear();
 
                 this.getStato().impostaDatiPrenotazione(formPrenotaImpianto, this);
         
