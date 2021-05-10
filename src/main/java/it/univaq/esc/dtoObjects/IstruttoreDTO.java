@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.univaq.esc.model.Appuntamento;
+import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
@@ -94,7 +95,7 @@ public class IstruttoreDTO {
         }
 
         List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
-        for(Appuntamento app : (List<Appuntamento>)sportivo.getProprieta().get("calendarioLezioni")){
+        for(Appuntamento app : ((Calendario)sportivo.getProprieta().get("calendarioLezioni")).getListaAppuntamenti()){
             AppuntamentoDTO appDTO = new AppuntamentoDTO();
             appDTO.impostaValoriDTO(app);
             listaAppuntamentiDTO.add(appDTO);
