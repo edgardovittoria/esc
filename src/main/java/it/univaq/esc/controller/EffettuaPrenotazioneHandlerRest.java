@@ -171,6 +171,11 @@ public class EffettuaPrenotazioneHandlerRest {
         return this.getStato().getDatiOpzioni();
     }
     
+    @PostMapping("/aggiornaOpzioniPrenotazione")
+    @CrossOrigin
+    public @ResponseBody Map<String, Object> aggiornaOpzioniPrenotazione(@RequestBody HashMap<String, Object> dati) {
+        return null;
+    }
 
     @PostMapping("/riepilogoPrenotazione")
     @CrossOrigin

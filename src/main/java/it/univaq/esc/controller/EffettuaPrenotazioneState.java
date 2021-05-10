@@ -34,6 +34,8 @@ public abstract class EffettuaPrenotazioneState {
 
     public abstract void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandlerRest controller);
 
+    public abstract Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati);
+
     protected List<SportDTO> getSportPraticabiliPolisportiva() {
         List<Sport> listaSportPraticabili = this.getSportPraticabili();
         

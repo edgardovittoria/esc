@@ -32,5 +32,11 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState{
         
     }
 
+    @Override
+    public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 
 }

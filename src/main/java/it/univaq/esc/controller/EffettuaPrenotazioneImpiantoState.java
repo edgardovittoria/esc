@@ -126,4 +126,9 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         }
         
     }
+
+    @Override
+    public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
+        return null;
+    }
 }
