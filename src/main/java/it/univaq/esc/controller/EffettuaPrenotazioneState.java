@@ -16,11 +16,13 @@ import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.IstruttoreDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
+import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
+import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 public abstract class EffettuaPrenotazioneState {
@@ -111,48 +113,49 @@ public abstract class EffettuaPrenotazioneState {
                     LocalDateTime.parse(orario.get("oraInizio"),
                             DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
                     LocalDateTime.parse(orario.get("oraFine"),
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")), listaImpiantiDisponibili);
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
+                    listaImpiantiDisponibili);
 
-            
-            if(dati.containsKey("sport")){
-                listaImpiantiDisponibili = this.filtraImpiantiPerSport((String)dati.get("sport"), listaImpiantiDisponibili);
-                
+            if (dati.containsKey("sport")) {
+                listaImpiantiDisponibili = this.filtraImpiantiPerSport((String) dati.get("sport"),
+                        listaImpiantiDisponibili);
+
             }
-        }
-        else if(dati.containsKey("sport")){
-            listaImpiantiDisponibili = this.filtraImpiantiPerSport((String)dati.get("sport"), listaImpiantiDisponibili);
+        } else if (dati.containsKey("sport")) {
+            listaImpiantiDisponibili = this.filtraImpiantiPerSport((String) dati.get("sport"),
+                    listaImpiantiDisponibili);
         }
 
         List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
         for (Impianto impianto : listaImpiantiDisponibili) {
-            
-                    ImpiantoDTO impiantoDTO = new ImpiantoDTO();
-                    impiantoDTO.impostaValoriDTO(impianto);
-                    listaImpiantiDTODisponibili.add(impiantoDTO);
-                
-            }
 
-        
+            ImpiantoDTO impiantoDTO = new ImpiantoDTO();
+            impiantoDTO.impostaValoriDTO(impianto);
+            listaImpiantiDTODisponibili.add(impiantoDTO);
+
+        }
+
         return listaImpiantiDTODisponibili;
     }
 
-    protected List<Impianto> filtraImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine, List<Impianto> listaImpianti) {
+    protected List<Impianto> filtraImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine,
+            List<Impianto> listaImpianti) {
         List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
-        
-            for (Impianto impianto : listaImpianti){
-                if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)) {
-                    listaImpiantiDisponibili.add(impianto);
-                }
+
+        for (Impianto impianto : listaImpianti) {
+            if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)) {
+                listaImpiantiDisponibili.add(impianto);
             }
-        
+        }
+
         return listaImpiantiDisponibili;
     }
 
-    protected List<Impianto> filtraImpiantiPerSport(String nomeSport, List<Impianto> listaImpianti){
+    protected List<Impianto> filtraImpiantiPerSport(String nomeSport, List<Impianto> listaImpianti) {
         List<Impianto> impianti = new ArrayList<Impianto>();
         for (Impianto impianto : listaImpianti) {
             for (ImpiantoSpecs specifica : impianto.getSpecificheImpianto()) {
-                if (specifica.getSportPraticabile().getNome().equals(nomeSport)){
+                if (specifica.getSportPraticabile().getNome().equals(nomeSport)) {
                     impianti.add(impianto);
                 }
             }
@@ -160,4 +163,60 @@ public abstract class EffettuaPrenotazioneState {
         }
         return impianti;
     }
+
+    protected List<UtentePolisportivaAbstract> filtraIstruttoriPerSport(String nomeSport,
+            List<UtentePolisportivaAbstract> listaIstruttori) {
+        List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
+        for (UtentePolisportivaAbstract istruttore : listaIstruttori) {
+            for (Sport sport : (List<Sport>) istruttore.getProprieta().get("sportInsegnati")) {
+                if (sport.getNome().equals(nomeSport)) {
+                    istruttori.add(istruttore);
+                }
+            }
+        }
+        return istruttori;
+    }
+
+    protected List<UtentePolisportivaAbstract> filtraIstruttoriPerOrario(LocalDateTime oraInizio, LocalDateTime oraFine,
+            List<UtentePolisportivaAbstract> listaIstruttori) {
+        List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
+        for (UtentePolisportivaAbstract istruttore : listaIstruttori) {
+            if (((Calendario) istruttore.getProprieta().get("calendarioLezioni")).sovrapponeA(oraInizio, oraFine)) {
+                istruttori.add(istruttore);
+            }
+        }
+        return istruttori;
+    }
+
+    protected List<IstruttoreDTO> getIstruttoriDTODisponibili(Map<String, Object> dati) {
+        List<UtentePolisportivaAbstract> istruttoriDisponibili = this.getRegistroUtenti()
+                .getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE);
+        if (dati.containsKey("orario")) {
+            Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
+            istruttoriDisponibili = this.filtraIstruttoriPerOrario(
+                    LocalDateTime.parse(orario.get("oraInizio"),
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
+                    LocalDateTime.parse(orario.get("oraFine"),
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
+                    istruttoriDisponibili);
+
+            if (dati.containsKey("sport")) {
+                istruttoriDisponibili = this.filtraIstruttoriPerSport((String) dati.get("sport"),
+                        istruttoriDisponibili);
+
+            }
+        } else if (dati.containsKey("sport")) {
+            istruttoriDisponibili = this.filtraIstruttoriPerSport((String) dati.get("sport"), istruttoriDisponibili);
+        }
+        List<IstruttoreDTO> listaIstruttoriDTODisponibili = new ArrayList<IstruttoreDTO>();
+        for (UtentePolisportivaAbstract istruttore : istruttoriDisponibili) {
+
+            IstruttoreDTO istruttoreDTO = new IstruttoreDTO();
+            istruttoreDTO.impostaValoriDTO(istruttore);
+            listaIstruttoriDTODisponibili.add(istruttoreDTO);
+
+        }
+        return listaIstruttoriDTODisponibili;
+    }
+
 }

@@ -22,7 +22,8 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState{
 
     @Override
     public void impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller) {
-        // TODO Auto-generated method stub
+        Map<String, Object> mappaValori = new HashMap<String, Object>();
+        mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
         
     }
 
@@ -34,8 +35,10 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState{
 
     @Override
     public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
-        // TODO Auto-generated method stub
-        return null;
+        Map<String, Object> mappaDatiAggiornati = new HashMap<String, Object>();
+        mappaDatiAggiornati.put("impiantiDisponibili", this.getImpiantiDTODisponibili(dati));
+        mappaDatiAggiornati.put("istruttoriDisponibili", this.getIstruttoriDTODisponibili(dati));
+        return mappaDatiAggiornati;
     }
 
 
