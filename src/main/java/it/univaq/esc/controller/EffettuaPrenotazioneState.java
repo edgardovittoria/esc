@@ -125,15 +125,14 @@ public abstract class EffettuaPrenotazioneState {
 
         List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
         for (Impianto impianto : listaImpiantiDisponibili) {
-            for (ImpiantoSpecs specifica : impianto.getSpecificheImpianto()) {
-                if (specifica.getSportPraticabile().getNome().equals(dati.get("sport"))) {
+            
                     ImpiantoDTO impiantoDTO = new ImpiantoDTO();
                     impiantoDTO.impostaValoriDTO(impianto);
                     listaImpiantiDTODisponibili.add(impiantoDTO);
-                }
+                
             }
 
-        }
+        
         return listaImpiantiDTODisponibili;
     }
 
