@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipoPrenotazione")
 @JsonSubTypes({
-    @Type(value = FormPrenotaImpianto.class, name = "IMPIANTO")
+    @Type(value = FormPrenotaImpianto.class, name = "IMPIANTO"),
+    @Type(value = FormPrenotaImpianto.class, name = "LEZIONE")
 })
 public interface IFormPrenotabile {
     

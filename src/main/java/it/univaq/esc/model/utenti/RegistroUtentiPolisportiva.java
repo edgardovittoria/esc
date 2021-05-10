@@ -1,7 +1,9 @@
 package it.univaq.esc.model.utenti;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
+import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
 
@@ -149,5 +152,13 @@ public class RegistroUtentiPolisportiva {
         return istruttori;
     }
 
+
+    public void aggiornaCalendarioIstruttore(Calendario calendarioDaUnire, UtentePolisportivaAbstract istruttore){
+        Calendario calendarioPrecedente = (Calendario)istruttore.getProprieta().get("calendarioLezioni");
+        calendarioPrecedente.unisciCalendario(calendarioDaUnire);
+        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
+        mappaProprieta.put("calendarioLezioni", calendarioPrecedente);
+        istruttore.setProprieta(mappaProprieta);
+    }
 
 }
