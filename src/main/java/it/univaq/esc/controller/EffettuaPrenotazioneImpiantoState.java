@@ -129,6 +129,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
     @Override
     public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
-        return null;
+        Map<String, Object> datiAggiornati = new HashMap<String, Object>();
+        datiAggiornati.put("impiantiDisponibili", this.getImpiantiDTODisponibili(dati));
+        return datiAggiornati;
     }
 }

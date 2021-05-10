@@ -209,29 +209,36 @@ public class EffettuaPrenotazioneHandlerRest {
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
     }
 
-    @PostMapping("/aggiornaImpianti")
+
+    @PostMapping("/aggiornaDatiOpzioni")
     @CrossOrigin
-    public @ResponseBody List<ImpiantoDTO> getListaImpianti(@RequestBody HashMap<String, Object> dati) {
-
-        Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
-
-        List<Impianto> impiantiDisponibili = this.getImpiantiDisponibiliByOrario(
-                LocalDateTime.parse(orario.get("oraInizio"), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
-                LocalDateTime.parse(orario.get("oraFine"), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
-        List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
-        for (Impianto impianto : impiantiDisponibili) {
-            for (ImpiantoSpecs specifica : impianto.getSpecificheImpianto()) {
-                if (specifica.getSportPraticabile().getNome().equals(dati.get("sport"))) {
-                    ImpiantoDTO impiantoDTO = new ImpiantoDTO();
-                    impiantoDTO.impostaValoriDTO(impianto);
-                    listaImpiantiDTODisponibili.add(impiantoDTO);
-                }
-            }
-
-        }
-
-        return listaImpiantiDTODisponibili;
+    public @ResponseBody Map<String, Object> getDatiOpzioniAggiornati(@RequestBody HashMap<String, Object> dati) {
+        return this.getStato().aggiornaOpzioniPrenotazione(dati);
     }
+
+    // @PostMapping("/aggiornaImpianti")
+    // @CrossOrigin
+    // public @ResponseBody List<ImpiantoDTO> getListaImpianti(@RequestBody HashMap<String, Object> dati) {
+
+    //     Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
+
+    //     List<Impianto> impiantiDisponibili = this.getImpiantiDisponibiliByOrario(
+    //             LocalDateTime.parse(orario.get("oraInizio"), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
+    //             LocalDateTime.parse(orario.get("oraFine"), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
+    //     List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
+    //     for (Impianto impianto : impiantiDisponibili) {
+    //         for (ImpiantoSpecs specifica : impianto.getSpecificheImpianto()) {
+    //             if (specifica.getSportPraticabile().getNome().equals(dati.get("sport"))) {
+    //                 ImpiantoDTO impiantoDTO = new ImpiantoDTO();
+    //                 impiantoDTO.impostaValoriDTO(impianto);
+    //                 listaImpiantiDTODisponibili.add(impiantoDTO);
+    //             }
+    //         }
+
+    //     }
+
+    //     return listaImpiantiDTODisponibili;
+    // }
 
     @GetMapping("/istruttoriDisponibili")
     @CrossOrigin
