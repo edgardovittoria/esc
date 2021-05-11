@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import it.univaq.esc.model.Impianto;
 
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
-
+@Entity
 public class PrenotazioneLezioneSpecs extends PrenotazioneSpecs{
     @ManyToOne()
     @JoinColumn()
