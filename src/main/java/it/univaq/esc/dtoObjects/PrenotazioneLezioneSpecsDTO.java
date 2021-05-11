@@ -46,9 +46,8 @@ public class PrenotazioneLezioneSpecsDTO extends PrenotazioneSpecsDTO {
     @Override
     public void impostaValoriDTO(PrenotazioneSpecs specifica) {
         
-        IstruttoreDTO istDTO = new IstruttoreDTO();
-        istDTO.impostaValoriDTO((UtentePolisportivaAbstract)specifica.getValoriSpecificheExtraPrenotazione().get("istruttore"));
-        this.setIstruttore(istDTO.getEmail());
+        
+        this.setIstruttore((String)((UtentePolisportivaAbstract)specifica.getValoriSpecificheExtraPrenotazione().get("istruttore")).getProprieta().get("email"));
         
        
         
