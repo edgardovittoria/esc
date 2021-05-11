@@ -182,6 +182,29 @@ public class PopolaDB {
             .impostaCostoPavimentazione(Float.parseFloat("30"), Pavimentazione.SINTETICO.toString())
             .salvaPrenotabileInCreazione();
 
+
+            this.listinoPrezziDescrizioniPolisportiva
+            .avviaCreazionePrenotabile(tennis, TipiPrenotazione.LEZIONE.toString())
+            .impostaCostoOrario(Float.parseFloat("10"))
+            .impostaCostoPavimentazione(Float.parseFloat("10") ,Pavimentazione.CEMENTO.toString())
+            .impostaCostoPavimentazione(Float.parseFloat("50") ,Pavimentazione.TERRA_BATTUTA.toString())
+            .impostaCostoPavimentazione(Float.parseFloat("20") ,Pavimentazione.SINTETICO.toString())
+            .salvaPrenotabileInCreazione();
+
+            this.listinoPrezziDescrizioniPolisportiva
+            .avviaCreazionePrenotabile(calcetto, TipiPrenotazione.LEZIONE.toString())
+            .impostaCostoOrario(Float.parseFloat("10"))
+            .impostaCostoPavimentazione(Float.parseFloat("10") ,Pavimentazione.CEMENTO.toString())
+            .impostaCostoPavimentazione(Float.parseFloat("20"), Pavimentazione.SINTETICO.toString())
+            .salvaPrenotabileInCreazione();
+
+            this.listinoPrezziDescrizioniPolisportiva
+            .avviaCreazionePrenotabile(pallavolo,TipiPrenotazione.LEZIONE.toString())
+            .impostaCostoOrario(Float.parseFloat("10"))
+            .impostaCostoPavimentazione(Float.parseFloat("20"), Pavimentazione.CEMENTO.toString())
+            .impostaCostoPavimentazione(Float.parseFloat("30"), Pavimentazione.SINTETICO.toString())
+            .salvaPrenotabileInCreazione();
+
             
             
 
