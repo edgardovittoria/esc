@@ -8,18 +8,18 @@ import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 public class PrenotazioneLezioneSpecsDTO extends PrenotazioneSpecsDTO {
     
-    private IstruttoreDTO istruttore;
+    private String istruttore;
    
     private Integer idImpiantoPrenotato;
     private String pavimentazioneImpianto;
 
     public PrenotazioneLezioneSpecsDTO(){}
 
-    public IstruttoreDTO getIstruttore() {
+    public String getIstruttore() {
         return istruttore;
     }
 
-    public void setIstruttore(IstruttoreDTO istruttore) {
+    public void setIstruttore(String istruttore) {
         this.istruttore = istruttore;
     }
 
@@ -48,7 +48,7 @@ public class PrenotazioneLezioneSpecsDTO extends PrenotazioneSpecsDTO {
         
         IstruttoreDTO istDTO = new IstruttoreDTO();
         istDTO.impostaValoriDTO((UtentePolisportivaAbstract)specifica.getValoriSpecificheExtraPrenotazione().get("istruttore"));
-        this.setIstruttore(istDTO);
+        this.setIstruttore(istDTO.getEmail());
         
        
         
