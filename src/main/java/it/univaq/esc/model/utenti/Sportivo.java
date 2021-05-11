@@ -58,7 +58,9 @@ public class Sportivo extends RuoloUtentePolisportivaDecorator{
 
     @Override
     public void setProprieta(Map<String, Object> mappaProprieta) {
+        if(mappaProprieta.containsKey("sporrtPraticati")){
         this.setSportPraticatiDalloSportivo((List<Sport>)mappaProprieta.get("sportPraticati"));
+        }
         this.getUtentePolisportiva().setProprieta(mappaProprieta);
     }
 
