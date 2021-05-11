@@ -1,35 +1,31 @@
 package it.univaq.esc.model;
 
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 
-
-
-
 @Component
 public class Calendario {
-    
-    
+
     private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
     /**
      * Crea calendario appuntamenti vuoto
      */
-    public Calendario(){}
-
+    public Calendario() {
+    }
 
     /**
      * Crea calendario segnando gli appuntamenti passati come parametro
-     * @param listaAppuntamentiDaSegnareSulCalendario lista di appuntamenti da segnare sul calendario
+     * 
+     * @param listaAppuntamentiDaSegnareSulCalendario lista di appuntamenti da
+     *                                                segnare sul calendario
      */
-    public Calendario(List<Appuntamento> listaAppuntamentiDaSegnareSulCalendario){
+    public Calendario(List<Appuntamento> listaAppuntamentiDaSegnareSulCalendario) {
         this.setListaAppuntamenti(listaAppuntamentiDaSegnareSulCalendario);
     }
 
@@ -47,70 +43,78 @@ public class Calendario {
         this.listaAppuntamenti = listaDate;
     }
 
-
-    public void aggiungiAppuntamento(Appuntamento appuntamentoDaAggiungere){
-        if(!this.sovrapponeA(appuntamentoDaAggiungere)){
-        this.getListaAppuntamenti().add(appuntamentoDaAggiungere);
-    }
-    }
-
-    public void aggiungiAppuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento, PrenotazioneSpecs prenotazioneSpecs){
-        
-        Appuntamento appuntamentoDaAggiungere = new Appuntamento(dataOraInizioAppuntamento, dataOraFineAppuntamento, prenotazioneSpecs);
-        if(!this.sovrapponeA(appuntamentoDaAggiungere)){
+    public void aggiungiAppuntamento(Appuntamento appuntamentoDaAggiungere) {
+        if (!this.sovrapponeA(appuntamentoDaAggiungere)) {
             this.getListaAppuntamenti().add(appuntamentoDaAggiungere);
         }
-        
     }
 
+    public void aggiungiAppuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento,
+            PrenotazioneSpecs prenotazioneSpecs) {
+
+        Appuntamento appuntamentoDaAggiungere = new Appuntamento(dataOraInizioAppuntamento, dataOraFineAppuntamento,
+                prenotazioneSpecs);
+        if (!this.sovrapponeA(appuntamentoDaAggiungere)) {
+            this.getListaAppuntamenti().add(appuntamentoDaAggiungere);
+        }
+
+    }
 
     /**
      * Verifica se due calendari si sovrappongono almeno in un appuntamento
-     * @param calendarioDiCuiVerificareSovrapposizione calendario di cui verificare la sovrapposizione
-     * @return true se i calendari si sovrappongono almeno su un appuntamento, false altrimenti.
+     * 
+     * @param calendarioDiCuiVerificareSovrapposizione calendario di cui verificare
+     *                                                 la sovrapposizione
+     * @return true se i calendari si sovrappongono almeno su un appuntamento, false
+     *         altrimenti.
      */
-    public boolean sovrapponeA(Calendario calendarioDiCuiVerificareSovrapposizione){
+    public boolean sovrapponeA(Calendario calendarioDiCuiVerificareSovrapposizione) {
         boolean calendariSiSovrappongono = false;
-        
-        for(Appuntamento appuntamento : calendarioDiCuiVerificareSovrapposizione.getListaAppuntamenti()){
-            if(!calendariSiSovrappongono){
+
+        for (Appuntamento appuntamento : calendarioDiCuiVerificareSovrapposizione.getListaAppuntamenti()) {
+            if (!calendariSiSovrappongono) {
                 calendariSiSovrappongono = this.sovrapponeA(appuntamento);
             }
         }
         return calendariSiSovrappongono;
     }
 
-
     /**
-     * Verifica se un appuntamento si sovrappone con quelli del calendario in oggetto
-     * @param appuntamentoDiCuiVerificareSovrapposizione appuntamento di cui verificare la sovrapposizione
-     * @return true se il calendario si sovrappone almeno su un appuntamento con quello da verificare, false altrimenti.
+     * Verifica se un appuntamento si sovrappone con quelli del calendario in
+     * oggetto
+     * 
+     * @param appuntamentoDiCuiVerificareSovrapposizione appuntamento di cui
+     *                                                   verificare la
+     *                                                   sovrapposizione
+     * @return true se il calendario si sovrappone almeno su un appuntamento con
+     *         quello da verificare, false altrimenti.
      */
-    private boolean sovrapponeA(Appuntamento appuntamentoDiCuiVerificareSovrapposizione){
+    private boolean sovrapponeA(Appuntamento appuntamentoDiCuiVerificareSovrapposizione) {
         boolean calendarioSiSovrappone = false;
-        
-        for(Appuntamento appuntamento : this.getListaAppuntamenti()){
-            if(!calendarioSiSovrappone){
-                calendarioSiSovrappone = appuntamento.sovrapponeA(appuntamentoDiCuiVerificareSovrapposizione);
+        if (!this.getListaAppuntamenti().isEmpty()) {
+            for (Appuntamento appuntamento : this.getListaAppuntamenti()) {
+                if (!calendarioSiSovrappone) {
+                    calendarioSiSovrappone = appuntamento.sovrapponeA(appuntamentoDiCuiVerificareSovrapposizione);
+                }
             }
         }
         return calendarioSiSovrappone;
     }
 
-    public boolean sovrapponeA(LocalDateTime oraInizio, LocalDateTime oraFine){
+    public boolean sovrapponeA(LocalDateTime oraInizio, LocalDateTime oraFine) {
         boolean calendarioSiSovrappone = false;
-        
-        for(Appuntamento appuntamento : this.getListaAppuntamenti()){
-            if(!calendarioSiSovrappone){
-                calendarioSiSovrappone = appuntamento.sovrapponeA(oraInizio, oraFine);
+        if (!this.getListaAppuntamenti().isEmpty()) {
+            for (Appuntamento appuntamento : this.getListaAppuntamenti()) {
+                if (!calendarioSiSovrappone) {
+                    calendarioSiSovrappone = appuntamento.sovrapponeA(oraInizio, oraFine);
+                }
             }
         }
         return calendarioSiSovrappone;
     }
 
-
-    public void unisciCalendario(Calendario calendarioDaUnire){
-        if(!this.sovrapponeA(calendarioDaUnire)){
+    public void unisciCalendario(Calendario calendarioDaUnire) {
+        if (!this.sovrapponeA(calendarioDaUnire)) {
             this.getListaAppuntamenti().addAll(calendarioDaUnire.getListaAppuntamenti());
         }
     }
