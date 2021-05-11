@@ -25,6 +25,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 

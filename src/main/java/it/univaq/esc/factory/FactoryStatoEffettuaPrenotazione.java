@@ -4,7 +4,7 @@ package it.univaq.esc.factory;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import groovy.lang.Singleton;
 import it.univaq.esc.controller.EffettuaPrenotazioneImpiantoState;
 import it.univaq.esc.controller.EffettuaPrenotazioneLezioneState;
 import it.univaq.esc.controller.EffettuaPrenotazioneState;
-import it.univaq.esc.model.TipiPrenotazione;
+import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 
 
 @Component

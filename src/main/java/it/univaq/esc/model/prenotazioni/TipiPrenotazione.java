@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.prenotazioni;
 
 public enum TipiPrenotazione {
     

@@ -1,14 +1,14 @@
 package it.univaq.esc.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,33 +22,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
+
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
-import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
-import it.univaq.esc.dtoObjects.ImpiantoDTO;
-import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
+
+
 import it.univaq.esc.dtoObjects.IstruttoreDTO;
-import it.univaq.esc.dtoObjects.OrarioAppuntamento;
+
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
-import it.univaq.esc.dtoObjects.SportDTO;
-import it.univaq.esc.dtoObjects.SportivoDTO;
-import it.univaq.esc.factory.FactorySpecifichePrenotazione;
+
 import it.univaq.esc.factory.FactoryStatoEffettuaPrenotazione;
 import it.univaq.esc.model.Appuntamento;
-import it.univaq.esc.model.Calendario;
-import it.univaq.esc.model.Impianto;
-import it.univaq.esc.model.ImpiantoSpecs;
-import it.univaq.esc.model.Prenotazione;
-import it.univaq.esc.model.PrenotazioneSpecs;
+
+
+import it.univaq.esc.model.prenotazioni.Prenotazione;
+
 import it.univaq.esc.model.RegistroAppuntamenti;
-import it.univaq.esc.model.RegistroImpianti;
-import it.univaq.esc.model.RegistroPrenotazioni;
-import it.univaq.esc.model.Sport;
+
+import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
+
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
-import it.univaq.esc.model.costi.PrenotabileDescrizione;
-import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
-import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
-import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
@@ -61,8 +53,8 @@ public class EffettuaPrenotazioneHandlerRest {
     @Autowired
     private RegistroAppuntamenti registroAppuntamenti;
 
-    @Autowired
-    private RegistroImpianti registroImpianti;
+    // @Autowired
+    // private RegistroImpianti registroImpianti;
 
     @Autowired
     private RegistroUtentiPolisportiva registroUtenti;
@@ -134,23 +126,23 @@ public class EffettuaPrenotazioneHandlerRest {
 
     // @GetMapping("/impiantiDisponibili")
     // @CrossOrigin
-    private List<ImpiantoDTO> getImpiantiDisponibili() {
-        Calendario calendario = new Calendario();
-        List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
-        for (Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()) {
-            if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(calendario)) {
-                listaImpiantiDisponibili.add(impianto);
-            }
-        }
-        List<ImpiantoDTO> listaImpiantiDisponibiliDTO = new ArrayList<ImpiantoDTO>();
-        for (Impianto impianto : listaImpiantiDisponibili) {
-            ImpiantoDTO impiantoDTO = new ImpiantoDTO();
-            impiantoDTO.impostaValoriDTO(impianto);
-            listaImpiantiDisponibiliDTO.add(impiantoDTO);
-        }
-        return listaImpiantiDisponibiliDTO;
+    // private List<ImpiantoDTO> getImpiantiDisponibili() {
+    //     Calendario calendario = new Calendario();
+    //     List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
+    //     for (Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()) {
+    //         if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(calendario)) {
+    //             listaImpiantiDisponibili.add(impianto);
+    //         }
+    //     }
+    //     List<ImpiantoDTO> listaImpiantiDisponibiliDTO = new ArrayList<ImpiantoDTO>();
+    //     for (Impianto impianto : listaImpiantiDisponibili) {
+    //         ImpiantoDTO impiantoDTO = new ImpiantoDTO();
+    //         impiantoDTO.impostaValoriDTO(impianto);
+    //         listaImpiantiDisponibiliDTO.add(impiantoDTO);
+    //     }
+    //     return listaImpiantiDisponibiliDTO;
 
-    }
+    // }
 
     
 
@@ -247,23 +239,23 @@ public class EffettuaPrenotazioneHandlerRest {
     }
 
 
-    private List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine) {
-        List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
-        for (Impianto impianto : this.getRegistroImpianti().getListaImpiantiPolisportiva()) {
-            if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)) {
-                listaImpiantiDisponibili.add(impianto);
-            }
-        }
-        return listaImpiantiDisponibili;
-    }
+    // private List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine) {
+    //     List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
+    //     for (Impianto impianto : this.getRegistroImpianti().getListaImpiantiPolisportiva()) {
+    //         if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)) {
+    //             listaImpiantiDisponibili.add(impianto);
+    //         }
+    //     }
+    //     return listaImpiantiDisponibili;
+    // }
 
     private RegistroUtentiPolisportiva getRegistroUtenti() {
         return this.registroUtenti;
     }
 
-    private RegistroImpianti getRegistroImpianti() {
-        return this.registroImpianti;
-    }
+    // private RegistroImpianti getRegistroImpianti() {
+    //     return this.registroImpianti;
+    // }
 
     private RegistroPrenotazioni getRegistroPrenotazioni() {
         return this.registroPrenotazioni;

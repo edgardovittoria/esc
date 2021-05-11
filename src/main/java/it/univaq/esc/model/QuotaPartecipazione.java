@@ -10,7 +10,8 @@ import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
 
-import it.univaq.esc.model.utenti.Sportivo;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 @Entity

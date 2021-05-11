@@ -5,7 +5,9 @@ import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 
 import it.univaq.esc.dtoObjects.SportivoDTO;
-import it.univaq.esc.model.*;
+import it.univaq.esc.model.Calendario;
+import it.univaq.esc.model.Impianto;
+import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 

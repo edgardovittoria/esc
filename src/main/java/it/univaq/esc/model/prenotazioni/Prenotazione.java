@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.prenotazioni;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

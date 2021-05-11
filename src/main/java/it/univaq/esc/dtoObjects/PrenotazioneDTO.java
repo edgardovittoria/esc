@@ -7,7 +7,7 @@ import java.util.List;
 
 
 import it.univaq.esc.model.Appuntamento;
-import it.univaq.esc.model.Prenotazione;
+import it.univaq.esc.model.prenotazioni.Prenotazione;
 
 
 

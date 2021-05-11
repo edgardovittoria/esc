@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.prenotazioni;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
 
+import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 
 

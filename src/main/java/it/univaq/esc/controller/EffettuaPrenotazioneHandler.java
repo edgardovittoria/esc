@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.*;
+import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.prenotazioni.Prenotazione;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 
 
 @Controller
@@ -56,7 +59,7 @@ public class EffettuaPrenotazioneHandler {
     public void avviaNuovaPrenotazione(UtentePolisportivaAbstract sportivo, String tipoPrenotazione) {
         int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
         PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione.getSpecifichePrenotazione(tipoPrenotazione);
-        setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione, prenotazioneSpecs));
+        setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
         prenotazioneSpecs.setPrenotazioneAssociata(getPrenotazioneInAtto());
         getPrenotazioneInAtto().setSportivoPrenotante(sportivo);
         Appuntamento appuntamento = new Appuntamento();

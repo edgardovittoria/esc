@@ -1,38 +1,25 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.prenotazioni;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 
-import javax.persistence.Column;
-
-import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
+import javax.persistence.ManyToOne;
+
+import it.univaq.esc.model.Impianto;
 
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
-@Entity
-public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
+public class PrenotazioneLezioneSpecs extends PrenotazioneSpecs{
+    @ManyToOne()
+    @JoinColumn()
+    private UtentePolisportivaAbstract istruttore;
 
-
-    
-    
-
-
-
-    @ManyToMany()
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<UtentePolisportivaAbstract> invitati = new ArrayList<UtentePolisportivaAbstract>();
-
-    @Column
-    private int numeroGiocatoriNonRegistratiAssociati = 0;
+   
 
 
     @ManyToOne
@@ -45,15 +32,18 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
  
     
 
-    public PrenotazioneImpiantoSpecs(){}
+    public PrenotazioneLezioneSpecs(){}
 
-    public List<UtentePolisportivaAbstract> getListaInvitati() {
-        return this.invitati;
+    
+
+    public void setIstruttore(UtentePolisportivaAbstract istruttore){
+        this.istruttore = istruttore;
     }
 
-    public void invitaSportivi(List<UtentePolisportivaAbstract> listaSportiviDaInvitare) {
-        getListaInvitati().addAll(listaSportiviDaInvitare);
+    public UtentePolisportivaAbstract getIstruttore(){
+        return this.istruttore;
     }
+    
 
     public void setManutentore(UtentePolisportivaAbstract manutentore){
         this.manutentore = manutentore;
@@ -62,19 +52,9 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     public UtentePolisportivaAbstract getManutentore(){
         return this.manutentore;
     }
-    /**
-     * @return int return the numeroGiocatoriNonRegistratiAssociati
-     */
-    public int getNumeroGiocatoriNonRegistratiAssociati() {
-        return numeroGiocatoriNonRegistratiAssociati;
-    }
+   
 
-    /**
-     * @param numeroGiocatoriNonRegistratiAssociati the numeroGiocatoriNonRegistratiAssociati to set
-     */
-    public void setNumeroGiocatoriNonRegistratiAssociati(int numeroGiocatoriNonRegistratiAssociati) {
-        this.numeroGiocatoriNonRegistratiAssociati = numeroGiocatoriNonRegistratiAssociati;
-    }
+   
 
     public void setImpiantoPrenotato(Impianto impiantoPrenotato){
         this.impiantoPrenotato = impiantoPrenotato;
@@ -92,11 +72,8 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     public void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori) {
         for(String chiave : mappaValori.keySet()){
             switch (chiave) {
-                case "invitati":
-                    this.invitaSportivi((List<UtentePolisportivaAbstract>)mappaValori.get(chiave));
-                    break;
-                case "numeroGiocatoriNonIscritti" : 
-                    this.setNumeroGiocatoriNonRegistratiAssociati((Integer)mappaValori.get(chiave));
+                case "istruttore":
+                    this.setIstruttore((UtentePolisportivaAbstract)mappaValori.get(chiave));
                     break;
                 case "manutentore":
                     this.setManutentore((UtentePolisportivaAbstract)mappaValori.get(chiave));
@@ -114,8 +91,7 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     @Override
     public Map<String, Object> getValoriSpecificheExtraPrenotazione() {
         HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-        mappaValori.put("invitati", this.getListaInvitati());
-        mappaValori.put("numeroGiocatoriNonIscritti", this.getNumeroGiocatoriNonRegistratiAssociati());
+        mappaValori.put("istruttore", this.getIstruttore());
         mappaValori.put("manutentore", this.getManutentore());
         mappaValori.put("impianto", this.getImpiantoPrenotato());
 

@@ -3,7 +3,7 @@ package it.univaq.esc.model.utenti;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Embedded;
+
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;

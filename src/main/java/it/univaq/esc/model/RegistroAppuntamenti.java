@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.repository.AppuntamentoRepository;
 
 @Component

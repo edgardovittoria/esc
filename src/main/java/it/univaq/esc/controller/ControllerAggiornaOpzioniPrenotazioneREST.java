@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.Appuntamento;
-import it.univaq.esc.model.Prenotazione;
-import it.univaq.esc.model.PrenotazioneSpecs;
+import it.univaq.esc.model.prenotazioni.Prenotazione;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.RegistroAppuntamenti;
 
 

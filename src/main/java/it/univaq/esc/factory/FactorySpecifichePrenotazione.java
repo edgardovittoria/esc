@@ -5,10 +5,11 @@ import org.springframework.stereotype.Component;
 import it.univaq.esc.dtoObjects.PrenotazioneImpiantoSpecsDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneLezioneSpecsDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
-import it.univaq.esc.model.PrenotazioneImpiantoSpecs;
-import it.univaq.esc.model.PrenotazioneLezioneSpecs;
-import it.univaq.esc.model.PrenotazioneSpecs;
-import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
+
+
+import it.univaq.esc.model.prenotazioni.PrenotazioneLezioneSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 
 
 

@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+
 
 
 

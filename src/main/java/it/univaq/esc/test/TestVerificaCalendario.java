@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-import it.univaq.esc.model.RegistroPrenotazioni;
+import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 
 @Component
 public class TestVerificaCalendario {

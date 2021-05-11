@@ -1,7 +1,7 @@
 package it.univaq.esc.model.costi;
 
 import java.util.HashMap;
-import java.util.HashSet;
+
 import java.util.Map;
 
 import it.univaq.esc.model.Sport;

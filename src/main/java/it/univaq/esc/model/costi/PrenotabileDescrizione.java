@@ -19,7 +19,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.Sport;
-import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
+
 @Entity
 public class PrenotabileDescrizione {
     @Id

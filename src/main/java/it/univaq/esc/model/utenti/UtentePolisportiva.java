@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Embeddable;
+
 import javax.persistence.Entity;
 
 

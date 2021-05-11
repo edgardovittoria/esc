@@ -15,7 +15,7 @@ import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
-import it.univaq.esc.model.PrenotazioneSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;

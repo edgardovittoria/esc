@@ -2,7 +2,7 @@ package it.univaq.esc.dtoObjects;
 
 
 
-import it.univaq.esc.model.PrenotazioneSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 
 
 

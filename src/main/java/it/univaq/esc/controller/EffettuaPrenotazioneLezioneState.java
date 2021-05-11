@@ -16,7 +16,7 @@ import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
-import it.univaq.esc.model.PrenotazioneSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
@@ -70,8 +70,8 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState{
         }
 
         List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
-        for (String email : (List<String>)formDati.getValoriForm().get("istruttori")) {
-            istruttori.add(getRegistroUtenti().getUtenteByEmail(email));
+        for (IstruttoreSelezionato istruttore : (List<IstruttoreSelezionato>)formDati.getValoriForm().get("istruttori")) {
+            istruttori.add(getRegistroUtenti().getUtenteByEmail(istruttore.getIstruttore()));
         }
 
         for (OrarioAppuntamento orario : (List<OrarioAppuntamento>)formDati.getValoriForm().get("listaOrariAppuntamenti")) {
