@@ -109,7 +109,7 @@ public class PrenotazioneLezioneSpecs extends PrenotazioneSpecs{
 
     @Override
     public String getTipoPrenotazione() {
-        return TipiPrenotazione.IMPIANTO.toString();
+        return TipiPrenotazione.LEZIONE.toString();
     }
 
 }
