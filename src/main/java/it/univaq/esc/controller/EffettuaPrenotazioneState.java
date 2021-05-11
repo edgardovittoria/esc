@@ -181,7 +181,7 @@ public abstract class EffettuaPrenotazioneState {
             List<UtentePolisportivaAbstract> listaIstruttori) {
         List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
         for (UtentePolisportivaAbstract istruttore : listaIstruttori) {
-            if (((Calendario) istruttore.getProprieta().get("calendarioLezioni")).sovrapponeA(oraInizio, oraFine)) {
+            if (!((Calendario)istruttore.getProprieta().get("calendarioLezioni")).sovrapponeA(oraInizio, oraFine)) {
                 istruttori.add(istruttore);
             }
         }
