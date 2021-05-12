@@ -25,8 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ControllerAvvio {
 
 
-    @Autowired
-    private EffettuaPrenotazioneHandler effettuaPrenotazioneHandler;
+    
 
     @Autowired
     private RegistroUtentiPolisportiva registroSportivi;
@@ -38,37 +37,37 @@ public class ControllerAvvio {
     //     return new ModelAndView("newPrenotazione", this.getParametri());
     // }
 
-    @RequestMapping(value = "/profilo")
-    public ModelAndView getProfilo(){
-    ModelAndView profiloSportivo = new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo("pippofranco@bagaglino.com"));
-        // profiloSportivo.addObject("avvio", this.avvio());
-        return profiloSportivo;
+    // @RequestMapping(value = "/profilo")
+    // public ModelAndView getProfilo(){
+    // ModelAndView profiloSportivo = new ModelAndView("profiloSportivo", this.getDettagliProfiloSportivo("pippofranco@bagaglino.com"));
+    //     // profiloSportivo.addObject("avvio", this.avvio());
+    //     return profiloSportivo;
         
-    }    
+    // }    
     
 
-    private HashMap<String, Object> getOpzioniPrenotazioneImpianto(){
-       // EffettuaPrenotazioneHandler controller = effettuaPrenotazioneHandler;
-        HashMap<String, Object> opzioniPrenotazioneImpianto = new HashMap<String, Object>();
-        opzioniPrenotazioneImpianto.put("sportPraticabili", this.effettuaPrenotazioneHandler.getSportPraticabili());
-        HashMap<Integer, String> impiantiDisponibili = new HashMap<Integer, String>();
+    // private HashMap<String, Object> getOpzioniPrenotazioneImpianto(){
+    //    // EffettuaPrenotazioneHandler controller = effettuaPrenotazioneHandler;
+    //     HashMap<String, Object> opzioniPrenotazioneImpianto = new HashMap<String, Object>();
+    //     opzioniPrenotazioneImpianto.put("sportPraticabili", this.effettuaPrenotazioneHandler.getSportPraticabili());
+    //     HashMap<Integer, String> impiantiDisponibili = new HashMap<Integer, String>();
     
-        for(Impianto impianto : this.effettuaPrenotazioneHandler.getImpiantiDisponibili(new Calendario())){
-            impiantiDisponibili.put(impianto.getIdImpianto(), impianto.getTipoPavimentazione().toString());
-        }
-        opzioniPrenotazioneImpianto.put("impiantiDisponibili", impiantiDisponibili);
-        List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
-        for(UtentePolisportivaAbstract sportivo : this.effettuaPrenotazioneHandler.getSportivi()){
-            SportivoDTO sportivoDTO = new SportivoDTO();
-            sportivoDTO.impostaValoriDTO(sportivo);
-            listaSportiviDTO.add(sportivoDTO);
-        }
-        opzioniPrenotazioneImpianto.put("sportiviIscrittiPolisportiva", listaSportiviDTO);
+    //     for(Impianto impianto : this.effettuaPrenotazioneHandler.getImpiantiDisponibili(new Calendario())){
+    //         impiantiDisponibili.put(impianto.getIdImpianto(), impianto.getTipoPavimentazione().toString());
+    //     }
+    //     opzioniPrenotazioneImpianto.put("impiantiDisponibili", impiantiDisponibili);
+    //     List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
+    //     for(UtentePolisportivaAbstract sportivo : this.effettuaPrenotazioneHandler.getSportivi()){
+    //         SportivoDTO sportivoDTO = new SportivoDTO();
+    //         sportivoDTO.impostaValoriDTO(sportivo);
+    //         listaSportiviDTO.add(sportivoDTO);
+    //     }
+    //     opzioniPrenotazioneImpianto.put("sportiviIscrittiPolisportiva", listaSportiviDTO);
         
         
 
-        return opzioniPrenotazioneImpianto;
-    }
+    //     return opzioniPrenotazioneImpianto;
+    // }
 
     // private HashMap<String, Object> getParametri(){
         
@@ -98,38 +97,38 @@ public class ControllerAvvio {
     //     return parametri;
     // }
 
-    private HashMap<String, Object> getDettagliProfiloSportivo(String email){
-        SportivoDTO sportivoDTO = new SportivoDTO();
-        sportivoDTO.impostaValoriDTO(this.registroSportivi.getUtenteByEmail(email));
-        HashMap<String, Object> dettagliProfiloSportivo = new HashMap<String, Object>();
-        dettagliProfiloSportivo.put("sportivo", sportivoDTO);
-        List<PrenotazioneDTO> prenotazioniDTO = new ArrayList<PrenotazioneDTO>();
-        for(Prenotazione prenotazione : this.effettuaPrenotazioneHandler.getPrenotazioniByEmailSportivo(email)){
-            PrenotazioneSpecsDTO specifichePrenotazione = this.effettuaPrenotazioneHandler.getSpecifichePrenotazioneDTOByTipoPrenotazione(prenotazione.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione());
-            specifichePrenotazione.impostaValoriDTO(prenotazione.getListaSpecifichePrenotazione().get(0));
-            //specifichePrenotazione.impostaValoriSpecificheExtraPrenotazioneDTO(prenotazione.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione());
-            PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO();
-            // prenotazioneDTO.impostaValoriDTO(prenotazione);
-            prenotazioniDTO.add(prenotazioneDTO);
-        }
-        dettagliProfiloSportivo.put("prenotazioniEffettuate", prenotazioniDTO);
-        return dettagliProfiloSportivo;
-    }
+    // private HashMap<String, Object> getDettagliProfiloSportivo(String email){
+    //     SportivoDTO sportivoDTO = new SportivoDTO();
+    //     sportivoDTO.impostaValoriDTO(this.registroSportivi.getUtenteByEmail(email));
+    //     HashMap<String, Object> dettagliProfiloSportivo = new HashMap<String, Object>();
+    //     dettagliProfiloSportivo.put("sportivo", sportivoDTO);
+    //     List<PrenotazioneDTO> prenotazioniDTO = new ArrayList<PrenotazioneDTO>();
+    //     for(Prenotazione prenotazione : this.effettuaPrenotazioneHandler.getPrenotazioniByEmailSportivo(email)){
+    //         PrenotazioneSpecsDTO specifichePrenotazione = this.effettuaPrenotazioneHandler.getSpecifichePrenotazioneDTOByTipoPrenotazione(prenotazione.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione());
+    //         specifichePrenotazione.impostaValoriDTO(prenotazione.getListaSpecifichePrenotazione().get(0));
+    //         //specifichePrenotazione.impostaValoriSpecificheExtraPrenotazioneDTO(prenotazione.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione());
+    //         PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO();
+    //         // prenotazioneDTO.impostaValoriDTO(prenotazione);
+    //         prenotazioniDTO.add(prenotazioneDTO);
+    //     }
+    //     dettagliProfiloSportivo.put("prenotazioniEffettuate", prenotazioniDTO);
+    //     return dettagliProfiloSportivo;
+    // }
 
     
 
    
-    @RequestMapping(value = "/nuovaPrenotazione")
-    public ModelAndView avviaPrenotazione(@RequestParam(name="email") String emailSportivoPrenotante, @RequestParam(name="tipoPrenotazione") String tipoPrenotazione){
-        this.effettuaPrenotazioneHandler.avviaNuovaPrenotazione(this.effettuaPrenotazioneHandler.getRegistroSportivi().getUtenteByEmail(emailSportivoPrenotante), tipoPrenotazione);
-        HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto();
-        SportivoDTO sportivoPrenotanteDTO = new SportivoDTO();
-        sportivoPrenotanteDTO.impostaValoriDTO(this.effettuaPrenotazioneHandler.getPrenotazioneInAtto().getSportivoPrenotante());
-        System.out.println("EMAIL SPORTIVO : ");
-        opzioniPrenotazione.put("sportivoPrenotante", sportivoPrenotanteDTO);     
-        opzioniPrenotazione.put("formPrenotaImpianto", new FormPrenotaImpianto());
-        ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", opzioniPrenotazione);
-        return opzioniPrenotazioneImpianto;
-    }
+    // @RequestMapping(value = "/nuovaPrenotazione")
+    // public ModelAndView avviaPrenotazione(@RequestParam(name="email") String emailSportivoPrenotante, @RequestParam(name="tipoPrenotazione") String tipoPrenotazione){
+    //     this.effettuaPrenotazioneHandler.avviaNuovaPrenotazione(this.effettuaPrenotazioneHandler.getRegistroSportivi().getUtenteByEmail(emailSportivoPrenotante), tipoPrenotazione);
+    //     HashMap<String, Object> opzioniPrenotazione = this.getOpzioniPrenotazioneImpianto();
+    //     SportivoDTO sportivoPrenotanteDTO = new SportivoDTO();
+    //     sportivoPrenotanteDTO.impostaValoriDTO(this.effettuaPrenotazioneHandler.getPrenotazioneInAtto().getSportivoPrenotante());
+    //     System.out.println("EMAIL SPORTIVO : ");
+    //     opzioniPrenotazione.put("sportivoPrenotante", sportivoPrenotanteDTO);     
+    //     opzioniPrenotazione.put("formPrenotaImpianto", new FormPrenotaImpianto());
+    //     ModelAndView opzioniPrenotazioneImpianto = new ModelAndView("prenotazioneImpianto", opzioniPrenotazione);
+    //     return opzioniPrenotazioneImpianto;
+    // }
 
 }

@@ -7,15 +7,25 @@ import java.util.List;
 
 import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.Appuntamento;
+import it.univaq.esc.model.QuotaPartecipazione;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
-public class AppuntamentoDTO {
+public class AppuntamentoDTO implements IModelToDTO{
     
     private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
     private List<SportivoDTO> partecipanti = new ArrayList<SportivoDTO>();
     private PrenotazioneSpecsDTO specificaPrenotazione;
+    private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
 
     public AppuntamentoDTO(){}
+
+    public List<QuotaPartecipazioneDTO> getQuotePartecipazione() {
+        return quotePartecipazione;
+    }
+
+    public void setQuotePartecipazione(List<QuotaPartecipazioneDTO> quotePartecipazione) {
+        this.quotePartecipazione = quotePartecipazione;
+    }
 
     private OrarioAppuntamento getOrarioAppuntamento() {
         return orarioAppuntamento;
@@ -66,7 +76,9 @@ public class AppuntamentoDTO {
     }
     
 
-    public void impostaValoriDTO(Appuntamento appuntamento){
+    @Override
+    public void impostaValoriDTO(Object appuntamentoDaConvertire){
+        Appuntamento appuntamento = (Appuntamento)appuntamentoDaConvertire;
         setDataAppuntamento(appuntamento.getDataAppuntamento());
         setOraInizioAppuntamento(appuntamento.getOraInizioAppuntamento());
         setOraFineAppuntamento(appuntamento.getOraFineAppuntamento());
@@ -78,6 +90,14 @@ public class AppuntamentoDTO {
             partecipanteDTO.impostaValoriDTO(partecipante);
             this.aggiungiPartecipante(partecipanteDTO);
         }
+        List<QuotaPartecipazioneDTO> listaQuote = new ArrayList<QuotaPartecipazioneDTO>();
+        for(QuotaPartecipazione quota : appuntamento.getQuotePartecipazione()){
+            QuotaPartecipazioneDTO quotaDTO = new QuotaPartecipazioneDTO();
+            quotaDTO.impostaValoriDTO(quota);
+            listaQuote.add(quotaDTO);
+            
+        }
+        this.setQuotePartecipazione(listaQuote);
         
     }
 

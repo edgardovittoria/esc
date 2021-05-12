@@ -7,7 +7,7 @@ import java.util.List;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
-public class SportivoDTO {
+public class SportivoDTO implements IModelToDTO{
 
     private String nome;
     private String cognome;
@@ -54,7 +54,9 @@ public class SportivoDTO {
         this.email = email;
     }
 
-    public void impostaValoriDTO(UtentePolisportivaAbstract sportivo){
+    @Override
+    public void impostaValoriDTO(Object modelDaConvertire){
+        UtentePolisportivaAbstract sportivo = (UtentePolisportivaAbstract)modelDaConvertire;
         this.setNome((String)sportivo.getProprieta().get("nome"));
         this.setCognome((String)sportivo.getProprieta().get("cognome"));
         this.setEmail((String)sportivo.getProprieta().get("email"));

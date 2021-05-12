@@ -1,17 +1,16 @@
 package it.univaq.esc.dtoObjects;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-
-
+import java.util.Map;
 
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 
 
 
-public class PrenotazioneDTO {
+public class PrenotazioneDTO implements IModelToDTO{
 
     
 
@@ -46,7 +45,11 @@ public class PrenotazioneDTO {
         this.getAppuntamenti().add(appuntamento);
     }
 
-    public void impostaValoriDTO(Prenotazione prenotazione, List<Appuntamento> listaAppuntamentiPrenotazione){
+    @Override
+    public void impostaValoriDTO(Object modelDaConvertire){
+        Map<String, Object> mappa = (HashMap<String, Object>)modelDaConvertire; 
+        Prenotazione prenotazione = (Prenotazione)mappa.get("prenotazione");
+        List<Appuntamento> listaAppuntamentiPrenotazione = (List<Appuntamento>)mappa.get("appuntamentiPrenotazione");
         this.sportivoPrenotante = new SportivoDTO();
         this.sportivoPrenotante.impostaValoriDTO(prenotazione.getSportivoPrenotante());
        

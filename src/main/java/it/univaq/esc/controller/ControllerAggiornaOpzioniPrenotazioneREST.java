@@ -2,7 +2,9 @@ package it.univaq.esc.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +20,8 @@ import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
+import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.RegistroAppuntamenti;
 
 
@@ -28,7 +32,10 @@ import it.univaq.esc.model.RegistroAppuntamenti;
 public class ControllerAggiornaOpzioniPrenotazioneREST {
 
     @Autowired
-    private EffettuaPrenotazioneHandler controller;
+    private RegistroUtentiPolisportiva registroUtentiPolisportiva;
+
+    @Autowired
+    private RegistroPrenotazioni registroPrenotazioni;
 
     @Autowired
     private RegistroAppuntamenti registroAppuntamenti;
@@ -37,7 +44,7 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
     @CrossOrigin
     public @ResponseBody SportivoDTO getSportivo(@RequestParam(name = "email") String email){
         SportivoDTO sportivoDTO = new SportivoDTO();
-        sportivoDTO.impostaValoriDTO(controller.getRegistroSportivi().getUtenteByEmail(email));
+        sportivoDTO.impostaValoriDTO(registroUtentiPolisportiva.getUtenteByEmail(email));
         return sportivoDTO;
     }
 
@@ -45,13 +52,16 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
     @CrossOrigin
     public @ResponseBody List<PrenotazioneDTO> getPrenotazioniSportivo(@RequestParam(name = "email") String email){
         List<PrenotazioneDTO> prenotazioni = new ArrayList<PrenotazioneDTO>();
-        for(Prenotazione pren : controller.getRegistroPrenotazioni().getPrenotazioniByEmailSportivo(email)){
+        for(Prenotazione pren : registroPrenotazioni.getPrenotazioniByEmailSportivo(email)){
             PrenotazioneDTO prenDTO = new PrenotazioneDTO();
             List<Appuntamento> listaAppuntamnenti = new ArrayList<Appuntamento>();
             for(PrenotazioneSpecs spec : pren.getListaSpecifichePrenotazione()){
                 listaAppuntamnenti.add(registroAppuntamenti.getAppuntamentoBySpecificaAssociata(spec));
             }
-            prenDTO.impostaValoriDTO(pren, listaAppuntamnenti);
+            Map<String, Object> mappa = new HashMap<String, Object>();
+        mappa.put("prenotazione", pren);
+        mappa.put("appuntamentiPrenotazione", listaAppuntamnenti);
+        prenDTO.impostaValoriDTO(mappa);
             prenotazioni.add(prenDTO);
         }
         return prenotazioni;

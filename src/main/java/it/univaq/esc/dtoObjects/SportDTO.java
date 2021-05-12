@@ -2,7 +2,7 @@ package it.univaq.esc.dtoObjects;
 
 import it.univaq.esc.model.Sport;
 
-public class SportDTO {
+public class SportDTO implements IModelToDTO{
     
     private String nome;
     private int postiLiberi;
@@ -25,7 +25,9 @@ public class SportDTO {
         this.postiLiberi = postiLiberi;
     }
 
-    public void impostaValoriDTO(Sport sport){
+    @Override
+    public void impostaValoriDTO(Object modelDaConvertire){
+        Sport sport = (Sport)modelDaConvertire;
         this.nome = sport.getNome();
         this.postiLiberi = sport.getNumeroGiocatori();
     }

@@ -180,7 +180,10 @@ public class EffettuaPrenotazioneHandlerRest {
         
 
         PrenotazioneDTO prenDTO = new PrenotazioneDTO();
-        prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getListaAppuntamentiPrenotazioneInAtto());
+        Map<String, Object> mappa = new HashMap<String, Object>();
+        mappa.put("prenotazione", this.getPrenotazioneInAtto());
+        mappa.put("appuntamentiPrenotazione", this.getListaAppuntamentiPrenotazioneInAtto());
+        prenDTO.impostaValoriDTO(mappa);
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.OK);
 
     }
@@ -197,7 +200,10 @@ public class EffettuaPrenotazioneHandlerRest {
         
 
         PrenotazioneDTO prenDTO = new PrenotazioneDTO();
-        prenDTO.impostaValoriDTO(this.prenotazioneInAtto, this.getListaAppuntamentiPrenotazioneInAtto());
+        Map<String, Object> mappa = new HashMap<String, Object>();
+        mappa.put("prenotazione", this.getPrenotazioneInAtto());
+        mappa.put("appuntamentiPrenotazione", this.getListaAppuntamentiPrenotazioneInAtto());
+        prenDTO.impostaValoriDTO(mappa);
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
     }
 

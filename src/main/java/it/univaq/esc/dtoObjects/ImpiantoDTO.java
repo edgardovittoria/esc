@@ -7,7 +7,7 @@ import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Sport;
 
-public class ImpiantoDTO {
+public class ImpiantoDTO implements IModelToDTO{
 
     private int idImpianto;
     private boolean indoor;
@@ -57,7 +57,9 @@ public class ImpiantoDTO {
         this.appuntamenti = appuntamenti;
     }
     
-    public void impostaValoriDTO(Impianto impianto){
+    @Override
+    public void impostaValoriDTO(Object modelDaConveritire){
+        Impianto impianto = (Impianto)modelDaConveritire;
         setIdImpianto(impianto.getIdImpianto());
         setIndoor(impianto.isIndoor());
         setPavimentazione(impianto.getTipoPavimentazione().toString());
