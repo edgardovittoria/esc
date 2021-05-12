@@ -17,6 +17,10 @@ public abstract class CalcolatoreCosto {
 
     public abstract float calcolaCosto(Appuntamento appuntamento);
 
+    public float calcolaQuotaPartecipazione(Appuntamento appuntamento){
+        return this.calcolaCosto(appuntamento) / appuntamento.getNumeroPartecipantiTotali();
+    };
+
     public void aggiungiStrategiaCosto(CalcolatoreCosto calcolatoreCosto){
         // Di default non fa nulla
     }

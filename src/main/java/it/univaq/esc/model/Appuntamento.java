@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -54,8 +55,24 @@ public class Appuntamento {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<UtentePolisportivaAbstract> partecipanti = new ArrayList<UtentePolisportivaAbstract>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<QuotaPartecipazione> quotePartecipazione = new ArrayList<QuotaPartecipazione>();
+
 
     public Appuntamento(){}
+
+    public List<QuotaPartecipazione> getQuotePartecipazione() {
+        return quotePartecipazione;
+    }
+
+    private void aggiungiQuotaPartecipazione(UtentePolisportivaAbstract sportivo){
+        QuotaPartecipazione quota = new QuotaPartecipazione();
+        quota.setCosto(this.getCalcolatoreCosto().calcolaQuotaPartecipazione(this));
+        quota.setSportivoAssociato(sportivo);
+        quota.setPagata(false);
+    }
 
     public Appuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento, PrenotazioneSpecs specificaPrenotazione){
         setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
@@ -85,6 +102,7 @@ public class Appuntamento {
 
     public void aggiungiPartecipante(UtentePolisportivaAbstract sportivoPartecipante) {
         getListaPartecipanti().add(sportivoPartecipante);
+        this.aggiungiQuotaPartecipazione(sportivoPartecipante);
     }
     
 
@@ -185,5 +203,8 @@ public class Appuntamento {
     }
     
 
+    public Integer getNumeroPartecipantiTotali(){
+        return this.getPrenotazioneSpecsAppuntamento().getNumeroGiocatori();
+    }
 
 }

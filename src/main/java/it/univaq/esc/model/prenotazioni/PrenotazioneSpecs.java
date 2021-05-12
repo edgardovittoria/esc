@@ -112,6 +112,10 @@ public abstract class PrenotazioneSpecs {
 
     public abstract String getTipoPrenotazione();
 
+    public Integer getNumeroGiocatori(){
+        return this.getSportAssociato().getNumeroGiocatori();
+    }
+
     //protected abstract void setTipoPrenotazione();
 
 

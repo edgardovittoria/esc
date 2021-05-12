@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
 
-import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+//import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
@@ -29,9 +29,9 @@ public class QuotaPartecipazione {
     @JoinColumn(name = "sportivo_email",nullable = false)
     private UtentePolisportivaAbstract sportivoAssociato;
 
-    @ManyToOne
-    @JoinColumn(name = "prenotazioneSpecs_ID", nullable = false)
-    private PrenotazioneSpecs specificaPrenotazioneAssociata;
+    // @ManyToOne
+    // @JoinColumn(name = "prenotazioneSpecs_ID", nullable = false)
+    // private PrenotazioneSpecs specificaPrenotazioneAssociata;
 
     public QuotaPartecipazione(){}
 
@@ -60,13 +60,13 @@ public class QuotaPartecipazione {
         return costo;
     }
 
-    public void setSpecificaPrenotazioneAssociata(PrenotazioneSpecs specifica){
-        this.specificaPrenotazioneAssociata = specifica;
-    }
+    // public void setSpecificaPrenotazioneAssociata(PrenotazioneSpecs specifica){
+    //     this.specificaPrenotazioneAssociata = specifica;
+    // }
 
-    public PrenotazioneSpecs getSpecificaPrenotazioneAssociata(){
-        return this.specificaPrenotazioneAssociata;
-    }
+    // public PrenotazioneSpecs getSpecificaPrenotazioneAssociata(){
+    //     return this.specificaPrenotazioneAssociata;
+    // }
 
     public void setCosto(float costo) {
         this.costo = costo;
