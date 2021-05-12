@@ -290,6 +290,12 @@ public class PopolaDB {
         prenotazione2.setSportivoPrenotante(sportivo2);
         
         
+        prenotazione2.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(
+            this.listinoPrezziDescrizioniPolisportiva.getPrenotabileDescrizioneByTipoPrenotazioneESport(TipiPrenotazione.IMPIANTO.toString(), tennis));
+        Map<String, Object> mappaValori2 = new HashMap<String, Object>();
+        mappaValori2.put("impianto", impianto3);
+        prenotazione2.getListaSpecifichePrenotazione().get(0).impostaValoriSpecificheExtraPrenotazione(mappaValori);
+        
         Appuntamento appuntamento2 = new Appuntamento(LocalDateTime.of(2021, 5, 21, 17, 00), LocalDateTime.of(2021, 5, 21, 19,00), prenotazioneSpecs2);
         appuntamento2.setCalcolatoreCosto(calcolatoreCosto);
         appuntamento2.aggiungiPartecipante(sportivo2);
@@ -301,11 +307,7 @@ public class PopolaDB {
         // prenotazione2.setCalendarioSpecifica(calendarioSpecs2, prenotazioneSpecs2);
         // prenotazione2.impostaCalendarioPrenotazioneDaSpecifiche();
         
-        prenotazione2.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(
-            this.listinoPrezziDescrizioniPolisportiva.getPrenotabileDescrizioneByTipoPrenotazioneESport(TipiPrenotazione.IMPIANTO.toString(), tennis));
-        Map<String, Object> mappaValori2 = new HashMap<String, Object>();
-        mappaValori2.put("impianto", impianto3);
-        prenotazione2.getListaSpecifichePrenotazione().get(0).impostaValoriSpecificheExtraPrenotazione(mappaValori);
+        
         
         
         /*calendarioRepository.save(calendarioPrenotazione);
