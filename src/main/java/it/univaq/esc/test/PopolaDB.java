@@ -20,6 +20,9 @@ import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
+import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
+import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
+import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.model.utenti.UtentePolisportivaBuilder;
 import it.univaq.esc.repository.AppuntamentoRepository;
@@ -266,6 +269,9 @@ public class PopolaDB {
         prenotazione1.getListaSpecifichePrenotazione().get(0).impostaValoriSpecificheExtraPrenotazione(mappaValori);
         
         Appuntamento appuntamento1 = new Appuntamento(LocalDateTime.of(2021, 5, 26, 10, 30), LocalDateTime.of(2021, 5, 26, 11, 30), prenotazioneSpecs);
+        CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
+            calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
+        appuntamento1.setCalcolatoreCosto(calcolatoreCosto);
         appuntamento1.aggiungiPartecipante(sportivo1);
         appuntamento1.aggiungiPartecipante(sportivo2);
         Calendario calendarioSpecs1 = new Calendario();
@@ -285,6 +291,7 @@ public class PopolaDB {
         
         
         Appuntamento appuntamento2 = new Appuntamento(LocalDateTime.of(2021, 5, 21, 17, 00), LocalDateTime.of(2021, 5, 21, 19,00), prenotazioneSpecs2);
+        appuntamento2.setCalcolatoreCosto(calcolatoreCosto);
         appuntamento2.aggiungiPartecipante(sportivo2);
         appuntamento2.aggiungiPartecipante(sportivo3);
         Calendario calendarioSpecs2 = new Calendario();
