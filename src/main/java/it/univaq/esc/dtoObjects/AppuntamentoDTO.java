@@ -77,8 +77,8 @@ public class AppuntamentoDTO implements IModelToDTO{
     
 
     @Override
-    public void impostaValoriDTO(Object appuntamentoDaConvertire){
-        Appuntamento appuntamento = (Appuntamento)appuntamentoDaConvertire;
+    public void impostaValoriDTO(Object modelDaConvertire){
+        Appuntamento appuntamento = (Appuntamento)modelDaConvertire;
         setDataAppuntamento(appuntamento.getDataAppuntamento());
         setOraInizioAppuntamento(appuntamento.getOraInizioAppuntamento());
         setOraFineAppuntamento(appuntamento.getOraFineAppuntamento());

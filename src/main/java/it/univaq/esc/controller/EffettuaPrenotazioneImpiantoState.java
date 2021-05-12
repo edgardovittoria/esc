@@ -51,7 +51,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
             Appuntamento appuntamento = new Appuntamento();
             appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
             appuntamento.setCalcolatoreCosto(calcolatoreCosto);
-            appuntamento.aggiungiPartecipante(controller.getPrenotazioneInAtto().getSportivoPrenotante());
+            
             controller.aggiungiAppuntamento(appuntamento);
         }
 
@@ -108,6 +108,10 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
             controller.getListaAppuntamentiPrenotazioneInAtto().get(((List<OrarioAppuntamento>)formDati.getValoriForm().get("listaOrariAppuntamenti")).indexOf(orario)).getPrenotazioneSpecsAppuntamento().impostaValoriSpecificheExtraPrenotazione(mappaValori);
             controller.getListaAppuntamentiPrenotazioneInAtto().get(((List<OrarioAppuntamento>)formDati.getValoriForm().get("listaOrariAppuntamenti")).indexOf(orario))
                     .calcolaCosto();
+        }
+
+        for(Appuntamento appuntamento : controller.getListaAppuntamentiPrenotazioneInAtto()){
+            appuntamento.aggiungiPartecipante(controller.getPrenotazioneInAtto().getSportivoPrenotante());
         }
 
         
