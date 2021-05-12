@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
@@ -128,6 +130,9 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
                             app.getPrenotazioneSpecsAppuntamento()),
                     calendarioDaUnire);
         }
+        List<String> lista = new ArrayList<String>();
+        lista.add("pippo");
+        this.send(lista);
         
     }
 
@@ -136,5 +141,10 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         Map<String, Object> datiAggiornati = new HashMap<String, Object>();
         datiAggiornati.put("impiantiDisponibili", this.getImpiantiDTODisponibili(dati));
         return datiAggiornati;
+    }
+
+    @SendTo("/topic/user")
+    public List<String> send(@Payload List<String> message) {
+        return message;
     }
 }
