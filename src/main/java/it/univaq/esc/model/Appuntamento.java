@@ -72,6 +72,7 @@ public class Appuntamento {
         quota.setCosto(this.getCalcolatoreCosto().calcolaQuotaPartecipazione(this));
         quota.setSportivoAssociato(sportivo);
         quota.setPagata(false);
+        this.quotePartecipazione.add(quota);
     }
 
     public Appuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento, PrenotazioneSpecs specificaPrenotazione){

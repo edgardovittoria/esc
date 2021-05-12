@@ -319,7 +319,6 @@ public class PopolaDB {
         appuntamentoRepository.saveAll(calendarioSpecs2.getListaAppuntamenti());
 
         
-        
     }
 
 
