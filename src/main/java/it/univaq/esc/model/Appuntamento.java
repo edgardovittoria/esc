@@ -208,4 +208,16 @@ public class Appuntamento {
         return this.getPrenotazioneSpecsAppuntamento().getNumeroGiocatori();
     }
 
+    public String getTipoPrenotazione(){
+        return this.getPrenotazioneSpecsAppuntamento().getTipoPrenotazione();
+    }
+
+    public boolean isPending(){
+        return this.getPrenotazioneSpecsAppuntamento().isPending();
+    }
+
+    public void setPending(boolean pending){
+        this.prenotazioneSpecsAppuntamento.setPending(pending);
+    }
+
 }

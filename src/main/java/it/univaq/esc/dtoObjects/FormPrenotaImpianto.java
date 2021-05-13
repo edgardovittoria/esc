@@ -17,8 +17,26 @@ public class FormPrenotaImpianto implements IFormPrenotabile{
 
     private Integer numeroGiocatoriNonIscritti;
 
+    private List<CheckboxPendingSelezionato> checkboxesPending;
+
 
     public FormPrenotaImpianto(){}
+
+
+    
+
+    public List<CheckboxPendingSelezionato> getCheckboxesPending() {
+        return checkboxesPending;
+    }
+
+
+
+
+    public void setCheckboxesPending(List<CheckboxPendingSelezionato> checkboxesPending) {
+        this.checkboxesPending = checkboxesPending;
+    }
+
+
 
 
     public Integer getNumeroGiocatoriNonIscritti() {
@@ -90,6 +108,7 @@ public class FormPrenotaImpianto implements IFormPrenotabile{
         mappaValori.put("invitati", this.getSportiviInvitati());
         mappaValori.put("postiLiberi", this.getPostiLiberi());
         mappaValori.put("numeroPartecipantiNonIscritti", this.getNumeroGiocatoriNonIscritti());
+        mappaValori.put("checkboxesPending", this.getCheckboxesPending());
 
         return mappaValori;
     }

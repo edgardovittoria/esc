@@ -1,5 +1,6 @@
 package it.univaq.esc.model.prenotazioni;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +76,21 @@ public class RegistroPrenotazioni {
     }
 
 
+    public List<Prenotazione> getPrenotazioniSottoscrivibiliPerTipo(String tipoPrenotazione){
+        return null;
+    }
+
     
+
+    private List<Prenotazione> filtraPrenotazioniPerTipo(List<Prenotazione> listaPrenotazioniDaFiltrare, String tipoPrenotazione){
+
+        List<Prenotazione> prenotazioniFiltrate = new ArrayList<Prenotazione>();
+        for(Prenotazione prenotazione : listaPrenotazioniDaFiltrare){
+            if(prenotazione.getTipoPrenotazione().equals(tipoPrenotazione)){
+                prenotazioniFiltrate.add(prenotazione);
+            }
+        }
+        return prenotazioniFiltrate;
+    }
 
 }

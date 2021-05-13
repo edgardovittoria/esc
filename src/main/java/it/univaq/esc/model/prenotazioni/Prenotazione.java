@@ -116,6 +116,10 @@ public class Prenotazione {
     }
 
 
+    public String getTipoPrenotazione(){
+    
+        return this.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione();
+    }
 
     
 }

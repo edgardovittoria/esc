@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
@@ -86,11 +87,18 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
             // controller.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione,
             // controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
 
-            controller.getListaAppuntamentiPrenotazioneInAtto().get(((List<OrarioAppuntamento>)formDati.getValoriForm().get("listaOrariAppuntamenti")).indexOf(orario))
-                    .setDataOraInizioAppuntamento(dataInizio);
-            controller.getListaAppuntamentiPrenotazioneInAtto().get(((List<OrarioAppuntamento>)formDati.getValoriForm().get("listaOrariAppuntamenti")).indexOf(orario))
-                    .setDataOraFineAppuntamento(dataFine);
+            Appuntamento appuntamentoDaImpostare = controller.getListaAppuntamentiPrenotazioneInAtto().get(((List<OrarioAppuntamento>)formDati.getValoriForm().get("listaOrariAppuntamenti")).indexOf(orario));
+            appuntamentoDaImpostare.setDataOraInizioAppuntamento(dataInizio);
+            appuntamentoDaImpostare.setDataOraFineAppuntamento(dataFine);
             
+            boolean pending = false;
+            for(CheckboxPendingSelezionato checkbox : (List<CheckboxPendingSelezionato>)formDati.getValoriForm().get("checkboxesPending")){
+                if(checkbox.getIdSelezione() == orario.getId()){
+                    pending = checkbox.isPending();
+                }
+            }
+
+            appuntamentoDaImpostare.setPending(pending);
 
             HashMap<String, Object> mappaValori = new HashMap<String, Object>();
             mappaValori.put("invitati", sportivi);

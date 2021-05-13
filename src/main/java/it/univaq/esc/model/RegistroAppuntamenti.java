@@ -1,5 +1,6 @@
 package it.univaq.esc.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,5 +63,44 @@ public class RegistroAppuntamenti {
     }
 
    
+    public List<Appuntamento> getAppuntamentiSottoscrivibiliPerTipo(String tipoPrenotazione){
+        List<Appuntamento> appuntamentiFiltrati = this.filtraAppuntamentiPerDataOra(this.getListaAppuntamenti(), LocalDateTime.now());
+        appuntamentiFiltrati = this.filtraAppuntamentiPerTipoPrenotazione(appuntamentiFiltrati, tipoPrenotazione);
+        appuntamentiFiltrati = this.filtraAppuntamentiNonPending(appuntamentiFiltrati);
+
+        return appuntamentiFiltrati;
+    }
+
+
+    private List<Appuntamento> filtraAppuntamentiPerDataOra(List<Appuntamento> listaAppuntamentiDaFiltrare, LocalDateTime dataOra){
+        List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
+        for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare){
+            if(appuntamento.getDataOraInizioAppuntamento().isAfter(dataOra)){
+                appuntamentiFiltrati.add(appuntamento);
+            }
+        }
+        return appuntamentiFiltrati;
+    }
+
+    private List<Appuntamento> filtraAppuntamentiPerTipoPrenotazione(List<Appuntamento> listaAppuntamentiDaFiltrare, String tipoPrenotazione){
+        List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
+        for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare){
+            if(appuntamento.getTipoPrenotazione().equals(tipoPrenotazione)){
+                appuntamentiFiltrati.add(appuntamento);
+            }
+        }
+        return appuntamentiFiltrati;
+    }
+
+    private List<Appuntamento> filtraAppuntamentiNonPending(List<Appuntamento> listaAppuntamentiDaFiltrare){
+        List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
+        for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare){
+            if(appuntamento.isPending()){
+                appuntamentiFiltrati.add(appuntamento);
+            }
+        }
+        return appuntamentiFiltrati;
+    }
+    
 
 }

@@ -31,6 +31,8 @@ public abstract class PrenotazioneSpecs {
     @Column
     private boolean confermata = false;
     @Column
+    private boolean pending = false;
+    @Column
     private float costo;
 
     
@@ -62,6 +64,14 @@ public abstract class PrenotazioneSpecs {
 
     public void setSpecificaDescrtiption(PrenotabileDescrizione specificaDescription){
         this.specificaDescription = specificaDescription;
+    }
+
+    public void setPending(boolean pending){
+        this.pending = pending;
+    }
+
+    public boolean isPending(){
+        return this.pending;
     }
 
     public void setConfermata() {
