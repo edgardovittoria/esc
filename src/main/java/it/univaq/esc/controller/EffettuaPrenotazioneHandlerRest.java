@@ -13,6 +13,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -205,6 +208,16 @@ public class EffettuaPrenotazioneHandlerRest {
         mappa.put("appuntamentiPrenotazione", this.getListaAppuntamentiPrenotazioneInAtto());
         prenDTO.impostaValoriDTO(mappa);
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
+    }
+
+    @MessageMapping("/creaNotifica")
+    @SendTo("/inviti")
+    public List<String> send(@Payload String email) {
+        System.out.println(email);
+        List<String> lista = new ArrayList<String> ();
+        lista.add("pippo");
+        lista.add("gino");
+        return lista;
     }
 
 
