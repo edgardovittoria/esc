@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,6 +57,9 @@ public class EffettuaPrenotazioneHandlerRest {
     @Autowired
     private RegistroAppuntamenti registroAppuntamenti;
 
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
+
     // @Autowired
     // private RegistroImpianti registroImpianti;
 
@@ -76,8 +80,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
     private EffettuaPrenotazioneState stato;
 
-    public EffettuaPrenotazioneHandlerRest() {
-    }
+    public EffettuaPrenotazioneHandlerRest() {}
 
     private FactoryStatoEffettuaPrenotazione getFactoryStati() {
         return factoryStati;
@@ -200,7 +203,9 @@ public class EffettuaPrenotazioneHandlerRest {
 
 
         this.getStato().aggiornaElementiDopoConfermaPrenotazione(this);
-        
+
+        //simpMessagingTemplate.convertAndSendToUser("pippofranco", "/user", "notifica inviata");
+        simpMessagingTemplate.convertAndSendToUser("pippofranco", "/inviti", "notifica inviata");
 
         PrenotazioneDTO prenDTO = new PrenotazioneDTO();
         Map<String, Object> mappa = new HashMap<String, Object>();
@@ -210,15 +215,15 @@ public class EffettuaPrenotazioneHandlerRest {
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
     }
 
-    @MessageMapping("/creaNotifica")
-    @SendTo("/inviti")
-    public List<String> send(@Payload String email) {
-        System.out.println(email);
-        List<String> lista = new ArrayList<String> ();
-        lista.add("pippo");
-        lista.add("gino");
-        return lista;
-    }
+    // @MessageMapping("/creaNotifica")
+    // @SendTo("/inviti")
+    // public List<String> send(@Payload String email) {
+    //     System.out.println(email);
+    //     List<String> lista = new ArrayList<String> ();
+    //     lista.add("pippo");
+    //     lista.add("gino");
+    //     return lista;
+    // }
 
 
     @PostMapping("/aggiornaDatiOpzioni")
