@@ -1,4 +1,4 @@
-package it.univaq.esc.controller;
+package it.univaq.esc.controller.effettuaPrenotazione;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

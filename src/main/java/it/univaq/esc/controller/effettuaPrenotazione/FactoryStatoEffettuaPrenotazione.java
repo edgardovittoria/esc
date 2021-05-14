@@ -1,4 +1,4 @@
-package it.univaq.esc.factory;
+package it.univaq.esc.controller.effettuaPrenotazione;
 
 
 import java.util.HashMap;
@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
-import it.univaq.esc.controller.EffettuaPrenotazioneImpiantoState;
-import it.univaq.esc.controller.EffettuaPrenotazioneLezioneState;
-import it.univaq.esc.controller.EffettuaPrenotazioneState;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 
 

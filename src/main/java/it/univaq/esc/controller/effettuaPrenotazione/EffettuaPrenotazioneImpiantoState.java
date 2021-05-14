@@ -1,4 +1,4 @@
-package it.univaq.esc.controller;
+package it.univaq.esc.controller.effettuaPrenotazione;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -168,6 +168,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
         if(appuntamento != null){
             appuntamento.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante));
+            this.getRegistroAppuntamenti().salvaAppuntamento(appuntamento);
             return HttpStatus.NO_CONTENT;
         }
         return HttpStatus.INTERNAL_SERVER_ERROR;

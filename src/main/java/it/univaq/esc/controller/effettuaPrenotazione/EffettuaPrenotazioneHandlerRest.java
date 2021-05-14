@@ -1,4 +1,4 @@
-package it.univaq.esc.controller;
+package it.univaq.esc.controller.effettuaPrenotazione;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,8 +25,6 @@ import it.univaq.esc.dtoObjects.IFormPrenotabile;
 import it.univaq.esc.dtoObjects.IstruttoreDTO;
 
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
-
-import it.univaq.esc.factory.FactoryStatoEffettuaPrenotazione;
 import it.univaq.esc.model.Appuntamento;
 
 import it.univaq.esc.model.prenotazioni.Prenotazione;
