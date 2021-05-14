@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
+import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
+import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.AppuntamentoRepository;
@@ -31,6 +33,12 @@ public class RegistroAppuntamenti {
     @PostConstruct
     private void popola(){
         this.getListaAppuntamenti().addAll(getAppuntamentoRepository().findAll());
+        for(Appuntamento appuntamento : this.getListaAppuntamenti()){
+            CalcolatoreCostoBase calcBase = new CalcolatoreCostoBase();
+            CalcolatoreCostoComposito calcComposito = new CalcolatoreCostoComposito();
+            calcComposito.aggiungiStrategiaCosto(calcBase);
+            appuntamento.setCalcolatoreCosto(calcComposito);
+        }
     }
 
     /**
