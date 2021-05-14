@@ -16,8 +16,17 @@ public class AppuntamentoDTO implements IModelToDTO{
     private List<SportivoDTO> partecipanti = new ArrayList<SportivoDTO>();
     private PrenotazioneSpecsDTO specificaPrenotazione;
     private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
+    private SportivoDTO creatore;
 
     public AppuntamentoDTO(){}
+
+    public SportivoDTO getCreatore() {
+        return creatore;
+    }
+
+    public void setCreatore(SportivoDTO creatore) {
+        this.creatore = creatore;
+    }
 
     public List<QuotaPartecipazioneDTO> getQuotePartecipazione() {
         return quotePartecipazione;
@@ -98,6 +107,10 @@ public class AppuntamentoDTO implements IModelToDTO{
             
         }
         this.setQuotePartecipazione(listaQuote);
+        
+        SportivoDTO creatore = new SportivoDTO();
+        creatore.impostaValoriDTO(appuntamento.creatoDa());
+        this.setCreatore(creatore);
         
     }
 
