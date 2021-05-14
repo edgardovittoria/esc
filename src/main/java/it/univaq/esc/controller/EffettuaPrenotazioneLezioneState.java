@@ -29,7 +29,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState{
     public EffettuaPrenotazioneLezioneState(){}
 
     @Override
-    public Map<String, Object> getDatiOpzioni() {
+    public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller) {
         Map<String, Object> mappaValori = new HashMap<String, Object>();
         mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
         

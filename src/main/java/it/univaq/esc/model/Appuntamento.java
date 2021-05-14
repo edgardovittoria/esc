@@ -220,4 +220,12 @@ public class Appuntamento {
         this.prenotazioneSpecsAppuntamento.setPending(pending);
     }
 
+    /**
+     * Restituisce l'utente che ha creato la Prenotazione da cui è scaturito questo appuntamento.
+     * @return Utente che ha creato la prenotazione per questo appuntamento.
+     */
+    public UtentePolisportivaAbstract creatoDa(){
+        return this.getPrenotazioneSpecsAppuntamento().getSportivoPrenotante();
+    }
+
 }

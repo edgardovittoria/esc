@@ -19,6 +19,7 @@ import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
+import it.univaq.esc.model.RegistroAppuntamenti;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
@@ -32,10 +33,17 @@ public abstract class EffettuaPrenotazioneState {
     @Autowired
     private RegistroUtentiPolisportiva registroUtenti;
 
+    @Autowired
+    private RegistroAppuntamenti registroAppuntamenti;
+
     public EffettuaPrenotazioneState() {
     }
 
-    public abstract Map<String, Object> getDatiOpzioni();
+    protected RegistroAppuntamenti getRegistroAppuntamenti() {
+        return registroAppuntamenti;
+    }
+
+    public abstract Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller);
 
     public abstract void impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller);
 

@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+
 
 
 
@@ -124,6 +126,10 @@ public abstract class PrenotazioneSpecs {
 
     public Integer getNumeroGiocatori(){
         return this.getSportAssociato().getNumeroGiocatori();
+    }
+
+    public UtentePolisportivaAbstract getSportivoPrenotante(){
+        return this.getPrenotazioneAssociata().getSportivoPrenotante();
     }
 
     //protected abstract void setTipoPrenotazione();

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
@@ -17,6 +18,7 @@ import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
@@ -28,10 +30,12 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
     public EffettuaPrenotazioneImpiantoState(){}
 
     @Override
-    public Map<String, Object> getDatiOpzioni() {
+    public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller) {
         Map<String, Object> mappaValori = new HashMap<String, Object>();
         mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
         mappaValori.put("sportiviPolisportiva", this.getSportiviPolisportiva());
+        mappaValori.put("appuntamentiSottoscrivibili", this.getAppuntamentiImpiantoSottoscrivibiliDaUtente(controller.getSportivoPrenotante()));
+
 
         return mappaValori;
     }
@@ -145,6 +149,17 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         Map<String, Object> datiAggiornati = new HashMap<String, Object>();
         datiAggiornati.put("impiantiDisponibili", this.getImpiantiDTODisponibili(dati));
         return datiAggiornati;
+    }
+
+
+    private List<AppuntamentoDTO> getAppuntamentiImpiantoSottoscrivibiliDaUtente(UtentePolisportivaAbstract utentePerCuiCercareAppuntamentiSottoscrivibili){
+        List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
+        for(Appuntamento appuntamento : this.getRegistroAppuntamenti().getAppuntamentiSottoscrivibiliPerTipo(TipiPrenotazione.IMPIANTO.toString(), utentePerCuiCercareAppuntamentiSottoscrivibili)){
+            AppuntamentoDTO appDTO = new AppuntamentoDTO();
+            appDTO.impostaValoriDTO(appuntamento);
+            listaAppuntamentiDTO.add(appDTO);
+        }
+        return listaAppuntamentiDTO;
     }
 
     

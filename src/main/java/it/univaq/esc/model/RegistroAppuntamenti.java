@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.AppuntamentoRepository;
 
 @Component
@@ -63,10 +64,11 @@ public class RegistroAppuntamenti {
     }
 
    
-    public List<Appuntamento> getAppuntamentiSottoscrivibiliPerTipo(String tipoPrenotazione){
+    public List<Appuntamento> getAppuntamentiSottoscrivibiliPerTipo(String tipoPrenotazione, UtentePolisportivaAbstract utentePerCuiTrovareAppuntamenti){
         List<Appuntamento> appuntamentiFiltrati = this.filtraAppuntamentiPerDataOra(this.getListaAppuntamenti(), LocalDateTime.now());
         appuntamentiFiltrati = this.filtraAppuntamentiPerTipoPrenotazione(appuntamentiFiltrati, tipoPrenotazione);
-        appuntamentiFiltrati = this.filtraAppuntamentiNonPending(appuntamentiFiltrati);
+        appuntamentiFiltrati = this.filtraAppuntamentiPending(appuntamentiFiltrati);
+        appuntamentiFiltrati = this.escludiAppuntamentiPerUtenteCreatore(appuntamentiFiltrati, utentePerCuiTrovareAppuntamenti);
 
         return appuntamentiFiltrati;
     }
@@ -92,7 +94,7 @@ public class RegistroAppuntamenti {
         return appuntamentiFiltrati;
     }
 
-    private List<Appuntamento> filtraAppuntamentiNonPending(List<Appuntamento> listaAppuntamentiDaFiltrare){
+    private List<Appuntamento> filtraAppuntamentiPending(List<Appuntamento> listaAppuntamentiDaFiltrare){
         List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
         for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare){
             if(appuntamento.isPending()){
@@ -101,6 +103,27 @@ public class RegistroAppuntamenti {
         }
         return appuntamentiFiltrati;
     }
+
+    private List<Appuntamento> filtraAppuntamentiPerUtenteCreatore(List<Appuntamento> listaAppuntamentiDaFiltrare, UtentePolisportivaAbstract utenteCreatore){
+        List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
+        for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare){
+            if(((String)appuntamento.creatoDa().getProprieta().get("email")).equals((String)utenteCreatore.getProprieta().get("email"))){
+                appuntamentiFiltrati.add(appuntamento);
+            }
+        }
+        return appuntamentiFiltrati;
+    }
+
+    private List<Appuntamento> escludiAppuntamentiPerUtenteCreatore(List<Appuntamento> listaAppuntamentiDaFiltrare, UtentePolisportivaAbstract utenteCreatore){
+        List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
+        for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare){
+            if(!((String)appuntamento.creatoDa().getProprieta().get("email")).equals((String)utenteCreatore.getProprieta().get("email"))){
+                appuntamentiFiltrati.add(appuntamento);
+            }
+        }
+        return appuntamentiFiltrati;
+    }
+
     
 
 }

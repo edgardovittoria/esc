@@ -166,7 +166,7 @@ public class EffettuaPrenotazioneHandlerRest {
 
         this.setTipoPrenotazioneInAtto(tipoPrenotazione);
 
-        return this.getStato().getDatiOpzioni();
+        return this.getStato().getDatiOpzioni(this);
     }
     
     @PostMapping("/aggiornaOpzioniPrenotazione")
@@ -293,5 +293,8 @@ public class EffettuaPrenotazioneHandlerRest {
         this.prenotazioneInAtto = prenotazione;
     }
 
+    public UtentePolisportivaAbstract getSportivoPrenotante(){
+        return this.getPrenotazioneInAtto().getSportivoPrenotante();
+    }
 
 }

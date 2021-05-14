@@ -75,11 +75,6 @@ public class RegistroPrenotazioni {
         return lastPrenotazione.getIdPrenotazione();}
     }
 
-
-    public List<Prenotazione> getPrenotazioniSottoscrivibiliPerTipo(String tipoPrenotazione){
-        return null;
-    }
-
     
 
     private List<Prenotazione> filtraPrenotazioniPerTipo(List<Prenotazione> listaPrenotazioniDaFiltrare, String tipoPrenotazione){
