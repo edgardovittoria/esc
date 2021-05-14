@@ -36,7 +36,7 @@ public class Appuntamento {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int idAppuntamento;
+    private Integer idAppuntamento;
     @Column
     private LocalDateTime dataOraInizioAppuntamento;
     @Column

@@ -54,6 +54,10 @@ public class RegistroAppuntamenti {
         this.getAppuntamentoRepository().save(appuntamento);
     }
 
+    public void aggiornaAppuntamento(Appuntamento appuntamento){
+        this.getAppuntamentoRepository().saveAndFlush(appuntamento);
+    }
+
 
     public void salvaListaAppuntamenti(List<Appuntamento> listaAppuntamenti){
         this.getListaAppuntamenti().addAll(listaAppuntamenti);

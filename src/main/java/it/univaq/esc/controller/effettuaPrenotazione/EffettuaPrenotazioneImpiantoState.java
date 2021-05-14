@@ -168,7 +168,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
         if(appuntamento != null){
             appuntamento.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante));
-            this.getRegistroAppuntamenti().salvaAppuntamento(appuntamento);
+            this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
             return HttpStatus.NO_CONTENT;
         }
         return HttpStatus.INTERNAL_SERVER_ERROR;
