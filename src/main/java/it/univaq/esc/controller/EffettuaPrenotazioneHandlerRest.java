@@ -253,9 +253,10 @@ public class EffettuaPrenotazioneHandlerRest {
     @CrossOrigin
     public @ResponseStatus HttpStatus aggiungiPartecipanteAEventoEsistente(
             @RequestBody Map<String, Object> mappaDati) {
-
-        Integer idEvento = (Integer) mappaDati.get("idEvento");
-        String emailPartecipante = (String) mappaDati.get("emailPartecipante");
+        
+        Map<String, Object> mappaParametri = (HashMap<String, Object>)mappaDati.get("params");
+        Integer idEvento = (Integer) mappaParametri.get("idEvento");
+        String emailPartecipante = (String) mappaParametri.get("emailPartecipante");
         return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante);
     }
 
