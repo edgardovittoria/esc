@@ -83,6 +83,14 @@ public class RegistroAppuntamenti {
         return appuntamentiFiltrati;
     }
 
+    public List<Appuntamento> getAppuntamentiPerPartecipanteNonCreatore(UtentePolisportivaAbstract partecipanteNonCreatore){
+        List<Appuntamento> appuntamenti = this.getListaAppuntamenti();
+        appuntamenti = this.filtraAppuntamentiPerPartecipante(appuntamenti, partecipanteNonCreatore);
+        appuntamenti = this.escludiAppuntamentiPerUtenteCreatore(appuntamenti, partecipanteNonCreatore);
+
+        return appuntamenti;
+    }
+
 
     private List<Appuntamento> filtraAppuntamentiPerDataOra(List<Appuntamento> listaAppuntamentiDaFiltrare, LocalDateTime dataOra){
         List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
@@ -143,6 +151,16 @@ public class RegistroAppuntamenti {
         }
         return appuntamentiFiltrati;
     }
+
+    private List<Appuntamento> filtraAppuntamentiPerPartecipante(List<Appuntamento> listaAppuntamentiDaFiltrare, UtentePolisportivaAbstract utenteDiCuiVerificarePartecipazione){
+        List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
+        for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare){
+            if(appuntamento.utenteIsPartecipante(utenteDiCuiVerificarePartecipazione)){
+                appuntamentiFiltrati.add(appuntamento);
+            }
+        }
+        return appuntamentiFiltrati;
+    }
     
     public Appuntamento getAppuntamentoById(Integer idAppuntamento){
         for(Appuntamento appuntamento: this.getListaAppuntamenti()){
@@ -152,4 +170,5 @@ public class RegistroAppuntamenti {
         }
         return null;
     }
+
 }
