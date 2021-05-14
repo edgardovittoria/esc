@@ -234,7 +234,12 @@ public class Appuntamento {
      * @return true se l'utente è un partecipante, false altrimenti 
      */
     public boolean utenteIsPartecipante(UtentePolisportivaAbstract utenteDaVerificarePartecipazione){
-        return this.getListaPartecipanti().contains(utenteDaVerificarePartecipazione);
+        for(UtentePolisportivaAbstract partecipante : this.getListaPartecipanti()){
+            if(((String)partecipante.getProprieta().get("email")).equals(((String)utenteDaVerificarePartecipazione.getProprieta().get("email")))){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
