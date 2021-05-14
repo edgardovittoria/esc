@@ -55,7 +55,7 @@ public class RegistroAppuntamenti {
     }
 
     public void aggiornaAppuntamento(Appuntamento appuntamento){
-        this.getAppuntamentoRepository().saveAndFlush(appuntamento);
+        this.getAppuntamentoRepository().save(appuntamento);
     }
 
 
