@@ -69,6 +69,7 @@ public class RegistroAppuntamenti {
         appuntamentiFiltrati = this.filtraAppuntamentiPerTipoPrenotazione(appuntamentiFiltrati, tipoPrenotazione);
         appuntamentiFiltrati = this.filtraAppuntamentiPending(appuntamentiFiltrati);
         appuntamentiFiltrati = this.escludiAppuntamentiPerUtenteCreatore(appuntamentiFiltrati, utentePerCuiTrovareAppuntamenti);
+        appuntamentiFiltrati = this.escludiAppuntamentiPerPartecipante(appuntamentiFiltrati, utentePerCuiTrovareAppuntamenti);
 
         return appuntamentiFiltrati;
     }
@@ -124,6 +125,15 @@ public class RegistroAppuntamenti {
         return appuntamentiFiltrati;
     }
 
+    private List<Appuntamento> escludiAppuntamentiPerPartecipante(List<Appuntamento> listaAppuntamentiDaFiltrare, UtentePolisportivaAbstract utenteDiCuiVerificarePartecipazione){
+        List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
+        for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare){
+            if(appuntamento.utenteIsPartecipante(utenteDiCuiVerificarePartecipazione)){
+                appuntamentiFiltrati.add(appuntamento);
+            }
+        }
+        return appuntamentiFiltrati;
+    }
     
 
 }

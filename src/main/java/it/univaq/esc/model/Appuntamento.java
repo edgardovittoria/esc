@@ -228,4 +228,13 @@ public class Appuntamento {
         return this.getPrenotazioneSpecsAppuntamento().getSportivoPrenotante();
     }
 
+    /**
+     * Indica se un utente passato come parametro partecipa o meno all'appuntamento.        
+     * @param utenteDaVerificarePartecipazione utente di cui verificare la partecipazione all'appuntamento
+     * @return true se l'utente è un partecipante, false altrimenti 
+     */
+    public boolean utenteIsPartecipante(UtentePolisportivaAbstract utenteDaVerificarePartecipazione){
+        return this.getListaPartecipanti().contains(utenteDaVerificarePartecipazione);
+    }
+
 }
