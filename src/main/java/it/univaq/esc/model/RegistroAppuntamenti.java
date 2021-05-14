@@ -128,7 +128,7 @@ public class RegistroAppuntamenti {
     private List<Appuntamento> escludiAppuntamentiPerPartecipante(List<Appuntamento> listaAppuntamentiDaFiltrare, UtentePolisportivaAbstract utenteDiCuiVerificarePartecipazione){
         List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
         for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare){
-            if(appuntamento.utenteIsPartecipante(utenteDiCuiVerificarePartecipazione)){
+            if(!appuntamento.utenteIsPartecipante(utenteDiCuiVerificarePartecipazione)){
                 appuntamentiFiltrati.add(appuntamento);
             }
         }
