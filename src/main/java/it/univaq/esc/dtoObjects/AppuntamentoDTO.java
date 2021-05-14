@@ -12,6 +12,7 @@ import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 public class AppuntamentoDTO implements IModelToDTO{
     
+    private Integer idAppuntamento;
     private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
     private List<SportivoDTO> partecipanti = new ArrayList<SportivoDTO>();
     private PrenotazioneSpecsDTO specificaPrenotazione;
@@ -19,6 +20,14 @@ public class AppuntamentoDTO implements IModelToDTO{
     private SportivoDTO creatore;
 
     public AppuntamentoDTO(){}
+
+    public Integer getIdAppuntamento() {
+        return idAppuntamento;
+    }
+
+    public void setIdAppuntamento(Integer idAppuntamento) {
+        this.idAppuntamento = idAppuntamento;
+    }
 
     public SportivoDTO getCreatore() {
         return creatore;
@@ -88,6 +97,7 @@ public class AppuntamentoDTO implements IModelToDTO{
     @Override
     public void impostaValoriDTO(Object modelDaConvertire){
         Appuntamento appuntamento = (Appuntamento)modelDaConvertire;
+        this.setIdAppuntamento(appuntamento.getIdAppuntamento());
         setDataAppuntamento(appuntamento.getDataAppuntamento());
         setOraInizioAppuntamento(appuntamento.getOraInizioAppuntamento());
         setOraFineAppuntamento(appuntamento.getOraFineAppuntamento());
@@ -107,7 +117,7 @@ public class AppuntamentoDTO implements IModelToDTO{
             
         }
         this.setQuotePartecipazione(listaQuote);
-        
+
         SportivoDTO creatore = new SportivoDTO();
         creatore.impostaValoriDTO(appuntamento.creatoDa());
         this.setCreatore(creatore);

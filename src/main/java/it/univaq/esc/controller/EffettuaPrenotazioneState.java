@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
@@ -50,6 +51,8 @@ public abstract class EffettuaPrenotazioneState {
     public abstract void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandlerRest controller);
 
     public abstract Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati);
+
+    public abstract HttpStatus aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante);
 
     protected List<SportDTO> getSportPraticabiliPolisportiva() {
         List<Sport> listaSportPraticabili = this.getSportPraticabili();

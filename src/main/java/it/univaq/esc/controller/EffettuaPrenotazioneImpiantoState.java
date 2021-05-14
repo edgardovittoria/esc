@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
@@ -160,6 +161,16 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
             listaAppuntamentiDTO.add(appDTO);
         }
         return listaAppuntamentiDTO;
+    }
+
+    @Override
+    public HttpStatus aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
+        Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
+        if(appuntamento != null){
+            appuntamento.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante));
+            return HttpStatus.NO_CONTENT;
+        }
+        return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
     

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
@@ -144,6 +145,12 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState{
         mappaDatiAggiornati.put("impiantiDisponibili", this.getImpiantiDTODisponibili(dati));
         mappaDatiAggiornati.put("istruttoriDisponibili", this.getIstruttoriDTODisponibili(dati));
         return mappaDatiAggiornati;
+    }
+
+    @Override
+    public HttpStatus aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 

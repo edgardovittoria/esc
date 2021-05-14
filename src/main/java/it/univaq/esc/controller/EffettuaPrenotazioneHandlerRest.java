@@ -19,11 +19,13 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -263,6 +265,15 @@ public class EffettuaPrenotazioneHandlerRest {
     }
 
 
+    @PatchMapping("/partecipazioneEventoEsistente")
+    @CrossOrigin
+    public @ResponseStatus HttpStatus aggiungiPartecipanteAPrenotazioneEsistente(@RequestParam(name = "idEvento") Integer idEvento, @RequestParam(name = "emailPartecipante") String emailPartecipante){
+
+       return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante);
+    }
+
+
+
     // private List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine) {
     //     List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
     //     for (Impianto impianto : this.getRegistroImpianti().getListaImpiantiPolisportiva()) {
@@ -296,5 +307,6 @@ public class EffettuaPrenotazioneHandlerRest {
     public UtentePolisportivaAbstract getSportivoPrenotante(){
         return this.getPrenotazioneInAtto().getSportivoPrenotante();
     }
+
 
 }

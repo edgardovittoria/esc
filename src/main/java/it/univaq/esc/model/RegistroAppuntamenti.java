@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.swing.event.InternalFrameAdapter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -135,5 +136,12 @@ public class RegistroAppuntamenti {
         return appuntamentiFiltrati;
     }
     
-
+    public Appuntamento getAppuntamentoById(Integer idAppuntamento){
+        for(Appuntamento appuntamento: this.getListaAppuntamenti()){
+            if(appuntamento.getIdAppuntamento() == idAppuntamento){
+                return appuntamento;
+            }
+        }
+        return null;
+    }
 }
