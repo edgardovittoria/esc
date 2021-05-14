@@ -263,7 +263,7 @@ public class PopolaDB {
         prenotazione1.getListaSpecifichePrenotazione().get(0).setPrenotazioneAssociata(prenotazione1);
         prenotazione1.setSportivoPrenotante(sportivo1);
         
-        prenotazione1.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(
+        prenotazioneSpecs.setSpecificaDescrtiption(
             this.listinoPrezziDescrizioniPolisportiva.getPrenotabileDescrizioneByTipoPrenotazioneESport(TipiPrenotazione.IMPIANTO.toString(), tennis));
         Map<String, Object> mappaValori = new HashMap<String, Object>();
         mappaValori.put("impianto", impianto1);
@@ -275,6 +275,7 @@ public class PopolaDB {
         appuntamento1.setCalcolatoreCosto(calcolatoreCosto);
         appuntamento1.aggiungiPartecipante(sportivo1);
         appuntamento1.aggiungiPartecipante(sportivo2);
+        appuntamento1.calcolaCosto();
         Calendario calendarioSpecs1 = new Calendario();
         calendarioSpecs1.aggiungiAppuntamento(appuntamento1);
         //prenotazione1.setCalendarioSpecifica(calendarioSpecs1, prenotazioneSpecs);
@@ -292,7 +293,7 @@ public class PopolaDB {
         prenotazione2.setSportivoPrenotante(sportivo2);
         
         
-        prenotazione2.getListaSpecifichePrenotazione().get(0).setSpecificaDescrtiption(
+        prenotazioneSpecs2.setSpecificaDescrtiption(
             this.listinoPrezziDescrizioniPolisportiva.getPrenotabileDescrizioneByTipoPrenotazioneESport(TipiPrenotazione.IMPIANTO.toString(), tennis));
         Map<String, Object> mappaValori2 = new HashMap<String, Object>();
         mappaValori2.put("impianto", impianto3);
@@ -302,6 +303,7 @@ public class PopolaDB {
         appuntamento2.setCalcolatoreCosto(calcolatoreCosto);
         appuntamento2.aggiungiPartecipante(sportivo2);
         appuntamento2.aggiungiPartecipante(sportivo3);
+        appuntamento2.calcolaCosto();
         Calendario calendarioSpecs2 = new Calendario();
         calendarioSpecs2.aggiungiAppuntamento(appuntamento2);
         
