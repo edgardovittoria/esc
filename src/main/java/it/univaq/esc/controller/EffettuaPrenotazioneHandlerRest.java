@@ -9,9 +9,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
@@ -54,9 +50,6 @@ public class EffettuaPrenotazioneHandlerRest {
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
-
-    // @Autowired
-    // private RegistroImpianti registroImpianti;
 
     @Autowired
     private RegistroUtentiPolisportiva registroUtenti;
@@ -119,25 +112,7 @@ public class EffettuaPrenotazioneHandlerRest {
         return this.registroAppuntamenti;
     }
 
-    // @GetMapping("/impiantiDisponibili")
-    // @CrossOrigin
-    // private List<ImpiantoDTO> getImpiantiDisponibili() {
-    // Calendario calendario = new Calendario();
-    // List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
-    // for (Impianto impianto : registroImpianti.getListaImpiantiPolisportiva()) {
-    // if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(calendario)) {
-    // listaImpiantiDisponibili.add(impianto);
-    // }
-    // }
-    // List<ImpiantoDTO> listaImpiantiDisponibiliDTO = new ArrayList<ImpiantoDTO>();
-    // for (Impianto impianto : listaImpiantiDisponibili) {
-    // ImpiantoDTO impiantoDTO = new ImpiantoDTO();
-    // impiantoDTO.impostaValoriDTO(impianto);
-    // listaImpiantiDisponibiliDTO.add(impiantoDTO);
-    // }
-    // return listaImpiantiDisponibiliDTO;
-
-    // }
+   
 
     @GetMapping("/avviaNuovaPrenotazione")
     @CrossOrigin
@@ -200,48 +175,14 @@ public class EffettuaPrenotazioneHandlerRest {
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
     }
 
-    // @MessageMapping("/creaNotifica")
-    // @SendTo("/inviti")
-    // public List<String> send(@Payload String email) {
-    // System.out.println(email);
-    // List<String> lista = new ArrayList<String> ();
-    // lista.add("pippo");
-    // lista.add("gino");
-    // return lista;
-    // }
-
+    
     @PostMapping("/aggiornaDatiOpzioni")
     @CrossOrigin
     public @ResponseBody Map<String, Object> getDatiOpzioniAggiornati(@RequestBody HashMap<String, Object> dati) {
         return this.getStato().aggiornaOpzioniPrenotazione(dati);
     }
 
-    // @PostMapping("/aggiornaImpianti")
-    // @CrossOrigin
-    // public @ResponseBody List<ImpiantoDTO> getListaImpianti(@RequestBody
-    // HashMap<String, Object> dati) {
-
-    // Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
-
-    // List<Impianto> impiantiDisponibili = this.getImpiantiDisponibiliByOrario(
-    // LocalDateTime.parse(orario.get("oraInizio"),
-    // DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
-    // LocalDateTime.parse(orario.get("oraFine"),
-    // DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
-    // List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
-    // for (Impianto impianto : impiantiDisponibili) {
-    // for (ImpiantoSpecs specifica : impianto.getSpecificheImpianto()) {
-    // if (specifica.getSportPraticabile().getNome().equals(dati.get("sport"))) {
-    // ImpiantoDTO impiantoDTO = new ImpiantoDTO();
-    // impiantoDTO.impostaValoriDTO(impianto);
-    // listaImpiantiDTODisponibili.add(impiantoDTO);
-    // }
-    // }
-
-    // }
-
-    // return listaImpiantiDTODisponibili;
-    // }
+    
 
     @GetMapping("/istruttoriDisponibili")
     @CrossOrigin
@@ -260,26 +201,13 @@ public class EffettuaPrenotazioneHandlerRest {
         return new ResponseEntity<HttpStatus>(this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante), HttpStatus.NO_CONTENT);
     }
 
-    // private List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime
-    // oraInizio, LocalDateTime oraFine) {
-    // List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
-    // for (Impianto impianto :
-    // this.getRegistroImpianti().getListaImpiantiPolisportiva()) {
-    // if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio,
-    // oraFine)) {
-    // listaImpiantiDisponibili.add(impianto);
-    // }
-    // }
-    // return listaImpiantiDisponibili;
-    // }
+   
 
     private RegistroUtentiPolisportiva getRegistroUtenti() {
         return this.registroUtenti;
     }
 
-    // private RegistroImpianti getRegistroImpianti() {
-    // return this.registroImpianti;
-    // }
+    
 
     private RegistroPrenotazioni getRegistroPrenotazioni() {
         return this.registroPrenotazioni;

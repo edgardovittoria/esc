@@ -22,7 +22,6 @@ import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
-import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.model.RegistroAppuntamenti;
 
@@ -39,6 +38,11 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
     @Autowired
     private RegistroAppuntamenti registroAppuntamenti;
 
+    /**
+     * Ricava uno sportivo registrato nel sistema a partire dalla email associata, resituendolo nel relativo formato DTO.
+     * @param email email dello sportivo da ricavare
+     * @return sportivo associato alla email passata come parametro
+     */
     @GetMapping("/sportivo")
     @CrossOrigin
     public @ResponseBody SportivoDTO getSportivo(@RequestParam(name = "email") String email) {
@@ -47,10 +51,20 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
         return sportivoDTO;
     }
 
+    /**
+     * Restituisce una mappa con le prenotazioni effettuate dallo sportivo e le sue partecipazioni, nei formati DTO corrispondenti.
+     * ovvero gli appuntamenti non appartenenti a sue prenotazioni dei quali però è un partecipante.
+     * @param email email dell'utente di cui ricavare i dati.
+     * @return prenotazioni effettuate e partecipazioni dell'utente registrato con l'email passata come parametro.
+     */
     @GetMapping("/prenotazioniEPartecipazioniSportivo")
     @CrossOrigin
     public @ResponseBody Map<String, Object> getAppuntamentiSportivo(@RequestParam(name = "email") String email) {
     
+        /**
+         * Ricaviamo la lista delle prenotazioni effettuate dall'utente,
+         * trasformandola in DTO.
+         */
         List<PrenotazioneDTO> prenotazioni = new ArrayList<PrenotazioneDTO>();
         for (Prenotazione pren : registroPrenotazioni.getPrenotazioniByEmailSportivo(email)) {
             PrenotazioneDTO prenDTO = new PrenotazioneDTO();
@@ -65,6 +79,11 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
             prenotazioni.add(prenDTO);
         }
         
+
+        /**
+         * Ricaviamo la lista degli appuntamenti non creati dallo sportivo, ma dei quali è un partecipante, 
+         * trasformandola in DTO.
+         */
         UtentePolisportivaAbstract sportivo = this.registroUtentiPolisportiva.getUtenteByEmail(email);
         List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
         for(Appuntamento appuntamento : this.registroAppuntamenti.getAppuntamentiPerPartecipanteNonCreatore(sportivo)){
@@ -77,6 +96,12 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
         mappaPrenotazioniPartecipazioni.put("prenotazioniEffettuate", prenotazioni);
         mappaPrenotazioniPartecipazioni.put("partecipazioni", appuntamenti);
 
+
+        /**
+         * Ritorniamo la mappa costituita da
+         *  -"prenotazioniEffettuate": lista delle prenotazioni effettuate dallo sportivo
+         *  -"partecipazioni": lista degli appuntamenti non creati dall'utente, ma di cui l'utente è partecipante
+         */
         return mappaPrenotazioniPartecipazioni;
 
     }
