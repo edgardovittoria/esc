@@ -254,9 +254,9 @@ public class EffettuaPrenotazioneHandlerRest {
     public @ResponseStatus HttpStatus aggiungiPartecipanteAEventoEsistente(
             @RequestBody Map<String, Object> mappaDati) {
         
-        Map<String, Object> mappaParametri = (HashMap<String, Object>)mappaDati.get("params");
-        Integer idEvento = (Integer) mappaParametri.get("idEvento");
-        String emailPartecipante = (String) mappaParametri.get("emailPartecipante");
+        
+        Integer idEvento = (Integer) mappaDati.get("idEvento");
+        String emailPartecipante = (String) mappaDati.get("emailPartecipante");
         return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante);
     }
 
