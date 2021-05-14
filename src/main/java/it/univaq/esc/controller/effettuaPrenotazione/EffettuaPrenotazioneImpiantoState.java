@@ -164,14 +164,16 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
     }
 
     @Override
-    public HttpStatus aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
+    public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
         Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
         if(appuntamento != null){
             appuntamento.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante));
             this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
-            return HttpStatus.NO_CONTENT;
+            AppuntamentoDTO appuntamentoDTO = new AppuntamentoDTO();
+            appuntamentoDTO.impostaValoriDTO(appuntamento);
+            return appuntamentoDTO;
         }
-        return HttpStatus.INTERNAL_SERVER_ERROR;
+        return null;
     }
 
     

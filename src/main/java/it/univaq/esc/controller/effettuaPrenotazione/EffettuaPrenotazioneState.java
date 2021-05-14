@@ -52,7 +52,7 @@ public abstract class EffettuaPrenotazioneState {
 
     public abstract Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati);
 
-    public abstract HttpStatus aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante);
+    public abstract Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante);
 
     protected List<SportDTO> getSportPraticabiliPolisportiva() {
         List<Sport> listaSportPraticabili = this.getSportPraticabili();

@@ -190,13 +190,13 @@ public class EffettuaPrenotazioneHandlerRest {
 
     @PatchMapping("/partecipazioneEventoEsistente")
     @CrossOrigin
-    public ResponseEntity<HttpStatus> aggiungiPartecipanteAEventoEsistente(
+    public @ResponseBody Object aggiungiPartecipanteAEventoEsistente(
             @RequestBody Map<String, Object> mappaDati) {
         
         
         Integer idEvento = (Integer) mappaDati.get("idEvento");
         String emailPartecipante = (String) mappaDati.get("emailPartecipante");
-        return new ResponseEntity<HttpStatus>(this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante), HttpStatus.NO_CONTENT);
+        return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante);
     }
 
    

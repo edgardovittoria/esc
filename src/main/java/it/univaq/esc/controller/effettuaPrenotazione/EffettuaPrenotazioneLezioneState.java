@@ -148,7 +148,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState{
     }
 
     @Override
-    public HttpStatus aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
+    public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
         // TODO Auto-generated method stub
         return null;
     }
