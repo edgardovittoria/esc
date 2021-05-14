@@ -251,13 +251,13 @@ public class EffettuaPrenotazioneHandlerRest {
 
     @PatchMapping("/partecipazioneEventoEsistente")
     @CrossOrigin
-    public @ResponseStatus HttpStatus aggiungiPartecipanteAEventoEsistente(
+    public ResponseEntity<HttpStatus> aggiungiPartecipanteAEventoEsistente(
             @RequestBody Map<String, Object> mappaDati) {
         
         
         Integer idEvento = (Integer) mappaDati.get("idEvento");
         String emailPartecipante = (String) mappaDati.get("emailPartecipante");
-        return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante);
+        return new ResponseEntity<HttpStatus>(this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante), HttpStatus.NO_CONTENT);
     }
 
     // private List<Impianto> getImpiantiDisponibiliByOrario(LocalDateTime
