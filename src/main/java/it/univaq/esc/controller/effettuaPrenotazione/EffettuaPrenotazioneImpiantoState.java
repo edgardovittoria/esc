@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
@@ -25,11 +22,34 @@ import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+
+/**
+ * Stato del controller EffettuaPrenotazioneHandler, che definisce la specifica implementazione delle funzionalità
+ * correlate al tipo di prenotazione IMPIANTO.
+ * @author esc
+ *
+ */
 @Component
 public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState{
     
+	/**
+	 * Costruttore della classe EffettuaPrenotazioneImpiantoState
+	 */
     public EffettuaPrenotazioneImpiantoState(){}
+    
+    
+    /**
+     * Blocco static.
+     * La prima volta che viene caricata la classe, la registra nella FactoryStatoEffettuaPrenotazione
+     */
+    static {
+    	FactoryStatoEffettuaPrenotazione.registra(TipiPrenotazione.IMPIANTO.toString(), EffettuaPrenotazioneImpiantoState.class);
+    }
 
+    
+    /**
+     * Metodo che restituisce i dati per popolare le opzioni di prenotazione, in fase di avvio di una prenotazione Impianto.
+     */
     @Override
     public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller) {
         Map<String, Object> mappaValori = new HashMap<String, Object>();
@@ -41,6 +61,12 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         return mappaValori;
     }
 
+    
+    /**
+     * Metodo che registra i dati impostati per la prenotazione nella prenotazione in atto del controller e nella lista di 
+     * appuntamenti associata.
+     * Invocato in fase di riepilogo della prenotazione Impianto.
+     */
     @Override
     public void impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller) {
         for (int i = 0; i < ((List<OrarioAppuntamento>)formDati.getValoriForm().get("listaOrariAppuntamenti")).size(); i++) {
@@ -130,6 +156,11 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         
     }
 
+    
+    /**
+     * Metodo che aggiorna eventuali oggetti correlati alla prenotazione in atto, dopo che questa è stata confermata.
+     * Invocato in fase di conferma della prenotazione in atto.
+     */
     @Override
     public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandlerRest controller) {
         for(Appuntamento app : controller.getListaAppuntamentiPrenotazioneInAtto()){
@@ -145,6 +176,11 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         lista.add("pippo");        
     }
 
+    
+    /**
+     * Metodo che aggiorna i dati delle opzioni di prenotazione, sulla base di quelle già impostate.
+     * Invocato in fase di compilazione della prenotazione.
+     */
     @Override
     public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
         Map<String, Object> datiAggiornati = new HashMap<String, Object>();
@@ -153,6 +189,15 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
     }
 
 
+    /**
+     * Metodo di utilità.
+     * Restituisce gli appuntamenti riferiti a preotazioni di tipo IMPIANTO, ai quali l'utente può partecipare.
+     * È possibile partecipare ad appuntamenti pending, e dei quali l'utente stesso non sia il creatore, perché 
+     * risulta già in automatico come partecipante degli appuntamenti associati a prenotazioni create da lui.
+     * @param utentePerCuiCercareAppuntamentiSottoscrivibili utente autenticato e per cui ricavare la lista di
+     * appuntamenti sottoscrivibili.
+     * @return la lista degli appuntamenti associati a prenotazioni di tipo IMPIANTO, ai quali l'utente può partecipare.
+     */
     private List<AppuntamentoDTO> getAppuntamentiImpiantoSottoscrivibiliDaUtente(UtentePolisportivaAbstract utentePerCuiCercareAppuntamentiSottoscrivibili){
         List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
         for(Appuntamento appuntamento : this.getRegistroAppuntamenti().getAppuntamentiSottoscrivibiliPerTipo(TipiPrenotazione.IMPIANTO.toString(), utentePerCuiCercareAppuntamentiSottoscrivibili)){
@@ -163,6 +208,11 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         return listaAppuntamentiDTO;
     }
 
+    
+    /**
+     * Metodo che gestisce la partecipazione dell'utente ad un appuntamento esistente associato ad una prenotazione
+     * di tipo IMPIANTO.
+     */
     @Override
     public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
         Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);

@@ -1,5 +1,6 @@
 package it.univaq.esc.model.utenti;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -140,8 +141,21 @@ public class RegistroUtentiPolisportiva {
      * @return lista di tutti gli istruttori associati allo sport passato come parametro
      */
     public List<UtentePolisportivaAbstract> getIstruttoriPerSport(Sport sportDiCuiTrovareGliIstruttori){
-        List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
-        for(UtentePolisportivaAbstract istruttore : this.getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE)){
+        return this.filtraIstruttoriPerSport(this.getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE), sportDiCuiTrovareGliIstruttori);
+    }
+    
+    
+    
+    /**
+     * Restituisce una lista dei soli isitruttori associati ad un determinato sport passato come parametro, a partire da una
+     * lista di istruttori anch'essa passata come parametro.
+     * @param listaIstruttoriDaFiltrare lista degli istruttori da filtrare.
+     * @param sportDiCuiTrovareGliIstruttori spsort in base al quale filtrare gli istruttori.
+     * @return lista dei soli istruttori, appartenenti alla lista passata come parametro, associati allo sport passato come parametro.
+     */
+    public List<UtentePolisportivaAbstract> filtraIstruttoriPerSport(List<UtentePolisportivaAbstract> listaIstruttoriDaFiltrare, Sport sportDiCuiTrovareGliIstruttori){
+    	List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
+    	for(UtentePolisportivaAbstract istruttore : listaIstruttoriDaFiltrare){
             for(Sport sportInsegnato : (List<Sport>)istruttore.getProprieta().get("sportInsegnati")){
                 if (sportInsegnato.getNome().equals(sportDiCuiTrovareGliIstruttori.getNome())) {
                     istruttori.add(istruttore);
@@ -151,6 +165,42 @@ public class RegistroUtentiPolisportiva {
         }
         return istruttori;
     }
+    
+    
+    /**
+     * Filtra una lista di istruttori passata come parametro, sulla base di un calendario passato come parametro.
+     * Restituisce i soli istruttori della lista liberi nelle date del calendario passato come parametro.
+     * @param listaIstruttoriDaFiltrare lista degli istruttori da filtrare.
+     * @param calendarioPerCuiFiltrareGliIstruttori calendario in base al quale filtrare gli istruttori.
+     * @return la lista dei soli istruttori liberi nelle date del calendario passato come parametro.
+     */
+    public  List<UtentePolisportivaAbstract> filtraIstruttorePerCalendario(List<UtentePolisportivaAbstract> listaIstruttoriDaFiltrare, Calendario calendarioPerCuiFiltrareGliIstruttori) {
+    	List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
+		for (UtentePolisportivaAbstract istruttore : listaIstruttoriDaFiltrare) {
+			if (!((Calendario) istruttore.getProprieta().get("calendarioLezioni")).sovrapponeA(calendarioPerCuiFiltrareGliIstruttori)) {
+				istruttori.add(istruttore);
+			}
+		}
+		return istruttori;
+	}
+    
+    /**
+     * Filtra una lista di istruttori passata come parametro, sulla base di un intervallo di tempo passato come parametro.
+     * Restituisce i soli istruttori della lista liberi in quel determinato intervallo di tempo.
+     * @param listaIstruttoriDaFiltrare lista degli istruttori da filtrare.
+     * @param oraInizioOrarioPerCuiFiltrare data e ora di inizio dell'intervallo di tempo per cui filtrare.
+     * @param oraFineOrarioPerCuiFiltrare dat e ora di fine dell'intervallo di tempo per cui filtrare.
+     * @return la lista dei soli istruttori della lista di partenza, liberi nell'intervallo di tempo passato come parametro.
+     */
+    public  List<UtentePolisportivaAbstract> filtraIstruttorePerOrario(List<UtentePolisportivaAbstract> listaIstruttoriDaFiltrare, LocalDateTime oraInizioOrarioPerCuiFiltrare, LocalDateTime oraFineOrarioPerCuiFiltrare) {
+    	List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
+		for (UtentePolisportivaAbstract istruttore : listaIstruttoriDaFiltrare) {
+			if (!((Calendario) istruttore.getProprieta().get("calendarioLezioni")).sovrapponeA(oraInizioOrarioPerCuiFiltrare, oraFineOrarioPerCuiFiltrare)) {
+				istruttori.add(istruttore);
+			}
+		}
+		return istruttori;
+	}
 
 
     public void aggiornaCalendarioIstruttore(Calendario calendarioDaUnire, UtentePolisportivaAbstract istruttore){

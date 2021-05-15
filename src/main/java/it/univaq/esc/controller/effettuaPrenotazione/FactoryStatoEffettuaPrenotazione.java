@@ -3,44 +3,38 @@ package it.univaq.esc.controller.effettuaPrenotazione;
 
 import java.util.HashMap;
 import java.util.Map;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
-import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.utility.BeanUtil;
 
-
+/**
+ * Factory per la creazione degli Stati del controller EffettuaPrenotazioneHandlerRest.
+ * In base al tipo di prenotazione pass
+ * @author esc
+ *
+ */
 @Component
 @Singleton
 public class FactoryStatoEffettuaPrenotazione {
-    private Map<String, EffettuaPrenotazioneState> mappaStati = new HashMap<String, EffettuaPrenotazioneState>();
+    private static final Map<String, Class<? extends EffettuaPrenotazioneState>> mappaStati = new HashMap<>();
     
     
     @Autowired
-    public FactoryStatoEffettuaPrenotazione(EffettuaPrenotazioneImpiantoState statoImpianto, EffettuaPrenotazioneLezioneState statoLezione){
-        getMappaStati().put(TipiPrenotazione.IMPIANTO.toString(), statoImpianto);
-        getMappaStati().put(TipiPrenotazione.LEZIONE.toString(), statoLezione);
-    }
-
-
-    private Map<String, EffettuaPrenotazioneState> getMappaStati(){
-        return this.mappaStati;
-    }
+    public FactoryStatoEffettuaPrenotazione() {}
     
+    
+    public static void registra(String tipoPrenotazione, Class<? extends EffettuaPrenotazioneState> stato) {
+        if (tipoPrenotazione != null && stato != null) {
+            mappaStati.put(tipoPrenotazione, stato);
+        }
+    }
 
     public EffettuaPrenotazioneState getStato(String tipoPrenotazione){
 
-        switch (tipoPrenotazione) {
-            case "IMPIANTO":
-                return getMappaStati().get(tipoPrenotazione);
-                
-            case "LEZIONE":
-                return getMappaStati().get(tipoPrenotazione);
-                
-            default:
-                return null;
+        if(mappaStati.containsKey(tipoPrenotazione)) {
+        	return BeanUtil.getBean(mappaStati.get(tipoPrenotazione));
         }
+        return null;
     }
 }

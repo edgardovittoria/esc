@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import it.univaq.esc.test.PopolaDB;
 import it.univaq.esc.test.RicercaAppuntamentiSottoscrivibili;
+import it.univaq.esc.test.TestFactoryStatoEffettuaPrenotazione;
 import it.univaq.esc.test.TestVerificaCalendario;
 
 
@@ -26,6 +27,9 @@ public class EscApplication implements CommandLineRunner {
 
     @Autowired
     private RicercaAppuntamentiSottoscrivibili ricercaAppuntamentiSottoscrivibili;
+    
+    @Autowired
+    private TestFactoryStatoEffettuaPrenotazione testFactoryStatoEffettuaPrenotazione;
 	
 	public static void main(String[] args) {
 				
@@ -44,6 +48,7 @@ public class EscApplication implements CommandLineRunner {
        //popolaDB.popola();
         //testCalendarioPrenotazioni.test();
         //ricercaAppuntamentiSottoscrivibili.test();
+    	//testFactoryStatoEffettuaPrenotazione.test();
         
     }
 
