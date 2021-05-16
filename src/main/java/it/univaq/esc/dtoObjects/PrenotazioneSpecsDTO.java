@@ -27,7 +27,7 @@ public abstract class PrenotazioneSpecsDTO implements IModelToDTO{
         SportDTO sportAssociato = new SportDTO();
         sportAssociato.impostaValoriDTO(specs.getSportAssociato());
         this.setSportAssociato(sportAssociato);
-        this.setIdPrenotazioneSpecsDTO(specs.getIdPrenotazioneSpecs());
+        this.setIdPrenotazioneSpecsDTO(specs.getId());
         this.setTipoSpecifica(specs.getTipoPrenotazione());
         this.setCosto(specs.getCosto());
     };

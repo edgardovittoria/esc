@@ -5,8 +5,11 @@ import java.util.Map;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import lombok.NoArgsConstructor;
+
 @Entity
 @DiscriminatorValue(value = "Direttore")
+@NoArgsConstructor
 public class DirettorePolisportiva extends RuoloUtentePolisportivaDecorator{
 
     public DirettorePolisportiva(UtentePolisportivaAbstract utenteDaDecorare){

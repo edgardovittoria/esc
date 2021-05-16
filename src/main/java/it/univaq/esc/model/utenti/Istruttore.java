@@ -14,10 +14,12 @@ import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 @Entity
 @DiscriminatorValue(value = "Istruttore")
 @Getter @Setter
+@NoArgsConstructor
 public class Istruttore extends RuoloUtentePolisportivaDecorator{
 
     @ManyToMany

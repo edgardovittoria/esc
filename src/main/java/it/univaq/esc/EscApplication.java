@@ -11,11 +11,6 @@ import it.univaq.esc.test.TestFactoryStatoEffettuaPrenotazione;
 import it.univaq.esc.test.TestVerificaCalendario;
 
 
-
-
-
-
-
 @SpringBootApplication
 public class EscApplication implements CommandLineRunner {
 
@@ -36,10 +31,6 @@ public class EscApplication implements CommandLineRunner {
 		SpringApplication.run(EscApplication.class, args);  
 		
 	}
-
-    
-
-    
 
 
     @Override

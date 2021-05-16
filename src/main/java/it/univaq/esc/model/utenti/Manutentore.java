@@ -8,11 +8,13 @@ import javax.persistence.Transient;
 
 import it.univaq.esc.model.Calendario;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @DiscriminatorValue(value = "Manutentore")
 @Getter @Setter
+@NoArgsConstructor
 public class Manutentore extends RuoloUtentePolisportivaDecorator{
     
     @Transient

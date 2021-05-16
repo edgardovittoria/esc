@@ -26,6 +26,7 @@ import lombok.Setter;
 @Entity
 @DiscriminatorValue(value = "Sportivo")
 @Getter @Setter
+@NoArgsConstructor
 public class Sportivo extends RuoloUtentePolisportivaDecorator{
 
     

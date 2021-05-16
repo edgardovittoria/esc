@@ -32,8 +32,8 @@ public abstract class PrenotazioneSpecs {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Setter(value = AccessLevel.NONE)
-	private Long idPrenotazioneSpecs;
+	@Setter(value = AccessLevel.PRIVATE)
+	private Long id;
 	@Column
 	private boolean confermata = false;
 	@Column
