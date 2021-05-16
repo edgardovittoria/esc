@@ -8,7 +8,11 @@ import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter @Setter @NoArgsConstructor
 public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
     
     private List<SportivoDTO> invitati = new ArrayList<SportivoDTO>();
@@ -16,57 +20,23 @@ public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
     private Integer idImpiantoPrenotato;
     private String pavimentazioneImpianto;
 
-    public PrenotazioneImpiantoSpecsDTO(){}
-
-    public String getPavimentazioneImpianto() {
-        return pavimentazioneImpianto;
-    }
-
-    public void setPavimentazioneImpianto(String pavimentazioneImpianto) {
-        this.pavimentazioneImpianto = pavimentazioneImpianto;
-    }
-
-    public Integer getIdImpiantoPrenotato() {
-        return idImpiantoPrenotato;
-    }
-
-    public void setIdImpiantoPrenotato(Integer impiantoPrenotato) {
-        this.idImpiantoPrenotato = impiantoPrenotato;
-    }
-
-    public List<SportivoDTO> getInvitati() {
-        return invitati;
-    }
-
-    public void setInvitati(List<SportivoDTO> invitati) {
-        this.invitati = invitati;
-    }
-
-    public int getPostiLiberi() {
-        return postiLiberi;
-    }
-
-    public void setPostiLiberi(int postiLiberi) {
-        this.postiLiberi = postiLiberi;
-    }
- 
-
    
 
     @Override
-    public void impostaValoriDTO(PrenotazioneSpecs specifica) {
-        
+    public void impostaValoriDTO(Object specifica) {
+    	PrenotazioneSpecs specs = (PrenotazioneSpecs)specifica;
+    	
         // I posti liberi sono da eliminare perché si possono calcolare in automatico
         setPostiLiberi(12);
         
-        for(UtentePolisportivaAbstract invitato : (List<UtentePolisportivaAbstract>) specifica.getValoriSpecificheExtraPrenotazione().get("invitati")){
+        for(UtentePolisportivaAbstract invitato : (List<UtentePolisportivaAbstract>) specs.getValoriSpecificheExtraPrenotazione().get("invitati")){
             SportivoDTO invitatoDTO = new SportivoDTO();
             invitatoDTO.impostaValoriDTO(invitato);
             this.getInvitati().add(invitatoDTO);
         }
         
-        this.setIdImpiantoPrenotato(((Impianto)specifica.getValoriSpecificheExtraPrenotazione().get("impianto")).getIdImpianto());
-        this.setPavimentazioneImpianto(((Impianto)specifica.getValoriSpecificheExtraPrenotazione().get("impianto")).getTipoPavimentazione().toString());
+        this.setIdImpiantoPrenotato(((Impianto)specs.getValoriSpecificheExtraPrenotazione().get("impianto")).getIdImpianto());
+        this.setPavimentazioneImpianto(((Impianto)specs.getValoriSpecificheExtraPrenotazione().get("impianto")).getTipoPavimentazione().toString());
         super.impostaValoriDTO(specifica);
         
     }

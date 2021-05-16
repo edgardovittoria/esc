@@ -5,40 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
-
+@Getter @Setter @NoArgsConstructor
 public class PrenotazioneDTO implements IModelToDTO{
 
     
 
     private SportivoDTO sportivoPrenotante;  
     private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();   
-    
-    
-
-    public PrenotazioneDTO(){}
- 
-
-    
-
-   
-
-    public SportivoDTO getSportivoPrenotante() {
-        return sportivoPrenotante;
-    }
-
-    public void setSportivoPrenotante(SportivoDTO sportivoPrenotante) {
-        this.sportivoPrenotante = sportivoPrenotante;
-    }
-
-    public List<AppuntamentoDTO> getAppuntamenti() {
-        return this.appuntamenti;
-    }
-
-
     
 
     public void aggiungiAppuntamento(AppuntamentoDTO appuntamento){
@@ -62,16 +44,6 @@ public class PrenotazioneDTO implements IModelToDTO{
         
          
     }
-
-    public void setAppuntamenti(List<AppuntamentoDTO> appuntamenti) {
-        this.appuntamenti = appuntamenti;
-    }
-
-    
-
-    
-
-
 
    
 }

@@ -2,10 +2,8 @@ package it.univaq.esc.model.utenti;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-
 
 @Entity
 @DiscriminatorValue(value = "Direttore")

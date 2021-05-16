@@ -10,37 +10,26 @@ import javax.persistence.InheritanceType;
 
 import javax.persistence.OneToOne;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-//@MappedSuperclass
 @DiscriminatorColumn(name="RuoloUtenteDecorator")
-//@SecondaryTable(name="USERS")
 @DiscriminatorValue("utenteDecorator")
+@NoArgsConstructor(access = AccessLevel.PROTECTED) 
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class RuoloUtentePolisportivaDecorator extends UtentePolisportivaAbstract{
     
     
     @OneToOne(cascade = CascadeType.ALL)
+    @Getter(value = AccessLevel.PROTECTED)
+    @Setter(value = AccessLevel.PROTECTED)
     private UtentePolisportivaAbstract utentePolisportiva;
 
-    protected RuoloUtentePolisportivaDecorator(){}
-    
-    protected RuoloUtentePolisportivaDecorator(UtentePolisportivaAbstract utenteDaDecorare){
-        this.setUtentePolisportiva(utenteDaDecorare);
-    }
-    
-    /**
-     * @return IUtentePolisportiva return the utentePolisportiva
-     */
-    protected UtentePolisportivaAbstract getUtentePolisportiva() {
-        return utentePolisportiva;
-    }
-
-    /**
-     * @param utentePolisportiva the utentePolisportiva to set
-     */
-    protected void setUtentePolisportiva(UtentePolisportivaAbstract utentePolisportiva) {
-        this.utentePolisportiva = utentePolisportiva;
-    }
 
 }

@@ -13,36 +13,30 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import it.univaq.esc.repository.ImpiantoRepository;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipoCostoPrenotabile")
 @DiscriminatorValue("costoBase")
+@Getter @Setter @NoArgsConstructor
 public class CostoPrenotabile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(value = AccessLevel.NONE)
     private Integer idCosto;
     @Column
     private Float costo;
     @Column
     private String tipoCosto;
 
-    CostoPrenotabile(){}
-
-
-    public Float getCosto() {
-        return costo;
-    }
-    public String getTipoCosto() {
-        return tipoCosto;
-    }
-    public void setTipoCosto(String tipoCosto) {
-        this.tipoCosto = tipoCosto;
-    }
-    public void setCosto(Float costo) {
-        this.costo = costo;
-    }
 
     public void setProprieta(Map<String, Object> mappaProprietaDaImpostare){}
+    
     public Map<String, Object> getProprieta(){
         return null;
     }

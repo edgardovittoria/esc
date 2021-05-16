@@ -4,7 +4,10 @@ import java.util.List;
 
 
 import it.univaq.esc.model.Sport;
-
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE)
 public class UtentePolisportivaBuilder {
     
     private UtentePolisportivaAbstract utente;
@@ -13,13 +16,6 @@ public class UtentePolisportivaBuilder {
         this.setUtente(new UtentePolisportiva());
     }
 
-    private UtentePolisportivaAbstract getUtente() {
-        return utente;
-    }
-
-    private void setUtente(UtentePolisportivaAbstract utente) {
-        this.utente = utente;
-    }
 
     public UtentePolisportivaBuilder assegnaRuoloSportivo(){
         this.setUtente(new Sportivo(utente));

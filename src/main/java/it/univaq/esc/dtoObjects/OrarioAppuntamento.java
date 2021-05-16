@@ -6,6 +6,12 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import net.bytebuddy.asm.Advice.This;
+
+@Getter @Setter @NoArgsConstructor
 public class OrarioAppuntamento {
     
 
@@ -21,71 +27,36 @@ public class OrarioAppuntamento {
     private LocalTime oraFine;
 
 
-    public OrarioAppuntamento(){}
-
-     public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     /**
      * @return Date return the dataPrenotazione
      */
-    public String getDataPrenotazione() {
+    public String getDataPrenotazioneToString() {
         return dataPrenotazione.toString();
     }
 
-    public LocalDate getLocalDataPrenotazione(){
-        return dataPrenotazione;
-    }
 
     /**
      * @param dataPrenotazione the dataPrenotazione to set
      */
-    public void setDataPrenotazione(String dataPrenotazione) {
+    public void setDataPrenotazioneFromString(String dataPrenotazione) {
         this.dataPrenotazione = LocalDate.parse(dataPrenotazione, DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" ));
     }
-
-    public void setLocalDataPrenotaione(LocalDate data){
-        this.dataPrenotazione = data;
-    }
-
-    /**
-     * @return LocalTime return the oraInizio
-     */
-    public LocalTime getOraInizio() {
-        return oraInizio;
-    }
+    
 
     /**
      * @param oraInizio the oraInizio to set
      */
-    public void setOraInizio(String oraInizio) {
+    public void setOraInizioFromString(String oraInizio) {
         this.oraInizio = LocalTime.parse(oraInizio, DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" ));
     }
 
-    public void setOraInizio(LocalTime oraInizio){
-        this.oraInizio = oraInizio;
-    }
-
-    /**
-     * @return LocalTime return the oraFine
-     */
-    public LocalTime getOraFine() {
-        return oraFine;
-    }
 
     /**
      * @param oraFine the oraFine to set
      */
-    public void setOraFine(String oraFine) {
+    public void setOraFineFromString(String oraFine) {
         this.oraFine = LocalTime.parse(oraFine, DateTimeFormatter.ofPattern ( "yyyy-MM-dd'T'HH:mm:ss.SSSX" ));
     }
 
-    public void setOraFine(LocalTime oraFine){
-        this.oraFine = oraFine;
-    }
+   
 }

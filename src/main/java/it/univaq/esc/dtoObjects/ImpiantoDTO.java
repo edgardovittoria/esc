@@ -6,7 +6,11 @@ import java.util.List;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Sport;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter @Setter @NoArgsConstructor
 public class ImpiantoDTO implements IModelToDTO{
 
     private int idImpianto;
@@ -15,47 +19,6 @@ public class ImpiantoDTO implements IModelToDTO{
     private List<SportDTO> sportPraticabili = new ArrayList<SportDTO>();
     private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
 
-    public ImpiantoDTO(){}
-
-    public int getIdImpianto() {
-        return idImpianto;
-    }
-
-    public void setIdImpianto(int idImpianto) {
-        this.idImpianto = idImpianto;
-    }
-
-    public boolean isIndoor() {
-        return indoor;
-    }
-
-    public void setIndoor(boolean indoor) {
-        this.indoor = indoor;
-    }
-
-    public String getPavimentazione() {
-        return pavimentazione;
-    }
-
-    public void setPavimentazione(String pavimentazione) {
-        this.pavimentazione = pavimentazione;
-    }
-
-    public List<SportDTO> getSportPraticabili() {
-        return sportPraticabili;
-    }
-
-    public void setSportPraticabili(List<SportDTO> sportPraticabili) {
-        this.sportPraticabili = sportPraticabili;
-    }
-
-    public List<AppuntamentoDTO> getAppuntamenti() {
-        return appuntamenti;
-    }
-
-    public void setAppuntamenti(List<AppuntamentoDTO> appuntamenti) {
-        this.appuntamenti = appuntamenti;
-    }
     
     @Override
     public void impostaValoriDTO(Object modelDaConveritire){

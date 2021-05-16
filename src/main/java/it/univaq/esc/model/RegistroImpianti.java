@@ -11,30 +11,37 @@ import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.ImpiantoRepository;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 @Component
 @Singleton
+@Getter @Setter
 public class RegistroImpianti {
 
-    @Autowired
+    @Setter(value = AccessLevel.PRIVATE)
     private ImpiantoRepository impiantoRepository;
 
-    @Autowired 
+    @Setter(value = AccessLevel.PRIVATE)
     private AppuntamentoRepository appuntamentoRepository;
 
-    //private static RegistroImpianti instance = null;
+    @Setter(value = AccessLevel.PRIVATE)
     private List<Impianto> listaImpiantiPolisportiva = new ArrayList<Impianto>();
 
-    public RegistroImpianti() {}
+    public RegistroImpianti(ImpiantoRepository impiantoRepository, AppuntamentoRepository appuntamentoRepository) {
+    	this.setAppuntamentoRepository(appuntamentoRepository);
+    	this.setImpiantoRepository(impiantoRepository);
+    }
 
     
 
     @PostConstruct
     public void popola(){
-        this.getListaImpiantiPolisportiva().addAll(impiantoRepository.findAll());
+        this.setListaImpiantiPolisportiva(getImpiantoRepository().findAll());
         for(Impianto impianto : this.getListaImpiantiPolisportiva()){
             List<Appuntamento> appuntamentiImpianto = new ArrayList<Appuntamento>();
-            for(Appuntamento appuntamento : appuntamentoRepository.findAll()){
+            for(Appuntamento appuntamento : getAppuntamentoRepository().findAll()){
                 if(impianto.getIdImpianto() == appuntamento.getImpiantoPrenotato().getIdImpianto()){
                     appuntamentiImpianto.add(appuntamento);
                 }
@@ -52,16 +59,14 @@ public class RegistroImpianti {
 
     public void aggiungiImpianto(Impianto impiantoDaAggiungere) {
         getListaImpiantiPolisportiva().add(impiantoDaAggiungere);
-        impiantoRepository.save(impiantoDaAggiungere);
+        getImpiantoRepository().save(impiantoDaAggiungere);
     }
 
-    public List<Impianto> getListaImpiantiPolisportiva() {
-        return this.listaImpiantiPolisportiva;
-    }
+   
 
     public void rimuoviImpianto(Impianto impiantoDaRimuovere){
         getListaImpiantiPolisportiva().remove(impiantoDaRimuovere);
-        impiantoRepository.delete(impiantoDaRimuovere);
+        getImpiantoRepository().delete(impiantoDaRimuovere);
     }
 
     public Impianto getImpiantoByID(Integer idImpianto){

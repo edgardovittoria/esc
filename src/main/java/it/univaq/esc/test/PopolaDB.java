@@ -263,7 +263,7 @@ public class PopolaDB {
         prenotazione1.getListaSpecifichePrenotazione().get(0).setPrenotazioneAssociata(prenotazione1);
         prenotazione1.setSportivoPrenotante(sportivo1);
         
-        prenotazioneSpecs.setSpecificaDescrtiption(
+        prenotazioneSpecs.setSpecificaDescription(
             this.listinoPrezziDescrizioniPolisportiva.getPrenotabileDescrizioneByTipoPrenotazioneESport(TipiPrenotazione.IMPIANTO.toString(), tennis));
         Map<String, Object> mappaValori = new HashMap<String, Object>();
         mappaValori.put("impianto", impianto1);
@@ -293,7 +293,7 @@ public class PopolaDB {
         prenotazione2.setSportivoPrenotante(sportivo2);
         
         
-        prenotazioneSpecs2.setSpecificaDescrtiption(
+        prenotazioneSpecs2.setSpecificaDescription(
             this.listinoPrezziDescrizioniPolisportiva.getPrenotabileDescrizioneByTipoPrenotazioneESport(TipiPrenotazione.IMPIANTO.toString(), tennis));
         Map<String, Object> mappaValori2 = new HashMap<String, Object>();
         mappaValori2.put("impianto", impianto3);

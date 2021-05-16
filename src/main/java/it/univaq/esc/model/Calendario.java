@@ -7,48 +7,36 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Component
+@NoArgsConstructor @AllArgsConstructor @Getter @Setter
 public class Calendario {
 
     private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
-    /**
-     * Crea calendario appuntamenti vuoto
-     */
-    public Calendario() {
-    }
+
 
     /**
-     * Crea calendario segnando gli appuntamenti passati come parametro
-     * 
-     * @param listaAppuntamentiDaSegnareSulCalendario lista di appuntamenti da
-     *                                                segnare sul calendario
+     * Aggiunge un appuntamento al calendario, a condizione che non si sovrapponga agli appuntamenti già presenti.
+     * @param appuntamentoDaAggiungere appuntamento da aggiungere al calendario
      */
-    public Calendario(List<Appuntamento> listaAppuntamentiDaSegnareSulCalendario) {
-        this.setListaAppuntamenti(listaAppuntamentiDaSegnareSulCalendario);
-    }
-
-    /**
-     * @return List<LocalDateTime> return the listaDate
-     */
-    public List<Appuntamento> getListaAppuntamenti() {
-        return this.listaAppuntamenti;
-    }
-
-    /**
-     * @param listaDate the listaDate to set
-     */
-    public void setListaAppuntamenti(List<Appuntamento> listaDate) {
-        this.listaAppuntamenti = listaDate;
-    }
-
     public void aggiungiAppuntamento(Appuntamento appuntamentoDaAggiungere) {
         if (!this.sovrapponeA(appuntamentoDaAggiungere)) {
             this.getListaAppuntamenti().add(appuntamentoDaAggiungere);
         }
     }
 
+    /**
+     * Crea un appuntamento con i dati passati come parametri, dopodiché lo aggiunge al calendario se non si sovrappone
+     * agli appuntamenti esistenti.
+     * @param dataOraInizioAppuntamento data e ora di inizio dell'appuntamento da aggiungere.
+     * @param dataOraFineAppuntamento data e ora di fine dell'appuntamento da aggiungere.
+     * @param prenotazioneSpecs specifica di prenotazione da associare all'appuntamento da aggiungere.
+     */
     public void aggiungiAppuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento,
             PrenotazioneSpecs prenotazioneSpecs) {
 
@@ -62,7 +50,6 @@ public class Calendario {
 
     /**
      * Verifica se due calendari si sovrappongono almeno in un appuntamento
-     * 
      * @param calendarioDiCuiVerificareSovrapposizione calendario di cui verificare
      *                                                 la sovrapposizione
      * @return true se i calendari si sovrappongono almeno su un appuntamento, false
@@ -101,6 +88,13 @@ public class Calendario {
         return calendarioSiSovrappone;
     }
 
+    /**
+     * Verifica se il calendario ha un appuntamento che si sovrappone all'orario passato come parametro.
+     * Restituisce true in caso di sovrapposizione, false altrimenti.
+     * @param oraInizio data e ora iniziali dell'orario da verificare.
+     * @param oraFine data e ora finali dell'orario da verificare.
+     * @return true in caso di sovrapposizione, false altrimenti.
+     */
     public boolean sovrapponeA(LocalDateTime oraInizio, LocalDateTime oraFine) {
         boolean calendarioSiSovrappone = false;
         if (!this.getListaAppuntamenti().isEmpty()) {
@@ -113,6 +107,12 @@ public class Calendario {
         return calendarioSiSovrappone;
     }
 
+    
+    /**
+     * Unisce gli appuntamenti di un calendario passato come parametro a quelli del calendario esistente, 
+     * se i due non si sovrappongono.
+     * @param calendarioDaUnire calendario da unire a quello preesistente.
+     */
     public void unisciCalendario(Calendario calendarioDaUnire) {
         if (!this.sovrapponeA(calendarioDaUnire)) {
             this.getListaAppuntamenti().addAll(calendarioDaUnire.getListaAppuntamenti());

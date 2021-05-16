@@ -105,13 +105,13 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         
 
         for (PrenotazioneSpecs spec : controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione()) {
-            spec.setSpecificaDescrtiption(descrizioneSpecifica);
+            spec.setSpecificaDescription(descrizioneSpecifica);
         }
 
         for (OrarioAppuntamento orario : (List<OrarioAppuntamento>)formDati.getValoriForm().get("listaOrariAppuntamenti")) {
             // Calendario calendarioPrenotazione = new Calendario();
-            LocalDateTime dataInizio = LocalDateTime.of(orario.getLocalDataPrenotazione(), orario.getOraInizio());
-            LocalDateTime dataFine = LocalDateTime.of(orario.getLocalDataPrenotazione(), orario.getOraFine());
+            LocalDateTime dataInizio = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraInizio());
+            LocalDateTime dataFine = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraFine());
 
             // calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine ,
             // controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));

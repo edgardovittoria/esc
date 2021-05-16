@@ -9,43 +9,32 @@ import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.repository.ImpiantoRepository;
 import it.univaq.esc.repository.PrenotabileDescrizioneRepository;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 @Component
 @Singleton
+@Getter @Setter
 public class CatalogoPrenotabili {
     
+	@Setter(value = AccessLevel.PRIVATE)
     private List<PrenotabileDescrizione> catalogoPrenotabili;
 
+    @Setter(value = AccessLevel.PRIVATE)
     private PrenotabileDescrizioneBuilder prenotabileDescrizioneBuilder;
 
-    @Autowired
+    @Setter(value = AccessLevel.PRIVATE)
     private PrenotabileDescrizioneRepository prenotabileDescrizioneRepository;
 
-    CatalogoPrenotabili(){
-        this.setPrenotabileDescrizioneBuilder(new PrenotabileDescrizioneBuilder());
-    }
-
-    public PrenotabileDescrizioneBuilder getPrenotabileDescrizioneBuilder() {
-        return prenotabileDescrizioneBuilder;
-    }
-
-    private void setPrenotabileDescrizioneBuilder(PrenotabileDescrizioneBuilder prenotabileDescrizioneBuilder) {
-        this.prenotabileDescrizioneBuilder = prenotabileDescrizioneBuilder;
-    }
-
-    private PrenotabileDescrizioneRepository getPrenotabileDescrizioneRepository() {
-        return prenotabileDescrizioneRepository;
+    CatalogoPrenotabili(PrenotabileDescrizioneRepository prenotabileDescrizioneRepository, PrenotabileDescrizioneBuilder prenotabileDescrizioneBuilder){
+        this.setPrenotabileDescrizioneBuilder(prenotabileDescrizioneBuilder);
+        this.setPrenotabileDescrizioneRepository(prenotabileDescrizioneRepository);
     }
 
 
-    public List<PrenotabileDescrizione> getCatalogoPrenotabili() {
-        return catalogoPrenotabili;
-    }
-
-    private void setCatalogoPrenotabili(List<PrenotabileDescrizione> catalogoPrenotabili) {
-        this.catalogoPrenotabili = catalogoPrenotabili;
-    }
 
     public PrenotabileDescrizione aggiungiPrenotabileACatalogo(PrenotabileDescrizione prenotabileDescrizioneDaAggiungere){
        this.getCatalogoPrenotabili().add(prenotabileDescrizioneDaAggiungere);

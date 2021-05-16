@@ -7,9 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 import it.univaq.esc.model.Calendario;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @DiscriminatorValue(value = "Manutentore")
+@Getter @Setter
 public class Manutentore extends RuoloUtentePolisportivaDecorator{
     
     @Transient
@@ -25,11 +28,7 @@ public class Manutentore extends RuoloUtentePolisportivaDecorator{
     }
 
 
-    public Calendario getCalendario() {
-        return calendario;
-    }
-
-    public void setCalendario(Calendario calendario) {
+    public void aggiungiCalendarioNuoviImpegni(Calendario calendario) {
         this.getCalendario().unisciCalendario(calendario);
     }
 

@@ -7,7 +7,11 @@ import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter @Setter @NoArgsConstructor
 public class IstruttoreDTO implements IModelToDTO{
     
     private String nome;
@@ -17,31 +21,6 @@ public class IstruttoreDTO implements IModelToDTO{
     private List<String> sportInsegnati = new ArrayList<String>();
     private List<AppuntamentoDTO> appuntamentiLezioni = new ArrayList<AppuntamentoDTO>();
 
-    public IstruttoreDTO(){}
-
-    public List<AppuntamentoDTO> getAppuntamentiLezioni() {
-        return appuntamentiLezioni;
-    }
-
-    public void setAppuntamentiLezioni(List<AppuntamentoDTO> appuntamentiLezioni) {
-        this.appuntamentiLezioni = appuntamentiLezioni;
-    }
-
-    public List<String> getSportInsegnati() {
-        return sportInsegnati;
-    }
-
-    public void setSportInsegnati(List<String> sportInsegnati) {
-        this.sportInsegnati = sportInsegnati;
-    }
-
-    public List<String> getSportPraticati() {
-        return sportPraticati;
-    }
-
-    public void setSportPraticati(List<String> sportPraticati) {
-        this.sportPraticati = sportPraticati;
-    }
 
     
     public void aggiungiSportPraticato(String nomeSport){
@@ -56,29 +35,6 @@ public class IstruttoreDTO implements IModelToDTO{
         }
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCognome() {
-        return cognome;
-    }
-
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     @Override
     public void impostaValoriDTO(Object modelDaConvertire){

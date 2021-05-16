@@ -1,4 +1,5 @@
 package it.univaq.esc.model.prenotazioni;
+
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -17,122 +18,53 @@ import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
-
-
-
-
-
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor
+@Getter
+@Setter
 public abstract class PrenotazioneSpecs {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column
-    private boolean confermata = false;
-    @Column
-    private boolean pending = false;
-    @Column
-    private float costo;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Setter(value = AccessLevel.NONE)
+	private Long idPrenotazioneSpecs;
+	@Column
+	private boolean confermata = false;
+	@Column
+	private boolean pending = false;
+	@Column
+	private float costo;
 
-    
-    
-    // @Column
-    // protected String tipoPrenotazione;
+	@ManyToOne
+	@JoinColumn
+	private PrenotabileDescrizione specificaDescription;
 
-    // @ManyToOne()
-    // @JoinColumn()
-    // private Sport sportAssociato;
-    @ManyToOne
-    @JoinColumn
-    private PrenotabileDescrizione specificaDescription;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "prenotazione_ID", nullable = false)
+	private Prenotazione prenotazioneAssociata;
 
-    
-   
+	public Sport getSportAssociato() {
+		return this.getSpecificaDescription().getSportAssociato();
+	}
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "prenotazione_ID", nullable = false)
-    private Prenotazione prenotazioneAssociata;
+	public abstract void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori);
 
+	public abstract Map<String, Object> getValoriSpecificheExtraPrenotazione();
 
-    public PrenotazioneSpecs(){}
-    
+	public abstract String getTipoPrenotazione();
 
-    public PrenotabileDescrizione getSpecificaDescription(){
-        return this.specificaDescription;
-    }
+	public Integer getNumeroGiocatori() {
+		return this.getSportAssociato().getNumeroGiocatori();
+	}
 
-    public void setSpecificaDescrtiption(PrenotabileDescrizione specificaDescription){
-        this.specificaDescription = specificaDescription;
-    }
+	public UtentePolisportivaAbstract getSportivoPrenotante() {
+		return this.getPrenotazioneAssociata().getSportivoPrenotante();
+	}
 
-    public void setPending(boolean pending){
-        this.pending = pending;
-    }
-
-    public boolean isPending(){
-        return this.pending;
-    }
-
-    public void setConfermata() {
-        this.confermata = true;
-    }
-
-    public void setNonConfermata() {
-        this.confermata = false;
-    }
-
-    public boolean isConfermata() {
-        return this.confermata;
-    }
-
-    public float getCosto() {
-        return costo;
-    }
-
-    public void setCosto(float costo) {
-        this.costo = costo;
-    }
-
-    // public void setSportAssociato(Sport sport){
-    //     this.sportAssociato = sport;
-    // }
-
-    public Sport getSportAssociato(){
-        return this.getSpecificaDescription().getSportAssociato();
-    }
-
-    public Long getIDPrenotazioneSpecs(){
-        return this.id;
-    }
-
-    
-
-    public abstract void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori);
-    
-    public abstract Map<String, Object> getValoriSpecificheExtraPrenotazione();
-
-    public Prenotazione getPrenotazioneAssociata() {
-        return prenotazioneAssociata;
-    }
-
-    public void setPrenotazioneAssociata(Prenotazione prenotazioneAssociata) {
-        this.prenotazioneAssociata = prenotazioneAssociata;
-    }
-
-    public abstract String getTipoPrenotazione();
-
-    public Integer getNumeroGiocatori(){
-        return this.getSportAssociato().getNumeroGiocatori();
-    }
-
-    public UtentePolisportivaAbstract getSportivoPrenotante(){
-        return this.getPrenotazioneAssociata().getSportivoPrenotante();
-    }
-
-    //protected abstract void setTipoPrenotazione();
-
-
-    }
+}

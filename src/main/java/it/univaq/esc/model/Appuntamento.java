@@ -28,14 +28,20 @@ import org.hibernate.annotations.LazyCollectionOption;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "appuntamenti")
+@Getter @Setter @NoArgsConstructor
 public class Appuntamento {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(value = AccessLevel.PRIVATE)
     private Integer idAppuntamento;
     @Column
     private LocalDateTime dataOraInizioAppuntamento;
@@ -60,13 +66,15 @@ public class Appuntamento {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<QuotaPartecipazione> quotePartecipazione = new ArrayList<QuotaPartecipazione>();
 
+    
 
-    public Appuntamento(){}
-
-    public List<QuotaPartecipazione> getQuotePartecipazione() {
-        return quotePartecipazione;
+    public Appuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento, PrenotazioneSpecs specificaPrenotazione){
+        setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
+        setDataOraFineAppuntamento(dataOraFineAppuntamento);
+        setPrenotazioneSpecsAppuntamento(specificaPrenotazione);
     }
-
+    
+    
     private void aggiungiQuotaPartecipazione(UtentePolisportivaAbstract sportivo){
         QuotaPartecipazione quota = new QuotaPartecipazione();
         quota.setCosto(this.getCalcolatoreCosto().calcolaQuotaPartecipazione(this));
@@ -75,65 +83,22 @@ public class Appuntamento {
         this.quotePartecipazione.add(quota);
     }
 
-    public Appuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento, PrenotazioneSpecs specificaPrenotazione){
-        setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
-        setDataOraFineAppuntamento(dataOraFineAppuntamento);
-        setPrenotazioneSpecsAppuntamento(specificaPrenotazione);
-    }
-
     public Impianto getImpiantoPrenotato(){
         return (Impianto)this.getPrenotazioneSpecsAppuntamento().getValoriSpecificheExtraPrenotazione().get("impianto");
     }
 
-    private CalcolatoreCosto getCalcolatoreCosto(){
-        return this.calcolatoreCosto;
-    } 
-
-    public void calcolaCosto(){
+    
+     public void calcolaCosto(){
         this.getPrenotazioneSpecsAppuntamento().setCosto(getCalcolatoreCosto().calcolaCosto(this));
     }
 
-    public void setCalcolatoreCosto(CalcolatoreCosto calcolatoreCosto){
-        this.calcolatoreCosto = calcolatoreCosto;
-    }
-
-    public List<UtentePolisportivaAbstract> getListaPartecipanti() {
-        return this.partecipanti;
-    }
-
+    
+    
     public void aggiungiPartecipante(UtentePolisportivaAbstract sportivoPartecipante) {
-        getListaPartecipanti().add(sportivoPartecipante);
+        getPartecipanti().add(sportivoPartecipante);
         this.aggiungiQuotaPartecipazione(sportivoPartecipante);
     }
     
-
-    /**
-     * @return LocalDateTime return the dataOraInizioAppuntamento
-     */
-    public LocalDateTime getDataOraInizioAppuntamento() {
-        return dataOraInizioAppuntamento;
-    }
-
-    /**
-     * @param dataOraInizioAppuntamento the dataOraInizioAppuntamento to set
-     */
-    public void setDataOraInizioAppuntamento(LocalDateTime dataOraInizioAppuntamento) {
-        this.dataOraInizioAppuntamento = dataOraInizioAppuntamento;
-    }
-
-    /**
-     * @return LocalDateTime return the dataOraFineAppuntamento
-     */
-    public LocalDateTime getDataOraFineAppuntamento() {
-        return dataOraFineAppuntamento;
-    }
-
-    /**
-     * @param dataOraFineAppuntamento the dataOraFineAppuntamento to set
-     */
-    public void setDataOraFineAppuntamento(LocalDateTime dataOraFineAppuntamento) {
-        this.dataOraFineAppuntamento = dataOraFineAppuntamento;
-    }
 
 
     public LocalDate getDataAppuntamento(){
@@ -183,28 +148,9 @@ public class Appuntamento {
         return false;
     } 
 
-   
-
-    /**
-     * @return Prenotazione return the prenotazioneAppuntamento
-     */
-    public PrenotazioneSpecs getPrenotazioneSpecsAppuntamento() {
-        return prenotazioneSpecsAppuntamento;
-    }
-
-    /**
-     * @param prenotazioneAppuntamento the prenotazioneAppuntamento to set
-     */
-    public void setPrenotazioneSpecsAppuntamento(PrenotazioneSpecs prenotazioneSpecsAppuntamento) {
-        this.prenotazioneSpecsAppuntamento = prenotazioneSpecsAppuntamento;
-    }
-
-    public Integer getIdAppuntamento(){
-        return this.idAppuntamento;
-    }
     
 
-    public Integer getNumeroPartecipantiTotali(){
+    public Integer getNumeroPartecipantiMassimo(){
         return this.getPrenotazioneSpecsAppuntamento().getNumeroGiocatori();
     }
 
@@ -234,7 +180,7 @@ public class Appuntamento {
      * @return true se l'utente è un partecipante, false altrimenti 
      */
     public boolean utenteIsPartecipante(UtentePolisportivaAbstract utenteDaVerificarePartecipazione){
-        for(UtentePolisportivaAbstract partecipante : this.getListaPartecipanti()){
+        for(UtentePolisportivaAbstract partecipante : this.getPartecipanti()){
             if(((String)partecipante.getProprieta().get("email")).equals(((String)utenteDaVerificarePartecipazione.getProprieta().get("email")))){
                 return true;
             }

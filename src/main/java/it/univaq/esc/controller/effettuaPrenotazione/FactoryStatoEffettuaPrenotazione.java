@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
 import it.univaq.esc.utility.BeanUtil;
+import lombok.NoArgsConstructor;
 
 /**
  * Factory per la creazione degli Stati del controller EffettuaPrenotazioneHandlerRest.
@@ -16,12 +17,10 @@ import it.univaq.esc.utility.BeanUtil;
  */
 @Component
 @Singleton
+@NoArgsConstructor
 public class FactoryStatoEffettuaPrenotazione {
     private static final Map<String, Class<? extends EffettuaPrenotazioneState>> mappaStati = new HashMap<>();
     
-    
-    @Autowired
-    public FactoryStatoEffettuaPrenotazione() {}
     
     
     public static void registra(String tipoPrenotazione, Class<? extends EffettuaPrenotazioneState> stato) {

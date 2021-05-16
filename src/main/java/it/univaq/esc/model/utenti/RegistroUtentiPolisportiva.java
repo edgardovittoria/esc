@@ -15,20 +15,27 @@ import groovy.lang.Singleton;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Component
 @Singleton
+@Getter @Setter
 public class RegistroUtentiPolisportiva {
 
-    @Autowired
-    private UtentePolisportivaAbstractRepository utentiRepository;
+	@Setter(value = AccessLevel.PRIVATE)
+	@Getter(value = AccessLevel.PRIVATE)
+    private UtentePolisportivaAbstractRepository utentiRepository; 
     
-    
-    private List<UtentePolisportivaAbstract> registroSportivi = new ArrayList<UtentePolisportivaAbstract>();
+    @Setter(value = AccessLevel.PRIVATE)
+    private List<UtentePolisportivaAbstract> listaUtentiPolisportiva = new ArrayList<UtentePolisportivaAbstract>();
 
 
-    public RegistroUtentiPolisportiva() {}
+    public RegistroUtentiPolisportiva(UtentePolisportivaAbstractRepository utentePolisportivaAbstractRepository) {
+    	this.setUtentiRepository(utentePolisportivaAbstractRepository);
+    }
 
     /**
      * Viene invocato subito dopo l'istanziazione del registro utenti, per popolare quest'ultimo 
@@ -36,54 +43,37 @@ public class RegistroUtentiPolisportiva {
      */
     @PostConstruct
     public void popola(){
-        this.getListaUtenti().addAll(this.utentiRepository.findAll());
-        if(!this.getListaUtenti().isEmpty()){
+        this.setListaUtentiPolisportiva(this.utentiRepository.findAll());
+        if(!this.getListaUtentiPolisportiva().isEmpty()){
         List<Integer> listaindiciDaEliminare = new ArrayList<Integer>();
-        for(UtentePolisportivaAbstract utente : this.getListaUtenti().subList(0, this.getListaUtenti().size() - 1)){
+        for(UtentePolisportivaAbstract utente : this.getListaUtentiPolisportiva().subList(0, this.getListaUtentiPolisportiva().size() - 1)){
             int j=0;
-            for(UtentePolisportivaAbstract utenteSuccessivo : this.getListaUtenti().subList(this.getListaUtenti().indexOf(utente)+1, this.getListaUtenti().size())){
+            for(UtentePolisportivaAbstract utenteSuccessivo : this.getListaUtentiPolisportiva().subList(this.getListaUtentiPolisportiva().indexOf(utente)+1, this.getListaUtentiPolisportiva().size())){
                 if(utente.getProprieta().get("email").equals(utenteSuccessivo.getProprieta().get("email"))){
                     j++;
                 }
             }
             if(j>0){
-                listaindiciDaEliminare.add(this.getListaUtenti().indexOf(utente));
+                listaindiciDaEliminare.add(this.getListaUtentiPolisportiva().indexOf(utente));
             }
 
         }
         List<UtentePolisportivaAbstract> utentiDaEliminare = new ArrayList<UtentePolisportivaAbstract>();
         for(Integer index : listaindiciDaEliminare){
-            utentiDaEliminare.add(this.getListaUtenti().get(index));
+            utentiDaEliminare.add(this.getListaUtentiPolisportiva().get(index));
         }
-        this.getListaUtenti().removeAll(utentiDaEliminare);
+        this.getListaUtentiPolisportiva().removeAll(utentiDaEliminare);
     }
         
     }
-
-
-    /**
-     * Ritorna la lista di tutti gli utenti registrati alla polisportiva
-     * @return la lista degli utenti registrati alla polisportiva
-     */
-    public List<UtentePolisportivaAbstract> getListaUtenti() {
-        return this.registroSportivi;
-    }
-
-
-    /**
-     * Restituisce il repository degli utenti per la loro gestione nel database
-     * @return repository degli utenti
-     */
-    private UtentePolisportivaAbstractRepository getUtentiRepository(){
-        return this.utentiRepository;
-    }
+    
 
     /**
      * Registra l'utente passato nel sistema della polisportiva (registro e database)
      * @param utente utente da registrare
      */
     public void registraUtente(UtentePolisportivaAbstract utente){
-        getListaUtenti().add(utente);
+        getListaUtentiPolisportiva().add(utente);
         utentiRepository.save(utente);
     }
 
@@ -93,7 +83,7 @@ public class RegistroUtentiPolisportiva {
      * @return l'utente associato alla email passata come parametro, se registrato
      */
     public UtentePolisportivaAbstract getUtenteByEmail(String emailUtente){
-        for(UtentePolisportivaAbstract sportivo : getListaUtenti()){
+        for(UtentePolisportivaAbstract sportivo : getListaUtentiPolisportiva()){
             if(((String)sportivo.getProprieta().get("email")).equals(emailUtente)){
                 return sportivo;
             }
@@ -108,7 +98,7 @@ public class RegistroUtentiPolisportiva {
      */
     public List<UtentePolisportivaAbstract> getListaUtentiByRuolo(TipoRuolo ruolo){
         List<UtentePolisportivaAbstract> listaUtentiByRuolo = new ArrayList<UtentePolisportivaAbstract>();
-        for(UtentePolisportivaAbstract utente : this.getListaUtenti()){
+        for(UtentePolisportivaAbstract utente : this.getListaUtentiPolisportiva()){
             if(utente.getRuoliUtentePolisportiva().contains(ruolo.toString())){
                 listaUtentiByRuolo.add(utente);
             }
@@ -121,7 +111,7 @@ public class RegistroUtentiPolisportiva {
      * @param utente utente da eliminare
      */
     public void eliminaUtente(UtentePolisportivaAbstract utente){
-        this.getListaUtenti().remove(utente);
+        this.getListaUtentiPolisportiva().remove(utente);
         this.getUtentiRepository().delete(utente);
     }
 

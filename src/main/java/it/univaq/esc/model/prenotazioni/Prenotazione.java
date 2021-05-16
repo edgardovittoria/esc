@@ -25,11 +25,15 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "prenotazioni")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPrenotazione")
+@Getter @Setter @NoArgsConstructor
 public class Prenotazione {
     @Id
     private int idPrenotazione;
@@ -43,14 +47,11 @@ public class Prenotazione {
     private LocalDateTime oraDataPrenotazione;
   
     
-    
-    
     @OneToMany(mappedBy = "prenotazioneAssociata")
     //@JoinColumn
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<PrenotazioneSpecs> listaSpecifichePrenotazione = new ArrayList<PrenotazioneSpecs>();
 
-    public Prenotazione(){}
 
     public Prenotazione(int lastIdPrenotazione){
         setIdPrenotazione(lastIdPrenotazione);
@@ -62,40 +63,11 @@ public class Prenotazione {
         this.getListaSpecifichePrenotazione().add(prenotazioneSpecs);
     }
 
-    public int getIdPrenotazione(){
-        return this.idPrenotazione;
-    }
-
-    private void setIdPrenotazione(int lastIdPrenotazione) {
-        this.idPrenotazione = lastIdPrenotazione + 1;
-    }
-
     
     public void aggiungiSpecifica(PrenotazioneSpecs specifica){
         this.getListaSpecifichePrenotazione().add(specifica);
     }
 
-    public void setSportivoPrenotante(UtentePolisportivaAbstract sportivoPrenotante) {
-        this.sportivoPrenotante = sportivoPrenotante;
-    }
-
-    public UtentePolisportivaAbstract getSportivoPrenotante() {
-        return this.sportivoPrenotante;
-    }
-
-    
-    
-    
-    
-
-
-    public List<PrenotazioneSpecs> getListaSpecifichePrenotazione() {
-        return listaSpecifichePrenotazione;
-    }
-
-    public void setListaSpecifichePrenotazione(List<PrenotazioneSpecs> listaSpecifichePrenotazione) {
-        this.listaSpecifichePrenotazione = listaSpecifichePrenotazione;
-    }
 
     public void impostaValoriListaSpecifichePrenotazione(List<Map<String, Object>> listaMappeValori){
         for(PrenotazioneSpecs specifica : this.getListaSpecifichePrenotazione()){

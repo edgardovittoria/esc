@@ -13,14 +13,15 @@ import javax.persistence.ManyToOne;
 import it.univaq.esc.model.Impianto;
 
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 @Entity
+@NoArgsConstructor @Getter @Setter
 public class PrenotazioneLezioneSpecs extends PrenotazioneSpecs{
     @ManyToOne()
     @JoinColumn()
     private UtentePolisportivaAbstract istruttore;
-
-   
-
 
     @ManyToOne
     @JoinColumn
@@ -30,39 +31,6 @@ public class PrenotazioneLezioneSpecs extends PrenotazioneSpecs{
     @JoinColumn()
     private UtentePolisportivaAbstract manutentore;
  
-    
-
-    public PrenotazioneLezioneSpecs(){}
-
-    
-
-    public void setIstruttore(UtentePolisportivaAbstract istruttore){
-        this.istruttore = istruttore;
-    }
-
-    public UtentePolisportivaAbstract getIstruttore(){
-        return this.istruttore;
-    }
-    
-
-    public void setManutentore(UtentePolisportivaAbstract manutentore){
-        this.manutentore = manutentore;
-    }
-
-    public UtentePolisportivaAbstract getManutentore(){
-        return this.manutentore;
-    }
-   
-
-   
-
-    public void setImpiantoPrenotato(Impianto impiantoPrenotato){
-        this.impiantoPrenotato = impiantoPrenotato;
-    }
-
-    public Impianto getImpiantoPrenotato(){
-        return this.impiantoPrenotato;
-    }
 
     public Integer getIdImpiantoPrenotato(){
         return this.getImpiantoPrenotato().getIdImpianto();

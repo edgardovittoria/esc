@@ -5,8 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "sports")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Sport {
 
     @Id
@@ -14,19 +20,5 @@ public class Sport {
     @Column
     private int numeroGiocatori;
 
-    public Sport(){}
-
-    public Sport(String nome, int numeroGiocatori){
-        this.nome = nome;
-        this.numeroGiocatori = numeroGiocatori;
-    }
-    
-    public String getNome() {
-        return nome;
-    }
-    
-    public int getNumeroGiocatori() {
-        return numeroGiocatori;
-    }
       
 }

@@ -9,7 +9,11 @@ import it.univaq.esc.factory.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.QuotaPartecipazione;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter @Setter @NoArgsConstructor
 public class AppuntamentoDTO implements IModelToDTO{
     
     private Integer idAppuntamento;
@@ -19,46 +23,13 @@ public class AppuntamentoDTO implements IModelToDTO{
     private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
     private SportivoDTO creatore;
 
-    public AppuntamentoDTO(){}
-
-    public Integer getIdAppuntamento() {
-        return idAppuntamento;
-    }
-
-    public void setIdAppuntamento(Integer idAppuntamento) {
-        this.idAppuntamento = idAppuntamento;
-    }
-
-    public SportivoDTO getCreatore() {
-        return creatore;
-    }
-
-    public void setCreatore(SportivoDTO creatore) {
-        this.creatore = creatore;
-    }
-
-    public List<QuotaPartecipazioneDTO> getQuotePartecipazione() {
-        return quotePartecipazione;
-    }
-
-    public void setQuotePartecipazione(List<QuotaPartecipazioneDTO> quotePartecipazione) {
-        this.quotePartecipazione = quotePartecipazione;
-    }
-
-    private OrarioAppuntamento getOrarioAppuntamento() {
-        return orarioAppuntamento;
-    }
-
-    private void setOrarioAppuntamento(OrarioAppuntamento orarioAppuntamento) {
-        this.orarioAppuntamento = orarioAppuntamento;
-    }
-
+    
     public LocalDate getDataAppuntamento() {
-        return this.getOrarioAppuntamento().getLocalDataPrenotazione();
+        return this.getOrarioAppuntamento().getDataPrenotazione();
     }
 
     public void setDataAppuntamento(LocalDate dataAppuntamento) {
-        this.getOrarioAppuntamento().setLocalDataPrenotaione(dataAppuntamento);
+        this.getOrarioAppuntamento().setDataPrenotazione(dataAppuntamento);
     }
 
     public LocalTime getOraInizioAppuntamento() {
@@ -77,21 +48,11 @@ public class AppuntamentoDTO implements IModelToDTO{
         this.getOrarioAppuntamento().setOraFine(oraFineAppuntamento);
     }
 
-    public List<SportivoDTO> getListaPartecipanti(){
-        return this.partecipanti;
-    }
 
     public void aggiungiPartecipante(SportivoDTO partecipante){
         this.partecipanti.add(partecipante);
     }
 
-    public void setSpecificaPrenotazione(PrenotazioneSpecsDTO specifica){
-        this.specificaPrenotazione = specifica;
-    }
-
-    public PrenotazioneSpecsDTO getSpecificaPrenotazione(){
-        return this.specificaPrenotazione;
-    }
     
 
     @Override
@@ -104,7 +65,7 @@ public class AppuntamentoDTO implements IModelToDTO{
         PrenotazioneSpecsDTO specificaDTO = FactorySpecifichePrenotazione.getSpecifichePrenotazioneDTO(appuntamento.getPrenotazioneSpecsAppuntamento().getTipoPrenotazione());
         specificaDTO.impostaValoriDTO(appuntamento.getPrenotazioneSpecsAppuntamento());
         this.setSpecificaPrenotazione(specificaDTO);
-        for(UtentePolisportivaAbstract partecipante : appuntamento.getListaPartecipanti()){
+        for(UtentePolisportivaAbstract partecipante : appuntamento.getPartecipanti()){
             SportivoDTO partecipanteDTO = new SportivoDTO();
             partecipanteDTO.impostaValoriDTO(partecipante);
             this.aggiungiPartecipante(partecipanteDTO);

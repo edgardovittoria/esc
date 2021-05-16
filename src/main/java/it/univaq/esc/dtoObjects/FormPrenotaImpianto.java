@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter @NoArgsConstructor
 public class FormPrenotaImpianto implements IFormPrenotabile{
     private String sportSelezionato = "tennis";
 
@@ -20,83 +25,6 @@ public class FormPrenotaImpianto implements IFormPrenotabile{
     private List<CheckboxPendingSelezionato> checkboxesPending;
 
 
-    public FormPrenotaImpianto(){}
-
-
-    
-
-    public List<CheckboxPendingSelezionato> getCheckboxesPending() {
-        return checkboxesPending;
-    }
-
-
-
-
-    public void setCheckboxesPending(List<CheckboxPendingSelezionato> checkboxesPending) {
-        this.checkboxesPending = checkboxesPending;
-    }
-
-
-
-
-    public Integer getNumeroGiocatoriNonIscritti() {
-        return numeroGiocatoriNonIscritti;
-    }
-
-
-    public void setNumeroGiocatoriNonIscritti(Integer numeroGiocatoriNonIscritti) {
-        this.numeroGiocatoriNonIscritti = numeroGiocatoriNonIscritti;
-    }
-
-
-    public Integer getPostiLiberi() {
-        return postiLiberi;
-    }
-
-
-    public void setPostiLiberi(Integer postiLiberi) {
-        this.postiLiberi = postiLiberi;
-    }
-
-
-    public List<String> getSportiviInvitati() {
-        return sportiviInvitati;
-    }
-
-
-    public void setSportiviInvitati(List<String> sportiviInvitati) {
-        this.sportiviInvitati = sportiviInvitati;
-    }
-
-
-    public List<ImpiantoSelezionato> getImpianti() {
-        return impianti;
-    }
-
-
-    public void setImpianti(List<ImpiantoSelezionato> impianti) {
-        this.impianti = impianti;
-    }
-
-
-    public List<OrarioAppuntamento> getOrariSelezionati() {
-        return orariSelezionati;
-    }
-
-
-    public void setOrariSelezionati(List<OrarioAppuntamento> orariSelezionati) {
-        this.orariSelezionati = orariSelezionati;
-    }
-
-
-    public String getSportSelezionato() {
-        return sportSelezionato;
-    }
-
-
-    public void setSportSelezionato(String sportSelezionato) {
-        this.sportSelezionato = sportSelezionato;
-    }
 
 
     @Override

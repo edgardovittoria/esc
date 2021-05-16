@@ -176,7 +176,7 @@ public abstract class EffettuaPrenotazioneState {
 	 */
 	protected List<SportivoDTO> getSportiviPolisportiva() {
 		List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
-		for (UtentePolisportivaAbstract utente : getRegistroUtenti().getListaUtenti()) {
+		for (UtentePolisportivaAbstract utente : getRegistroUtenti().getListaUtentiPolisportiva()) {
 			SportivoDTO sportivoDTO = new SportivoDTO();
 			sportivoDTO.impostaValoriDTO(utente);
 			listaSportiviDTO.add(sportivoDTO);

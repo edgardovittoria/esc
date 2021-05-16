@@ -10,13 +10,11 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+import lombok.NoArgsConstructor;
 import it.univaq.esc.model.costi.TipoCostoPrenotabile;
 
-
-public class CalcolatoreCostoBase extends CalcolatoreCosto{
-
-   public CalcolatoreCostoBase(){}
-        
+@NoArgsConstructor
+public class CalcolatoreCostoBase extends CalcolatoreCosto{        
     
 
     @Override

@@ -1,12 +1,13 @@
 package it.univaq.esc.dtoObjects;
 
-
-
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
-
-public abstract class PrenotazioneSpecsDTO {
+@Getter @Setter @NoArgsConstructor
+public abstract class PrenotazioneSpecsDTO implements IModelToDTO{
 
     private Long idPrenotazioneSpecsDTO;
 
@@ -17,86 +18,20 @@ public abstract class PrenotazioneSpecsDTO {
     // private Manutentore responsabilePrenotazione;
 
     private SportDTO sportAssociato;
-
-    // private List<QuotaPartecipazione> quoteDiPartecipazione = new
-    // ArrayList<QuotaPartecipazione>();
     private String tipoSpecifica;
-    
+        
 
-    /**
-     * @return boolean return the confermata
-     */
-    public boolean getConfermata() {
-        return confermata;
-    }
-
-    /**
-     * @param confermata the confermata to set
-     */
-    public void setConfermata(boolean confermata) {
-        this.confermata = confermata;
-    }
-
-    /**
-     * @return float return the costo
-     */
-    public float getCosto() {
-        return costo;
-    }
-
-    /**
-     * @param costo the costo to set
-     */
-    public void setCosto(float costo) {
-        this.costo = costo;
-    }
-
-    /**
-     * @return SportDTO return the sportAssociato
-     */
-    public SportDTO getSportAssociato() {
-        return sportAssociato;
-    }
-
-    /**
-     * @param sportAssociato the sportAssociato to set
-     */
-    public void setSportAssociato(SportDTO sportAssociato) {
-        this.sportAssociato = sportAssociato;
-    }
-
-
-     /**
-     * @return String return the tipoSpecifica
-     */
-    public String getTipoSpecifica() {
-        return tipoSpecifica;
-    }
-
-    /**
-     * @param tipoSpecifica the tipoSpecifica to set
-     */
-    public void setTipoSpecifica(String tipoSpecifica) {
-        this.tipoSpecifica = tipoSpecifica;
-    }
-
-    public void setIdPrenotazioneSpecsDTO(Long id){
-        this.idPrenotazioneSpecsDTO = id;
-    }
-
-    
-
-    public void impostaValoriDTO(PrenotazioneSpecs prenotazioneSpecs){
+    @Override
+    public void impostaValoriDTO(Object prenotazioneSpecs){
+    	PrenotazioneSpecs specs = (PrenotazioneSpecs)prenotazioneSpecs;
         SportDTO sportAssociato = new SportDTO();
-        sportAssociato.impostaValoriDTO(prenotazioneSpecs.getSportAssociato());
+        sportAssociato.impostaValoriDTO(specs.getSportAssociato());
         this.setSportAssociato(sportAssociato);
-        this.setIdPrenotazioneSpecsDTO(prenotazioneSpecs.getIDPrenotazioneSpecs());
-        this.setTipoSpecifica(prenotazioneSpecs.getTipoPrenotazione());
-        this.setCosto(prenotazioneSpecs.getCosto());
+        this.setIdPrenotazioneSpecsDTO(specs.getIdPrenotazioneSpecs());
+        this.setTipoSpecifica(specs.getTipoPrenotazione());
+        this.setCosto(specs.getCosto());
     };
+    
 
-    public Long getIdPrenotazioneSpecsDTO() {
-        return idPrenotazioneSpecsDTO;
-    }
-
+    
 }

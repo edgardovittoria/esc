@@ -19,11 +19,17 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.Sport;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter @Setter @NoArgsConstructor
 public class PrenotabileDescrizione {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(value = AccessLevel.NONE)
     private Integer id;
     @Column
     private String tipoPrenotazione;
@@ -36,38 +42,11 @@ public class PrenotabileDescrizione {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<CostoPrenotabile> listaCosti = new ArrayList<CostoPrenotabile>();
 
-    PrenotabileDescrizione(){}
-
     
-    public List<CostoPrenotabile> getListaCosti() {
-        return listaCosti;
-    }
-
-
-    public void setListaCosti(List<CostoPrenotabile> listaCosti) {
-        this.listaCosti = listaCosti;
-    }
-
     public void aggiungiCosto(CostoPrenotabile costoDaAggiungere){
         this.getListaCosti().add(costoDaAggiungere);
     }
-
-    public Sport getSportAssociato() {
-        return sportAssociato;
-    }
-
-
-    public void setSportAssociato(Sport sportAssociato) {
-        this.sportAssociato = sportAssociato;
-    }
-
-
-    public String getTipoPrenotazione() {
-        return tipoPrenotazione;
-    }
-    public void setTipoPrenotazione(String tipoPrenotazione) {
-        this.tipoPrenotazione = tipoPrenotazione;
-    }    
+  
 
     public Map<String, Float> getMappaCosti(){
         Map<String, Float> mappaCosti = new HashMap<String, Float>();

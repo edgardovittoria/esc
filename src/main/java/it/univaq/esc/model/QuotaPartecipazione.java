@@ -13,13 +13,19 @@ import javax.persistence.Table;
 //import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "quotePartecipazione")
+@Getter @Setter @NoArgsConstructor
 public class QuotaPartecipazione {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(value = AccessLevel.NONE)
     private int idQuotaPartecipazione;
     @Column
     private boolean pagata;
@@ -28,62 +34,12 @@ public class QuotaPartecipazione {
     @ManyToOne()
     @JoinColumn(name = "sportivo_email",nullable = false)
     private UtentePolisportivaAbstract sportivoAssociato;
-
-    // @ManyToOne
-    // @JoinColumn(name = "prenotazioneSpecs_ID", nullable = false)
-    // private PrenotazioneSpecs specificaPrenotazioneAssociata;
-
-    public QuotaPartecipazione(){}
-
-    public QuotaPartecipazione(boolean pagata, float costo) {
-        this.pagata = pagata;
-        this.costo = costo;
-    }
-
-    public int getIdQuotaPartecipazione() {
-        return idQuotaPartecipazione;
-    }
-
-    public void setIdQuotaPartecipazione(int idQuotaPartecipazione) {
-        this.idQuotaPartecipazione = idQuotaPartecipazione;
-    }
-
-    public boolean isPagata() {
-        return pagata;
-    }
-
-    public void setPagata(boolean pagata) {
-        this.pagata = pagata;
-    }
-
-    public float getCosto() {
-        return costo;
-    }
-
-    // public void setSpecificaPrenotazioneAssociata(PrenotazioneSpecs specifica){
-    //     this.specificaPrenotazioneAssociata = specifica;
-    // }
-
-    // public PrenotazioneSpecs getSpecificaPrenotazioneAssociata(){
-    //     return this.specificaPrenotazioneAssociata;
-    // }
-
-    public void setCosto(float costo) {
-        this.costo = costo;
-    }
-
-    public UtentePolisportivaAbstract getSportivoAssociato() {
-        return sportivoAssociato;
-    }
-
-    public void setSportivoAssociato(UtentePolisportivaAbstract sportivoAssociato) {
-        this.sportivoAssociato = sportivoAssociato;
-    }
-
     
 
-
-    
-
+    public QuotaPartecipazione(boolean pagata, float costo, UtentePolisportivaAbstract sportivoDaAssociareAllaQuota) {
+        this.setPagata(pagata);
+        this.setCosto(costo);
+        this.setSportivoAssociato(sportivoDaAssociareAllaQuota);
+    }
     
 }

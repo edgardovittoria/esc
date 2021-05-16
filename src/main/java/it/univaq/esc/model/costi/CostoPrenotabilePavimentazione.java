@@ -6,21 +6,19 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 @Entity
 @DiscriminatorValue("costoPavimentazione")
+@Getter @Setter @NoArgsConstructor
 public class CostoPrenotabilePavimentazione extends CostoPrenotabile{
-    @Column
+    
+	@Column
     private String tipoPavimentazione;
 
-    CostoPrenotabilePavimentazione(){}
-
-    private String getTipoPavimentazione() {
-        return tipoPavimentazione;
-    }
-
-    private void setTipoPavimentazione(String tipoPavimentazione) {
-        this.tipoPavimentazione = tipoPavimentazione;
-    }
+    
 
     @Override
     public Map<String, Object> getProprieta() {

@@ -4,23 +4,19 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-import it.univaq.esc.model.Sport;
+import org.springframework.stereotype.Component;
 
+import it.univaq.esc.model.Sport;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Component
+@NoArgsConstructor @Getter @Setter
 public class PrenotabileDescrizioneBuilder {
     
     private PrenotabileDescrizione prenotabileDescrizione;
 
-    PrenotabileDescrizioneBuilder(){
-
-    }
-
-    private PrenotabileDescrizione getPrenotabileDescrizione() {
-        return prenotabileDescrizione;
-    }
-
-    private void setPrenotabileDescrizione(PrenotabileDescrizione prenotabileDescrizione) {
-        this.prenotabileDescrizione = prenotabileDescrizione;
-    }
 
     public PrenotabileDescrizioneBuilder creaNuovoDescrizione(Sport sport, String tipoPrenotazione){
         this.setPrenotabileDescrizione(new PrenotabileDescrizione());

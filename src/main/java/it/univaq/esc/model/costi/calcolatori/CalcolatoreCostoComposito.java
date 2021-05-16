@@ -4,29 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.univaq.esc.model.Appuntamento;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
-
+@NoArgsConstructor
 public class CalcolatoreCostoComposito extends CalcolatoreCosto{
     
    
+	@Getter(value = AccessLevel.PRIVATE)
     private List<CalcolatoreCosto> strategieCosto = new ArrayList<CalcolatoreCosto>();
 
-  
-    public CalcolatoreCostoComposito() {}
-
-    private List<CalcolatoreCosto> getListaStrategieCosto(){
-        return this.strategieCosto;
-    }
 
     @Override
     public void aggiungiStrategiaCosto(CalcolatoreCosto calcolatoreCosto){
-        this.getListaStrategieCosto().add(calcolatoreCosto);
+        this.getStrategieCosto().add(calcolatoreCosto);
     }
     @Override
     public float calcolaCosto(Appuntamento appuntamento) {
         float costo = 2000;
-        for(CalcolatoreCosto strategia : this.getListaStrategieCosto()){
+        for(CalcolatoreCosto strategia : this.getStrategieCosto()){
             if(strategia.calcolaCosto(appuntamento)<costo){
                 costo = strategia.calcolaCosto(appuntamento);
             }

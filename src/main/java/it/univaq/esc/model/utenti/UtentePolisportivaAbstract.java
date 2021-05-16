@@ -9,12 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-
-
-
-
-//@Inheritance(strategy=InheritanceType.JOINED)
-
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class UtentePolisportivaAbstract {

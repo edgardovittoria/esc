@@ -20,14 +20,21 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @Entity
 @Table(name = "impianti")
+@Getter @Setter @NoArgsConstructor
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idImpianto")
 public class Impianto {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(value = AccessLevel.NONE)
     private int idImpianto;
     @Column
     private int costo;
@@ -40,52 +47,38 @@ public class Impianto {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<ImpiantoSpecs> specificheImpianto;
 
-    
     @Transient
     private Calendario calendarioAppuntamentiImpianto = new Calendario();
     
 
-    public Impianto() {}
-
+    /**
+     * Costruttore della classe Impianto che prende in input una lista di specifiche di impianto.
+     * @param caratteristicheImpianto lista delle specifiche di impianto da associare all'impianto creato.
+     */
     public Impianto(List<ImpiantoSpecs> caratteristicheImpianto) {
        
-        this.specificheImpianto = caratteristicheImpianto;
+        this.setSpecificheImpianto(caratteristicheImpianto);
     }
 
 
-    public int getIdImpianto() {
-        return idImpianto;
-    }
 
-    public int getCosto() {
-        return costo;
-    }
-
-    public void setCosto(int costo) {
-        this.costo = costo;
-    }
-
-    public boolean isIndoor() {
-        return this.indoor;
-    }
-
-    public void setIndoor(boolean indoor) {
-        this.indoor = indoor;
-    }
-
+    /**
+     * Restituisce il tipo di pavimentazione dell'impianto.
+     * Sebbene si possano praticare diversi sport in uno stesso impianto, la pavimentazione sarà la medesima, 
+     * per cui ogni specifica avrà la medesima pavimentazione.
+     * È sufficiente prendere la prima e farsi restituire la pavimentazione.
+     * @return il tipo di pavimentazione dell'impianto.
+     */
     public Pavimentazione getTipoPavimentazione(){
-          return this.specificheImpianto.get(0).getTipoPavimentazione();
+          return this.getSpecificheImpianto().get(0).getTipoPavimentazione();
       }
 
-
-    public List<ImpiantoSpecs> getSpecificheImpianto() {
-        return specificheImpianto;
-    }
-
-    public void setSpecificaImpianto(ImpiantoSpecs specificaImpianto) {
-        this.specificheImpianto.add(specificaImpianto);
-    }
-
+    
+    /**
+     * Restituisce la lista degli sport praticabili nell'impianto, ispezionando la lista delle specifiche 
+     * di impianto associata.
+     * @return la lista degli sport praticabili nell'impianto.
+     */
     public List<Sport> getSportPraticabili(){
         List<Sport> sportPraticabili = new ArrayList<Sport>();
         for(ImpiantoSpecs impiantoSpecs : this.getSpecificheImpianto()){
@@ -94,41 +87,11 @@ public class Impianto {
         return sportPraticabili;
     }
 
-    
-    
-  
-
+ 
     /**
-     * @param idImpianto the idImpianto to set
+     * Restituisce la lista degli appuntamenti presenti nel calendario dell'impianto.
+     * @return lista di tutti gli appuntamenti del calendario dell'impianto.
      */
-    public void setIdImpianto(int idImpianto) {
-        this.idImpianto = idImpianto;
-    }
-
-    /**
-     * @param specificheImpianto the specificheImpianto to set
-     */
-    public void setSpecificheImpianto(List<ImpiantoSpecs> specificheImpianto) {
-        this.specificheImpianto = specificheImpianto;
-    }
-
-    
-
-
-    /**
-     * @return Calendario return the calendarioAppuntamentiImpianto
-     */
-    public Calendario getCalendarioAppuntamentiImpianto() {
-        return calendarioAppuntamentiImpianto;
-    }
-
-    /**
-     * @param calendarioAppuntamentiImpianto the calendarioAppuntamentiImpianto to set
-     */
-    public void setCalendarioAppuntamentiImpianto(Calendario calendarioAppuntamentiImpianto) {
-        this.calendarioAppuntamentiImpianto = calendarioAppuntamentiImpianto;
-    }
-
     public List<Appuntamento> getListaAppuntamenti(){
         return this.getCalendarioAppuntamentiImpianto().getListaAppuntamenti();
     }

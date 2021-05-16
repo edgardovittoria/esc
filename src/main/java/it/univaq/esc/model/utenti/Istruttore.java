@@ -3,24 +3,21 @@ package it.univaq.esc.model.utenti;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-
 import it.univaq.esc.model.Calendario;
-
 import it.univaq.esc.model.Sport;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 @Entity
 @DiscriminatorValue(value = "Istruttore")
+@Getter @Setter
 public class Istruttore extends RuoloUtentePolisportivaDecorator{
 
     @ManyToMany
@@ -29,21 +26,18 @@ public class Istruttore extends RuoloUtentePolisportivaDecorator{
     private List<Sport> sportInsegnati = new ArrayList<Sport>();
 
     @Transient
+    @Setter(value = AccessLevel.PRIVATE)
     private Calendario calendarioLezioni = new Calendario();
 
 
-    public Istruttore(){}
 
     public Istruttore(UtentePolisportivaAbstract utenteDaDecorare, List<Sport> sportInsegnati){
         super(utenteDaDecorare);
         this.setSportInsegnati(sportInsegnati);
     }
 
-    private Calendario getCalendarioLezioni() {
-        return calendarioLezioni;
-    }
 
-    private void setCalendarioLezioni(Calendario calendarioLezioniDaAggiungere) {
+    private void aggiungiCalendarioNuoveLezioni(Calendario calendarioLezioniDaAggiungere) {
         this.getCalendarioLezioni().unisciCalendario(calendarioLezioniDaAggiungere);
     }
 
@@ -64,13 +58,6 @@ public class Istruttore extends RuoloUtentePolisportivaDecorator{
         this.getUtentePolisportiva().setProprieta(mappaProprieta);
     }
 
-    private List<Sport> getSportInsegnati() {
-        return sportInsegnati;
-    }
-
-    private void setSportInsegnati(List<Sport> sportInsegnati) {
-        this.sportInsegnati = sportInsegnati;
-    }
 
     @Override
     public Map<String, Object> getProprieta() {

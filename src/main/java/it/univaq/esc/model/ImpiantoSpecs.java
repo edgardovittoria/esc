@@ -10,12 +10,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "specificheImpianto")
+@NoArgsConstructor @Getter @Setter
 public class ImpiantoSpecs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(value = AccessLevel.NONE)
     private int idSpecificaImpianto;
     
     @Enumerated(EnumType.STRING)
@@ -24,28 +32,11 @@ public class ImpiantoSpecs {
     @JoinColumn()
     private Sport sportPraticabile;
 
-    public ImpiantoSpecs(){}
+   
 
     public ImpiantoSpecs(Pavimentazione TipoPavimentazione, Sport sportPraticabileNellImpianto) {
         this.TipoPavimentazione = TipoPavimentazione;
         this.sportPraticabile = sportPraticabileNellImpianto;
-    }
-
-
-    public Pavimentazione getTipoPavimentazione() {
-        return TipoPavimentazione;
-    }    
-
-    public void setTipoPavimentazione(Pavimentazione tipoPavimentazione) {
-        TipoPavimentazione = tipoPavimentazione;
-    }
-
-    public Sport getSportPraticabile() {
-        return sportPraticabile;
-    }
-
-    public void setSportPraticabile(Sport sportPraticabile){
-        this.sportPraticabile = sportPraticabile;
     }
 
    

@@ -16,19 +16,25 @@ import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.AppuntamentoRepository;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 @Component
 @Singleton
+@Setter @Getter
 public class RegistroAppuntamenti {
 
-    @Autowired
+	@Setter(value = AccessLevel.PRIVATE)
     private AppuntamentoRepository appuntamentoRepository;
     
     private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
 
     
-    public RegistroAppuntamenti(){}
+    public RegistroAppuntamenti(AppuntamentoRepository appuntamentoRepository){
+    	this.setAppuntamentoRepository(appuntamentoRepository);
+    }
 
     @PostConstruct
     private void popola(){
@@ -41,12 +47,6 @@ public class RegistroAppuntamenti {
         }
     }
 
-    /**
-     * @return List<Appuntamento> return the listaAppuntamenti
-     */
-    public List<Appuntamento> getListaAppuntamenti() {
-        return listaAppuntamenti;
-    }
 
    
     public void salvaAppuntamento(Appuntamento appuntamento){
@@ -64,16 +64,10 @@ public class RegistroAppuntamenti {
         this.getAppuntamentoRepository().saveAll(listaAppuntamenti);
     }
 
-    /**
-     * @return AppuntamentoRepository return the appuntamentoRepository
-     */
-    private AppuntamentoRepository getAppuntamentoRepository() {
-        return appuntamentoRepository;
-    }
 
 
     public Appuntamento getAppuntamentoBySpecificaAssociata(PrenotazioneSpecs prenotazioneSpecs){
-        return this.getAppuntamentoRepository().findByPrenotazioneSpecsAppuntamento_Id(prenotazioneSpecs.getIDPrenotazioneSpecs());
+        return this.getAppuntamentoRepository().findByPrenotazioneSpecsAppuntamento_Id(prenotazioneSpecs.getIdPrenotazioneSpecs());
     }
 
    

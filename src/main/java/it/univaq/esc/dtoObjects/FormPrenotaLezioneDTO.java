@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
+@Getter @Setter @NoArgsConstructor
 public class FormPrenotaLezioneDTO implements IFormPrenotabile{
 
     private String sportSelezionato = "tennis";
@@ -16,44 +20,7 @@ public class FormPrenotaLezioneDTO implements IFormPrenotabile{
 
     private List<IstruttoreSelezionato> istruttori = new ArrayList<IstruttoreSelezionato>();
 
-    public FormPrenotaLezioneDTO(){}
 
-    public List<IstruttoreSelezionato> getIstruttori() {
-        return istruttori;
-    }
-
-    public void setIstruttori(List<IstruttoreSelezionato> istruttori) {
-        this.istruttori = istruttori;
-    }
-
-    public List<ImpiantoSelezionato> getImpianti() {
-        return impianti;
-    }
-
-
-    public void setImpianti(List<ImpiantoSelezionato> impianti) {
-        this.impianti = impianti;
-    }
-
-
-    public List<OrarioAppuntamento> getOrariSelezionati() {
-        return orariSelezionati;
-    }
-
-
-    public void setOrariSelezionati(List<OrarioAppuntamento> orariSelezionati) {
-        this.orariSelezionati = orariSelezionati;
-    }
-
-
-    public String getSportSelezionato() {
-        return sportSelezionato;
-    }
-
-
-    public void setSportSelezionato(String sportSelezionato) {
-        this.sportSelezionato = sportSelezionato;
-    }
 
     @Override
     public HashMap<String, Object> getValoriForm() {

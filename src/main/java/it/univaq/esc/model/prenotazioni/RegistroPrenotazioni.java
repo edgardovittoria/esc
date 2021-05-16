@@ -1,55 +1,50 @@
 package it.univaq.esc.model.prenotazioni;
 
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
-
 import it.univaq.esc.repository.PrenotazioneRepository;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Component
 @Singleton
+@Getter @Setter
 public class RegistroPrenotazioni {
 
-    @Autowired 
+	@Getter(value = AccessLevel.PRIVATE)
+	@Setter(value = AccessLevel.PRIVATE)
     private PrenotazioneRepository prenotazioneRepository;
+	@Setter(value = AccessLevel.PRIVATE)
+    private List<Prenotazione> prenotazioniRegistrate = new ArrayList<Prenotazione>();
+    
 
-
-    private List<Prenotazione> prenotazioniEffettuate = new ArrayList<Prenotazione>();
-    //private static RegistroPrenotazioni instance = null;
-
-    public RegistroPrenotazioni(){}
+    public RegistroPrenotazioni(PrenotazioneRepository prenotazioneRepository){
+    	this.setPrenotazioneRepository(prenotazioneRepository);
+    }
 
 
     @PostConstruct
     public void popola(){
-        getTutteLePrenotazioni().addAll(prenotazioneRepository.findAll());
-        // for(Prenotazione prenotazione : this.getTutteLePrenotazioni()){
-        //     //prenotazione.impostaCalendarioPrenotazioneDaSpecifiche();
-        //     //prenotazione.getCalendarioPrenotazione().setListaAppuntamenti(appuntamentoRepository.findByPrenotazioneAppuntamento_IdPrenotazione(prenotazione.getIdPrenotazione()));
-        // }
+        getPrenotazioniRegistrate().addAll(prenotazioneRepository.findAll());
 
     }
 
     public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {
-        getTutteLePrenotazioni().add(prenotazioneDaAggiungere);
+        getPrenotazioniRegistrate().add(prenotazioneDaAggiungere);
        
     }
 
-    public List<Prenotazione> getTutteLePrenotazioni(){
-        return this.prenotazioniEffettuate;
-    }
+    
 
     public List<Prenotazione> getPrenotazioniByEmailSportivo(String email){
         List<Prenotazione> prenotazioniSportivo = new ArrayList<Prenotazione>();
-        for (Prenotazione prenotazione : this.getTutteLePrenotazioni()){
+        for (Prenotazione prenotazione : this.getPrenotazioniRegistrate()){
             if(((String)prenotazione.getSportivoPrenotante().getProprieta().get("email")).equals(email)){
                 prenotazioniSportivo.add(prenotazione);
             }
@@ -59,7 +54,7 @@ public class RegistroPrenotazioni {
 
     public void cancellaPrenotazione(Prenotazione prenotazioneDaCancellare){
         //appuntamentoRepository.deleteAll(prenotazioneDaCancellare.getListaAppuntamenti());
-        getTutteLePrenotazioni().remove(prenotazioneDaCancellare);
+        getPrenotazioniRegistrate().remove(prenotazioneDaCancellare);
         prenotazioneRepository.delete(prenotazioneDaCancellare);
         
     }
@@ -67,11 +62,11 @@ public class RegistroPrenotazioni {
     
 
     public int getLastIdPrenotazione() {
-        if(getTutteLePrenotazioni().isEmpty()){
+        if(getPrenotazioniRegistrate().isEmpty()){
             return 0;
         }
         else{
-        Prenotazione lastPrenotazione = getTutteLePrenotazioni().get(getTutteLePrenotazioni().size()-1);
+        Prenotazione lastPrenotazione = getPrenotazioniRegistrate().get(getPrenotazioniRegistrate().size()-1);
         return lastPrenotazione.getIdPrenotazione();}
     }
 

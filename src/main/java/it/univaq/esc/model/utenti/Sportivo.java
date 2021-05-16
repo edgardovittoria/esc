@@ -18,9 +18,14 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 
 import it.univaq.esc.model.Sport;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @DiscriminatorValue(value = "Sportivo")
+@Getter @Setter
 public class Sportivo extends RuoloUtentePolisportivaDecorator{
 
     
@@ -31,7 +36,6 @@ public class Sportivo extends RuoloUtentePolisportivaDecorator{
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Sport> sportPraticatiDalloSportivo = new ArrayList<Sport>();
 
-    public Sportivo(){}
 
     public Sportivo(UtentePolisportivaAbstract utenteDaDecorare){
         super(utenteDaDecorare);
@@ -43,14 +47,6 @@ public class Sportivo extends RuoloUtentePolisportivaDecorator{
     }
 
    
-
-    public List<Sport> getSportPraticatiDalloSportivo() {
-        return sportPraticatiDalloSportivo;
-    }
-
-    public void setSportPraticatiDalloSportivo(List<Sport> sportPraticatiDalloSportivo) {
-        this.sportPraticatiDalloSportivo = sportPraticatiDalloSportivo;
-    }
 
     public void aggiungiSporPraticatoDalloSportivo(Sport sportPraticato){
         this.sportPraticatiDalloSportivo.add(sportPraticato);

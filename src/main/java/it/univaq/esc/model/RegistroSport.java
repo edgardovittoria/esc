@@ -9,22 +9,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
+import it.univaq.esc.repository.ImpiantoRepository;
 import it.univaq.esc.repository.SportRepository;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Component
 @Singleton
+@Getter @Setter
 public class RegistroSport {
 
-	@Autowired
+	@Setter(value = AccessLevel.PRIVATE)
 	private SportRepository sportRepository;
 
+	@Setter(value = AccessLevel.PRIVATE)
 	private List<Sport> listaSportPolisportiva = new ArrayList<Sport>();
 
 	/**
 	 * Costruttore della classe RegistroSport. Non invocabile direttamente poiché
 	 * annotato come Singleton
 	 */
-	public RegistroSport() {
+	public RegistroSport(SportRepository sportRepository) {
+		this.setSportRepository(sportRepository);
 	}
 
 	/**
@@ -33,21 +41,7 @@ public class RegistroSport {
 	 */
 	@PostConstruct
 	public void popola() {
-		this.getListaSportPolisportiva().addAll(this.getSportRepository().findAll());
-	}
-
-	/**
-	 * @return il repository degli sport.
-	 */
-	private SportRepository getSportRepository() {
-		return sportRepository;
-	}
-
-	/**
-	 * @return la lista degli sport della polisportivia.
-	 */
-	public List<Sport> getListaSportPolisportiva() {
-		return listaSportPolisportiva;
+		this.setListaSportPolisportiva(this.getSportRepository().findAll());
 	}
 
 

@@ -17,18 +17,18 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@NoArgsConstructor @Getter @Setter
 public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
-
-
-    
-    
-
-
 
     @ManyToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
+    @Setter(value = AccessLevel.NONE)
     private List<UtentePolisportivaAbstract> invitati = new ArrayList<UtentePolisportivaAbstract>();
 
     @Column
@@ -43,46 +43,12 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     @JoinColumn()
     private UtentePolisportivaAbstract manutentore;
  
-    
-
-    public PrenotazioneImpiantoSpecs(){}
-
-    public List<UtentePolisportivaAbstract> getListaInvitati() {
-        return this.invitati;
-    }
-
+  
     public void invitaSportivi(List<UtentePolisportivaAbstract> listaSportiviDaInvitare) {
-        getListaInvitati().addAll(listaSportiviDaInvitare);
+        getInvitati().addAll(listaSportiviDaInvitare);
     }
 
-    public void setManutentore(UtentePolisportivaAbstract manutentore){
-        this.manutentore = manutentore;
-    }
-
-    public UtentePolisportivaAbstract getManutentore(){
-        return this.manutentore;
-    }
-    /**
-     * @return int return the numeroGiocatoriNonRegistratiAssociati
-     */
-    public int getNumeroGiocatoriNonRegistratiAssociati() {
-        return numeroGiocatoriNonRegistratiAssociati;
-    }
-
-    /**
-     * @param numeroGiocatoriNonRegistratiAssociati the numeroGiocatoriNonRegistratiAssociati to set
-     */
-    public void setNumeroGiocatoriNonRegistratiAssociati(int numeroGiocatoriNonRegistratiAssociati) {
-        this.numeroGiocatoriNonRegistratiAssociati = numeroGiocatoriNonRegistratiAssociati;
-    }
-
-    public void setImpiantoPrenotato(Impianto impiantoPrenotato){
-        this.impiantoPrenotato = impiantoPrenotato;
-    }
-
-    public Impianto getImpiantoPrenotato(){
-        return this.impiantoPrenotato;
-    }
+    
 
     public Integer getIdImpiantoPrenotato(){
         return this.getImpiantoPrenotato().getIdImpianto();
@@ -114,21 +80,13 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     @Override
     public Map<String, Object> getValoriSpecificheExtraPrenotazione() {
         HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-        mappaValori.put("invitati", this.getListaInvitati());
+        mappaValori.put("invitati", this.getInvitati());
         mappaValori.put("numeroGiocatoriNonIscritti", this.getNumeroGiocatoriNonRegistratiAssociati());
         mappaValori.put("manutentore", this.getManutentore());
         mappaValori.put("impianto", this.getImpiantoPrenotato());
 
         return mappaValori;
     }
-
-
-
-    // @Override
-    // protected void setTipoPrenotazione() {
-    //     this.tipoPrenotazione = TipiPrenotazione.IMPIANTO.toString();
-    // }
-
 
 
     @Override
