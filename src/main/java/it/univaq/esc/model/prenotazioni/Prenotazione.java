@@ -54,7 +54,7 @@ public class Prenotazione {
 
 
     public Prenotazione(int lastIdPrenotazione){
-        setIdPrenotazione(lastIdPrenotazione);
+        setIdPrenotazione(lastIdPrenotazione +1);
     }
 
     public Prenotazione(int lastIdPrenotazione, PrenotazioneSpecs prenotazioneSpecs) {
