@@ -71,6 +71,7 @@ public class PopolaDB {
         mappaProprieta.put("nome", "Pippo");
         mappaProprieta.put("cognome", "Franco");
         mappaProprieta.put("email", "pippofranco@bagaglino.com");
+        mappaProprieta.put("password", "pippo");
         List<Sport> listaSportPraticati = new ArrayList<Sport>();
         listaSportPraticati.add(tennis);
         mappaProprieta.put("sportPraticati", listaSportPraticati);
@@ -81,6 +82,7 @@ public class PopolaDB {
         mappaProprieta1.put("nome", "Gianni");
         mappaProprieta1.put("cognome", "cognome");
         mappaProprieta1.put("email", "poppins@bianconiglio.com");
+        mappaProprieta1.put("password", "poppins");
         List<Sport> listaSportPraticati1 = new ArrayList<Sport>();
         listaSportPraticati1.add(tennis);
         listaSportPraticati1.add(calcetto);
@@ -93,6 +95,7 @@ public class PopolaDB {
         mappaProprieta2.put("nome", "mariangelo");
         mappaProprieta2.put("cognome", "sasso");
         mappaProprieta2.put("email", "marsasso@boh.com");
+        mappaProprieta2.put("password", "sasso");
         List<Sport> listaSportPraticati2 = new ArrayList<Sport>();
         listaSportPraticati2.add(tennis);
         listaSportPraticati2.add(calcetto);
@@ -104,6 +107,7 @@ public class PopolaDB {
         mappaProprieta3.put("nome", "tardigrado");
         mappaProprieta3.put("cognome", "acqua");
         mappaProprieta3.put("email", "matita@boh.com");
+        mappaProprieta3.put("password", "matita");
         List<Sport> listaSportPraticati3 = new ArrayList<Sport>();
         listaSportPraticati3.add(pallavolo);
         listaSportPraticati3.add(calcetto);

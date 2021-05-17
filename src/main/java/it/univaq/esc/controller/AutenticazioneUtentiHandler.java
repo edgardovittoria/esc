@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,8 @@ import lombok.Setter;
 @Getter @Setter @AllArgsConstructor
 public class AutenticazioneUtentiHandler {
 	
+	@Getter(value = AccessLevel.PRIVATE)
+	@Setter(value = AccessLevel.PRIVATE)
 	private RegistroUtentiPolisportiva registroUtentiPolisportiva;
 	
 	
