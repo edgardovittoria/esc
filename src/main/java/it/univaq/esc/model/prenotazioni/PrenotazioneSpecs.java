@@ -32,7 +32,7 @@ public abstract class PrenotazioneSpecs {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Setter(value = AccessLevel.PRIVATE)
+	@Setter(value = AccessLevel.NONE)
 	private Long id;
 	@Column
 	private boolean confermata = false;

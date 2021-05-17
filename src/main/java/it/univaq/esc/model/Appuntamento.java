@@ -41,7 +41,7 @@ public class Appuntamento {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter(value = AccessLevel.PRIVATE)
+    @Setter(value = AccessLevel.NONE)
     private Integer idAppuntamento;
     @Column
     private LocalDateTime dataOraInizioAppuntamento;
