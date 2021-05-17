@@ -91,6 +91,7 @@ public class RegistroUtentiPolisportiva {
         return null;
     }
 
+
     /**
      * Ritorna una lista degli utenti che hanno nella polisportiva il ruolo passato come parametro
      * @param ruolo ruolo che devono avere gli utenti ricercati
