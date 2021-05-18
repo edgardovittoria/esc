@@ -12,20 +12,26 @@ import org.springframework.stereotype.Service;
 
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import javassist.NotFoundException;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @Component
+@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE) @AllArgsConstructor
 public class MyUserDetailsService implements UserDetailsService{
 
-    @Autowired
     private RegistroUtentiPolisportiva registroUtentiPolisportiva;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        
-        UtentePolisportivaAbstract utente = registroUtentiPolisportiva.getUtenteByEmail(username);
-        return new User((String)utente.getProprieta().get("email"), 
-                        (String)utente.getProprieta().get("password"), 
-                        new ArrayList<>());
+        UtentePolisportivaAbstract utente = getRegistroUtentiPolisportiva().getUtenteByEmail(username);
+        
+        	return new User((String)utente.getProprieta().get("email"), 
+                    (String)utente.getProprieta().get("password"), 
+                    new ArrayList<>());     
 
     }
 

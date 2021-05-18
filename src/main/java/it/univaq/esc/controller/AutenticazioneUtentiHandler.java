@@ -1,9 +1,5 @@
 package it.univaq.esc.controller;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
@@ -28,21 +23,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 @RestController
-// @Getter @Setter @AllArgsConstructor
+@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE) @AllArgsConstructor
 public class AutenticazioneUtentiHandler {
 
-	// @Getter(value = AccessLevel.PRIVATE)
-	// @Setter(value = AccessLevel.PRIVATE)
-	@Autowired
 	private RegistroUtentiPolisportiva registroUtentiPolisportiva;
 
-	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	@Autowired
 	private MyUserDetailsService myUserDetailsService;
 
-	@Autowired
 	private JwtUtil jwtUtil;
 
 	// @RequestMapping("/login")
