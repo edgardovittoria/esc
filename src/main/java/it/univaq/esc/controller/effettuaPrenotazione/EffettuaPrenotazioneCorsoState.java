@@ -22,6 +22,7 @@ import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import lombok.Setter;
@@ -29,15 +30,12 @@ import net.bytebuddy.asm.Advice.This;
 
 
 @Component
-@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE)
+@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE) @AllArgsConstructor
 public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 	
 	private EffettuaPrenotazioneLezioneState statoControllerLezioni;
 	
 	
-	public EffettuaPrenotazioneCorsoState(EffettuaPrenotazioneLezioneState statoLezioni) {
-		this.setStatoControllerLezioni(statoLezioni);
-	}
 	/**
      * Blocco static.
      * La prima volta che viene caricata la classe, la registra nella FactoryStatoEffettuaPrenotazione
