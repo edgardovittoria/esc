@@ -18,14 +18,31 @@ public class PrenotabileDescrizioneBuilder {
     private PrenotabileDescrizione prenotabileDescrizione;
 
 
-    public PrenotabileDescrizioneBuilder creaNuovoDescrizione(Sport sport, String tipoPrenotazione){
+    public PrenotabileDescrizioneBuilder creaNuovaDescrizione(){
         this.setPrenotabileDescrizione(new PrenotabileDescrizione());
-        this.getPrenotabileDescrizione().setSportAssociato(sport);
-        this.getPrenotabileDescrizione().setTipoPrenotazione(tipoPrenotazione);
-
         return this;
     }
 
+    public PrenotabileDescrizioneBuilder impostaSport(Sport sportDaImpostare) {
+		this.getPrenotabileDescrizione().setSportAssociato(sportDaImpostare);
+		return this;
+	}
+    
+    public PrenotabileDescrizioneBuilder impostaTipoPrenotazione(String tipoPrenotazione) {
+    	this.getPrenotabileDescrizione().setTipoPrenotazione(tipoPrenotazione);
+    	return this;
+    }
+    
+    public PrenotabileDescrizioneBuilder impostaSogliaMinimaPartecipanti(Integer numeroMinimoPartecipanti) {
+    	this.getPrenotabileDescrizione().setMinimoNumeroPartecipanti(numeroMinimoPartecipanti);
+    	return this;
+	}
+    
+    public PrenotabileDescrizioneBuilder impostaSogliaMassimaPartecipanti(Integer numeroMassimoPartecipanti) {
+		this.getPrenotabileDescrizione().setMassimoNumeroPartecipanti(numeroMassimoPartecipanti);
+		return this;
+	}
+    
     public PrenotabileDescrizioneBuilder impostaCostoOrario(Float costoDaImpostare){
         CostoPrenotabile costoOrario = new CostoPrenotabile();
         costoOrario.setCosto(costoDaImpostare);

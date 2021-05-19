@@ -80,4 +80,6 @@ public class PrenotazioneLezioneSpecs extends PrenotazioneSpecs{
         return TipiPrenotazione.LEZIONE.toString();
     }
 
+	
+
 }

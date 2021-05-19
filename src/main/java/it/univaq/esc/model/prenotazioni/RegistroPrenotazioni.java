@@ -10,6 +10,7 @@ import it.univaq.esc.repository.PrenotazioneRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import net.bytebuddy.description.ModifierReviewable.OfAbstraction;
 
 
 @Component
@@ -72,7 +73,7 @@ public class RegistroPrenotazioni {
 
     
 
-    private List<Prenotazione> filtraPrenotazioniPerTipo(List<Prenotazione> listaPrenotazioniDaFiltrare, String tipoPrenotazione){
+    public List<Prenotazione> filtraPrenotazioniPerTipo(List<Prenotazione> listaPrenotazioniDaFiltrare, String tipoPrenotazione){
 
         List<Prenotazione> prenotazioniFiltrate = new ArrayList<Prenotazione>();
         for(Prenotazione prenotazione : listaPrenotazioniDaFiltrare){
@@ -82,5 +83,16 @@ public class RegistroPrenotazioni {
         }
         return prenotazioniFiltrate;
     }
+    
+    public Prenotazione getPrenotazioneById(Integer idPrenotazione) {
+    	for(Prenotazione prenotazione : this.getPrenotazioniRegistrate()) {
+    		if(prenotazione.getIdPrenotazione() == idPrenotazione) {
+    			return prenotazione;
+    		}
+    	}
+    	return null;
+    }
+    
+    
 
 }

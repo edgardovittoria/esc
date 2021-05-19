@@ -150,7 +150,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         }
 
         for(Appuntamento appuntamento : controller.getListaAppuntamentiPrenotazioneInAtto()){
-            appuntamento.aggiungiPartecipante(controller.getPrenotazioneInAtto().getSportivoPrenotante());
+        	
+            this.aggiungiPartecipante(controller.getPrenotazioneInAtto().getSportivoPrenotante(), appuntamento);
         }
 
         
@@ -217,7 +218,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
     public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
         Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
         if(appuntamento != null){
-            appuntamento.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante));
+            this.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
             this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
             AppuntamentoDTO appuntamentoDTO = new AppuntamentoDTO();
             appuntamentoDTO.impostaValoriDTO(appuntamento);

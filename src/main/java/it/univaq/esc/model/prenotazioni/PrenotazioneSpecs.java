@@ -1,5 +1,6 @@
 package it.univaq.esc.model.prenotazioni;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -58,13 +59,26 @@ public abstract class PrenotazioneSpecs {
 	public abstract Map<String, Object> getValoriSpecificheExtraPrenotazione();
 
 	public abstract String getTipoPrenotazione();
+	
+	public Integer getIdPrenotazioneAssociata() {
+		return this.getPrenotazioneAssociata().getIdPrenotazione();
+	}
 
 	public Integer getNumeroGiocatori() {
 		return this.getSportAssociato().getNumeroGiocatori();
 	}
+	
+	public Integer getSogliaMassimaPartecipanti() {
+		return this.getSpecificaDescription().getMassimoNumeroPartecipanti();
+	}
+	
+	public Integer getSogliaPartecipantiPerConferma() {
+		return this.getSpecificaDescription().getMinimoNumeroPartecipanti();
+	};
 
 	public UtentePolisportivaAbstract getSportivoPrenotante() {
 		return this.getPrenotazioneAssociata().getSportivoPrenotante();
 	}
+	
 
 }

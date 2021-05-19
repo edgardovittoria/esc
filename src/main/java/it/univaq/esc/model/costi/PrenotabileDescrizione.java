@@ -36,6 +36,10 @@ public class PrenotabileDescrizione {
     @ManyToOne
     @JoinColumn
     private Sport sportAssociato;
+    @Column 
+    private Integer minimoNumeroPartecipanti;
+    @Column
+    private Integer massimoNumeroPartecipanti;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn

@@ -79,17 +79,92 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 			controller.aggiungiAppuntamento(appuntamento);
 		}
 
+//		PrenotabileDescrizione descrizioneSpecifica = null;
+//		for (PrenotabileDescrizione desc : controller.getListinoPrezziDescrizioniPolisportiva()
+//				.getCatalogoPrenotabili()) {
+//			if (desc.getSportAssociato().getNome().equals((String) formDati.getValoriForm().get("sport"))
+//					&& desc.getTipoPrenotazione().equals(controller.getPrenotazioneInAtto()
+//							.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione())) {
+//				descrizioneSpecifica = desc;
+//			}
+//		}
+//
+//		for (PrenotazioneSpecs spec : controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione()) {
+//			spec.setSpecificaDescription(descrizioneSpecifica);
+//		}
+//
+//		List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
+//		for (IstruttoreSelezionato istruttore : (List<IstruttoreSelezionato>) formDati.getValoriForm()
+//				.get("istruttori")) {
+//			istruttori.add(getRegistroUtenti().getUtenteByEmail(istruttore.getIstruttore()));
+//		}
+//
+//		for (OrarioAppuntamento orario : (List<OrarioAppuntamento>) formDati.getValoriForm()
+//				.get("listaOrariAppuntamenti")) {
+//			// Calendario calendarioPrenotazione = new Calendario();
+//			LocalDateTime dataInizio = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraInizio());
+//			LocalDateTime dataFine = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraFine());
+//
+//			// calendarioPrenotazione.aggiungiAppuntamento(dataInizio, dataFine ,
+//			// controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+//			// controller.getPrenotazioneInAtto().setCalendarioSpecifica(calendarioPrenotazione,
+//			// controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0));
+//
+//			controller.getListaAppuntamentiPrenotazioneInAtto().get(
+//					((List<OrarioAppuntamento>) formDati.getValoriForm().get("listaOrariAppuntamenti")).indexOf(orario))
+//					.setDataOraInizioAppuntamento(dataInizio);
+//			controller.getListaAppuntamentiPrenotazioneInAtto().get(
+//					((List<OrarioAppuntamento>) formDati.getValoriForm().get("listaOrariAppuntamenti")).indexOf(orario))
+//					.setDataOraFineAppuntamento(dataFine);
+//
+//			HashMap<String, Object> mappaValori = new HashMap<String, Object>();
+//
+//			Integer idImpianto = 0;
+//			for (ImpiantoSelezionato impianto : (List<ImpiantoSelezionato>) formDati.getValoriForm().get("impianti")) {
+//				if (impianto.getIdSelezione() == orario.getId()) {
+//					idImpianto = impianto.getIdImpianto();
+//				}
+//			}
+//
+//			mappaValori.put("impianto", getRegistroImpianti().getImpiantoByID(idImpianto));
+//
+//			String emailIstruttore = "";
+//			for (IstruttoreSelezionato istruttore : (List<IstruttoreSelezionato>) formDati.getValoriForm()
+//					.get("istruttori")) {
+//				if (istruttore.getIdSelezione() == orario.getId()) {
+//					emailIstruttore = istruttore.getIstruttore();
+//				}
+//			}
+//			mappaValori.put("istruttore", getRegistroUtenti().getUtenteByEmail(emailIstruttore));
+//
+//			controller.getListaAppuntamentiPrenotazioneInAtto()
+//					.get(((List<OrarioAppuntamento>) formDati.getValoriForm().get("listaOrariAppuntamenti"))
+//							.indexOf(orario))
+//					.getPrenotazioneSpecsAppuntamento().impostaValoriSpecificheExtraPrenotazione(mappaValori);
+//			controller.getListaAppuntamentiPrenotazioneInAtto().get(
+//					((List<OrarioAppuntamento>) formDati.getValoriForm().get("listaOrariAppuntamenti")).indexOf(orario))
+//					.calcolaCosto();
+//		}
+		
+		this.impostaValoriPrenotazioniSpecs(formDati, controller.getTipoPrenotazioneInAtto(), controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione(), controller);
+
+		for (Appuntamento appuntamento : controller.getListaAppuntamentiPrenotazioneInAtto()) {
+			this.aggiungiPartecipante(controller.getPrenotazioneInAtto().getSportivoPrenotante(), appuntamento);
+		}
+
+	}
+	
+	public void impostaValoriPrenotazioniSpecs(IFormPrenotabile formDati, String tipoPrenotazione, List<PrenotazioneSpecs> listaSpecifiche, EffettuaPrenotazioneHandlerRest controller) {
 		PrenotabileDescrizione descrizioneSpecifica = null;
-		for (PrenotabileDescrizione desc : controller.getListinoPrezziDescrizioniPolisportiva()
+		for (PrenotabileDescrizione desc : this.getrCatalogoPrenotabili()
 				.getCatalogoPrenotabili()) {
 			if (desc.getSportAssociato().getNome().equals((String) formDati.getValoriForm().get("sport"))
-					&& desc.getTipoPrenotazione().equals(controller.getPrenotazioneInAtto()
-							.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione())) {
+					&& desc.getTipoPrenotazione().equals(tipoPrenotazione)) {
 				descrizioneSpecifica = desc;
 			}
 		}
 
-		for (PrenotazioneSpecs spec : controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione()) {
+		for (PrenotazioneSpecs spec : listaSpecifiche) {
 			spec.setSpecificaDescription(descrizioneSpecifica);
 		}
 
@@ -145,11 +220,6 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 					((List<OrarioAppuntamento>) formDati.getValoriForm().get("listaOrariAppuntamenti")).indexOf(orario))
 					.calcolaCosto();
 		}
-
-		for (Appuntamento appuntamento : controller.getListaAppuntamentiPrenotazioneInAtto()) {
-			appuntamento.aggiungiPartecipante(controller.getPrenotazioneInAtto().getSportivoPrenotante());
-		}
-
 	}
 
 	

@@ -12,15 +12,20 @@ import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.IstruttoreDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
+import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
+import it.univaq.esc.model.QuotaPartecipazione;
 import it.univaq.esc.model.RegistroAppuntamenti;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.costi.CatalogoPrenotabili;
+import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.repository.AppuntamentoRepository;
 
 /**
  * Classe astratta che definisce l'interfaccia comune per gli stati del
@@ -64,6 +69,14 @@ public abstract class EffettuaPrenotazioneState {
 	 */
 	@Autowired
 	private RegistroAppuntamenti registroAppuntamenti;
+	
+	
+	@Autowired 
+	private RegistroPrenotazioni registroPrenotazioni;
+	
+	
+	@Autowired
+	private CatalogoPrenotabili catalogoPrenotabili;
 
 	/**
 	 * Costruttore della classe EffettuaPrenotazioneState
@@ -79,6 +92,10 @@ public abstract class EffettuaPrenotazioneState {
 	 */
 	protected RegistroAppuntamenti getRegistroAppuntamenti() {
 		return registroAppuntamenti;
+	}
+	
+	protected CatalogoPrenotabili getrCatalogoPrenotabili() {
+		return catalogoPrenotabili;
 	}
 
 	/**
@@ -399,6 +416,42 @@ public abstract class EffettuaPrenotazioneState {
 	 */
 	public RegistroSport getRegistroSport() {
 		return registroSport;
+	}
+
+	protected QuotaPartecipazione creaQuotaPartecipazione(Appuntamento appuntamento,
+			UtentePolisportivaAbstract sportivo) {
+		boolean quotaGiaPresente = false;
+		for (QuotaPartecipazione quotaPartecipazione : appuntamento.getQuotePartecipazione()) {
+			if (!quotaPartecipazione.getSportivoAssociato().isEqual(sportivo)) {
+				quotaGiaPresente = true;
+			}
+		}
+		if (!quotaGiaPresente) {
+			QuotaPartecipazione quota = new QuotaPartecipazione();
+			quota.setCosto(appuntamento.getCalcolatoreCosto().calcolaQuotaPartecipazione(appuntamento));
+			quota.setSportivoAssociato(sportivo);
+			quota.setPagata(false);
+			return quota;
+		}
+		return null;
+	}
+	
+	protected void aggiungiPartecipante(UtentePolisportivaAbstract utente, Appuntamento appuntamento) {
+		if (appuntamento.getPartecipanti().size() < appuntamento.getNumeroPartecipantiMassimo()) {
+			appuntamento.aggiungiPartecipante(utente);
+			if (appuntamento.getPartecipanti().size() >= appuntamento.getSogliaMinimaPartecipantiPerConferma()) {
+				appuntamento.confermaAppuntamento();
+				appuntamento.getPartecipanti().forEach((partecipante) -> appuntamento.aggiungiQuotaPartecipazione(
+						this.creaQuotaPartecipazione(appuntamento, utente)));
+			}
+		}
+	}
+
+	/**
+	 * @return the registroPrenotazioni
+	 */
+	public RegistroPrenotazioni getRegistroPrenotazioni() {
+		return registroPrenotazioni;
 	}
 
 }

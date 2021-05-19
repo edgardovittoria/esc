@@ -46,8 +46,12 @@ public class CatalogoPrenotabili {
         this.setCatalogoPrenotabili(this.getPrenotabileDescrizioneRepository().findAll());
     }
 
-    public CatalogoPrenotabili avviaCreazionePrenotabile(Sport sport, String tipoPrenotazione){
-        this.getPrenotabileDescrizioneBuilder().creaNuovoDescrizione(sport, tipoPrenotazione);
+    public CatalogoPrenotabili avviaCreazionePrenotabile(Sport sport, String tipoPrenotazione, Integer sogliaMinimaPartecipanti, Integer sogliaMassimaPartecipanti){
+        this.getPrenotabileDescrizioneBuilder().creaNuovaDescrizione()
+        	.impostaSport(sport)
+        	.impostaTipoPrenotazione(tipoPrenotazione)
+        	.impostaSogliaMinimaPartecipanti(sogliaMinimaPartecipanti)
+        	.impostaSogliaMassimaPartecipanti(sogliaMassimaPartecipanti);
 
         return this;
     }

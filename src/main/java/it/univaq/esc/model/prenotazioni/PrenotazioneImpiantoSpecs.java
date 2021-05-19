@@ -94,4 +94,5 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
         return TipiPrenotazione.IMPIANTO.toString();
     }
 
+
 }

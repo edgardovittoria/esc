@@ -1,14 +1,21 @@
 package it.univaq.esc.model.prenotazioni;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.Impianto;
 
@@ -16,62 +23,36 @@ import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.bytebuddy.asm.Advice.This;
 @Entity
 @NoArgsConstructor @Getter @Setter
 public class PrenotazioneCorsoSpecs extends PrenotazioneSpecs{
-    @ManyToOne()
+    @OneToMany
     @JoinColumn()
-    private UtentePolisportivaAbstract istruttore;
-
-    @ManyToOne
-    @JoinColumn
-    private Impianto impiantoPrenotato;
-
-    @ManyToOne()
-    @JoinColumn()
-    private UtentePolisportivaAbstract manutentore;
- 
-
-    public Integer getIdImpiantoPrenotato(){
-        return this.getImpiantoPrenotato().getIdImpianto();
-    }
-
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<PrenotazioneSpecs> listaLezioni = new ArrayList<PrenotazioneSpecs>();
+    
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<UtentePolisportivaAbstract> invitati = new ArrayList<UtentePolisportivaAbstract>();
+    
+    
     @Override
     public void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori) {
-        for(String chiave : mappaValori.keySet()){
-            switch (chiave) {
-                case "istruttore":
-                    this.setIstruttore((UtentePolisportivaAbstract)mappaValori.get(chiave));
-                    break;
-                case "manutentore":
-                    this.setManutentore((UtentePolisportivaAbstract)mappaValori.get(chiave));
-                    break;
-                case "impianto":
-                    this.setImpiantoPrenotato((Impianto)mappaValori.get(chiave));   
-                    break;  
-                default:
-                    break;
-            }
-        }
+    	List<Map<String, Object>> listaMappe = ((List<Map<String, Object>>)mappaValori.get("listaMappeLezioni"));
+        listaLezioni.forEach((lezione) -> lezione.impostaValoriSpecificheExtraPrenotazione(listaMappe.get(listaLezioni.indexOf(lezione))));
+        this.setInvitati((List<UtentePolisportivaAbstract>)mappaValori.get("invitati")); 
+        this.setListaLezioni((List<PrenotazioneSpecs>)mappaValori.get("listaLezioniCorso"));
         
     }
 
     @Override
     public Map<String, Object> getValoriSpecificheExtraPrenotazione() {
         HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-        mappaValori.put("istruttore", this.getIstruttore());
-        mappaValori.put("manutentore", this.getManutentore());
-        mappaValori.put("impianto", this.getImpiantoPrenotato());
-
+        mappaValori.put("listaLezioniCorso", this.getListaLezioni());    
+        mappaValori.put("invitati", this.getInvitati());
         return mappaValori;
     }
-
-
-
-    // @Override
-    // protected void setTipoPrenotazione() {
-    //     this.tipoPrenotazione = TipiPrenotazione.IMPIANTO.toString();
-    // }
 
 
 

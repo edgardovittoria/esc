@@ -20,4 +20,7 @@ public abstract class UtentePolisportivaAbstract {
     public abstract void setProprieta(Map<String, Object> mappaProprieta);
     public abstract Map<String, Object> getProprieta();
     public abstract List<String> getRuoliUtentePolisportiva();
+    
+    public abstract boolean isEqual(UtentePolisportivaAbstract utenteDaConfrontare);
+    	
 }

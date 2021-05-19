@@ -31,5 +31,9 @@ public abstract class RuoloUtentePolisportivaDecorator extends UtentePolisportiv
     @Setter(value = AccessLevel.PROTECTED)
     private UtentePolisportivaAbstract utentePolisportiva;
 
+    @Override
+    public boolean isEqual(UtentePolisportivaAbstract utenteDaConfrontare) {
+    	return this.getUtentePolisportiva().isEqual(utenteDaConfrontare);
+    }
 
 }

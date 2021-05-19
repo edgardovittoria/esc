@@ -168,5 +168,15 @@ public class RegistroAppuntamenti {
         }
         return null;
     }
+    
+    public List<Appuntamento> getAppuntamentiByPrenotazioneId(Integer idPrenotazione){
+    	List<Appuntamento> appuntamenti = new ArrayList<Appuntamento>();
+    	for(Appuntamento appuntamento : this.getListaAppuntamenti()) {
+    		if(appuntamento.getIdPrenotazione() == idPrenotazione) {
+    			appuntamenti.add(appuntamento);
+    		}
+    	}
+    	return appuntamenti;
+    }
 
 }

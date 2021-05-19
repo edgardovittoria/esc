@@ -15,11 +15,14 @@ import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.Pavimentazione;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
+import it.univaq.esc.model.prenotazioni.PrenotazioneCorsoSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneLezioneSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
+import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
@@ -41,6 +44,7 @@ public class PopolaDB {
 
     @Autowired
     private ImpiantoRepository impiantoRepository;
+    
 
     
     @Autowired
@@ -168,7 +172,7 @@ public class PopolaDB {
 
 
         this.listinoPrezziDescrizioniPolisportiva
-            .avviaCreazionePrenotabile(tennis, TipiPrenotazione.IMPIANTO.toString())
+            .avviaCreazionePrenotabile(tennis, TipiPrenotazione.IMPIANTO.toString(), tennis.getNumeroGiocatori(), tennis.getNumeroGiocatori())
             .impostaCostoOrario(Float.parseFloat("10"))
             .impostaCostoPavimentazione(Float.parseFloat("10") ,Pavimentazione.CEMENTO.toString())
             .impostaCostoPavimentazione(Float.parseFloat("50") ,Pavimentazione.TERRA_BATTUTA.toString())
@@ -176,14 +180,14 @@ public class PopolaDB {
             .salvaPrenotabileInCreazione();
 
             this.listinoPrezziDescrizioniPolisportiva
-            .avviaCreazionePrenotabile(calcetto, TipiPrenotazione.IMPIANTO.toString())
+            .avviaCreazionePrenotabile(calcetto, TipiPrenotazione.IMPIANTO.toString(), calcetto.getNumeroGiocatori(), calcetto.getNumeroGiocatori())
             .impostaCostoOrario(Float.parseFloat("10"))
             .impostaCostoPavimentazione(Float.parseFloat("10") ,Pavimentazione.CEMENTO.toString())
             .impostaCostoPavimentazione(Float.parseFloat("20"), Pavimentazione.SINTETICO.toString())
             .salvaPrenotabileInCreazione();
 
             this.listinoPrezziDescrizioniPolisportiva
-            .avviaCreazionePrenotabile(pallavolo,TipiPrenotazione.IMPIANTO.toString())
+            .avviaCreazionePrenotabile(pallavolo,TipiPrenotazione.IMPIANTO.toString(), pallavolo.getNumeroGiocatori(), pallavolo.getNumeroGiocatori())
             .impostaCostoOrario(Float.parseFloat("10"))
             .impostaCostoPavimentazione(Float.parseFloat("20"), Pavimentazione.CEMENTO.toString())
             .impostaCostoPavimentazione(Float.parseFloat("30"), Pavimentazione.SINTETICO.toString())
@@ -191,7 +195,7 @@ public class PopolaDB {
 
 
             this.listinoPrezziDescrizioniPolisportiva
-            .avviaCreazionePrenotabile(tennis, TipiPrenotazione.LEZIONE.toString())
+            .avviaCreazionePrenotabile(tennis, TipiPrenotazione.LEZIONE.toString(), 1, 1)
             .impostaCostoOrario(Float.parseFloat("10"))
             .impostaCostoPavimentazione(Float.parseFloat("10") ,Pavimentazione.CEMENTO.toString())
             .impostaCostoPavimentazione(Float.parseFloat("50") ,Pavimentazione.TERRA_BATTUTA.toString())
@@ -199,14 +203,14 @@ public class PopolaDB {
             .salvaPrenotabileInCreazione();
 
             this.listinoPrezziDescrizioniPolisportiva
-            .avviaCreazionePrenotabile(calcetto, TipiPrenotazione.LEZIONE.toString())
+            .avviaCreazionePrenotabile(calcetto, TipiPrenotazione.LEZIONE.toString(), 1, 5)
             .impostaCostoOrario(Float.parseFloat("10"))
             .impostaCostoPavimentazione(Float.parseFloat("10") ,Pavimentazione.CEMENTO.toString())
             .impostaCostoPavimentazione(Float.parseFloat("20"), Pavimentazione.SINTETICO.toString())
             .salvaPrenotabileInCreazione();
 
             this.listinoPrezziDescrizioniPolisportiva
-            .avviaCreazionePrenotabile(pallavolo,TipiPrenotazione.LEZIONE.toString())
+            .avviaCreazionePrenotabile(pallavolo,TipiPrenotazione.LEZIONE.toString(),1,6)
             .impostaCostoOrario(Float.parseFloat("10"))
             .impostaCostoPavimentazione(Float.parseFloat("20"), Pavimentazione.CEMENTO.toString())
             .impostaCostoPavimentazione(Float.parseFloat("30"), Pavimentazione.SINTETICO.toString())
@@ -325,7 +329,7 @@ public class PopolaDB {
         // prenotazioneRepository.save(prenotazione2);
         appuntamentoRepository.saveAll(calendarioSpecs1.getListaAppuntamenti());
         appuntamentoRepository.saveAll(calendarioSpecs2.getListaAppuntamenti());
-
+        		
         
     }
 
