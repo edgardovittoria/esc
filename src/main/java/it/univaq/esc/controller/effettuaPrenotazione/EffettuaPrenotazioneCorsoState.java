@@ -23,9 +23,10 @@ import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
 import lombok.Setter;
 import net.bytebuddy.asm.Advice.This;
+
 
 @Component
 @Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE)
@@ -140,6 +141,14 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 		PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO();
 		prenotazioneDTO.impostaValoriDTO(this.getRegistroPrenotazioni().getPrenotazioneById(idEvento));
 		return prenotazioneDTO;
+	}
+
+	@Override
+	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandlerRest controller) {
+		Map<String, Object> mappaDati = this.getDatiOpzioni(controller);
+		mappaDati.put("sportiviInvitabili", this.getSportiviPolisportiva());
+		
+		return mappaDati;
 	}
 
 }

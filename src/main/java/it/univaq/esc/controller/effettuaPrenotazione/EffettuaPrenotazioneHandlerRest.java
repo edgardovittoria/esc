@@ -223,19 +223,27 @@ public class EffettuaPrenotazioneHandlerRest {
     public @ResponseBody Map<String, Object> avviaNuovaPrenotazione(
             @RequestParam(name = "email") String emailSportivoPrenotante,
             @RequestParam(name = "tipoPrenotazione") String tipoPrenotazione) {
-        UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroUtenti()
-                .getUtenteByEmail(emailSportivoPrenotante);
-        int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
-
-        setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
-        getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
-
-        this.setTipoPrenotazioneInAtto(tipoPrenotazione);
-
+        
+    	this.inizializzaNuovaPrenotazione(emailSportivoPrenotante, tipoPrenotazione);
         return this.getStato().getDatiOpzioni(this);
     }
 
-    
+    /**
+     * Avvia una nuova prenotazione di eventi creabili solo dal direttore, o che in modalità direttore devono offrire opzioni differenti.
+     * Crea una prenotazione e imposta l'utente che la effettua, il direttore.
+     * Salva poi la tipologia della prenotazione per utilizzarla in operazioni successive e, in base a questa, imposta lo Stato corretto.
+     * Infine, tramite lo Stato, restituisce una mappa di dati per la fase di compilazione.
+     * 
+     * @param emailDirettore email del direttore che effettua la prenotazione.
+     * @param tipoPrenotazione tipologia di prenotazione selezionata
+     * @return mappa di dati per la fase di compilazione della prenotazione.
+     */
+    @GetMapping("/avviaNuovaPrenotazioneEventoDirettore")
+    @CrossOrigin
+    public @ResponseBody Map<String, Object> avviaNuovaPrenotazioneEventoDirettore(@RequestParam(name = "email") String emailDirettore, @RequestParam(name = "tipoPrenotazione") String tipoPrenotazione){
+    	this.inizializzaNuovaPrenotazione(emailDirettore, tipoPrenotazione);
+    	return this.getStato().getDatiOpzioniModalitaDirettore(this);
+    }
     
     @PostMapping("/aggiornaOpzioniPrenotazione")
     @CrossOrigin
@@ -243,6 +251,17 @@ public class EffettuaPrenotazioneHandlerRest {
         return null;
     }
 
+    
+    private void inizializzaNuovaPrenotazione(String emailPrenotante, String tipoPrenotazione) {
+    	UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroUtenti()
+                .getUtenteByEmail(emailPrenotante);
+        int lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
+
+        setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
+        getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
+
+        this.setTipoPrenotazioneInAtto(tipoPrenotazione);
+    }
     
     /**
      * Imposta i valori della prenotazione passati come parametro, delegando tutte le operazioni di assegnazione allo Stato.

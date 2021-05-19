@@ -156,7 +156,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	
 	public void impostaValoriPrenotazioniSpecs(IFormPrenotabile formDati, String tipoPrenotazione, List<PrenotazioneSpecs> listaSpecifiche, EffettuaPrenotazioneHandlerRest controller) {
 		PrenotabileDescrizione descrizioneSpecifica = null;
-		for (PrenotabileDescrizione desc : this.getrCatalogoPrenotabili()
+		for (PrenotabileDescrizione desc : this.getCatalogoPrenotabili()
 				.getCatalogoPrenotabili()) {
 			if (desc.getSportAssociato().getNome().equals((String) formDati.getValoriForm().get("sport"))
 					&& desc.getTipoPrenotazione().equals(tipoPrenotazione)) {
@@ -259,6 +259,12 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 */
 	@Override
 	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandlerRest controller) {
 		// TODO Auto-generated method stub
 		return null;
 	}

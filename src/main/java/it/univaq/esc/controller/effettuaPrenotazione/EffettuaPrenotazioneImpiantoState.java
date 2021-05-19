@@ -227,5 +227,12 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
         return null;
     }
 
+
+	@Override
+	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandlerRest controller) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     
 }

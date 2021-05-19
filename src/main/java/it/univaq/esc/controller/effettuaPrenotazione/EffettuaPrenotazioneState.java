@@ -94,7 +94,7 @@ public abstract class EffettuaPrenotazioneState {
 		return registroAppuntamenti;
 	}
 	
-	protected CatalogoPrenotabili getrCatalogoPrenotabili() {
+	protected CatalogoPrenotabili getCatalogoPrenotabili() {
 		return catalogoPrenotabili;
 	}
 
@@ -167,6 +167,21 @@ public abstract class EffettuaPrenotazioneState {
 	 */
 	public abstract Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante);
 
+	
+	
+	/**
+	 * Definisce l'interfaccia per il metodo che restituisce i dati necessari per
+	 * popolare le opzioni di prenotazione, nella fase di avvio di una nuova
+	 * prenotazione di un evento che può essere creato solo dal Direttore, o che 
+	 * nel caso del Direttore necessita di opzioni differenti.
+	 * 
+	 * @param controller istanza del controller a cui lo stato è associato, in modo
+	 *                   tale da poter aggiornarne i dati all'occorrenza.
+	 * @return mappa con i dati iniziali delle varie opzioni selezionabili in fase
+	 *         di prenotazione.
+	 */
+	public abstract Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandlerRest controller);
+	
 	/**
 	 * Metodo di utilità, utilizzato in quelli principali, che resituisce la lista
 	 * di tutti gli sport praticabili nella polisportiva, in formato DTO.
@@ -187,11 +202,29 @@ public abstract class EffettuaPrenotazioneState {
 
 	/**
 	 * Metodo di utilità. Restituisce tutti gli utenti registrati nel sistema della
-	 * polisportiva.
+	 * polisportiva che sono SPORTIVI, in formato DTO.
 	 * 
-	 * @return lista di tutti gli utenti registrati nella polisportiva.
+	 * @return lista di tutti gli utenti registrati nella polisportiva che hanno il ruolo di sportivi in formato DTO.
 	 */
 	protected List<SportivoDTO> getSportiviPolisportiva() {
+		List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
+		for (UtentePolisportivaAbstract utente : getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO)) {
+			SportivoDTO sportivoDTO = new SportivoDTO();
+			sportivoDTO.impostaValoriDTO(utente);
+			listaSportiviDTO.add(sportivoDTO);
+		}
+
+		return listaSportiviDTO;
+	}
+	
+	
+	/**
+	 * Metodo di utilità. Restituisce tutti gli utenti registrati nel sistema della
+	 * polisportiva, in formato DTO
+	 * 
+	 * @return lista di tutti gli utenti registrati nella polisportiva in formato DTO.
+	 */
+	protected List<SportivoDTO> getUtentiPolisportiva() {
 		List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
 		for (UtentePolisportivaAbstract utente : getRegistroUtenti().getListaUtentiPolisportiva()) {
 			SportivoDTO sportivoDTO = new SportivoDTO();
