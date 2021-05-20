@@ -21,7 +21,7 @@ public class PrenotazioneDTO implements IModelToDTO {
 
 	private SportivoDTO sportivoPrenotante;
 	private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
-	private Map<String, Object> infoGeneraliPrenotazioneMap = new HashMap<String, Object>();
+	private Map<String, Object> infoGeneraliEvento = new HashMap<String, Object>();
 
 	public void aggiungiAppuntamento(AppuntamentoDTO appuntamento) {
 		this.getAppuntamenti().add(appuntamento);
@@ -41,7 +41,7 @@ public class PrenotazioneDTO implements IModelToDTO {
 			this.aggiungiAppuntamento(appDTO);
 		}
 		if (mappa.containsKey("infoGeneraliEvento")) {
-			this.setInfoGeneraliPrenotazioneMap((Map<String, Object>) mappa.get("infoGeneraliEvento"));
+			this.setInfoGeneraliEvento((Map<String, Object>) mappa.get("infoGeneraliEvento"));
 		}
 
 	}
