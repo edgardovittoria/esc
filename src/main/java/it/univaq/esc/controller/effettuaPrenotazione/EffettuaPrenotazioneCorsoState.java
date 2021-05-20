@@ -111,8 +111,18 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 		
 		prenotazioneSpecs.setSpecificaDescription(descrizioneCorso);
 		
-		this.getStatoControllerLezioni().impostaValoriPrenotazioniSpecs(formDati, TipiPrenotazione.LEZIONE.toString(), listaLezioniSpecs, controller);
 		
+		/*
+		 * Impostiamo il costo della specifica che rappresenta il corso con il costo per partecipante impostato nella form, 
+		 * dopodiché sovrascriviamo i costi delle singole lezioni impostandoli a zero.
+		 * Quando verrà aggiunto un partecipante verrà creata una quota di partecipazione, passata poi a tutti gli appuntamenti, con
+		 * il costo della specifica del corso.
+		 */
+		this.getStatoControllerLezioni().impostaValoriPrenotazioniSpecs(formDati, TipiPrenotazione.LEZIONE.toString(), listaLezioniSpecs, controller);
+		prenotazioneSpecs.setCosto((Float)formDati.getValoriForm().get("costoPerPartecipante"));
+		for(PrenotazioneSpecs specs : listaLezioniSpecs) {
+			specs.setCosto(0);
+		}
 		
 		
 		
