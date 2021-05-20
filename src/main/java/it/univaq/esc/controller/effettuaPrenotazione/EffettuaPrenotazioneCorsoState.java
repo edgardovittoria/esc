@@ -121,7 +121,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 		this.getStatoControllerLezioni().impostaValoriPrenotazioniSpecs(formDati, TipiPrenotazione.LEZIONE.toString(), listaLezioniSpecs, controller);
 		prenotazioneSpecs.setCosto((Float)formDati.getValoriForm().get("costoPerPartecipante"));
 		for(PrenotazioneSpecs specs : listaLezioniSpecs) {
-			specs.setCosto(0);
+			specs.setCosto(prenotazioneSpecs.getCosto());
 		}
 		
 		
