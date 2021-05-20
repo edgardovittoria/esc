@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.IstruttoreDTO;
+import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.Appuntamento;
@@ -126,7 +127,7 @@ public abstract class EffettuaPrenotazioneState {
 	 * @param controller istanza del controller cui lo stato è associato, per
 	 *                   poterne eventualmente aggiornare i dati.
 	 */
-	public abstract void impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller);
+	public abstract PrenotazioneDTO impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller);
 
 	/**
 	 * Definisce l'interfaccia del metodo che aggiorna gli oggetti intererssati

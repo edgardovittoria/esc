@@ -10,6 +10,7 @@ import it.univaq.esc.dtoObjects.IFormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
+import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
@@ -59,7 +60,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 * Metodo che imposta i dati della prenotazione, passati tramite una form DTO, nella controparte software lato server.
 	 */
 	@Override
-	public void impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller) {
+	public PrenotazioneDTO impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller) {
 		for (int i = 0; i < ((List<OrarioAppuntamento>) formDati.getValoriForm().get("listaOrariAppuntamenti"))
 				.size(); i++) {
 			PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione
@@ -151,6 +152,14 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 		for (Appuntamento appuntamento : controller.getListaAppuntamentiPrenotazioneInAtto()) {
 			this.aggiungiPartecipante(controller.getPrenotazioneInAtto().getSportivoPrenotante(), appuntamento);
 		}
+		
+		PrenotazioneDTO prenDTO = new PrenotazioneDTO();
+        Map<String, Object> mappa = new HashMap<String, Object>();
+        mappa.put("prenotazione", controller.getPrenotazioneInAtto());
+        mappa.put("appuntamentiPrenotazione", controller.getListaAppuntamentiPrenotazioneInAtto());
+        prenDTO.impostaValoriDTO(mappa);
+        
+        return prenDTO;
 
 	}
 	

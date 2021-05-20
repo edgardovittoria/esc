@@ -275,13 +275,13 @@ public class EffettuaPrenotazioneHandlerRest {
             @RequestBody IFormPrenotabile formPrenotaImpianto) {
         this.getListaAppuntamentiPrenotazioneInAtto().clear();
 
-        this.getStato().impostaDatiPrenotazione(formPrenotaImpianto, this);
+        PrenotazioneDTO prenDTO = this.getStato().impostaDatiPrenotazione(formPrenotaImpianto, this);
 
-        PrenotazioneDTO prenDTO = new PrenotazioneDTO();
-        Map<String, Object> mappa = new HashMap<String, Object>();
-        mappa.put("prenotazione", this.getPrenotazioneInAtto());
-        mappa.put("appuntamentiPrenotazione", this.getListaAppuntamentiPrenotazioneInAtto());
-        prenDTO.impostaValoriDTO(mappa);
+//        PrenotazioneDTO prenDTO = new PrenotazioneDTO();
+//        Map<String, Object> mappa = new HashMap<String, Object>();
+//        mappa.put("prenotazione", this.getPrenotazioneInAtto());
+//        mappa.put("appuntamentiPrenotazione", this.getListaAppuntamentiPrenotazioneInAtto());
+//        prenDTO.impostaValoriDTO(mappa);
         return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.OK);
 
     }

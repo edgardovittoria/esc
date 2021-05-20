@@ -14,36 +14,36 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter @NoArgsConstructor
-public class PrenotazioneDTO implements IModelToDTO{
+@Getter
+@Setter
+@NoArgsConstructor
+public class PrenotazioneDTO implements IModelToDTO {
 
-    
+	private SportivoDTO sportivoPrenotante;
+	private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
+	private Map<String, Object> infoGeneraliPrenotazioneMap = new HashMap<String, Object>();
 
-    private SportivoDTO sportivoPrenotante;  
-    private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();   
-    
+	public void aggiungiAppuntamento(AppuntamentoDTO appuntamento) {
+		this.getAppuntamenti().add(appuntamento);
+	}
 
-    public void aggiungiAppuntamento(AppuntamentoDTO appuntamento){
-        this.getAppuntamenti().add(appuntamento);
-    }
+	@Override
+	public void impostaValoriDTO(Object modelDaConvertire) {
+		Map<String, Object> mappa = (HashMap<String, Object>) modelDaConvertire;
+		Prenotazione prenotazione = (Prenotazione) mappa.get("prenotazione");
+		List<Appuntamento> listaAppuntamentiPrenotazione = (List<Appuntamento>) mappa.get("appuntamentiPrenotazione");
+		this.sportivoPrenotante = new SportivoDTO();
+		this.sportivoPrenotante.impostaValoriDTO(prenotazione.getSportivoPrenotante());
 
-    @Override
-    public void impostaValoriDTO(Object modelDaConvertire){
-        Map<String, Object> mappa = (HashMap<String, Object>)modelDaConvertire; 
-        Prenotazione prenotazione = (Prenotazione)mappa.get("prenotazione");
-        List<Appuntamento> listaAppuntamentiPrenotazione = (List<Appuntamento>)mappa.get("appuntamentiPrenotazione");
-        this.sportivoPrenotante = new SportivoDTO();
-        this.sportivoPrenotante.impostaValoriDTO(prenotazione.getSportivoPrenotante());
-       
-        for(Appuntamento app : listaAppuntamentiPrenotazione){
-            AppuntamentoDTO appDTO = new AppuntamentoDTO();
-                    appDTO.impostaValoriDTO(app);
-                    this.aggiungiAppuntamento(appDTO);
-        }
+		for (Appuntamento app : listaAppuntamentiPrenotazione) {
+			AppuntamentoDTO appDTO = new AppuntamentoDTO();
+			appDTO.impostaValoriDTO(app);
+			this.aggiungiAppuntamento(appDTO);
+		}
+		if (mappa.containsKey("infoGeneraliEvento")) {
+			this.setInfoGeneraliPrenotazioneMap((Map<String, Object>) mappa.get("infoGeneraliEvento"));
+		}
 
-        
-         
-    }
+	}
 
-   
 }

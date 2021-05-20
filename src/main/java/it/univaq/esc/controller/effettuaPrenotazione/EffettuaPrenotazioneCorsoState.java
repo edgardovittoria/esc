@@ -67,7 +67,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 	}
 
 	@Override
-	public void impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller) {
+	public PrenotazioneDTO impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller) {
 		PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione
 				.getSpecifichePrenotazione(controller.getTipoPrenotazioneInAtto());
 		controller.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
@@ -124,7 +124,18 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 			specs.setCosto(prenotazioneSpecs.getCosto());
 		}
 		
-		
+		PrenotazioneDTO prenDTO = new PrenotazioneDTO();
+        Map<String, Object> mappaPrenotazione = new HashMap<String, Object>();
+        Map<String, Object> infoGeneraliEvento = new HashMap<String, Object>();
+        infoGeneraliEvento.put("numeroMinimoPartecipanti", descrizioneCorso.getMinimoNumeroPartecipanti());
+        infoGeneraliEvento.put("numeroMassimoPartecipanti", descrizioneCorso.getMassimoNumeroPartecipanti());
+        infoGeneraliEvento.put("invitatiCorso", prenotazioneSpecs.getValoriSpecificheExtraPrenotazione().get("invitati"));
+        mappa.put("prenotazione", controller.getPrenotazioneInAtto());
+        mappa.put("appuntamentiPrenotazione", controller.getListaAppuntamentiPrenotazioneInAtto());
+        mappa.put("infoGeneraliEvento", infoGeneraliEvento);
+        prenDTO.impostaValoriDTO(mappa);
+        
+        return prenDTO;
 		
 	}
 
