@@ -80,7 +80,7 @@ public class Appuntamento {
 			this.getQuotePartecipazione().add(quota);
 		}
 	}
-	
+
 	public Integer getIdPrenotazione() {
 		return this.getPrenotazioneSpecsAppuntamento().getIdPrenotazioneAssociata();
 	}
@@ -95,7 +95,9 @@ public class Appuntamento {
 	}
 
 	public void aggiungiPartecipante(UtentePolisportivaAbstract sportivoPartecipante) {
-		this.getPartecipanti().add(sportivoPartecipante);
+		if (!this.utenteIsPartecipante(sportivoPartecipante)) {
+			this.getPartecipanti().add(sportivoPartecipante);
+		}
 	}
 
 	public void confermaAppuntamento() {
@@ -193,8 +195,7 @@ public class Appuntamento {
 	 */
 	public boolean utenteIsPartecipante(UtentePolisportivaAbstract utenteDaVerificarePartecipazione) {
 		for (UtentePolisportivaAbstract partecipante : this.getPartecipanti()) {
-			if (((String) partecipante.getProprieta().get("email"))
-					.equals(((String) utenteDaVerificarePartecipazione.getProprieta().get("email")))) {
+			if (partecipante.isEqual(utenteDaVerificarePartecipazione)) {
 				return true;
 			}
 		}
