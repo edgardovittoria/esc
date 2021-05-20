@@ -54,7 +54,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
     public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller) {
         Map<String, Object> mappaValori = new HashMap<String, Object>();
         mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
-        mappaValori.put("sportiviPolisportiva", this.getSportiviPolisportiva());
+        mappaValori.put("sportiviInvitabili", this.getSportiviPolisportiva());
         mappaValori.put("appuntamentiSottoscrivibili", this.getAppuntamentiImpiantoSottoscrivibiliDaUtente(controller.getSportivoPrenotante()));
 
 
