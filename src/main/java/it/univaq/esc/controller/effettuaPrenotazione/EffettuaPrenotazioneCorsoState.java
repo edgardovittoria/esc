@@ -127,7 +127,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 		}
 		
 		List<SportivoDTO> invitatiDTO = new ArrayList<SportivoDTO>();
-		for(UtentePolisportivaAbstract invitato = listaInvitati) {
+		for(UtentePolisportivaAbstract invitato : listaInvitati) {
 			SportivoDTO invitatoDTO = new SportivoDTO();
 			invitatoDTO.impostaValoriDTO(invitato);
 			invitatiDTO.add(invitatoDTO);
