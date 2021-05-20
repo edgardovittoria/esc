@@ -38,7 +38,7 @@ public class RegistroPrenotazioni {
 
     public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {
         getPrenotazioniRegistrate().add(prenotazioneDaAggiungere);
-        this.getPrenotazioneRepository().save(prenotazioneDaAggiungere);
+       // this.getPrenotazioneRepository().save(prenotazioneDaAggiungere);
        
     }
 
@@ -79,6 +79,17 @@ public class RegistroPrenotazioni {
         List<Prenotazione> prenotazioniFiltrate = new ArrayList<Prenotazione>();
         for(Prenotazione prenotazione : listaPrenotazioniDaFiltrare){
             if(prenotazione.getTipoPrenotazione().equals(tipoPrenotazione)){
+                prenotazioniFiltrate.add(prenotazione);
+            }
+        }
+        return prenotazioniFiltrate;
+    }
+    
+    public List<Prenotazione> escludiPrenotazioniPerTipo(List<Prenotazione> listaPrenotazioniDaFiltrare, String tipoPrenotazione){
+
+        List<Prenotazione> prenotazioniFiltrate = new ArrayList<Prenotazione>();
+        for(Prenotazione prenotazione : listaPrenotazioniDaFiltrare){
+            if(!prenotazione.getTipoPrenotazione().equals(tipoPrenotazione)){
                 prenotazioniFiltrate.add(prenotazione);
             }
         }

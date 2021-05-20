@@ -21,6 +21,7 @@ import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
+import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.model.RegistroAppuntamenti;
@@ -72,7 +73,7 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
 		 */
 		List<PrenotazioneDTO> prenotazioni = new ArrayList<PrenotazioneDTO>();
 		if (!this.registroPrenotazioni.getPrenotazioniByEmailSportivo(email).isEmpty()) {
-			for (Prenotazione pren : registroPrenotazioni.getPrenotazioniByEmailSportivo(email)) {
+			for (Prenotazione pren : registroPrenotazioni.escludiPrenotazioniPerTipo(registroPrenotazioni.getPrenotazioniByEmailSportivo(email), TipiPrenotazione.CORSO.toString())) {
 				PrenotazioneDTO prenDTO = new PrenotazioneDTO();
 				List<Appuntamento> listaAppuntamnenti = new ArrayList<Appuntamento>();
 				for (PrenotazioneSpecs spec : pren.getListaSpecifichePrenotazione()) {

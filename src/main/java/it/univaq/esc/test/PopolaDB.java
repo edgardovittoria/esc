@@ -17,12 +17,12 @@ import it.univaq.esc.model.Pavimentazione;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneCorsoSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneLezioneSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
-import it.univaq.esc.model.costi.PrenotazioneLezioneSpecs;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
@@ -30,7 +30,7 @@ import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.model.utenti.UtentePolisportivaBuilder;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.ImpiantoRepository;
-
+import it.univaq.esc.repository.PrenotazioneRepository;
 import it.univaq.esc.repository.SportRepository;
 import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
 @Component
@@ -55,6 +55,9 @@ public class PopolaDB {
 
     @Autowired
     private SportRepository sportRepo;
+    
+    @Autowired
+    private PrenotazioneRepository prenotazioneRepository;
 
     
     public PopolaDB(){}
@@ -325,8 +328,8 @@ public class PopolaDB {
         /*calendarioRepository.save(calendarioPrenotazione);
         calendarioRepository.save(calendarioPrenotazione2);*/
         
-        // prenotazioneRepository.save(prenotazione1);
-        // prenotazioneRepository.save(prenotazione2);
+       // prenotazioneRepository.save(prenotazione1);
+       // prenotazioneRepository.save(prenotazione2);
         appuntamentoRepository.saveAll(calendarioSpecs1.getListaAppuntamenti());
         appuntamentoRepository.saveAll(calendarioSpecs2.getListaAppuntamenti());
         		

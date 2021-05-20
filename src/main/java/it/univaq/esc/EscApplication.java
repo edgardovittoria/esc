@@ -36,7 +36,7 @@ public class EscApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         
-       //popolaDB.popola();
+      // popolaDB.popola();
         //testCalendarioPrenotazioni.test();
         //ricercaAppuntamentiSottoscrivibili.test();
     	//testFactoryStatoEffettuaPrenotazione.test();
