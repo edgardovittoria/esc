@@ -46,7 +46,7 @@ public abstract class PrenotazioneSpecs {
 	@JoinColumn
 	private PrenotabileDescrizione specificaDescription;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn(name = "prenotazione_ID", nullable = false)
 	private Prenotazione prenotazioneAssociata;
 

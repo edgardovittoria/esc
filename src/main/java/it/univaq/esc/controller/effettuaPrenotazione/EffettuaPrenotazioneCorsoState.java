@@ -125,6 +125,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 		for(PrenotazioneSpecs specs : listaLezioniSpecs) {
 			specs.setCosto(prenotazioneSpecs.getCosto());
 		}
+		prenotazioneSpecs.setPrenotazioneAssociata(controller.getPrenotazioneInAtto());
+		prenotazioneSpecs.setPending(true);
 		
 		List<SportivoDTO> invitatiDTO = new ArrayList<SportivoDTO>();
 		for(UtentePolisportivaAbstract invitato : listaInvitati) {

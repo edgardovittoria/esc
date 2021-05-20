@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -47,7 +47,7 @@ public class Prenotazione {
     private LocalDateTime oraDataPrenotazione;
   
     
-    @OneToMany(mappedBy = "prenotazioneAssociata")
+    @OneToMany(mappedBy = "prenotazioneAssociata", cascade = CascadeType.ALL)
     //@JoinColumn
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<PrenotazioneSpecs> listaSpecifichePrenotazione = new ArrayList<PrenotazioneSpecs>();
