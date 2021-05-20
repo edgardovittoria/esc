@@ -1,4 +1,4 @@
-package it.univaq.esc.model.prenotazioni;
+package it.univaq.esc.model.costi;
 
 
 import java.util.HashMap;
@@ -11,7 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import it.univaq.esc.model.Impianto;
-
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

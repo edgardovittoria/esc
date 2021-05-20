@@ -6,6 +6,7 @@ import it.univaq.esc.dtoObjects.PrenotazioneCorsoSpecsDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneImpiantoSpecsDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneLezioneSpecsDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
+import it.univaq.esc.model.costi.PrenotazioneLezioneSpecs;
 
 @Component
 public class FactorySpecifichePrenotazione {

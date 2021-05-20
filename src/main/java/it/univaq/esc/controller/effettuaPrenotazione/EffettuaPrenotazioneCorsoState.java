@@ -130,6 +130,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
         infoGeneraliEvento.put("numeroMinimoPartecipanti", descrizioneCorso.getMinimoNumeroPartecipanti());
         infoGeneraliEvento.put("numeroMassimoPartecipanti", descrizioneCorso.getMassimoNumeroPartecipanti());
         infoGeneraliEvento.put("invitatiCorso", prenotazioneSpecs.getValoriSpecificheExtraPrenotazione().get("invitati"));
+        infoGeneraliEvento.put("costoPerPartecipante", prenotazioneSpecs.getCosto());
         mappa.put("prenotazione", controller.getPrenotazioneInAtto());
         mappa.put("appuntamentiPrenotazione", controller.getListaAppuntamentiPrenotazioneInAtto());
         mappa.put("infoGeneraliEvento", infoGeneraliEvento);
