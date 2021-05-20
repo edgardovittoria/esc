@@ -153,7 +153,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 
 	@Override
 	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandlerRest controller) {
-		Map<String, Object> mappaDati = this.getDatiOpzioni(controller);
+		Map<String, Object> mappaDati = this.getStatoControllerLezioni().getDatiOpzioni(controller);
 		mappaDati.put("sportiviInvitabili", this.getSportiviPolisportiva());
 		
 		return mappaDati;
