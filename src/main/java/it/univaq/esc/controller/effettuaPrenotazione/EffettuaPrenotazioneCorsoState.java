@@ -104,8 +104,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 	
 		PrenotabileDescrizione descrizioneCorso = controller.getListinoPrezziDescrizioniPolisportiva().avviaCreazionePrenotabile(
 				this.getRegistroSport().getSportByNome((String)formDati.getValoriForm().get("sport")),
-				controller.getTipoPrenotazioneInAtto(), (Integer)formDati.getValoriForm().get("sogliaMinimaPartecipanti"),
-				(Integer)formDati.getValoriForm().get("sogliaMassimaPartecipanti"))
+				controller.getTipoPrenotazioneInAtto(), (Integer)formDati.getValoriForm().get("numeroMinimoPartecipanti"),
+				(Integer)formDati.getValoriForm().get("numeroMassimoPartecipanti"))
 				.impostaCostoUnaTantum((Float)formDati.getValoriForm().get("costoPerPartecipante"))
 				.salvaPrenotabileInCreazione();
 		
@@ -123,6 +123,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 		for(PrenotazioneSpecs specs : listaLezioniSpecs) {
 			specs.setCosto(prenotazioneSpecs.getCosto());
 		}
+		
 		
 		PrenotazioneDTO prenDTO = new PrenotazioneDTO();
         Map<String, Object> mappaPrenotazione = new HashMap<String, Object>();
