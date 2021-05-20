@@ -39,10 +39,11 @@ public class PrenotazioneCorsoSpecs extends PrenotazioneSpecs{
     
     @Override
     public void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori) {
-    	List<Map<String, Object>> listaMappe = ((List<Map<String, Object>>)mappaValori.get("listaMappeLezioni"));
-        listaLezioni.forEach((lezione) -> lezione.impostaValoriSpecificheExtraPrenotazione(listaMappe.get(listaLezioni.indexOf(lezione))));
+    	//List<Map<String, Object>> listaMappe = ((List<Map<String, Object>>)mappaValori.get("listaMappeLezioni"));
+    	this.setListaLezioni((List<PrenotazioneSpecs>)mappaValori.get("listaLezioniCorso"));
+        //listaLezioni.forEach((lezione) -> lezione.impostaValoriSpecificheExtraPrenotazione(listaMappe.get(listaLezioni.indexOf(lezione))));
         this.setInvitati((List<UtentePolisportivaAbstract>)mappaValori.get("invitati")); 
-        this.setListaLezioni((List<PrenotazioneSpecs>)mappaValori.get("listaLezioniCorso"));
+        
         
     }
 
