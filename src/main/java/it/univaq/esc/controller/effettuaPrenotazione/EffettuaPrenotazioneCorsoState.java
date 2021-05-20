@@ -87,7 +87,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 			// ---------------------------------------------------------------------------------------
 
 			Appuntamento appuntamento = new Appuntamento();
-			appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
+			appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneLezioneSpecs);
 			appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 
 			controller.aggiungiAppuntamento(appuntamento);
