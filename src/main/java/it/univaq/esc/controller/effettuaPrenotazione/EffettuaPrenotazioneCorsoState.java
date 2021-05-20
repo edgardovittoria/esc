@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
+import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
@@ -124,13 +126,18 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 			specs.setCosto(prenotazioneSpecs.getCosto());
 		}
 		
-		
+		List<SportivoDTO> invitatiDTO = new ArrayList<SportivoDTO>();
+		for(UtentePolisportivaAbstract invitato = listaInvitati) {
+			SportivoDTO invitatoDTO = new SportivoDTO();
+			invitatoDTO.impostaValoriDTO(invitato);
+			invitatiDTO.add(invitatoDTO);
+		}
 		PrenotazioneDTO prenDTO = new PrenotazioneDTO();
         Map<String, Object> mappaPrenotazione = new HashMap<String, Object>();
         Map<String, Object> infoGeneraliEvento = new HashMap<String, Object>();
         infoGeneraliEvento.put("numeroMinimoPartecipanti", descrizioneCorso.getMinimoNumeroPartecipanti());
         infoGeneraliEvento.put("numeroMassimoPartecipanti", descrizioneCorso.getMassimoNumeroPartecipanti());
-        infoGeneraliEvento.put("invitatiCorso", prenotazioneSpecs.getValoriSpecificheExtraPrenotazione().get("invitati"));
+        infoGeneraliEvento.put("invitatiCorso", invitatiDTO);
         infoGeneraliEvento.put("costoPerPartecipante", prenotazioneSpecs.getCosto());
         mappa.put("prenotazione", controller.getPrenotazioneInAtto());
         mappa.put("appuntamentiPrenotazione", controller.getListaAppuntamentiPrenotazioneInAtto());
