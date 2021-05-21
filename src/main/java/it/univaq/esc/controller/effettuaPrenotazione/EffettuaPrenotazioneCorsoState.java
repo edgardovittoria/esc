@@ -13,6 +13,7 @@ import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.Appuntamento;
+import it.univaq.esc.model.QuotaPartecipazione;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
@@ -58,6 +59,11 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 			Map<String, Object> mappaPrenotazione = new HashMap<String, Object>();
 			mappaPrenotazione.put("prenotazione", prenotazione);
 			mappaPrenotazione.put("appuntamentiPrenotazione", appuntamentiPrenotazione);
+			Map<String, Object> infoGeneraliCorso = new HashMap<String, Object>();
+			infoGeneraliCorso.put("numeroMinimoPartecipanti", prenotazione.getListaSpecifichePrenotazione().get(0).getSogliaPartecipantiPerConferma());
+			infoGeneraliCorso.put("numeroMassimoPartecipanti", prenotazione.getListaSpecifichePrenotazione().get(0).getSogliaMassimaPartecipanti());
+			infoGeneraliCorso.put("costoPerPartecipante", prenotazione.getListaSpecifichePrenotazione().get(0).getCosto());
+			mappaPrenotazione.put("infoGeneraliEvento", infoGeneraliCorso);
 			PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO();
 			prenotazioneDTO.impostaValoriDTO(mappaPrenotazione);
 			listaCorsi.add(prenotazioneDTO);
@@ -163,13 +169,29 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 
 	@Override
 	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
+		Prenotazione corsoPrenotazione = this.getRegistroPrenotazioni().getPrenotazioneById(idEvento);
 		List<Appuntamento> listaAppuntamentiCorso = this.getRegistroAppuntamenti().getAppuntamentiByPrenotazioneId(idEvento);
+		Appuntamento appuntamentoPerCreazioneQuota = listaAppuntamentiCorso.get(0);
+		QuotaPartecipazione quotaPartecipazione = this.creaQuotaPartecipazione(appuntamentoPerCreazioneQuota, this.getRegistroUtenti().getUtenteByEmail(emailPartecipante));
 		for(Appuntamento appuntamento : listaAppuntamentiCorso) {
-			this.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
+			boolean partecipanteAggiunto = this.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
+			if(partecipanteAggiunto) {
+				appuntamento.aggiungiQuotaPartecipazione(quotaPartecipazione);
+			}
 		}
 		
+		Map<String, Object> mappaPrenotazione = new HashMap<String, Object>();
+		mappaPrenotazione.put("prenotazione", corsoPrenotazione);
+		mappaPrenotazione.put("appuntamentiPrenotazione", listaAppuntamentiCorso);
+		Map<String, Object> infoGeneraliCorso = new HashMap<String, Object>();
+		infoGeneraliCorso.put("numeroMinimoPartecipanti", corsoPrenotazione.getListaSpecifichePrenotazione().get(0).getSogliaPartecipantiPerConferma());
+		infoGeneraliCorso.put("numeroMassimoPartecipanti", corsoPrenotazione.getListaSpecifichePrenotazione().get(0).getSogliaMassimaPartecipanti());
+		infoGeneraliCorso.put("costoPerPartecipante", corsoPrenotazione.getListaSpecifichePrenotazione().get(0).getCosto());
+		mappaPrenotazione.put("infoGeneraliEvento", infoGeneraliCorso);
+		
+		
 		PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO();
-		prenotazioneDTO.impostaValoriDTO(this.getRegistroPrenotazioni().getPrenotazioneById(idEvento));
+		prenotazioneDTO.impostaValoriDTO(mappaPrenotazione);
 		return prenotazioneDTO;
 	}
 
@@ -180,5 +202,20 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 		
 		return mappaDati;
 	}
+	
+	@Override
+	protected boolean aggiungiPartecipante(UtentePolisportivaAbstract utente, Appuntamento appuntamento) {
+		boolean partecipanteAggiunto = false;
+		if (appuntamento.getPartecipanti().size() < appuntamento.getNumeroPartecipantiMassimo()) {
+			appuntamento.aggiungiPartecipante(utente);
+			partecipanteAggiunto = true;
+			if (appuntamento.getPartecipanti().size() >= appuntamento.getSogliaMinimaPartecipantiPerConferma()) {
+				appuntamento.confermaAppuntamento();
+				
+			}
+		}
+		return partecipanteAggiunto;
+	}
+	
 
 }

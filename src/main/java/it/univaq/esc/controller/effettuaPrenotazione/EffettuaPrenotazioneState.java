@@ -470,15 +470,18 @@ public abstract class EffettuaPrenotazioneState {
 		return null;
 	}
 	
-	protected void aggiungiPartecipante(UtentePolisportivaAbstract utente, Appuntamento appuntamento) {
+	protected boolean aggiungiPartecipante(UtentePolisportivaAbstract utente, Appuntamento appuntamento) {
+		boolean partecipanteAggiunto = false;
 		if (appuntamento.getPartecipanti().size() < appuntamento.getNumeroPartecipantiMassimo()) {
 			appuntamento.aggiungiPartecipante(utente);
+			partecipanteAggiunto = true;
 			if (appuntamento.getPartecipanti().size() >= appuntamento.getSogliaMinimaPartecipantiPerConferma()) {
 				appuntamento.confermaAppuntamento();
 				appuntamento.getPartecipanti().forEach((partecipante) -> appuntamento.aggiungiQuotaPartecipazione(
 						this.creaQuotaPartecipazione(appuntamento, utente)));
 			}
 		}
+		return partecipanteAggiunto;
 	}
 
 	/**
