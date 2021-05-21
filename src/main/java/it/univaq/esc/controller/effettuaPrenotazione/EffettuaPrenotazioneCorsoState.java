@@ -171,6 +171,12 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
 		Prenotazione corsoPrenotazione = this.getRegistroPrenotazioni().getPrenotazioneById(idEvento);
 		List<Appuntamento> listaAppuntamentiCorso = this.getRegistroAppuntamenti().getAppuntamentiByPrenotazioneId(idEvento);
+		
+		for(Prenotazione prenotazione : this.getRegistroPrenotazioni().getPrenotazioniRegistrate()) {
+			System.out.println("ID: " + prenotazione.getIdPrenotazione());
+		}
+		System.out.println("idEvento: " + idEvento);
+		
 		Appuntamento appuntamentoPerCreazioneQuota = listaAppuntamentiCorso.get(0);
 		QuotaPartecipazione quotaPartecipazione = this.creaQuotaPartecipazione(appuntamentoPerCreazioneQuota, this.getRegistroUtenti().getUtenteByEmail(emailPartecipante));
 		for(Appuntamento appuntamento : listaAppuntamentiCorso) {

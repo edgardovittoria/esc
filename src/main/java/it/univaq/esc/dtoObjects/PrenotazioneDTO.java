@@ -18,7 +18,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PrenotazioneDTO implements IModelToDTO {
-
+	
+	private Integer idPrenotazione;
 	private SportivoDTO sportivoPrenotante;
 	private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
 	private Map<String, Object> infoGeneraliEvento = new HashMap<String, Object>();
@@ -32,9 +33,10 @@ public class PrenotazioneDTO implements IModelToDTO {
 		Map<String, Object> mappa = (HashMap<String, Object>) modelDaConvertire;
 		Prenotazione prenotazione = (Prenotazione) mappa.get("prenotazione");
 		List<Appuntamento> listaAppuntamentiPrenotazione = (List<Appuntamento>) mappa.get("appuntamentiPrenotazione");
-		this.sportivoPrenotante = new SportivoDTO();
-		this.sportivoPrenotante.impostaValoriDTO(prenotazione.getSportivoPrenotante());
-
+		this.setSportivoPrenotante(new SportivoDTO());
+		this.getSportivoPrenotante().impostaValoriDTO(prenotazione.getSportivoPrenotante());
+		this.setIdPrenotazione(prenotazione.getIdPrenotazione());
+		
 		for (Appuntamento app : listaAppuntamentiPrenotazione) {
 			AppuntamentoDTO appDTO = new AppuntamentoDTO();
 			appDTO.impostaValoriDTO(app);
