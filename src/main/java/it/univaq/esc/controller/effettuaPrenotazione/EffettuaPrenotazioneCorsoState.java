@@ -178,6 +178,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 			if(partecipanteAggiunto) {
 				appuntamento.aggiungiQuotaPartecipazione(quotaPartecipazione);
 			}
+			this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 		}
 		
 		Map<String, Object> mappaPrenotazione = new HashMap<String, Object>();

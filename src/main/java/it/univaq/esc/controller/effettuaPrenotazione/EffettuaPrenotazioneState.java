@@ -480,6 +480,7 @@ public abstract class EffettuaPrenotazioneState {
 				appuntamento.getPartecipanti().forEach((partecipante) -> appuntamento.aggiungiQuotaPartecipazione(
 						this.creaQuotaPartecipazione(appuntamento, utente)));
 			}
+			this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 		}
 		return partecipanteAggiunto;
 	}
