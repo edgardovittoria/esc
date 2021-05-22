@@ -2,8 +2,10 @@ package it.univaq.esc.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,7 +26,10 @@ import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import lombok.Setter;
+import net.bytebuddy.asm.Advice.This;
 import it.univaq.esc.model.RegistroAppuntamenti;
+import it.univaq.esc.model.costi.PrenotabileDescrizione;
 
 @RestController
 @RequestMapping("/aggiornaOpzioni")
@@ -67,7 +72,7 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
 	@CrossOrigin
 	public @ResponseBody Map<String, Object> getAppuntamentiSportivo(@RequestParam(name = "email") String email) {
 
-		/**
+		/*
 		 * Ricaviamo la lista delle prenotazioni effettuate dall'utente, trasformandola
 		 * in DTO.
 		 */
@@ -87,13 +92,13 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
 			}
 		}
 
-		/**
+		/*
 		 * Ricaviamo la lista degli appuntamenti non creati dallo sportivo, ma dei quali
 		 * è un partecipante, trasformandola in DTO.
 		 */
 		UtentePolisportivaAbstract sportivo = this.registroUtentiPolisportiva.getUtenteByEmail(email);
 		List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
-		if (!this.registroAppuntamenti.getAppuntamentiPerPartecipanteNonCreatore(sportivo).isEmpty()) {
+		if (!this.registroAppuntamenti.escludiAppuntamentiDiCorsi(this.registroAppuntamenti.getAppuntamentiPerPartecipanteNonCreatore(sportivo)).isEmpty()) {
 			for (Appuntamento appuntamento : this.registroAppuntamenti
 					.getAppuntamentiPerPartecipanteNonCreatore(sportivo)) {
 				AppuntamentoDTO appDTO = new AppuntamentoDTO();
@@ -101,16 +106,55 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
 				appuntamenti.add(appDTO);
 			}
 		}
-
+		
+		
+		/*
+		 * Ricaviamo la lista dei corsi a cui si partecipa, come prenotazioni DTO.
+		 * Prima ricaviamo gli appuntamenti riferiti ai corsi, ai quali si partecipa.
+		 * Poi ricaviamo le prenotazioni a cui gli appuntamenti si riferiscono e li mettiamo in un Set così che 
+		 * vengano inserite una sola volta automaticamente.
+		 * Infine trasformiamo il Set in List e la convertiamo in DTO.
+		 * 
+		 */
+		List<Appuntamento> appuntamentiCorsiACuiSiPartecipa = this.registroAppuntamenti.filtraAppuntamentiPerPartecipante(
+				this.registroAppuntamenti.filtraAppuntamentiDiCorsi(this.registroAppuntamenti.getListaAppuntamenti()), sportivo);
+		Set<Prenotazione> corsiACuiSiPartecipa = new HashSet<Prenotazione>();
+		appuntamentiCorsiACuiSiPartecipa.forEach((appuntamento) -> corsiACuiSiPartecipa.add(appuntamento.getPrenotazionePrincipale()));
+		List<Prenotazione> listaCorsiACuiSiPartecipa = new ArrayList<Prenotazione>(corsiACuiSiPartecipa);
+		
+		List<PrenotazioneDTO> listaCorsiACuiSiPartecipaDTO = new ArrayList<PrenotazioneDTO>();
+		for(Prenotazione prenotazione : listaCorsiACuiSiPartecipa) {
+			Map<String, Object> infoGenerali = new HashMap<String, Object>();
+			PrenotazioneSpecs specificaCorso = prenotazione.getListaSpecifichePrenotazione().get(0);
+			infoGenerali.put("numeroMinimoParteciapanti", specificaCorso.getSogliaPartecipantiPerConferma());
+			infoGenerali.put("numeroMassimoPartecipanti", specificaCorso.getSogliaMassimaPartecipanti());
+			infoGenerali.put("costoPerPartecipante", specificaCorso.getCosto());
+			
+			Map<String, Object> mappaDatiPrenotazioneDTO = new HashMap<String, Object>();
+			mappaDatiPrenotazioneDTO.put("prenotazione", prenotazione);
+			mappaDatiPrenotazioneDTO.put("appuntamentiPrenotazione", this.registroAppuntamenti.getAppuntamentiByPrenotazioneId(prenotazione.getIdPrenotazione()));
+			mappaDatiPrenotazioneDTO.put("infoGeneraliEvento", infoGenerali);
+			
+			PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO();
+			prenotazioneDTO.impostaValoriDTO(mappaDatiPrenotazioneDTO);
+			listaCorsiACuiSiPartecipaDTO.add(prenotazioneDTO);
+		}
+		
+		
+		
+		
+		
+		/*
+		 * Creiamo la mappa con tutti i dati e la ritorniamo.
+		 * "prenotazioniEffettuate": lista delle prenotazioni effettuate dallo sportivo.
+		 * "partecipazioni": lista degli appuntamenti non creati dall'utente, ma di cui l'utente è partecipante.
+		 * "corsiAcuiSiPartecipa": lista delle prenotazioni di corsi a cui ci si è prenotati.
+		 */
 		Map<String, Object> mappaPrenotazioniPartecipazioni = new HashMap<String, Object>();
 		mappaPrenotazioniPartecipazioni.put("prenotazioniEffettuate", prenotazioni);
 		mappaPrenotazioniPartecipazioni.put("partecipazioni", appuntamenti);
+		mappaPrenotazioniPartecipazioni.put("corsiACuiSiPartecipa", listaCorsiACuiSiPartecipaDTO);
 
-		/**
-		 * Ritorniamo la mappa costituita da -"prenotazioniEffettuate": lista delle
-		 * prenotazioni effettuate dallo sportivo -"partecipazioni": lista degli
-		 * appuntamenti non creati dall'utente, ma di cui l'utente è partecipante
-		 */
 		return mappaPrenotazioniPartecipazioni;
 
 	}

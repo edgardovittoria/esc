@@ -14,6 +14,7 @@ import groovy.lang.Singleton;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import lombok.AccessLevel;
@@ -129,6 +130,16 @@ public class RegistroAppuntamenti {
         }
         return appuntamentiFiltrati;
     }
+    
+    public List<Appuntamento> escludiAppuntamentiDiCorsi(List<Appuntamento> listaAppuntamentiDaFiltrare){
+    	listaAppuntamentiDaFiltrare.removeIf((appuntamento) -> appuntamento.appartieneA().equals(TipiPrenotazione.CORSO.toString()));
+    	return listaAppuntamentiDaFiltrare;
+    }
+    
+    public List<Appuntamento> filtraAppuntamentiDiCorsi(List<Appuntamento> listaAppuntamentiDaFiltrare){
+    	listaAppuntamentiDaFiltrare.removeIf((appuntamento) -> !appuntamento.appartieneA().equals(TipiPrenotazione.CORSO.toString()));
+    	return listaAppuntamentiDaFiltrare;
+    }
 
     private List<Appuntamento> escludiAppuntamentiPerUtenteCreatore(List<Appuntamento> listaAppuntamentiDaFiltrare, UtentePolisportivaAbstract utenteCreatore){
         List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
@@ -150,7 +161,7 @@ public class RegistroAppuntamenti {
         return appuntamentiFiltrati;
     }
 
-    private List<Appuntamento> filtraAppuntamentiPerPartecipante(List<Appuntamento> listaAppuntamentiDaFiltrare, UtentePolisportivaAbstract utenteDiCuiVerificarePartecipazione){
+    public List<Appuntamento> filtraAppuntamentiPerPartecipante(List<Appuntamento> listaAppuntamentiDaFiltrare, UtentePolisportivaAbstract utenteDiCuiVerificarePartecipazione){
         List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
         for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare){
             if(appuntamento.utenteIsPartecipante(utenteDiCuiVerificarePartecipazione)){

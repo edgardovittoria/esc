@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.PrenotazioneRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -121,6 +122,7 @@ public class RegistroPrenotazioni {
     	}
     	return null;
     }
+    
     
     
 

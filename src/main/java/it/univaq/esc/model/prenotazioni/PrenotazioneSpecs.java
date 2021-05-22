@@ -57,6 +57,14 @@ public abstract class PrenotazioneSpecs {
 	public abstract void impostaValoriSpecificheExtraPrenotazione(Map<String, Object> mappaValori);
 
 	public abstract Map<String, Object> getValoriSpecificheExtraPrenotazione();
+	
+	/**
+	 * Ritorna il tipo della prenotazione principale.
+	 * @return tipo della prenotazione principale.
+	 */
+	public String appartieneA() {
+		return this.getPrenotazioneAssociata().getTipoPrenotazione();
+	}
 
 	public abstract String getTipoPrenotazione();
 	

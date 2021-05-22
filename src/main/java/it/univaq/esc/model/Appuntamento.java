@@ -28,6 +28,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
+import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
@@ -168,6 +169,14 @@ public class Appuntamento {
 	public String getTipoPrenotazione() {
 		return this.getPrenotazioneSpecsAppuntamento().getTipoPrenotazione();
 	}
+	
+	/**
+	 * Restituisce la prenotazione principale a cui l'appuntamento fa capo
+	 * @return la prenotazione principale.
+	 */
+	public Prenotazione getPrenotazionePrincipale() {
+		return this.getPrenotazioneSpecsAppuntamento().getPrenotazioneAssociata();
+	}
 
 	public boolean isPending() {
 		return this.getPrenotazioneSpecsAppuntamento().isPending();
@@ -209,6 +218,14 @@ public class Appuntamento {
 	
 	public Map<String, Float> getMappaCostiAppuntamento(){
 		return this.getPrenotazioneSpecsAppuntamento().getMappaCosti();
+	}
+	
+	/**
+	 * Restituisce il tipo della prenotazione principale a cui l'appuntamento fa capo.
+	 * @return il tipo della prenotazione principale.
+	 */
+	public String appartieneA() {
+		return this.getPrenotazioneSpecsAppuntamento().appartieneA();
 	}
 
 }
