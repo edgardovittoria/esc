@@ -32,8 +32,25 @@ public class RegistroPrenotazioni {
 
     @PostConstruct
     public void popola(){
-        getPrenotazioniRegistrate().addAll(prenotazioneRepository.findAll());
+        setPrenotazioniRegistrate(prenotazioneRepository.findAll());
 
+        
+        /*
+         * Poiché nel caso dei corsi le specifiche delle lezioni si trovano dentro la specifica corso come voluto,
+         * ma vengono anche inserite direttamente nella prenotazione dal database, 
+         * andiamo ad eliminare queste ultime che sono dei doppioni indesiderati.
+         */
+        for(Prenotazione prenotazione : this.getPrenotazioniRegistrate()) {
+        	boolean isCorso = false;
+        	for(PrenotazioneSpecs specs : prenotazione.getListaSpecifichePrenotazione()) {
+        		if (specs.getTipoPrenotazione().equals(TipiPrenotazione.CORSO.toString())) {
+        			isCorso = true;
+        		}
+        	}
+        	if(isCorso) {
+        		prenotazione.getListaSpecifichePrenotazione().removeIf((spec) -> !spec.getTipoPrenotazione().equals(TipiPrenotazione.CORSO.toString()));
+        	}
+        }
     }
 
     public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {

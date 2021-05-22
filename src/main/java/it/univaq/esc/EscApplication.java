@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import it.univaq.esc.test.PopolaDB;
+import it.univaq.esc.test.RegistrazioneCorsiTest;
 import it.univaq.esc.test.RicercaAppuntamentiSottoscrivibili;
 import it.univaq.esc.test.TestFactoryStatoEffettuaPrenotazione;
 import it.univaq.esc.test.TestVerificaCalendario;
@@ -25,6 +26,9 @@ public class EscApplication implements CommandLineRunner {
     
     @Autowired
     private TestFactoryStatoEffettuaPrenotazione testFactoryStatoEffettuaPrenotazione;
+    
+    @Autowired
+    private RegistrazioneCorsiTest registrazioneCorsiTest;
 	
 	public static void main(String[] args) {
 				
@@ -35,11 +39,13 @@ public class EscApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        
+       
+    	//registrazioneCorsiTest.test();
       // popolaDB.popola();
         //testCalendarioPrenotazioni.test();
         //ricercaAppuntamentiSottoscrivibili.test();
     	//testFactoryStatoEffettuaPrenotazione.test();
+    	
         
     }
 

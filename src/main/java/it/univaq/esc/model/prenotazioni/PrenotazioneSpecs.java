@@ -63,6 +63,10 @@ public abstract class PrenotazioneSpecs {
 	public Integer getIdPrenotazioneAssociata() {
 		return this.getPrenotazioneAssociata().getIdPrenotazione();
 	}
+	
+	public Map<String, Float> getMappaCosti(){
+		return this.getSpecificaDescription().getMappaCosti();
+	}
 
 	public Integer getNumeroGiocatori() {
 		return this.getSportAssociato().getNumeroGiocatori();

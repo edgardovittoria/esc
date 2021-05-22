@@ -147,7 +147,16 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 //					.calcolaCosto();
 //		}
 		
-		this.impostaValoriPrenotazioniSpecs(formDati, controller.getTipoPrenotazioneInAtto(), controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione(), controller);
+		PrenotabileDescrizione descrizioneSpecifica = null;
+		for (PrenotabileDescrizione desc : this.getCatalogoPrenotabili()
+				.getCatalogoPrenotabili()) {
+			if (desc.getSportAssociato().getNome().equals((String) formDati.getValoriForm().get("sport"))
+					&& desc.getTipoPrenotazione().equals(controller.getTipoPrenotazioneInAtto())) {
+				descrizioneSpecifica = desc;
+			}
+		}
+		
+		this.impostaValoriPrenotazioniSpecs(formDati, descrizioneSpecifica, controller.getTipoPrenotazioneInAtto(), controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione(), controller);
 
 		for (Appuntamento appuntamento : controller.getListaAppuntamentiPrenotazioneInAtto()) {
 			this.aggiungiPartecipante(controller.getPrenotazioneInAtto().getSportivoPrenotante(), appuntamento);
@@ -163,15 +172,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 
 	}
 	
-	public void impostaValoriPrenotazioniSpecs(IFormPrenotabile formDati, String tipoPrenotazione, List<PrenotazioneSpecs> listaSpecifiche, EffettuaPrenotazioneHandlerRest controller) {
-		PrenotabileDescrizione descrizioneSpecifica = null;
-		for (PrenotabileDescrizione desc : this.getCatalogoPrenotabili()
-				.getCatalogoPrenotabili()) {
-			if (desc.getSportAssociato().getNome().equals((String) formDati.getValoriForm().get("sport"))
-					&& desc.getTipoPrenotazione().equals(tipoPrenotazione)) {
-				descrizioneSpecifica = desc;
-			}
-		}
+	public void impostaValoriPrenotazioniSpecs(IFormPrenotabile formDati, PrenotabileDescrizione descrizioneSpecifica, String tipoPrenotazione, List<PrenotazioneSpecs> listaSpecifiche, EffettuaPrenotazioneHandlerRest controller) {
 
 		for (PrenotazioneSpecs spec : listaSpecifiche) {
 			spec.setSpecificaDescription(descrizioneSpecifica);

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -200,6 +201,14 @@ public class Appuntamento {
 			}
 		}
 		return false;
+	}
+	
+	public Float getCostoAppuntamento() {
+		return this.prenotazioneSpecsAppuntamento.getCosto();
+	}
+	
+	public Map<String, Float> getMappaCostiAppuntamento(){
+		return this.getPrenotazioneSpecsAppuntamento().getMappaCosti();
 	}
 
 }

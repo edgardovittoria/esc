@@ -53,6 +53,11 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 		List<Prenotazione> corsiDisponibili = this.getRegistroPrenotazioni().filtraPrenotazioniPerTipo(
 				this.getRegistroPrenotazioni().getPrenotazioniRegistrate(), 
 				TipiPrenotazione.CORSO.toString());
+		
+		for(Prenotazione prenotazione : this.getRegistroPrenotazioni().getPrenotazioniRegistrate()) {
+			System.out.println("tipoPrenotazione: " + prenotazione.getTipoPrenotazione());
+		}
+		
 		List<PrenotazioneDTO> listaCorsi = new ArrayList<PrenotazioneDTO>();
 		for(Prenotazione prenotazione : corsiDisponibili) {
 			List<Appuntamento> appuntamentiPrenotazione = this.getRegistroAppuntamenti().getAppuntamentiByPrenotazioneId(prenotazione.getIdPrenotazione());
@@ -120,7 +125,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 		prenotazioneSpecs.setSpecificaDescription(descrizioneCorso);
 		
 		
-		this.getStatoControllerLezioni().impostaValoriPrenotazioniSpecs(formDati, TipiPrenotazione.LEZIONE.toString(), listaLezioniSpecs, controller);
+		this.getStatoControllerLezioni().impostaValoriPrenotazioniSpecs(formDati, descrizioneCorso, TipiPrenotazione.LEZIONE.toString(), listaLezioniSpecs, controller);
 		/*
 		 * Impostiamo il costo della specifica che rappresenta il corso con il costo per partecipante impostato nella form, 
 		 * dopodiché sovrascriviamo i costi delle singole lezioni impostandoli a zero.
@@ -171,11 +176,6 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState{
 	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
 		Prenotazione corsoPrenotazione = this.getRegistroPrenotazioni().getPrenotazioneById(idEvento);
 		List<Appuntamento> listaAppuntamentiCorso = this.getRegistroAppuntamenti().getAppuntamentiByPrenotazioneId(idEvento);
-		
-		for(Prenotazione prenotazione : this.getRegistroPrenotazioni().getPrenotazioniRegistrate()) {
-			System.out.println("ID: " + prenotazione.getIdPrenotazione());
-		}
-		System.out.println("idEvento: " + idEvento);
 		
 		Appuntamento appuntamentoPerCreazioneQuota = listaAppuntamentiCorso.get(0);
 		QuotaPartecipazione quotaPartecipazione = this.creaQuotaPartecipazione(appuntamentoPerCreazioneQuota, this.getRegistroUtenti().getUtenteByEmail(emailPartecipante));
