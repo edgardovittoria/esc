@@ -29,6 +29,7 @@ public class RegistroAppuntamenti {
 	@Setter(value = AccessLevel.PRIVATE)
     private AppuntamentoRepository appuntamentoRepository;
     
+	@Setter(value = AccessLevel.PRIVATE)
     private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
 
@@ -72,7 +73,7 @@ public class RegistroAppuntamenti {
     }
 
    
-    public List<Appuntamento> getAppuntamentiSottoscrivibiliPerTipo(String tipoPrenotazione, UtentePolisportivaAbstract utentePerCuiTrovareAppuntamenti){
+    public List<Appuntamento> getAppuntamentiSottoscrivibiliPerTipo(String tipoPrenotazione, UtentePolisportivaAbstract utentePerCuiTrovareAppuntamenti){	
         List<Appuntamento> appuntamentiFiltrati = this.filtraAppuntamentiPerDataOra(this.getListaAppuntamenti(), LocalDateTime.now());
         appuntamentiFiltrati = this.filtraAppuntamentiPerTipoPrenotazione(appuntamentiFiltrati, tipoPrenotazione);
         appuntamentiFiltrati = this.filtraAppuntamentiPending(appuntamentiFiltrati);
