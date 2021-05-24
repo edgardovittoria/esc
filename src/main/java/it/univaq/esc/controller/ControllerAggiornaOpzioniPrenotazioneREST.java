@@ -98,7 +98,6 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
 		 */
 		UtentePolisportivaAbstract sportivo = this.registroUtentiPolisportiva.getUtenteByEmail(email);
 		List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
-		System.out.println("APP: " + this.registroAppuntamenti.getListaAppuntamenti());
 		if (!this.registroAppuntamenti.escludiAppuntamentiDiCorsi(this.registroAppuntamenti.getAppuntamentiPerPartecipanteNonCreatore(sportivo)).isEmpty()) {
 			for (Appuntamento appuntamento : this.registroAppuntamenti
 					.getAppuntamentiPerPartecipanteNonCreatore(sportivo)) {
