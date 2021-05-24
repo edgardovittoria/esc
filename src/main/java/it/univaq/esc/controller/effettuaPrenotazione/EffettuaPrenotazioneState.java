@@ -456,7 +456,7 @@ public abstract class EffettuaPrenotazioneState {
 			UtentePolisportivaAbstract sportivo) {
 		boolean quotaGiaPresente = false;
 		for (QuotaPartecipazione quotaPartecipazione : appuntamento.getQuotePartecipazione()) {
-			if (!quotaPartecipazione.getSportivoAssociato().isEqual(sportivo)) {
+			if (quotaPartecipazione.getSportivoAssociato().isEqual(sportivo)) {
 				quotaGiaPresente = true;
 			}
 		}

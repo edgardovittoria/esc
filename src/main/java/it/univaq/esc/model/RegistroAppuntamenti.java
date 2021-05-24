@@ -133,14 +133,14 @@ public class RegistroAppuntamenti {
     }
     
     public List<Appuntamento> escludiAppuntamentiDiCorsi(List<Appuntamento> listaAppuntamentiDaFiltrare){
-    	List<Appuntamento> appuntamentiCorsi = new ArrayList<Appuntamento>();
+    	List<Appuntamento> appuntamentiNonCorsi = new ArrayList<Appuntamento>();
     	for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
     		if(!appuntamento.appartieneA().equals(TipiPrenotazione.CORSO.toString())){
-    			appuntamentiCorsi.add(appuntamento);
+    			appuntamentiNonCorsi.add(appuntamento);
     		}
     	}
     	
-    	return appuntamentiCorsi;
+    	return appuntamentiNonCorsi;
     }
     
     public List<Appuntamento> filtraAppuntamentiDiCorsi(List<Appuntamento> listaAppuntamentiDaFiltrare){
