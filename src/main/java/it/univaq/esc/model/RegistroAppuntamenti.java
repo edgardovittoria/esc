@@ -133,13 +133,25 @@ public class RegistroAppuntamenti {
     }
     
     public List<Appuntamento> escludiAppuntamentiDiCorsi(List<Appuntamento> listaAppuntamentiDaFiltrare){
-    	listaAppuntamentiDaFiltrare.removeIf((appuntamento) -> appuntamento.appartieneA().equals(TipiPrenotazione.CORSO.toString()));
-    	return listaAppuntamentiDaFiltrare;
+    	List<Appuntamento> appuntamentiCorsi = new ArrayList<Appuntamento>();
+    	for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
+    		if(!appuntamento.appartieneA().equals(TipiPrenotazione.CORSO.toString())){
+    			appuntamentiCorsi.add(appuntamento);
+    		}
+    	}
+    	
+    	return appuntamentiCorsi;
     }
     
     public List<Appuntamento> filtraAppuntamentiDiCorsi(List<Appuntamento> listaAppuntamentiDaFiltrare){
-    	listaAppuntamentiDaFiltrare.removeIf((appuntamento) -> !appuntamento.appartieneA().equals(TipiPrenotazione.CORSO.toString()));
-    	return listaAppuntamentiDaFiltrare;
+    	List<Appuntamento> appuntamentiCorsi = new ArrayList<Appuntamento>();
+    	for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
+    		if(appuntamento.appartieneA().equals(TipiPrenotazione.CORSO.toString())){
+    			appuntamentiCorsi.add(appuntamento);
+    		}
+    	}
+    	
+    	return appuntamentiCorsi;
     }
 
     private List<Appuntamento> escludiAppuntamentiPerUtenteCreatore(List<Appuntamento> listaAppuntamentiDaFiltrare, UtentePolisportivaAbstract utenteCreatore){
