@@ -19,16 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportivoDTO;
-import it.univaq.esc.model.Appuntamento;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.Setter;
 import net.bytebuddy.asm.Advice.This;
-import it.univaq.esc.model.RegistroAppuntamenti;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 
 @RestController

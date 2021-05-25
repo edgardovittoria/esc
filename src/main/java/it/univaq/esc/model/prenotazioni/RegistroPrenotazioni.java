@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
+import it.univaq.esc.model.prenotazioni.utility.FetchDatiPrenotazioniAppuntamentiFunctionsUtlis;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.PrenotazioneRepository;
 import lombok.AccessLevel;
@@ -26,32 +27,17 @@ public class RegistroPrenotazioni {
     private List<Prenotazione> prenotazioniRegistrate = new ArrayList<Prenotazione>();
     
 
-    public RegistroPrenotazioni(PrenotazioneRepository prenotazioneRepository){
+    public RegistroPrenotazioni(PrenotazioneRepository prenotazioneRepository, RegistroAppuntamenti registroAppuntamenti){
     	this.setPrenotazioneRepository(prenotazioneRepository);
+    	setPrenotazioniRegistrate(registroAppuntamenti.getPrenotazioniAssociateAListaAppuntamenti(registroAppuntamenti.getListaAppuntamenti()));
     }
 
 
     @PostConstruct
     public void popola(){
-        setPrenotazioniRegistrate(prenotazioneRepository.findAll());
+//        setPrenotazioniRegistrate(prenotazioneRepository.findAll());
 
-        
-        /*
-         * Poiché nel caso dei corsi le specifiche delle lezioni si trovano dentro la specifica corso come voluto,
-         * ma vengono anche inserite direttamente nella prenotazione dal database, 
-         * andiamo ad eliminare queste ultime che sono dei doppioni indesiderati.
-         */
-        for(Prenotazione prenotazione : this.getPrenotazioniRegistrate()) {
-        	boolean isCorso = false;
-        	for(PrenotazioneSpecs specs : prenotazione.getListaSpecifichePrenotazione()) {
-        		if (specs.getTipoPrenotazione().equals(TipiPrenotazione.CORSO.toString())) {
-        			isCorso = true;
-        		}
-        	}
-        	if(isCorso) {
-        		prenotazione.getListaSpecifichePrenotazione().removeIf((spec) -> !spec.getTipoPrenotazione().equals(TipiPrenotazione.CORSO.toString()));
-        	}
-        }
+        FetchDatiPrenotazioniAppuntamentiFunctionsUtlis.rimuoviDoppioniSpecificheLezioniInPrenotazioneCorso(this.getPrenotazioniRegistrate());
     }
 
     public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {

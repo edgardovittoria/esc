@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.prenotazioni;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,9 +27,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
-import it.univaq.esc.model.prenotazioni.Prenotazione;
-import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
 import lombok.Getter;

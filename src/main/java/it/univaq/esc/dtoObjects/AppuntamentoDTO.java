@@ -5,9 +5,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.univaq.esc.model.Appuntamento;
-import it.univaq.esc.model.QuotaPartecipazione;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazione;
+import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

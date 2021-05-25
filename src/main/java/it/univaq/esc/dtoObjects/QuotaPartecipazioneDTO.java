@@ -1,6 +1,6 @@
 package it.univaq.esc.dtoObjects;
 
-import it.univaq.esc.model.QuotaPartecipazione;
+import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

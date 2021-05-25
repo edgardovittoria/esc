@@ -20,6 +20,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import it.univaq.esc.model.prenotazioni.Appuntamento;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

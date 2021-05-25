@@ -7,8 +7,8 @@ import java.util.Map;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
-import it.univaq.esc.model.Appuntamento;
 import it.univaq.esc.model.Impianto;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import lombok.NoArgsConstructor;
 import it.univaq.esc.model.costi.TipoCostoPrenotabile;

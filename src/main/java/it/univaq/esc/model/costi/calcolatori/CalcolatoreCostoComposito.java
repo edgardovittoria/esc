@@ -3,7 +3,7 @@ package it.univaq.esc.model.costi.calcolatori;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.univaq.esc.model.Appuntamento;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

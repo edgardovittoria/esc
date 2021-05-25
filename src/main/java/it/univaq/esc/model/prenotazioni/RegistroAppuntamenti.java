@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.prenotazioni;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,8 +13,7 @@ import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
-import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
-import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.model.prenotazioni.utility.FetchDatiPrenotazioniAppuntamentiFunctionsUtlis;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import lombok.AccessLevel;
@@ -47,6 +46,7 @@ public class RegistroAppuntamenti {
             calcComposito.aggiungiStrategiaCosto(calcBase);
             appuntamento.setCalcolatoreCosto(calcComposito);
         }
+        
     }
 
 
@@ -201,6 +201,10 @@ public class RegistroAppuntamenti {
     		}
     	}
     	return appuntamenti;
+    }
+    
+    public List<Prenotazione> getPrenotazioniAssociateAListaAppuntamenti(List<Appuntamento> listaAppuntamenti){
+    	return FetchDatiPrenotazioniAppuntamentiFunctionsUtlis.getPrenotazioniAssociateAListaAppuntamenti(listaAppuntamenti);
     }
 
 }

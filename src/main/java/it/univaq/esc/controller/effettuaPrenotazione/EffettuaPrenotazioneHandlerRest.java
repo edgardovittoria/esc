@@ -25,12 +25,9 @@ import it.univaq.esc.dtoObjects.IFormPrenotabile;
 import it.univaq.esc.dtoObjects.IstruttoreDTO;
 
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
-import it.univaq.esc.model.Appuntamento;
-
+import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
-
-import it.univaq.esc.model.RegistroAppuntamenti;
-
+import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 
 import it.univaq.esc.model.costi.CatalogoPrenotabili;

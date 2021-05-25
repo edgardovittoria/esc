@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-import it.univaq.esc.model.Appuntamento;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import lombok.AccessLevel;
 import lombok.Getter;
