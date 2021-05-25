@@ -25,24 +25,27 @@ public class RegistroPrenotazioni {
     private PrenotazioneRepository prenotazioneRepository;
 	@Setter(value = AccessLevel.PRIVATE)
     private List<Prenotazione> prenotazioniRegistrate = new ArrayList<Prenotazione>();
+	@Getter(value = AccessLevel.PRIVATE)
+	@Setter(value = AccessLevel.PRIVATE)
+	private RegistroAppuntamenti registroAppuntamenti;
     
 
     public RegistroPrenotazioni(PrenotazioneRepository prenotazioneRepository, RegistroAppuntamenti registroAppuntamenti){
     	this.setPrenotazioneRepository(prenotazioneRepository);
-    	setPrenotazioniRegistrate(registroAppuntamenti.getPrenotazioniAssociateAListaAppuntamenti(registroAppuntamenti.getListaAppuntamenti()));
+    	this.setRegistroAppuntamenti(registroAppuntamenti);
     }
 
 
     @PostConstruct
     public void popola(){
-//        setPrenotazioniRegistrate(prenotazioneRepository.findAll());
-
+    	setPrenotazioniRegistrate(getRegistroAppuntamenti().getPrenotazioniAssociateAListaAppuntamenti(getRegistroAppuntamenti().getListaAppuntamenti()));
+    	
         FetchDatiPrenotazioniAppuntamentiFunctionsUtlis.rimuoviDoppioniSpecificheLezioniInPrenotazioneCorso(this.getPrenotazioniRegistrate());
     }
 
     public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {
         getPrenotazioniRegistrate().add(prenotazioneDaAggiungere);
-       // this.getPrenotazioneRepository().save(prenotazioneDaAggiungere);
+        this.getPrenotazioneRepository().save(prenotazioneDaAggiungere);
        
     }
 
@@ -61,7 +64,7 @@ public class RegistroPrenotazioni {
     public void cancellaPrenotazione(Prenotazione prenotazioneDaCancellare){
         //appuntamentoRepository.deleteAll(prenotazioneDaCancellare.getListaAppuntamenti());
         getPrenotazioniRegistrate().remove(prenotazioneDaCancellare);
-        prenotazioneRepository.delete(prenotazioneDaCancellare);
+       getPrenotazioneRepository().delete(prenotazioneDaCancellare);
         
     }
 
