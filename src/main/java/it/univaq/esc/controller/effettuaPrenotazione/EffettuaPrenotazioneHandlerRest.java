@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -238,7 +240,8 @@ public class EffettuaPrenotazioneHandlerRest {
      * @param tipoPrenotazione tipologia di prenotazione selezionata
      * @return mappa di dati per la fase di compilazione della prenotazione.
      */
-    @PreAuthorize("hasRole('DIRETTORE')")
+    //@PreAuthorize("hasRole('ROLE_DIRETTORE')")
+    @RolesAllowed("ROLE_DIRETTORE")
     @GetMapping("/avviaNuovaPrenotazioneEventoDirettore")
     @CrossOrigin
     public @ResponseBody Map<String, Object> avviaNuovaPrenotazioneEventoDirettore(@RequestParam(name = "email") String emailDirettore, @RequestParam(name = "tipoPrenotazione") String tipoPrenotazione){
