@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -33,6 +34,7 @@ import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
+import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 /**
@@ -236,6 +238,7 @@ public class EffettuaPrenotazioneHandlerRest {
      * @param tipoPrenotazione tipologia di prenotazione selezionata
      * @return mappa di dati per la fase di compilazione della prenotazione.
      */
+    @PreAuthorize("hasRole('DIRETTORE')")
     @GetMapping("/avviaNuovaPrenotazioneEventoDirettore")
     @CrossOrigin
     public @ResponseBody Map<String, Object> avviaNuovaPrenotazioneEventoDirettore(@RequestParam(name = "email") String emailDirettore, @RequestParam(name = "tipoPrenotazione") String tipoPrenotazione){

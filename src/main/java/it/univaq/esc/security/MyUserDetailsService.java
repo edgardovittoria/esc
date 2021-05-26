@@ -1,8 +1,12 @@
 package it.univaq.esc.security;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,8 +35,17 @@ public class MyUserDetailsService implements UserDetailsService{
         
         	return new User((String)utente.getProprieta().get("email"), 
                     (String)utente.getProprieta().get("password"), 
-                    new ArrayList<>());     
+                    getAuthority(utente));     
 
     }
+    
+    private List getAuthority(UtentePolisportivaAbstract user) {
+        Set authorities = new HashSet<>();
+		user.getRuoliUtentePolisportiva().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+		});
+		List<SimpleGrantedAuthority> listaRuoli = new ArrayList<SimpleGrantedAuthority>(authorities);
+		return listaRuoli;
+	}
 
 }
