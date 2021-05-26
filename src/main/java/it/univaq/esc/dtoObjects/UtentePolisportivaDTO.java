@@ -64,6 +64,8 @@ public class UtentePolisportivaDTO implements IModelToDTO{
 	        mappaAttributi.put("appuntamentiLezioni", listaAppuntamentiDTO);
 		}
 		
+		setAttributiExtra(mappaAttributi);
+		
 	}
 
 }
