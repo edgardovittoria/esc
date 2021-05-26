@@ -92,5 +92,9 @@ public abstract class PrenotazioneSpecs {
 		return this.getPrenotazioneAssociata().getSportivoPrenotante();
 	}
 	
+	public List<PrenotazioneSpecs> getPrenotazioniSpecsFiglie(){
+		return null;
+	}
+	
 
 }

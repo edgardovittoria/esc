@@ -15,6 +15,7 @@ import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.RegistroImpianti;
+import it.univaq.esc.model.RegistroNotifiche;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
@@ -26,6 +27,10 @@ import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.AppuntamentoRepository;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Classe astratta che definisce l'interfaccia comune per gli stati del
@@ -40,7 +45,14 @@ import it.univaq.esc.repository.AppuntamentoRepository;
  * @author esc
  *
  */
+@Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PRIVATE) @NoArgsConstructor
 public abstract class EffettuaPrenotazioneState {
+	
+	/**
+	 * Registro delle notifiche. Utilizzato per invio e gestione generale delle notifiche relative alle prenotazioni.
+	 */
+	@Autowired
+	private RegistroNotifiche registroNotifiche;
 
 	/**
 	 * Registro degli sport della polisportiva. Utilizzato per la ricerca e la
@@ -78,26 +90,10 @@ public abstract class EffettuaPrenotazioneState {
 	@Autowired
 	private CatalogoPrenotabili catalogoPrenotabili;
 
-	/**
-	 * Costruttore della classe EffettuaPrenotazioneState
-	 */
-	public EffettuaPrenotazioneState() {
-	}
 
-	/**
-	 * Restituisce il registro degli appuntamenti. Definito protected in modo da
-	 * poter essere invocato nelle sottoclassi.
-	 * 
-	 * @return il registro degli appuntamenti
-	 */
-	protected RegistroAppuntamenti getRegistroAppuntamenti() {
-		return registroAppuntamenti;
-	}
+
 	
-	protected CatalogoPrenotabili getCatalogoPrenotabili() {
-		return catalogoPrenotabili;
-	}
-
+	
 	/**
 	 * Definisce l'interfaccia per il metodo che restituisce i dati necessari per
 	 * popolare le opzioni di prenotazione, nella fase di avvio di una nuova
@@ -235,25 +231,7 @@ public abstract class EffettuaPrenotazioneState {
 		return listaSportiviDTO;
 	}
 
-	/**
-	 * Restituisce il registro degli impianti della polisportiva, per la gestione
-	 * degli impianti nei metodi principali.
-	 * 
-	 * @return registro degli impianti della polisportiva
-	 */
-	protected RegistroImpianti getRegistroImpianti() {
-		return this.registroImpianti;
-	}
-
-	/**
-	 * Getter per il registro degli utenti della polisportiva, per la gestione di
-	 * tutti gli utenti interessati dalla prenotazione che si sta gestendo.
-	 * 
-	 * @return registro deglgi utenti della polisportiva.
-	 */
-	protected RegistroUtentiPolisportiva getRegistroUtenti() {
-		return this.registroUtenti;
-	}
+	
 
 	/**
 	 * Metodo di utilità. Resituisce la lista degli istruttori, in formato DTO,
@@ -442,14 +420,7 @@ public abstract class EffettuaPrenotazioneState {
 		return listaIstruttoriDTODisponibili;
 	}
 
-	/**
-	 * Restiruisce il registro degli sport della polisportiva.
-	 * 
-	 * @return il registro degli sport della polisportiva
-	 */
-	public RegistroSport getRegistroSport() {
-		return registroSport;
-	}
+	
 
 	protected QuotaPartecipazione creaQuotaPartecipazione(Appuntamento appuntamento,
 			UtentePolisportivaAbstract sportivo) {
@@ -484,11 +455,5 @@ public abstract class EffettuaPrenotazioneState {
 		return partecipanteAggiunto;
 	}
 
-	/**
-	 * @return the registroPrenotazioni
-	 */
-	public RegistroPrenotazioni getRegistroPrenotazioni() {
-		return registroPrenotazioni;
-	}
-
+	
 }

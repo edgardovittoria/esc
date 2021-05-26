@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
+import it.univaq.esc.dtoObjects.NotificaDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
@@ -27,13 +28,21 @@ import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.Setter;
 import net.bytebuddy.asm.Advice.This;
+import it.univaq.esc.model.RegistroNotifiche;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
+import it.univaq.esc.model.notifiche.Notifica;
 
 @RestController
 @RequestMapping("/aggiornaOpzioni")
+@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE)
 public class ControllerAggiornaOpzioniPrenotazioneREST {
+	
+	@Autowired
+	private RegistroNotifiche registroNotifiche;
 
 	@Autowired
 	private RegistroUtentiPolisportiva registroUtentiPolisportiva;
@@ -139,7 +148,16 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
 			listaCorsiACuiSiPartecipaDTO.add(prenotazioneDTO);
 		}
 		
-		
+		/*
+		 * Ricaviamo le notifiche dell'utente autenticato per mostrarle nel suo profilo.
+		 */
+		List<NotificaDTO> notificheUtente = new ArrayList<NotificaDTO>();
+		for(Notifica notifica : getRegistroNotifiche().getNotifichePerDestinatario(sportivo)) {
+			NotificaDTO notificaDTO = new NotificaDTO();
+			notificaDTO.impostaValoriDTO(notifica);
+			
+			notificheUtente.add(notificaDTO);
+		}
 		
 		
 		
@@ -153,6 +171,7 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
 		mappaPrenotazioniPartecipazioni.put("prenotazioniEffettuate", prenotazioni);
 		mappaPrenotazioniPartecipazioni.put("partecipazioni", appuntamenti);
 		mappaPrenotazioniPartecipazioni.put("corsiACuiSiPartecipa", listaCorsiACuiSiPartecipaDTO);
+		mappaPrenotazioniPartecipazioni.put("notificheUtente", notificheUtente);
 
 		return mappaPrenotazioniPartecipazioni;
 

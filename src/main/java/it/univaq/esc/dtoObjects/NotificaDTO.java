@@ -1,6 +1,6 @@
 package it.univaq.esc.dtoObjects;
 
-import it.univaq.esc.model.Notifica;
+import it.univaq.esc.model.notifiche.Notifica;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

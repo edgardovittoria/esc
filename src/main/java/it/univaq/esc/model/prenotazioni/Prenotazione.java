@@ -106,12 +106,20 @@ public class Prenotazione extends Notificabile{
 		infoPrenotazionMap.put("tipoPrenotazione", this.getTipoPrenotazione());
 		infoPrenotazionMap.put("sport", this.getSportAssociatoAllaPrenotazione());
 		infoPrenotazionMap.put("identificativo", this.getIdPrenotazione());
+		infoPrenotazionMap.put("numeroIncontri", getNumeroIncontri());
 		
 		return infoPrenotazionMap;
 	}
 	
 	public Long getIdPrenotazione() {
 		return this.getIdNotificabile();
+	}
+	
+	public Integer getNumeroIncontri() {
+		if(getTipoPrenotazione().equals(TipiPrenotazione.CORSO.toString())) {
+			return getListaSpecifichePrenotazione().get(0).getPrenotazioniSpecsFiglie().size();
+		}
+		return getListaSpecifichePrenotazione().size();
 	}
 
     

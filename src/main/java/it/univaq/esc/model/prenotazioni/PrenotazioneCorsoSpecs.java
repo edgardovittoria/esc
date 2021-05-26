@@ -69,5 +69,10 @@ public class PrenotazioneCorsoSpecs extends PrenotazioneSpecs {
 		this.getListaLezioni().forEach((lezioneSpecs) -> lezioneSpecs.setPending(pending));
 
 	}
+	
+	@Override
+	public List<PrenotazioneSpecs> getPrenotazioniSpecsFiglie() {
+		return getListaLezioni();
+	}
 
 }
