@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
-import it.univaq.esc.dtoObjects.SportivoDTO;
+import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
@@ -53,8 +53,8 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
 	 */
 	@GetMapping("/sportivo")
 	@CrossOrigin
-	public @ResponseBody SportivoDTO getSportivo(@RequestParam(name = "email") String email) {
-		SportivoDTO sportivoDTO = new SportivoDTO();
+	public @ResponseBody UtentePolisportivaDTO getSportivo(@RequestParam(name = "email") String email) {
+		UtentePolisportivaDTO sportivoDTO = new UtentePolisportivaDTO();
 		sportivoDTO.impostaValoriDTO(registroUtentiPolisportiva.getUtenteByEmail(email));
 		return sportivoDTO;
 	}

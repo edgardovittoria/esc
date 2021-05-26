@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
-import it.univaq.esc.dtoObjects.SportivoDTO;
+import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
@@ -143,9 +143,9 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		prenotazioneSpecs.setPrenotazioneAssociata(controller.getPrenotazioneInAtto());
 		prenotazioneSpecs.setPending(true);
 
-		List<SportivoDTO> invitatiDTO = new ArrayList<SportivoDTO>();
+		List<UtentePolisportivaDTO> invitatiDTO = new ArrayList<UtentePolisportivaDTO>();
 		for (UtentePolisportivaAbstract invitato : listaInvitati) {
-			SportivoDTO invitatoDTO = new SportivoDTO();
+			UtentePolisportivaDTO invitatoDTO = new UtentePolisportivaDTO();
 			invitatoDTO.impostaValoriDTO(invitato);
 			invitatiDTO.add(invitatoDTO);
 		}

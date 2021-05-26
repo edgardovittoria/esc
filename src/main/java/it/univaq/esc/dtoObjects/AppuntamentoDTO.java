@@ -18,10 +18,10 @@ public class AppuntamentoDTO implements IModelToDTO{
     
     private Integer idAppuntamento;
     private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
-    private List<SportivoDTO> partecipanti = new ArrayList<SportivoDTO>();
+    private List<UtentePolisportivaDTO> partecipanti = new ArrayList<UtentePolisportivaDTO>();
     private PrenotazioneSpecsDTO specificaPrenotazione;
     private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
-    private SportivoDTO creatore;
+    private UtentePolisportivaDTO creatore;
 
     
     public LocalDate getDataAppuntamento() {
@@ -49,7 +49,7 @@ public class AppuntamentoDTO implements IModelToDTO{
     }
 
 
-    public void aggiungiPartecipante(SportivoDTO partecipante){
+    public void aggiungiPartecipante(UtentePolisportivaDTO partecipante){
         this.partecipanti.add(partecipante);
     }
 
@@ -66,7 +66,7 @@ public class AppuntamentoDTO implements IModelToDTO{
         specificaDTO.impostaValoriDTO(appuntamento.getPrenotazioneSpecsAppuntamento());
         this.setSpecificaPrenotazione(specificaDTO);
         for(UtentePolisportivaAbstract partecipante : appuntamento.getPartecipanti()){
-            SportivoDTO partecipanteDTO = new SportivoDTO();
+            UtentePolisportivaDTO partecipanteDTO = new UtentePolisportivaDTO();
             partecipanteDTO.impostaValoriDTO(partecipante);
             this.aggiungiPartecipante(partecipanteDTO);
         }
@@ -79,7 +79,7 @@ public class AppuntamentoDTO implements IModelToDTO{
         }
         this.setQuotePartecipazione(listaQuote);
 
-        SportivoDTO creatore = new SportivoDTO();
+        UtentePolisportivaDTO creatore = new UtentePolisportivaDTO();
         creatore.impostaValoriDTO(appuntamento.creatoDa());
         this.setCreatore(creatore);
         

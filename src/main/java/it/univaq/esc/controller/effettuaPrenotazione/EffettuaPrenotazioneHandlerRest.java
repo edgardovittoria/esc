@@ -22,9 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
 
-import it.univaq.esc.dtoObjects.IstruttoreDTO;
+
 
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
+import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
@@ -329,7 +330,7 @@ public class EffettuaPrenotazioneHandlerRest {
     
     @GetMapping("/istruttoriDisponibili")
     @CrossOrigin
-    public @ResponseBody List<IstruttoreDTO> getListaIstruttoriPerSport(@RequestParam(name = "sport") String sport) {
+    public @ResponseBody List<UtentePolisportivaDTO> getListaIstruttoriPerSport(@RequestParam(name = "sport") String sport) {
         return this.getStato().getIstruttoriPerSport(sport);
     }
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import it.univaq.esc.dtoObjects.SportivoDTO;
+import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.security.AuthenticationRequest;
@@ -70,7 +70,7 @@ public class AutenticazioneUtentiHandler {
 			.loadUserByUsername(authenticationRequest.getUsername());
 
 		UtentePolisportivaAbstract utente = registroUtentiPolisportiva.getUtenteByEmail(userDetails.getUsername());
-		SportivoDTO sportivoDTO = new SportivoDTO();
+		UtentePolisportivaDTO sportivoDTO = new UtentePolisportivaDTO();
 		sportivoDTO.impostaValoriDTO(utente);
 
 		final String jwt = jwtUtil.generateToken(userDetails);

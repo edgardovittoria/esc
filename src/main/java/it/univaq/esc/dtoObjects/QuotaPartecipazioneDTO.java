@@ -10,7 +10,7 @@ public class QuotaPartecipazioneDTO implements IModelToDTO{
 
     private float costo;
 
-    private SportivoDTO sportivo;
+    private UtentePolisportivaDTO sportivo;
 
     private boolean pagata;
 
@@ -20,7 +20,7 @@ public class QuotaPartecipazioneDTO implements IModelToDTO{
        QuotaPartecipazione quota = (QuotaPartecipazione)modelDaConvertire;
        this.setCosto(quota.getCosto());
        this.setPagata(quota.isPagata());
-       SportivoDTO sportivo = new SportivoDTO();
+       UtentePolisportivaDTO sportivo = new UtentePolisportivaDTO();
        sportivo.impostaValoriDTO(quota.getSportivoAssociato());
        this.setSportivo(sportivo);
         

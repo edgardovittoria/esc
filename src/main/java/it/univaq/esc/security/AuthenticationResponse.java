@@ -1,6 +1,7 @@
 package it.univaq.esc.security;
 
-import it.univaq.esc.dtoObjects.SportivoDTO;
+
+import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,6 @@ import lombok.Setter;
 public class AuthenticationResponse {
     
     private final String jwt;
-    private SportivoDTO sportivo;
+    private UtentePolisportivaDTO sportivo;
 
 }

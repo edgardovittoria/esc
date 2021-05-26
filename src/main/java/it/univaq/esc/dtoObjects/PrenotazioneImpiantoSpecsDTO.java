@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
     
-    private List<SportivoDTO> invitati = new ArrayList<SportivoDTO>();
+    private List<UtentePolisportivaDTO> invitati = new ArrayList<UtentePolisportivaDTO>();
     private int postiLiberi;
     private Integer idImpiantoPrenotato;
     private String pavimentazioneImpianto;
@@ -30,7 +30,7 @@ public class PrenotazioneImpiantoSpecsDTO extends PrenotazioneSpecsDTO {
         setPostiLiberi(12);
         
         for(UtentePolisportivaAbstract invitato : (List<UtentePolisportivaAbstract>) specs.getValoriSpecificheExtraPrenotazione().get("invitati")){
-            SportivoDTO invitatoDTO = new SportivoDTO();
+            UtentePolisportivaDTO invitatoDTO = new UtentePolisportivaDTO();
             invitatoDTO.impostaValoriDTO(invitato);
             this.getInvitati().add(invitatoDTO);
         }

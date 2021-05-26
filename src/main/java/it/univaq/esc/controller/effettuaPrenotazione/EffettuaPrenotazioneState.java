@@ -9,10 +9,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import it.univaq.esc.dtoObjects.IFormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
-import it.univaq.esc.dtoObjects.IstruttoreDTO;
+import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
-import it.univaq.esc.dtoObjects.SportivoDTO;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.RegistroImpianti;
@@ -207,10 +206,10 @@ public abstract class EffettuaPrenotazioneState {
 	 * 
 	 * @return lista di tutti gli utenti registrati nella polisportiva che hanno il ruolo di sportivi in formato DTO.
 	 */
-	protected List<SportivoDTO> getSportiviPolisportiva() {
-		List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
+	protected List<UtentePolisportivaDTO> getSportiviPolisportiva() {
+		List<UtentePolisportivaDTO> listaSportiviDTO = new ArrayList<UtentePolisportivaDTO>();
 		for (UtentePolisportivaAbstract utente : getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO)) {
-			SportivoDTO sportivoDTO = new SportivoDTO();
+			UtentePolisportivaDTO sportivoDTO = new UtentePolisportivaDTO();
 			sportivoDTO.impostaValoriDTO(utente);
 			listaSportiviDTO.add(sportivoDTO);
 		}
@@ -225,10 +224,10 @@ public abstract class EffettuaPrenotazioneState {
 	 * 
 	 * @return lista di tutti gli utenti registrati nella polisportiva in formato DTO.
 	 */
-	protected List<SportivoDTO> getUtentiPolisportiva() {
-		List<SportivoDTO> listaSportiviDTO = new ArrayList<SportivoDTO>();
+	protected List<UtentePolisportivaDTO> getUtentiPolisportiva() {
+		List<UtentePolisportivaDTO> listaSportiviDTO = new ArrayList<UtentePolisportivaDTO>();
 		for (UtentePolisportivaAbstract utente : getRegistroUtenti().getListaUtentiPolisportiva()) {
-			SportivoDTO sportivoDTO = new SportivoDTO();
+			UtentePolisportivaDTO sportivoDTO = new UtentePolisportivaDTO();
 			sportivoDTO.impostaValoriDTO(utente);
 			listaSportiviDTO.add(sportivoDTO);
 		}
@@ -264,13 +263,13 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return lista degli istruttori associati allo sport passato come parametro,
 	 *         in formato DTO.
 	 */
-	protected List<IstruttoreDTO> getIstruttoriPerSport(String sport) {
-		List<IstruttoreDTO> listaIstruttori = new ArrayList<IstruttoreDTO>();
+	protected List<UtentePolisportivaDTO> getIstruttoriPerSport(String sport) {
+		List<UtentePolisportivaDTO> listaIstruttori = new ArrayList<UtentePolisportivaDTO>();
 		Sport sportRichiesto = this.getRegistroSport().getSportByNome(sport);
 
 		List<UtentePolisportivaAbstract> istruttori = this.getRegistroUtenti().getIstruttoriPerSport(sportRichiesto);
 		for (UtentePolisportivaAbstract istruttore : istruttori) {
-			IstruttoreDTO istDTO = new IstruttoreDTO();
+			UtentePolisportivaDTO istDTO = new UtentePolisportivaDTO();
 			istDTO.impostaValoriDTO(istruttore);
 			listaIstruttori.add(istDTO);
 		}
@@ -412,7 +411,7 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return lista dei soli istruttori associati allo sport scelto, liberi
 	 *         nell'orario selezionato in fase di prenotazione.
 	 */
-	protected List<IstruttoreDTO> getIstruttoriDTODisponibili(Map<String, Object> dati) {
+	protected List<UtentePolisportivaDTO> getIstruttoriDTODisponibili(Map<String, Object> dati) {
 		List<UtentePolisportivaAbstract> istruttoriDisponibili = this.getRegistroUtenti()
 				.getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE);
 		if (dati.containsKey("orario")) {
@@ -432,10 +431,10 @@ public abstract class EffettuaPrenotazioneState {
 		} else if (dati.containsKey("sport")) {
 			istruttoriDisponibili = this.filtraIstruttoriPerSport((String) dati.get("sport"), istruttoriDisponibili);
 		}
-		List<IstruttoreDTO> listaIstruttoriDTODisponibili = new ArrayList<IstruttoreDTO>();
+		List<UtentePolisportivaDTO> listaIstruttoriDTODisponibili = new ArrayList<UtentePolisportivaDTO>();
 		for (UtentePolisportivaAbstract istruttore : istruttoriDisponibili) {
 
-			IstruttoreDTO istruttoreDTO = new IstruttoreDTO();
+			UtentePolisportivaDTO istruttoreDTO = new UtentePolisportivaDTO();
 			istruttoreDTO.impostaValoriDTO(istruttore);
 			listaIstruttoriDTODisponibili.add(istruttoreDTO);
 
