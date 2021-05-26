@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+
 import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
@@ -25,12 +25,12 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.Notificabile;
-import it.univaq.esc.model.Sport;
+
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.bytebuddy.asm.Advice.This;
+
 
 
 @Entity
@@ -38,9 +38,7 @@ import net.bytebuddy.asm.Advice.This;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPrenotazione")
 @Getter @Setter @NoArgsConstructor
 public class Prenotazione extends Notificabile{
-//    @Id
-//    private Long idPrenotazione;
-    
+
 
     @ManyToOne()
     @JoinColumn()
@@ -96,15 +94,15 @@ public class Prenotazione extends Notificabile{
         return this.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione();
     }
     
-    public Sport getSportAssociatoAllaPrenotazione() {
-    	return this.getListaSpecifichePrenotazione().get(0).getSportAssociato();
+    public String getNomeSportAssociatoAllaPrenotazione() {
+    	return this.getListaSpecifichePrenotazione().get(0).getSportAssociato().getNome();
     }
 
 	@Override
 	public Map<String, Object> getInfo() {
 		Map<String, Object> infoPrenotazionMap = new HashMap<String, Object>();
 		infoPrenotazionMap.put("tipoPrenotazione", this.getTipoPrenotazione());
-		infoPrenotazionMap.put("sport", this.getSportAssociatoAllaPrenotazione());
+		infoPrenotazionMap.put("sportNome", this.getNomeSportAssociatoAllaPrenotazione());
 		infoPrenotazionMap.put("identificativo", this.getIdPrenotazione());
 		infoPrenotazionMap.put("numeroIncontri", getNumeroIncontri());
 		
