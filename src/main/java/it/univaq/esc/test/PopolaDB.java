@@ -109,7 +109,7 @@ public class PopolaDB {
         mappaProprieta2.put("sportPraticati", listaSportPraticati2);
         sportivo2.setProprieta(mappaProprieta2);
 
-        UtentePolisportivaAbstract sportivo3 = new UtentePolisportivaBuilder().assegnaRuoloSportivo().build();
+        UtentePolisportivaAbstract sportivo3 = new UtentePolisportivaBuilder().assegnaRuoloSportivo().assegnaRuoloDirettorePolisportiva().build();
         Map<String, Object> mappaProprieta3 = new HashMap<String, Object>();
         mappaProprieta3.put("nome", "tardigrado");
         mappaProprieta3.put("cognome", "acqua");
