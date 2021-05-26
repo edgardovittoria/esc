@@ -66,8 +66,8 @@ public class RegistroPrenotazioni {
 
 	}
 
-	public Integer getLastIdPrenotazione() {
-		Integer lastID = 0;
+	public Long getLastIdPrenotazione() {
+		Long lastID = (long) 0;
 		if (getPrenotazioniRegistrate().isEmpty()) {
 			return lastID;
 		} else {
@@ -105,7 +105,7 @@ public class RegistroPrenotazioni {
 		return prenotazioniFiltrate;
 	}
 
-	public Prenotazione getPrenotazioneById(Integer idPrenotazione) {
+	public Prenotazione getPrenotazioneById(Long idPrenotazione) {
 		for (Prenotazione prenotazione : this.getPrenotazioniRegistrate()) {
 			if (prenotazione.getIdPrenotazione() == idPrenotazione) {
 				return prenotazione;

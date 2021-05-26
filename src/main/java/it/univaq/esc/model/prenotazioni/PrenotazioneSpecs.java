@@ -68,7 +68,7 @@ public abstract class PrenotazioneSpecs {
 
 	public abstract String getTipoPrenotazione();
 	
-	public Integer getIdPrenotazioneAssociata() {
+	public Long getIdPrenotazioneAssociata() {
 		return this.getPrenotazioneAssociata().getIdPrenotazione();
 	}
 	

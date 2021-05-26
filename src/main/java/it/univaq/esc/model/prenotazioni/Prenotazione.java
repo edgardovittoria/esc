@@ -2,7 +2,7 @@ package it.univaq.esc.model.prenotazioni;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,19 +24,22 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import it.univaq.esc.model.Notificabile;
+import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.bytebuddy.asm.Advice.This;
 
 
 @Entity
 @Table(name = "prenotazioni")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPrenotazione")
 @Getter @Setter @NoArgsConstructor
-public class Prenotazione {
-    @Id
-    private int idPrenotazione;
+public class Prenotazione extends Notificabile{
+//    @Id
+//    private Long idPrenotazione;
     
 
     @ManyToOne()
@@ -53,12 +56,12 @@ public class Prenotazione {
     private List<PrenotazioneSpecs> listaSpecifichePrenotazione = new ArrayList<PrenotazioneSpecs>();
 
 
-    public Prenotazione(int lastIdPrenotazione){
-        setIdPrenotazione(lastIdPrenotazione +1);
+    public Prenotazione(Long lastIdPrenotazione){
+        super(lastIdPrenotazione);
     }
 
-    public Prenotazione(int lastIdPrenotazione, PrenotazioneSpecs prenotazioneSpecs) {
-        setIdPrenotazione(lastIdPrenotazione);
+    public Prenotazione(Long lastIdPrenotazione, PrenotazioneSpecs prenotazioneSpecs) {
+        super(lastIdPrenotazione);
         //aggiungiQuotaPartecipazione(sportivoPrenotante, 0, false);
         this.getListaSpecifichePrenotazione().add(prenotazioneSpecs);
     }
@@ -92,6 +95,24 @@ public class Prenotazione {
     
         return this.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione();
     }
+    
+    public Sport getSportAssociatoAllaPrenotazione() {
+    	return this.getListaSpecifichePrenotazione().get(0).getSportAssociato();
+    }
+
+	@Override
+	public Map<String, Object> getInfo() {
+		Map<String, Object> infoPrenotazionMap = new HashMap<String, Object>();
+		infoPrenotazionMap.put("tipoPrenotazione", this.getTipoPrenotazione());
+		infoPrenotazionMap.put("sport", this.getSportAssociatoAllaPrenotazione());
+		infoPrenotazionMap.put("identificativo", this.getIdPrenotazione());
+		
+		return infoPrenotazionMap;
+	}
+	
+	public Long getIdPrenotazione() {
+		return this.getIdNotificabile();
+	}
 
     
 }

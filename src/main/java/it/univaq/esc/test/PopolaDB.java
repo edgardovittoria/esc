@@ -269,7 +269,7 @@ public class PopolaDB {
                
         PrenotazioneSpecs prenotazioneSpecs = new PrenotazioneImpiantoSpecs();
         prenotazioneSpecs.setPending(true);
-        Prenotazione prenotazione1 = new Prenotazione(0, prenotazioneSpecs);
+        Prenotazione prenotazione1 = new Prenotazione((long)0, prenotazioneSpecs);
         //prenotazioneSpecs.setPrenotazioneAssociata(prenotazione1);
         prenotazione1.getListaSpecifichePrenotazione().get(0).setPrenotazioneAssociata(prenotazione1);
         prenotazione1.setSportivoPrenotante(sportivo1);
@@ -298,7 +298,7 @@ public class PopolaDB {
         
         PrenotazioneSpecs prenotazioneSpecs2 = new PrenotazioneImpiantoSpecs();
         prenotazioneSpecs2.setPending(true);
-        Prenotazione prenotazione2 = new Prenotazione(1, prenotazioneSpecs2);
+        Prenotazione prenotazione2 = new Prenotazione((long)1, prenotazioneSpecs2);
         //prenotazioneSpecs2.setPrenotazioneAssociata(prenotazione2);
         prenotazione2.getListaSpecifichePrenotazione().get(0).setPrenotazioneAssociata(prenotazione2);
         prenotazione2.setSportivoPrenotante(sportivo2);

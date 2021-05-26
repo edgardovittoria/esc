@@ -223,7 +223,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
      * di tipo IMPIANTO.
      */
     @Override
-    public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
+    public Object aggiungiPartecipanteAEventoEsistente(Long idEvento, String emailPartecipante) {
         Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
         if(appuntamento != null){
             this.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
