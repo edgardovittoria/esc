@@ -151,13 +151,7 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
 		/*
 		 * Ricaviamo le notifiche dell'utente autenticato per mostrarle nel suo profilo.
 		 */
-		List<NotificaDTO> notificheUtente = new ArrayList<NotificaDTO>();
-		for(Notifica notifica : getRegistroNotifiche().getNotifichePerDestinatario(sportivo)) {
-			NotificaDTO notificaDTO = new NotificaDTO();
-			notificaDTO.impostaValoriDTO(notifica);
-			
-			notificheUtente.add(notificaDTO);
-		}
+		List<NotificaDTO> notificheUtente = getNotificheDTOPerDestinatario(sportivo);
 		
 		
 		
@@ -175,6 +169,26 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
 
 		return mappaPrenotazioniPartecipazioni;
 
+	}
+	
+	@GetMapping("/notificheUtente")
+	@CrossOrigin
+	public @ResponseBody List<NotificaDTO> getNotificheUtente(@RequestParam(name = "email") String email) {
+		UtentePolisportivaAbstract utente = getRegistroUtentiPolisportiva().getUtenteByEmail(email);
+		return getNotificheDTOPerDestinatario(utente);
+	}
+	
+	
+	private List<NotificaDTO> getNotificheDTOPerDestinatario(UtentePolisportivaAbstract destinatario){
+		List<NotificaDTO> notificheDtos = new ArrayList<NotificaDTO>();
+		for(Notifica notifica : getRegistroNotifiche().getNotifichePerDestinatario(destinatario)) {
+			NotificaDTO notificaDTO = new NotificaDTO();
+			notificaDTO.impostaValoriDTO(notifica);
+			
+			notificheDtos.add(notificaDTO);
+		}
+		
+		return notificheDtos;
 	}
 
 }
