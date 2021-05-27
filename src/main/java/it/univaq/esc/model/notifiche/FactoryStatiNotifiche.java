@@ -23,7 +23,7 @@ public class FactoryStatiNotifiche {
         }
     }
 
-    public NotificaState getStato(String tipoPrenotazione){
+    public static NotificaState getStato(String tipoPrenotazione){
 
         if(mappaStati.containsKey(tipoPrenotazione)) {
         	return BeanUtil.getBean(mappaStati.get(tipoPrenotazione));

@@ -15,6 +15,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import it.univaq.esc.model.Notificabile;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
@@ -23,7 +24,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter
 public class Notifica {
 
 	@Id
@@ -47,13 +48,9 @@ public class Notifica {
 	@Getter(value = AccessLevel.PRIVATE)
 	private NotificaState statoNotifica;
 	
-	@Transient
-	@Autowired
-	@Getter(value = AccessLevel.PRIVATE)
-	@Setter(value = AccessLevel.PRIVATE)
-	private FactoryStatiNotifiche factoryStatiNotifiche;
 	
 
+	
 	
 	public Long getIdEvento() {
 		return (Long)getEvento().getInfo().get("identificativo");
@@ -65,6 +62,6 @@ public class Notifica {
 	
 	public void setEvento(Notificabile evento) {
 		this.evento = evento;
-		this.setStatoNotifica(factoryStatiNotifiche.getStato((String)getEvento().getInfo().get("tipoPrenotazione")));
+		this.setStatoNotifica(FactoryStatiNotifiche.getStato((String)getEvento().getInfo().get("tipoPrenotazione")));
 	}
 }

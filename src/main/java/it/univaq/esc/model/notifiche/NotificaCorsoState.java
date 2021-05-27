@@ -4,7 +4,10 @@ package it.univaq.esc.model.notifiche;
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Component
 @NoArgsConstructor

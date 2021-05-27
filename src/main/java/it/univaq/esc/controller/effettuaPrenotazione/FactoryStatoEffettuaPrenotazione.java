@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Factory per la creazione degli Stati del controller EffettuaPrenotazioneHandlerRest.
- * In base al tipo di prenotazione pass
+ * In base al tipo di prenotazione passato come parametro.
  * @author esc
  *
  */
