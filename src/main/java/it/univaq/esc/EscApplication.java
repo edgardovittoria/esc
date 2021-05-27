@@ -49,7 +49,7 @@ public class EscApplication implements CommandLineRunner {
         //testCalendarioPrenotazioni.test();
         //ricercaAppuntamentiSottoscrivibili.test();
     	//testFactoryStatoEffettuaPrenotazione.test();
-    	testFactoryStatiNotifiche.test();
+    	//testFactoryStatiNotifiche.test();
     	
         
     }

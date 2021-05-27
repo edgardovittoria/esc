@@ -20,7 +20,7 @@ public class NotificaCorsoState extends NotificaState{
 	
 	@Override
 	public String getMessaggioNotifica(Notifica notificaDiCuiCostruireIlMessaggio) {
-		String sport = (String)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("sport");
+		String sport = (String)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("sportNome");
 		Integer numeroIncontri = (Integer)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("numeroIncontri");
 		String messaggio = "Partecipa al nuovo corso di " + sport + "organizzato da ESC. "
 				+ "Comprende una serie di " + numeroIncontri + " lezioni.";
