@@ -1,7 +1,8 @@
 package it.univaq.esc.model.notifiche;
 
-import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public abstract class NotificaState {
 
 
