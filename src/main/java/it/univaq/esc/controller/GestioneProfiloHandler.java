@@ -40,7 +40,7 @@ import it.univaq.esc.model.notifiche.RegistroNotifiche;
 @RestController
 @RequestMapping("/aggiornaOpzioni")
 @Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE)
-public class ControllerAggiornaOpzioniPrenotazioneREST {
+public class GestioneProfiloHandler {
 	
 	@Autowired
 	private RegistroNotifiche registroNotifiche;
