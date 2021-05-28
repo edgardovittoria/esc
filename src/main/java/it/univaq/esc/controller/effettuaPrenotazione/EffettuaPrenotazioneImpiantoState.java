@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
@@ -25,6 +27,7 @@ import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.notifiche.Notifica;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.utility.BeanUtil;
 
 /**
  * Stato del controller EffettuaPrenotazioneHandler, che definisce la specifica
@@ -35,6 +38,7 @@ import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
  *
  */
 @Component
+@DependsOn("beanUtil")
 public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState {
 
 	/**
@@ -197,7 +201,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		for (UtentePolisportivaAbstract invitato : (List<UtentePolisportivaAbstract>) controller.getPrenotazioneInAtto()
 				.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione().get("invitati")) {
 
-			NotificaService notifica = new NotificaService();
+			NotificaService notifica = BeanUtil.getBean(NotificaService.class);
 			notifica.setDestinatario(invitato);
 			notifica.setEvento(controller.getPrenotazioneInAtto());
 			notifica.setLetta(false);
