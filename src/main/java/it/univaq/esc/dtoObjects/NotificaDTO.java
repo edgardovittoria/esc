@@ -1,6 +1,6 @@
 package it.univaq.esc.dtoObjects;
 
-import it.univaq.esc.model.notifiche.Notifica;
+import it.univaq.esc.model.notifiche.NotificaService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +16,7 @@ public class NotificaDTO  implements IModelToDTO{
 	
 	@Override
 	public void impostaValoriDTO(Object modelDaConvertire) {
-		Notifica notifica = (Notifica)modelDaConvertire;
+		NotificaService notifica = (NotificaService)modelDaConvertire;
 		setMessaggio(notifica.getMessaggio());
 		setMittente(notifica.getMittente().getProprieta().get("nome") + " " + notifica.getMittente().getProprieta().get("cognome"));
 		setIdEvento((Long)notifica.getEvento().getInfo().get("identificativo"));

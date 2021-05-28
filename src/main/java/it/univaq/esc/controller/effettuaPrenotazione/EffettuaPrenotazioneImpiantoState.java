@@ -23,6 +23,7 @@ import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.notifiche.Notifica;
+import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 /**
@@ -196,7 +197,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		for (UtentePolisportivaAbstract invitato : (List<UtentePolisportivaAbstract>) controller.getPrenotazioneInAtto()
 				.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione().get("invitati")) {
 
-			Notifica notifica = new Notifica();
+			NotificaService notifica = new NotificaService();
 			notifica.setDestinatario(invitato);
 			notifica.setEvento(controller.getPrenotazioneInAtto());
 			notifica.setLetta(false);

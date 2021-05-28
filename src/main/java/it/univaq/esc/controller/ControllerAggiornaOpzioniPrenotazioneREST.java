@@ -32,9 +32,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import net.bytebuddy.asm.Advice.This;
-import it.univaq.esc.model.RegistroNotifiche;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.notifiche.Notifica;
+import it.univaq.esc.model.notifiche.NotificaService;
+import it.univaq.esc.model.notifiche.RegistroNotifiche;
 
 @RestController
 @RequestMapping("/aggiornaOpzioni")
@@ -181,7 +182,7 @@ public class ControllerAggiornaOpzioniPrenotazioneREST {
 	
 	private List<NotificaDTO> getNotificheDTOPerDestinatario(UtentePolisportivaAbstract destinatario){
 		List<NotificaDTO> notificheDtos = new ArrayList<NotificaDTO>();
-		for(Notifica notifica : getRegistroNotifiche().getNotifichePerDestinatario(destinatario)) {
+		for(NotificaService notifica : getRegistroNotifiche().getNotifichePerDestinatario(destinatario)) {
 			NotificaDTO notificaDTO = new NotificaDTO();
 			notificaDTO.impostaValoriDTO(notifica);
 			

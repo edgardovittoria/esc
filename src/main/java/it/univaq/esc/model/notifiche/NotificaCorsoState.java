@@ -13,13 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class NotificaCorsoState extends NotificaState{
 
-	static {
-		FactoryStatiNotifiche.registra(TipiPrenotazione.CORSO.toString(),
-				NotificaCorsoState.class);
-	}
 	
 	@Override
-	public String getMessaggioNotifica(Notifica notificaDiCuiCostruireIlMessaggio) {
+	public String getMessaggioNotifica(NotificaService notificaDiCuiCostruireIlMessaggio) {
 		String sport = (String)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("sportNome");
 		Integer numeroIncontri = (Integer)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("numeroIncontri");
 		String messaggio = "Partecipa al nuovo corso di " + sport + "organizzato da ESC. "

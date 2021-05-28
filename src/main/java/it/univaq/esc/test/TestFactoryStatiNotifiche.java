@@ -8,16 +8,16 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Component
-@NoArgsConstructor
+@AllArgsConstructor
 public class TestFactoryStatiNotifiche {
 
-	//private FactoryStatiNotifiche factoryStatiNotifiche;
+	private FactoryStatiNotifiche factoryStatiNotifiche;
 	
 	
 	public void test() {
 		System.out.println("ISTANZE DEGLI STATI REGISTRATE NELLA FactoryStatiNotifiche");
-		System.out.println(FactoryStatiNotifiche.getStato(TipiPrenotazione.IMPIANTO.toString()));
-		System.out.println(FactoryStatiNotifiche.getStato(TipiPrenotazione.CORSO.toString()));
+		System.out.println(factoryStatiNotifiche.getStato(TipiPrenotazione.IMPIANTO.toString()));
+		System.out.println(factoryStatiNotifiche.getStato(TipiPrenotazione.CORSO.toString()));
 	}
 		
 	

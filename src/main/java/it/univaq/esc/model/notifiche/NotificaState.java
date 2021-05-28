@@ -9,5 +9,5 @@ import lombok.Setter;
 public abstract class NotificaState {
 
 
-	public abstract String getMessaggioNotifica(Notifica notificaDiCuiCostruireIlMessaggio);
+	public abstract String getMessaggioNotifica(NotificaService notificaDiCuiCostruireIlMessaggio);
 }

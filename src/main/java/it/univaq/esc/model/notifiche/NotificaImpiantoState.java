@@ -12,16 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NotificaImpiantoState extends NotificaState{
 	
-	static {
-		FactoryStatiNotifiche.registra(TipiPrenotazione.IMPIANTO.toString(),
-				NotificaImpiantoState.class);
-	}
-
 	
 	
 
 	@Override
-	public String getMessaggioNotifica(Notifica notificaDiCuiCostruireIlMessaggio) {
+	public String getMessaggioNotifica(NotificaService notificaDiCuiCostruireIlMessaggio) {
 		String messaggio = "";
 		Integer numeroIncontri = (Integer)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("numeroIncontri");
 		String sport = (String)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("sportNome");
