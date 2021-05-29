@@ -28,16 +28,17 @@ public class RegistroAppuntamenti {
 	@Setter(value = AccessLevel.PRIVATE)
     private AppuntamentoRepository appuntamentoRepository;
     
-	@Setter(value = AccessLevel.PRIVATE)
+	//@Setter(value = AccessLevel.PRIVATE)
     private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
 
     
     public RegistroAppuntamenti(AppuntamentoRepository appuntamentoRepository){
     	this.setAppuntamentoRepository(appuntamentoRepository);
+    	popola();
     }
 
-    @PostConstruct
+    
     private void popola(){
         setListaAppuntamenti(getAppuntamentoRepository().findAll());
         for(Appuntamento appuntamento : this.getListaAppuntamenti()){

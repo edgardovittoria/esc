@@ -32,6 +32,7 @@ public class CatalogoPrenotabili {
     CatalogoPrenotabili(PrenotabileDescrizioneRepository prenotabileDescrizioneRepository, PrenotabileDescrizioneBuilder prenotabileDescrizioneBuilder){
         this.setPrenotabileDescrizioneBuilder(prenotabileDescrizioneBuilder);
         this.setPrenotabileDescrizioneRepository(prenotabileDescrizioneRepository);
+        popola();
     }
 
 
@@ -41,8 +42,8 @@ public class CatalogoPrenotabili {
        return prenotabileDescrizioneDaAggiungere;
     }
 
-    @PostConstruct
-    public void popola(){
+    
+    private void popola(){
         this.setCatalogoPrenotabili(this.getPrenotabileDescrizioneRepository().findAll());
     }
 

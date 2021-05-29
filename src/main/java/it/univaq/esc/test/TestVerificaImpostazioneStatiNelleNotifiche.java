@@ -18,7 +18,7 @@ public class TestVerificaImpostazioneStatiNelleNotifiche {
 
 	private RegistroNotifiche registroNotifiche;
 	
-	private ApplicationContext context;
+	
 	
 	
 	public void test() {

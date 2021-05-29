@@ -40,10 +40,11 @@ public class RegistroNotifiche {
 	public RegistroNotifiche(RegistroPrenotazioni registroPrenotazioni, NotificaRepository notificaRepository) {
 		setRegistroPrenotazioni(registroPrenotazioni);
 		setNotificaRepository(notificaRepository);
+		popola();
 	}
 
-	@PostConstruct
-	public void popola() {
+	
+	private void popola() {
 		List<NotificaService> listaNotifiche = new ArrayList<NotificaService>();
 		for (Notifica notifica : getNotificaRepository().findAll()) {
 			notifica.setEvento((Notificabile) getRegistroPrenotazioni().getPrenotazioneById(notifica.getIdEvento()));

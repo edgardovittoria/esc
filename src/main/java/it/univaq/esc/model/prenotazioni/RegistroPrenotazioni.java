@@ -32,10 +32,11 @@ public class RegistroPrenotazioni {
 			RegistroAppuntamenti registroAppuntamenti) {
 		this.setPrenotazioneRepository(prenotazioneRepository);
 		this.setRegistroAppuntamenti(registroAppuntamenti);
+		popola();
 	}
 
-	@PostConstruct
-	public void popola() {
+	
+	private void popola() {
 		setPrenotazioniRegistrate(getRegistroAppuntamenti()
 				.getPrenotazioniAssociateAListaAppuntamenti(getRegistroAppuntamenti().getListaAppuntamenti()));
 

@@ -33,14 +33,15 @@ public class RegistroSport {
 	 */
 	public RegistroSport(SportRepository sportRepository) {
 		this.setSportRepository(sportRepository);
+		popola();
 	}
 
 	/**
 	 * Metodo invocato immediatamente dopo l'istanziazione del registro, che popola la lista degli sport del registro 
 	 * con tutti gli sport ricavati dal database.
 	 */
-	@PostConstruct
-	public void popola() {
+	
+	private void popola() {
 		this.setListaSportPolisportiva(this.getSportRepository().findAll());
 	}
 

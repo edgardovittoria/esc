@@ -33,12 +33,13 @@ public class RegistroImpianti {
     public RegistroImpianti(ImpiantoRepository impiantoRepository, AppuntamentoRepository appuntamentoRepository) {
     	this.setAppuntamentoRepository(appuntamentoRepository);
     	this.setImpiantoRepository(impiantoRepository);
+    	popola();
     }
 
     
 
-    @PostConstruct
-    public void popola(){
+    
+    private void popola(){
         this.setListaImpiantiPolisportiva(getImpiantoRepository().findAll());
         for(Impianto impianto : this.getListaImpiantiPolisportiva()){
             List<Appuntamento> appuntamentiImpianto = new ArrayList<Appuntamento>();
