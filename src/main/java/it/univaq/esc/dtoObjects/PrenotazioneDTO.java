@@ -5,11 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.annotation.XmlSeeAlso;
 
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
-import lombok.AccessLevel;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PrenotazioneDTO implements IModelToDTO {
+public class PrenotazioneDTO extends NotificabileDTO implements IModelToDTO{
 	
 	private Long idPrenotazione;
 	private UtentePolisportivaDTO sportivoPrenotante;
@@ -45,6 +44,8 @@ public class PrenotazioneDTO implements IModelToDTO {
 		if (mappa.containsKey("infoGeneraliEvento")) {
 			this.setInfoGeneraliEvento((Map<String, Object>) mappa.get("infoGeneraliEvento"));
 		}
+		
+		setTipoEventoNotificabile(prenotazione.getTipoEventoPrenotabile());
 
 	}
 

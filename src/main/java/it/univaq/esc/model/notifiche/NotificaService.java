@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import it.univaq.esc.model.Notificabile;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -1,5 +1,7 @@
 package it.univaq.esc.model.prenotazioni;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,8 +26,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import it.univaq.esc.model.Notificabile;
-
+import it.univaq.esc.model.TipoEventoNotificabile;
+import it.univaq.esc.model.notifiche.Notificabile;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -118,6 +120,11 @@ public class Prenotazione extends Notificabile{
 			return getListaSpecifichePrenotazione().get(0).getPrenotazioniSpecsFiglie().size();
 		}
 		return getListaSpecifichePrenotazione().size();
+	}
+
+	@Override
+	public String getTipoEventoPrenotabile() {
+		return TipoEventoNotificabile.PRENOTAZIONE.toString();
 	}
 
     

@@ -157,7 +157,7 @@ public class RegistroAppuntamenti {
     private List<Appuntamento> escludiAppuntamentiPerUtenteCreatore(List<Appuntamento> listaAppuntamentiDaFiltrare, UtentePolisportivaAbstract utenteCreatore){
         List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
         for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare){
-            if(!((String)appuntamento.creatoDa().getProprieta().get("email")).equals((String)utenteCreatore.getProprieta().get("email"))){
+            if(!appuntamento.creatoDa().isEqual(utenteCreatore)){
                 appuntamentiFiltrati.add(appuntamento);
             }
         }

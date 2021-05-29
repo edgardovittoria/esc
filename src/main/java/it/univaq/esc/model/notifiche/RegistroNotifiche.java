@@ -13,7 +13,6 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
-import it.univaq.esc.model.Notificabile;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.NotificaRepository;

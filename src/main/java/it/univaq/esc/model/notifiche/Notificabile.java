@@ -1,4 +1,4 @@
-package it.univaq.esc.model;
+package it.univaq.esc.model.notifiche;
 
 import java.util.Map;
 
@@ -23,4 +23,5 @@ public abstract class Notificabile {
 	}
 
 	public abstract Map<String, Object> getInfo();
+	public abstract String getTipoEventoPrenotabile();
 }
