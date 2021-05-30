@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import it.univaq.esc.controller.effettuaPrenotazione.FactoryStatoEffettuaPrenotazione;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import lombok.AllArgsConstructor;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
