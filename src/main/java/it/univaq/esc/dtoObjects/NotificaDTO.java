@@ -10,7 +10,7 @@ public class NotificaDTO  implements IModelToDTO{
 
 	private String messaggio;
 	private String mittente;
-	private Long idEvento;
+	private Integer idEvento;
 	private String tipoEventoNotificabile;
 	private boolean letta;
 	
@@ -20,7 +20,7 @@ public class NotificaDTO  implements IModelToDTO{
 		NotificaService notifica = (NotificaService)modelDaConvertire;
 		setMessaggio(notifica.getMessaggio());
 		setMittente(notifica.getMittente().getProprieta().get("nome") + " " + notifica.getMittente().getProprieta().get("cognome"));
-		setIdEvento((Long)notifica.getEvento().getInfo().get("identificativo"));
+		setIdEvento((Integer)notifica.getEvento().getInfo().get("identificativo"));
 		setTipoEventoNotificabile(notifica.getEvento().getTipoEventoPrenotabile());
 		
 	}
