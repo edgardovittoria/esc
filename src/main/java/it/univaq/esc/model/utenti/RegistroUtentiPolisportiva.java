@@ -11,9 +11,13 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.sun.xml.fastinfoset.util.LocalNameQualifiedNamesMap;
+
 import groovy.lang.Singleton;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -31,6 +35,10 @@ public class RegistroUtentiPolisportiva {
     
     @Setter(value = AccessLevel.PRIVATE)
     private List<UtentePolisportivaAbstract> listaUtentiPolisportiva = new ArrayList<UtentePolisportivaAbstract>();
+    
+    @Setter(value = AccessLevel.PRIVATE)
+	@Getter(value = AccessLevel.PRIVATE)
+    private RegistroAppuntamenti registroAppuntamenti;
 
 
     public RegistroUtentiPolisportiva(UtentePolisportivaAbstractRepository utentePolisportivaAbstractRepository) {
@@ -64,6 +72,33 @@ public class RegistroUtentiPolisportiva {
         }
         this.getListaUtentiPolisportiva().removeAll(utentiDaEliminare);
     }
+        /*
+         * Popoliamo il calendario degli sportivi
+         */
+        for(UtentePolisportivaAbstract sportivo : getListaUtentiByRuolo(TipoRuolo.SPORTIVO)){
+        	List<Appuntamento> listaAppuntamenti = getRegistroAppuntamenti().getAppuntamentiPerPartecipante(sportivo);
+        	if(!listaAppuntamenti.isEmpty()) {
+        		Calendario calendario = new Calendario();
+        		calendario.setListaAppuntamenti(listaAppuntamenti);
+        		Map<String, Object> mappaDatiSportivo = new HashMap<String, Object>();
+        		mappaDatiSportivo.put("calendarioAppuntamentiSportivo", calendario);
+        		sportivo.setProprieta(mappaDatiSportivo);
+        	}
+         }
+        
+        /*
+         * Popoliamo il calendario degli istruttori
+         */
+        for(UtentePolisportivaAbstract istruttore : getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE)){
+        	List<Appuntamento> listaLezioni = getRegistroAppuntamenti().getListaLezioniPerIstruttore(istruttore);
+        	if(!listaLezioni.isEmpty()) {
+        		Calendario calendarioIstruttore = new Calendario();
+        		calendarioIstruttore.setListaAppuntamenti(listaLezioni);
+        		Map<String, Object> mappaDatiIstruttore = new HashMap<String, Object>();
+        		mappaDatiIstruttore.put("calendarioLezioni", listaLezioni);
+        		istruttore.setProprieta(mappaDatiIstruttore);
+        	}
+        }
         
     }
     

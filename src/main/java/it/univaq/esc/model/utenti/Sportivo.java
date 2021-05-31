@@ -11,13 +11,14 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-
+import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,10 @@ public class Sportivo extends RuoloUtentePolisportivaDecorator{
     
     @Column
     private boolean moroso = false;
+    
+    @Transient
+    @Setter(value = AccessLevel.PRIVATE)
+    private Calendario calendarioAppuntamenti = new Calendario();
 
 
     public Sportivo(UtentePolisportivaAbstract utenteDaDecorare){
@@ -60,7 +65,12 @@ public class Sportivo extends RuoloUtentePolisportivaDecorator{
     public void setProprieta(Map<String, Object> mappaProprieta) {
         if(mappaProprieta.containsKey("sportPraticati")){
         this.setSportPraticatiDalloSportivo((List<Sport>)mappaProprieta.get("sportPraticati"));
-        this.setMoroso((boolean)mappaProprieta.get("moroso"));
+        }
+        if(mappaProprieta.containsKey("moroso")) {
+        	this.setMoroso((boolean)mappaProprieta.get("moroso"));
+        }
+        if(mappaProprieta.containsKey("calendarioAppuntamentiSportivo")) {
+        	this.setCalendarioAppuntamenti((Calendario)mappaProprieta.get("calendarioAppuntamentiSportivo"));
         }
         this.getUtentePolisportiva().setProprieta(mappaProprieta);
     }
@@ -70,6 +80,7 @@ public class Sportivo extends RuoloUtentePolisportivaDecorator{
         Map<String, Object> mappaProprieta = this.getUtentePolisportiva().getProprieta();
         mappaProprieta.put("sportPraticati", this.getSportPraticatiDalloSportivo());
         mappaProprieta.put("moroso", isMoroso());
+        mappaProprieta.put("calendarioAppuntamentiSportivo", getCalendarioAppuntamenti());
         return mappaProprieta;
     }
 

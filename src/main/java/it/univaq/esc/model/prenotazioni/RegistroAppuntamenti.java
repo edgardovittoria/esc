@@ -207,5 +207,31 @@ public class RegistroAppuntamenti {
     public List<Prenotazione> getPrenotazioniAssociateAListaAppuntamenti(List<Appuntamento> listaAppuntamenti){
     	return FetchDatiPrenotazioniAppuntamentiFunctionsUtlis.getPrenotazioniAssociateAListaAppuntamenti(listaAppuntamenti);
     }
+    
+    public List<Appuntamento> getAppuntamentiPerPartecipante(UtentePolisportivaAbstract partecipante){
+    	List<Appuntamento> appuntamenti = new ArrayList<Appuntamento>();
+    	for(Appuntamento appuntamento : getListaAppuntamenti()) {
+    		if(appuntamento.utenteIsPartecipante(partecipante)) {
+    			appuntamenti.add(appuntamento);
+    		}
+    	}
+    	return appuntamenti;
+    }
+    
+    private List<Appuntamento> filtraLezioniPerIstruttore(List<Appuntamento> listaLezioniDaFiltrare, UtentePolisportivaAbstract istruttore){
+    	List<Appuntamento> listaLezioniIstruttore = new ArrayList<Appuntamento>();
+    	for(Appuntamento appuntamento : listaLezioniDaFiltrare) {
+    		if(((UtentePolisportivaAbstract)appuntamento.getPrenotazioneSpecsAppuntamento().getValoriSpecificheExtraPrenotazione().get("istruttore")).isEqual(istruttore)) {
+    			listaLezioniIstruttore.add(appuntamento);
+    		}
+    	}
+    	return listaLezioniIstruttore;
+    }
 
+    public List<Appuntamento> getListaLezioniPerIstruttore(UtentePolisportivaAbstract istruttore){
+    	List<Appuntamento> listaLezioni = filtraAppuntamentiPerTipoPrenotazione(getListaAppuntamenti(), TipiPrenotazione.LEZIONE.toString());
+    	listaLezioni = filtraLezioniPerIstruttore(listaLezioni, istruttore);
+    	
+    	return listaLezioni;
+    }
 }
