@@ -37,8 +37,8 @@ public class Notifica {
 	@JoinColumn
 	private Notificabile evento;
 
-	public Long getIdEvento() {
-		return (Long) getEvento().getInfo().get("identificativo");
+	public Integer getIdEvento() {
+		return (Integer)getEvento().getInfo().get("identificativo");
 	}
 
 }

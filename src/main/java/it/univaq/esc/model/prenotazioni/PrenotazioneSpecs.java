@@ -34,7 +34,7 @@ public abstract class PrenotazioneSpecs {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Setter(value = AccessLevel.NONE)
-	private Long id;
+	private Integer id;
 	@Column
 	private boolean confermata = false;
 	@Column
@@ -68,7 +68,7 @@ public abstract class PrenotazioneSpecs {
 
 	public abstract String getTipoPrenotazione();
 	
-	public Long getIdPrenotazioneAssociata() {
+	public Integer getIdPrenotazioneAssociata() {
 		return this.getPrenotazioneAssociata().getIdPrenotazione();
 	}
 	

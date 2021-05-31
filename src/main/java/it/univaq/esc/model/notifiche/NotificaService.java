@@ -43,7 +43,7 @@ public class NotificaService {
 		return getStatoNotifica().getMessaggioNotifica(this);
 	}
 	
-	public Long getIdEvento() {
+	public Integer getIdEvento() {
 		return getNotifica().getIdEvento();
 	}
 	

@@ -56,11 +56,11 @@ public class Prenotazione extends Notificabile{
     private List<PrenotazioneSpecs> listaSpecifichePrenotazione = new ArrayList<PrenotazioneSpecs>();
 
 
-    public Prenotazione(Long lastIdPrenotazione){
+    public Prenotazione(Integer lastIdPrenotazione){
         super(lastIdPrenotazione);
     }
 
-    public Prenotazione(Long lastIdPrenotazione, PrenotazioneSpecs prenotazioneSpecs) {
+    public Prenotazione(Integer lastIdPrenotazione, PrenotazioneSpecs prenotazioneSpecs) {
         super(lastIdPrenotazione);
         //aggiungiQuotaPartecipazione(sportivoPrenotante, 0, false);
         this.getListaSpecifichePrenotazione().add(prenotazioneSpecs);
@@ -111,7 +111,7 @@ public class Prenotazione extends Notificabile{
 		return infoPrenotazionMap;
 	}
 	
-	public Long getIdPrenotazione() {
+	public Integer getIdPrenotazione() {
 		return this.getIdNotificabile();
 	}
 	

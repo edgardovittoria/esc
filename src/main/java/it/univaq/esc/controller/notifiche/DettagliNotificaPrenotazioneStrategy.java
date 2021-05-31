@@ -29,7 +29,7 @@ public class DettagliNotificaPrenotazioneStrategy extends DettagliNotificaStrate
 	}
 
 	@Override
-	public NotificabileDTO getDettagliNotifica(Long idEvento) {
+	public NotificabileDTO getDettagliNotifica(Integer idEvento) {
 		
 		Prenotazione prenotazione = getRegistroPrenotazioni().getPrenotazioneById(idEvento);
 		 

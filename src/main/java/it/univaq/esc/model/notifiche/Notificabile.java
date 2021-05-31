@@ -16,9 +16,9 @@ import lombok.Setter;
 @Setter(value = AccessLevel.PRIVATE) @Getter(value = AccessLevel.PROTECTED) @NoArgsConstructor
 public abstract class Notificabile {
 	@Id
-	private Long idNotificabile;
+	private Integer idNotificabile;
 	
-	public Notificabile(Long lastIdNotificabile) {
+	public Notificabile(Integer lastIdNotificabile) {
 		setIdNotificabile(lastIdNotificabile + 1);
 	}
 

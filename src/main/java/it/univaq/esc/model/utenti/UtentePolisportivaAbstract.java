@@ -15,7 +15,7 @@ public abstract class UtentePolisportivaAbstract {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     public abstract void setProprieta(Map<String, Object> mappaProprieta);
     public abstract Map<String, Object> getProprieta();

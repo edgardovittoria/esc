@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class AppuntamentoDTO implements IModelToDTO{
     
-    private Long idAppuntamento;
+    private Integer idAppuntamento;
     private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
     private List<UtentePolisportivaDTO> partecipanti = new ArrayList<UtentePolisportivaDTO>();
     private PrenotazioneSpecsDTO specificaPrenotazione;

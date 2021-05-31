@@ -45,7 +45,7 @@ public class Appuntamento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Setter(value = AccessLevel.NONE)
-	private Long idAppuntamento;
+	private Integer idAppuntamento;
 	@Column
 	private LocalDateTime dataOraInizioAppuntamento;
 	@Column
@@ -82,7 +82,7 @@ public class Appuntamento {
 		}
 	}
 
-	public Long getIdPrenotazione() {
+	public Integer getIdPrenotazione() {
 		return this.getPrenotazioneSpecsAppuntamento().getIdPrenotazioneAssociata();
 	}
 

@@ -161,7 +161,7 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return l'oggeto che rappresenta l'evento a cui si vuole partecipare,
 	 *         aggiornato con il nuovo partecipante.
 	 */
-	public abstract Object aggiungiPartecipanteAEventoEsistente(Long idEvento, String emailPartecipante);
+	public abstract Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante);
 
 	
 	

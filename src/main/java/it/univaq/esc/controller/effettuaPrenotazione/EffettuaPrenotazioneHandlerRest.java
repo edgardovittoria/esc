@@ -259,7 +259,7 @@ public class EffettuaPrenotazioneHandlerRest {
     private void inizializzaNuovaPrenotazione(String emailPrenotante, String tipoPrenotazione) {
     	UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroUtenti()
                 .getUtenteByEmail(emailPrenotante);
-        Long lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
+        Integer lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
 
         setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
         getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
@@ -353,7 +353,7 @@ public class EffettuaPrenotazioneHandlerRest {
             @RequestBody Map<String, Object> mappaDati) {
         
         
-        Long idEvento = (Long) mappaDati.get("idEvento");
+        Integer idEvento = (Integer) mappaDati.get("idEvento");
         String emailPartecipante = (String) mappaDati.get("emailPartecipante");
         return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante);
     }

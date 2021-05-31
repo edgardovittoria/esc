@@ -5,5 +5,5 @@ import it.univaq.esc.dtoObjects.NotificabileDTO;
 
 public abstract class DettagliNotificaStrategy {
 
-	public abstract NotificabileDTO getDettagliNotifica(Long idEvento);
+	public abstract NotificabileDTO getDettagliNotifica(Integer idEvento);
 }

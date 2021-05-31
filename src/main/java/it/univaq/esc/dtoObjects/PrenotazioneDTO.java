@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PrenotazioneDTO extends NotificabileDTO implements IModelToDTO{
 	
-	private Long idPrenotazione;
+	private Integer idPrenotazione;
 	private UtentePolisportivaDTO sportivoPrenotante;
 	private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
 	private Map<String, Object> infoGeneraliEvento = new HashMap<String, Object>();

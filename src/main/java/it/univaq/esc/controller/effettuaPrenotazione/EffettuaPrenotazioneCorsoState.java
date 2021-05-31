@@ -177,7 +177,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public Object aggiungiPartecipanteAEventoEsistente(Long idEvento, String emailPartecipante) {
+	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
 		Prenotazione corsoPrenotazione = this.getRegistroPrenotazioni().getPrenotazioneById(idEvento);
 		List<Appuntamento> listaAppuntamentiCorso = this.getRegistroAppuntamenti()
 				.getAppuntamentiByPrenotazioneId(idEvento);

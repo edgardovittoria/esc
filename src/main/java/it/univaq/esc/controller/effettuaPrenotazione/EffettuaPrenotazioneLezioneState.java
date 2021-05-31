@@ -268,7 +268,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 * Metodo che gestisce la partecipazione di un utente ad una lezione esistente.
 	 */
 	@Override
-	public Object aggiungiPartecipanteAEventoEsistente(Long idEvento, String emailPartecipante) {
+	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
 		// TODO Auto-generated method stub
 		return null;
 	}

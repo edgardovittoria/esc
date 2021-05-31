@@ -185,7 +185,7 @@ public class RegistroAppuntamenti {
         return appuntamentiFiltrati;
     }
     
-    public Appuntamento getAppuntamentoById(Long idAppuntamento){
+    public Appuntamento getAppuntamentoById(Integer idAppuntamento){
         for(Appuntamento appuntamento: this.getListaAppuntamenti()){
             if(appuntamento.getIdAppuntamento() == idAppuntamento){
                 return appuntamento;
@@ -194,7 +194,7 @@ public class RegistroAppuntamenti {
         return null;
     }
     
-    public List<Appuntamento> getAppuntamentiByPrenotazioneId(Long idPrenotazione){
+    public List<Appuntamento> getAppuntamentiByPrenotazioneId(Integer idPrenotazione){
     	List<Appuntamento> appuntamenti = new ArrayList<Appuntamento>();
     	for(Appuntamento appuntamento : this.getListaAppuntamenti()) {
     		if(appuntamento.getIdPrenotazione() == idPrenotazione) {

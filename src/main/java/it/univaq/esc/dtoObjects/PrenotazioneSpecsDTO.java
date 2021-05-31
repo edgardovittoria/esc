@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public abstract class PrenotazioneSpecsDTO implements IModelToDTO{
 
-    private Long idPrenotazioneSpecsDTO;
+    private Integer idPrenotazioneSpecsDTO;
 
     private boolean confermata = false;
 

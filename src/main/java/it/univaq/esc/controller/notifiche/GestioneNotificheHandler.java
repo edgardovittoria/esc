@@ -23,7 +23,7 @@ public class GestioneNotificheHandler {
 	
 	@GetMapping("/dettagliNotifica")
 	@CrossOrigin
-	public @ResponseBody NotificabileDTO getDettagliNotifica(@RequestParam(name = "idEvento") Long idEvento, @RequestParam(name = "tipoEventoNotificabile") String tipoEventoNotificabile) {
+	public @ResponseBody NotificabileDTO getDettagliNotifica(@RequestParam(name = "idEvento") Integer idEvento, @RequestParam(name = "tipoEventoNotificabile") String tipoEventoNotificabile) {
 		
 		return factoryDettagliNotificaStrategy.getStrategy(tipoEventoNotificabile).getDettagliNotifica(idEvento);
 		
