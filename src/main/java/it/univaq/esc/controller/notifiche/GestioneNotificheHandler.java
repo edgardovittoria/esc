@@ -48,8 +48,7 @@ public class GestioneNotificheHandler {
 		NotificaService notifica = getRegistroNotifiche().getNotificaById(idNotifica);
 		
 		if(notifica != null) {
-			notifica.setLetta(true);
-			getRegistroNotifiche().aggiornaNotificaSuDatabase(notifica);
+			getRegistroNotifiche().impostaNotificaComeLetta(notifica);
 			NotificaDTO notificaDTO = new NotificaDTO();
 			notificaDTO.impostaValoriDTO(notifica);
 			

@@ -92,4 +92,9 @@ public class RegistroNotifiche {
 		}
 		return null;
 	}
+	
+	public void impostaNotificaComeLetta(NotificaService notifica) {
+		notifica.setLetta(true);
+		aggiornaNotificaSuDatabase(notifica);
+	}
 }
