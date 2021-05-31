@@ -24,6 +24,7 @@ public class NotificaDTO  implements IModelToDTO{
 		setMittente(notifica.getMittente().getProprieta().get("nome") + " " + notifica.getMittente().getProprieta().get("cognome"));
 		setIdEvento((Integer)notifica.getEvento().getInfo().get("identificativo"));
 		setTipoEventoNotificabile(notifica.getEvento().getTipoEventoPrenotabile());
+		setLetta(notifica.isLetta());
 		
 	}
 }
