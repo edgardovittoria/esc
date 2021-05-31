@@ -2,9 +2,12 @@ package it.univaq.esc.controller.notifiche;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,7 +43,8 @@ public class GestioneNotificheHandler {
 	
 	@PatchMapping("/impostaNotificaLetta")
 	@CrossOrigin
-	public @ResponseBody NotificaDTO setNotificaLetta(@RequestParam(name = "idNotifica") Integer idNotifica) {
+	public @ResponseBody NotificaDTO setNotificaLetta(@RequestBody Map<String, Object> mappaDati) {
+		Integer idNotifica = (Integer) mappaDati.get("idNotifica");
 		NotificaService notifica = getRegistroNotifiche().getNotificaById(idNotifica);
 		
 		if(notifica != null) {
