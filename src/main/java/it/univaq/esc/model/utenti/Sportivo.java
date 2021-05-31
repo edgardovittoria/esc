@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -36,6 +36,9 @@ public class Sportivo extends RuoloUtentePolisportivaDecorator{
                 inverseJoinColumns = {@JoinColumn(name="sport_praticato")})
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Sport> sportPraticatiDalloSportivo = new ArrayList<Sport>();
+    
+    @Column
+    private boolean moroso = false;
 
 
     public Sportivo(UtentePolisportivaAbstract utenteDaDecorare){
@@ -57,6 +60,7 @@ public class Sportivo extends RuoloUtentePolisportivaDecorator{
     public void setProprieta(Map<String, Object> mappaProprieta) {
         if(mappaProprieta.containsKey("sportPraticati")){
         this.setSportPraticatiDalloSportivo((List<Sport>)mappaProprieta.get("sportPraticati"));
+        this.setMoroso((boolean)mappaProprieta.get("moroso"));
         }
         this.getUtentePolisportiva().setProprieta(mappaProprieta);
     }
@@ -65,6 +69,7 @@ public class Sportivo extends RuoloUtentePolisportivaDecorator{
     public Map<String, Object> getProprieta() {
         Map<String, Object> mappaProprieta = this.getUtentePolisportiva().getProprieta();
         mappaProprieta.put("sportPraticati", this.getSportPraticatiDalloSportivo());
+        mappaProprieta.put("moroso", isMoroso());
         return mappaProprieta;
     }
 

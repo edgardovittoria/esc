@@ -42,6 +42,7 @@ public class UtentePolisportivaDTO implements IModelToDTO{
 	            sportPraticati.add(sport.getNome());
 	        }
 			mappaAttributi.put("sportPraticati", sportPraticati);
+			mappaAttributi.put("moroso", (Boolean)utente.getProprieta().get("moroso"));
 		}
 		
 		
