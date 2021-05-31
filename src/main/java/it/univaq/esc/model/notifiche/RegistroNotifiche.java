@@ -1,5 +1,7 @@
 package it.univaq.esc.model.notifiche;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
+
+import com.mysql.cj.result.IntegerValueFactory;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
@@ -78,5 +82,14 @@ public class RegistroNotifiche {
 	public void aggiornaNotificaSuDatabase(NotificaService notificaDaAggiornare) {
 		Notifica notifica = notificaDaAggiornare.getNotifica();
 		getNotificaRepository().save(notifica);
+	}
+	
+	public NotificaService getNotificaById(Integer idNotifica) {
+		for(NotificaService notifica : getListaNotifiche()) {
+			if(notifica.getIdNotifica() == idNotifica) {
+				return notifica;
+			}
+		}
+		return null;
 	}
 }

@@ -24,7 +24,7 @@ public class Notifica {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Setter(value = AccessLevel.PRIVATE)
-	private Long idNotifica;
+	private Integer idNotifica;
 	@ManyToOne
 	@JoinColumn
 	private UtentePolisportivaAbstract mittente;

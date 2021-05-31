@@ -1,12 +1,19 @@
 package it.univaq.esc.controller.notifiche;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import it.univaq.esc.dtoObjects.NotificaDTO;
 import it.univaq.esc.dtoObjects.NotificabileDTO;
+import it.univaq.esc.model.notifiche.NotificaService;
+import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +26,7 @@ import lombok.Setter;
 public class GestioneNotificheHandler {
 
 	private FactoryDettagliNotificaStrategy factoryDettagliNotificaStrategy;
+	private RegistroNotifiche registroNotifiche;
 	
 	
 	@GetMapping("/dettagliNotifica")
@@ -27,5 +35,22 @@ public class GestioneNotificheHandler {
 		
 		return factoryDettagliNotificaStrategy.getStrategy(tipoEventoNotificabile).getDettagliNotifica(idEvento);
 		
+	}
+	
+	
+	@PatchMapping("/impostaNotificaLetta")
+	@CrossOrigin
+	public @ResponseBody NotificaDTO setNotificaLetta(@RequestParam(name = "idNotifica") Integer idNotifica) {
+		NotificaService notifica = getRegistroNotifiche().getNotificaById(idNotifica);
+		
+		if(notifica != null) {
+			notifica.setLetta(true);
+			getRegistroNotifiche().aggiornaNotificaSuDatabase(notifica);
+			NotificaDTO notificaDTO = new NotificaDTO();
+			notificaDTO.impostaValoriDTO(notifica);
+			
+			return notificaDTO;
+		}
+		return null;
 	}
 }

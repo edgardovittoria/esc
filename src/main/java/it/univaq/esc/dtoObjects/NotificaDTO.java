@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class NotificaDTO  implements IModelToDTO{
 
+	private Integer idNotifica;
 	private String messaggio;
 	private String mittente;
 	private Integer idEvento;
@@ -18,6 +19,7 @@ public class NotificaDTO  implements IModelToDTO{
 	@Override
 	public void impostaValoriDTO(Object modelDaConvertire) {
 		NotificaService notifica = (NotificaService)modelDaConvertire;
+		setIdNotifica(notifica.getIdNotifica());
 		setMessaggio(notifica.getMessaggio());
 		setMittente(notifica.getMittente().getProprieta().get("nome") + " " + notifica.getMittente().getProprieta().get("cognome"));
 		setIdEvento((Integer)notifica.getEvento().getInfo().get("identificativo"));

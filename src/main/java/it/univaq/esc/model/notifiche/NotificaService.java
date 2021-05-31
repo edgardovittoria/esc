@@ -84,5 +84,9 @@ public class NotificaService {
 		this.statoNotifica = getFactoryStatiNotifiche().getStato((String)getEvento().getInfo().get("tipoPrenotazione"));
 				
 	}
+	
+	public Integer getIdNotifica() {
+		return getNotifica().getIdNotifica();
+	}
 }
 
