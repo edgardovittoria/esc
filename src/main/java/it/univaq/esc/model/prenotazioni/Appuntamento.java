@@ -55,6 +55,11 @@ public class Appuntamento {
 	@JoinColumn(name = "PrenotazioneSpecs_ID", nullable = false)
 	@JsonIdentityReference(alwaysAsId = true)
 	private PrenotazioneSpecs prenotazioneSpecsAppuntamento;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(nullable = false)
+	@JsonIdentityReference(alwaysAsId = true)
+	private UtentePolisportivaAbstract manutentore;
 
 	@Transient
 	private CalcolatoreCosto calcolatoreCosto;

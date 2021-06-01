@@ -234,4 +234,14 @@ public class RegistroAppuntamenti {
     	
     	return listaLezioni;
     }
+    
+    public List<Appuntamento> getListaAppuntamentiManutentore(UtentePolisportivaAbstract manutentore){
+    	List<Appuntamento> appuntamentiList = new ArrayList<Appuntamento>();
+    	for(Appuntamento appuntamento : getListaAppuntamenti()) {
+    		if(appuntamento.getManutentore().isEqual(manutentore)) {
+    			appuntamentiList.add(appuntamento);
+    		}
+    	}
+    	return appuntamentiList;
+    }
 }

@@ -43,6 +43,7 @@ public class UtentePolisportivaDTO implements IModelToDTO{
 	        }
 			mappaAttributi.put("sportPraticati", sportPraticati);
 			mappaAttributi.put("moroso", (Boolean)utente.getProprieta().get("moroso"));
+			
 		}
 		
 		
@@ -63,6 +64,19 @@ public class UtentePolisportivaDTO implements IModelToDTO{
 	            listaAppuntamentiDTO.add(appDTO);
 	        }
 	        mappaAttributi.put("appuntamentiLezioni", listaAppuntamentiDTO);
+		}
+		
+		/*
+		 * Impostiamo gli attributi extra del manutentore
+		 */
+		if(ruoli.contains(TipoRuolo.MANUTENTORE.toString())) {
+			List<AppuntamentoDTO> listaAppuntamentiManutentoreDTO = new ArrayList<AppuntamentoDTO>();
+	        for(Appuntamento app : ((Calendario)utente.getProprieta().get("calendarioManutentore")).getListaAppuntamenti()){
+	            AppuntamentoDTO appDTO = new AppuntamentoDTO();
+	            appDTO.impostaValoriDTO(app);
+	            listaAppuntamentiManutentoreDTO.add(appDTO);
+	        }
+	        mappaAttributi.put("appuntamentiManutentore", listaAppuntamentiManutentoreDTO);
 		}
 		
 		setAttributiExtra(mappaAttributi);

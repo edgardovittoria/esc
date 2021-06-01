@@ -1,5 +1,7 @@
 package it.univaq.esc.model.utenti;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,8 +98,22 @@ public class RegistroUtentiPolisportiva {
         		Calendario calendarioIstruttore = new Calendario();
         		calendarioIstruttore.setListaAppuntamenti(listaLezioni);
         		Map<String, Object> mappaDatiIstruttore = new HashMap<String, Object>();
-        		mappaDatiIstruttore.put("calendarioLezioni", listaLezioni);
+        		mappaDatiIstruttore.put("calendarioLezioni", calendarioIstruttore);
         		istruttore.setProprieta(mappaDatiIstruttore);
+        	}
+        }
+        
+        /*
+         * Popoliamo il calendario dei manutentori
+         */
+        for(UtentePolisportivaAbstract manutentore : getListaUtentiByRuolo(TipoRuolo.MANUTENTORE)){
+        	List<Appuntamento> listaAppuntamenti = getRegistroAppuntamenti().getListaAppuntamentiManutentore(manutentore);
+        	if(!listaAppuntamenti.isEmpty()) {
+        		Calendario calendarioManutentore = new Calendario();
+        		calendarioManutentore.setListaAppuntamenti(listaAppuntamenti);
+        		Map<String, Object> mappaDatiManutentore = new HashMap<String, Object>();
+        		mappaDatiManutentore.put("calendarioManutentore", calendarioManutentore);
+        		manutentore.setProprieta(mappaDatiManutentore);
         	}
         }
         
@@ -236,6 +252,24 @@ public class RegistroUtentiPolisportiva {
         Map<String, Object> mappaProprieta = new HashMap<String, Object>();
         mappaProprieta.put("calendarioLezioni", calendarioPrecedente);
         istruttore.setProprieta(mappaProprieta);
+    }
+    
+    public void aggiornaCalendarioManutentore(Calendario calendarioDaUnire, UtentePolisportivaAbstract manutentore){
+        Calendario calendarioPrecedente = (Calendario)manutentore.getProprieta().get("calendarioManutentore");
+        calendarioPrecedente.unisciCalendario(calendarioDaUnire);
+        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
+        mappaProprieta.put("calendarioManutentore", calendarioPrecedente);
+        manutentore.setProprieta(mappaProprieta);
+    }
+    
+    public UtentePolisportivaAbstract getManutentoreLibero(Calendario calendarioAppuntamento) {
+    	for(UtentePolisportivaAbstract manutentore : getListaUtentiByRuolo(TipoRuolo.MANUTENTORE)) {
+    		Calendario calendario = (Calendario)manutentore.getProprieta().get("calendarioManutentore");
+    		if(!calendario.sovrapponeA(calendarioAppuntamento)) {
+    			return manutentore;
+    		}
+    	}
+    	return null;
     }
 
 }

@@ -33,6 +33,7 @@ import it.univaq.esc.repository.ImpiantoRepository;
 import it.univaq.esc.repository.PrenotazioneRepository;
 import it.univaq.esc.repository.SportRepository;
 import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
+import javassist.expr.NewArray;
 @Component
 public class PopolaDB {
 
@@ -97,7 +98,7 @@ public class PopolaDB {
         mappaProprieta1.put("sportPraticati", listaSportPraticati1);
         sportivo1.setProprieta(mappaProprieta1);
 
-        UtentePolisportivaAbstract sportivo2 = new UtentePolisportivaBuilder().assegnaRuoloSportivo().assegnaRuoloIstruttore(listaSportPraticati1).build();
+        UtentePolisportivaAbstract sportivo2 = new UtentePolisportivaBuilder().assegnaRuoloSportivo().assegnaRuoloIstruttore(listaSportPraticati1).assegnaRuoloManutentore().build();
         Map<String, Object> mappaProprieta2 = new HashMap<String, Object>();
         mappaProprieta2.put("nome", "mariangelo");
         mappaProprieta2.put("cognome", "sasso");
@@ -107,6 +108,7 @@ public class PopolaDB {
         listaSportPraticati2.add(tennis);
         listaSportPraticati2.add(calcetto);
         mappaProprieta2.put("sportPraticati", listaSportPraticati2);
+        mappaProprieta2.put("calendarioManutentore", new Calendario()); 
         sportivo2.setProprieta(mappaProprieta2);
 
         UtentePolisportivaAbstract sportivo3 = new UtentePolisportivaBuilder().assegnaRuoloSportivo().assegnaRuoloDirettorePolisportiva().build();
@@ -223,49 +225,7 @@ public class PopolaDB {
             
 
             
-        // Calendario calendarioImpianto2 = new Calendario();
-        // Calendario calendarioImpianto3 = new Calendario();
-        
-
-        // List<Appuntamento> listaAppuntamenti1 = new ArrayList<Appuntamento>();
-        // listaAppuntamenti1.add(new Appuntamento(LocalDateTime.of(2020, 5, 26, 10, 30), LocalDateTime.of(2020, 5, 26, 11, 30)));
-        // listaAppuntamenti1.add(new Appuntamento(LocalDateTime.of(2020, 5, 25, 10, 30), LocalDateTime.of(2020, 5, 25, 11, 30)));
-        // listaAppuntamenti1.add(new Appuntamento(LocalDateTime.of(2020, 5, 27, 10, 30), LocalDateTime.of(2020, 5, 27, 11, 30)));
-        // listaAppuntamenti1.add(new Appuntamento(LocalDateTime.of(2020, 4, 26, 10, 30), LocalDateTime.of(2020, 4, 26, 11, 30)));
-        // listaAppuntamenti1.add(new Appuntamento(LocalDateTime.of(2020, 5, 26, 15, 30), LocalDateTime.of(2020, 5, 26, 17, 30)));
-
-        // List<Appuntamento> listaAppuntamenti2 = new ArrayList<Appuntamento>();
-        // listaAppuntamenti2.add(new Appuntamento(LocalDateTime.of(2020, 5, 28, 10, 30), LocalDateTime.of(2020, 5, 28, 11, 30)));
-        // listaAppuntamenti2.add(new Appuntamento(LocalDateTime.of(2020, 5, 25, 10, 30), LocalDateTime.of(2020, 5, 25, 11, 30)));
-        // listaAppuntamenti2.add(new Appuntamento(LocalDateTime.of(2020, 5, 27, 10, 30), LocalDateTime.of(2020, 5, 27, 11, 30)));
-        // listaAppuntamenti2.add(new Appuntamento(LocalDateTime.of(2020, 4, 26, 10, 30), LocalDateTime.of(2020, 4, 26, 11, 30)));
-        // listaAppuntamenti2.add(new Appuntamento(LocalDateTime.of(2020, 5, 28, 15, 30), LocalDateTime.of(2020, 5, 28, 17, 30)));
-
-        // List<Appuntamento> listaAppuntamenti3 = new ArrayList<Appuntamento>();
-        // listaAppuntamenti3.add(new Appuntamento(LocalDateTime.of(2020, 5, 26, 10, 30), LocalDateTime.of(2020, 5, 26, 11, 30)));
-        // listaAppuntamenti3.add(new Appuntamento(LocalDateTime.of(2020, 5, 25, 10, 30), LocalDateTime.of(2020, 5, 25, 11, 30)));
-        // listaAppuntamenti3.add(new Appuntamento(LocalDateTime.of(2020, 5, 27, 10, 30), LocalDateTime.of(2020, 5, 27, 11, 30)));
-        // listaAppuntamenti3.add(new Appuntamento(LocalDateTime.of(2020, 4, 26, 10, 30), LocalDateTime.of(2020, 4, 26, 11, 30)));
-        // listaAppuntamenti3.add(new Appuntamento(LocalDateTime.of(2020, 5, 26, 15, 30), LocalDateTime.of(2020, 5, 26, 17, 30)));
-
-
-         
-       
-        // appuntamentoRepository.saveAll(listaAppuntamenti1);
-        // appuntamentoRepository.saveAll(listaAppuntamenti2);
-        // appuntamentoRepository.saveAll(listaAppuntamenti3);
-        
-
-        // calendarioImpianto1.setListaAppuntamenti(listaAppuntamenti1);
-        // calendarioImpianto2.setListaAppuntamenti(listaAppuntamenti2);
-        // calendarioImpianto3.setListaAppuntamenti(listaAppuntamenti3);
-        
-
-        /*calendarioRepository.save(calendarioImpianto1);
-        calendarioRepository.save(calendarioImpianto2);
-        calendarioRepository.save(calendarioImpianto3);*/
-
-        //prenotazione dell'impianto1 nella stessa data scelta dallo sportivo che sta effettuando la prenotazione
+      
                
         PrenotazioneSpecs prenotazioneSpecs = new PrenotazioneImpiantoSpecs();
         prenotazioneSpecs.setPending(true);
@@ -292,7 +252,8 @@ public class PopolaDB {
         //prenotazione1.setCalendarioSpecifica(calendarioSpecs1, prenotazioneSpecs);
         impianto1.setCalendarioAppuntamentiImpianto(calendarioSpecs1);
         //prenotazione1.impostaCalendarioPrenotazioneDaSpecifiche();
-       
+        
+       appuntamento1.setManutentore(sportivo2);
 
         //Prenotazione dell'impianto3 in una data diversa dalla data scelta dallo sportivo che sta effettuando la prenotazione;
         
@@ -322,7 +283,7 @@ public class PopolaDB {
         // prenotazione2.setCalendarioSpecifica(calendarioSpecs2, prenotazioneSpecs2);
         // prenotazione2.impostaCalendarioPrenotazioneDaSpecifiche();
         
-        
+        appuntamento2.setManutentore(sportivo2);
         
         
         /*calendarioRepository.save(calendarioPrenotazione);

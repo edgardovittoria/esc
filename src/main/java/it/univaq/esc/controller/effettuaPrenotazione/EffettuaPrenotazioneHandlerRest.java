@@ -11,7 +11,7 @@ import javax.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +31,7 @@ import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
-
+import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.TipoRuolo;
@@ -61,11 +61,6 @@ public class EffettuaPrenotazioneHandlerRest {
 	@Autowired
 	private RegistroAppuntamenti registroAppuntamenti;
 
-	/**
-	 * Attributo per l'invio di notifiche tramite WebSocket.
-	 */
-	@Autowired
-	private SimpMessagingTemplate simpMessagingTemplate;
 
 	/**
 	 * Registro degli utenti della polisportiva, usato per tutte le operazioni di
@@ -328,15 +323,22 @@ public class EffettuaPrenotazioneHandlerRest {
 	@CrossOrigin
 	public ResponseEntity<PrenotazioneDTO> confermaPrenotazione() {
 
+		for(Appuntamento appuntamento : getListaAppuntamentiPrenotazioneInAtto()) {
+			Calendario calendarioAppuntamento = new Calendario();
+			calendarioAppuntamento.aggiungiAppuntamento(appuntamento);
+			UtentePolisportivaAbstract manutentore = getRegistroUtenti().getManutentoreLibero(calendarioAppuntamento);
+			appuntamento.setManutentore(manutentore);
+			getRegistroUtenti().aggiornaCalendarioManutentore(calendarioAppuntamento, manutentore);
+			
+			
+		}
 		this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
 		this.getRegistroAppuntamenti().salvaListaAppuntamenti(this.getListaAppuntamentiPrenotazioneInAtto());
 
 		this.getStato().aggiornaElementiDopoConfermaPrenotazione(this);
 
-		// simpMessagingTemplate.convertAndSendToUser("pippofranco", "/user", "notifica
-		// inviata");
-		simpMessagingTemplate.convertAndSendToUser("pippofranco", "/inviti", "notifica inviata");
-
+		
+		
 		PrenotazioneDTO prenDTO = new PrenotazioneDTO();
 		Map<String, Object> mappa = new HashMap<String, Object>();
 		mappa.put("prenotazione", this.getPrenotazioneInAtto());
