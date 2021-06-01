@@ -13,82 +13,81 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter @NoArgsConstructor
-public class AppuntamentoDTO implements IModelToDTO{
-    
-    private Integer idAppuntamento;
-    private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
-    private List<UtentePolisportivaDTO> partecipanti = new ArrayList<UtentePolisportivaDTO>();
-    private PrenotazioneSpecsDTO specificaPrenotazione;
-    private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
-    private UtentePolisportivaDTO creatore;
-    private Integer idManutentore;
+@Getter
+@Setter
+@NoArgsConstructor
+public class AppuntamentoDTO implements IModelToDTO {
 
-    
-    public LocalDate getDataAppuntamento() {
-        return this.getOrarioAppuntamento().getDataPrenotazione();
-    }
+	private Integer idAppuntamento;
+	private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
+	private List<UtentePolisportivaDTO> partecipanti = new ArrayList<UtentePolisportivaDTO>();
+	private PrenotazioneSpecsDTO specificaPrenotazione;
+	private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
+	private UtentePolisportivaDTO creatore;
+	private Integer idManutentore;
 
-    public void setDataAppuntamento(LocalDate dataAppuntamento) {
-        this.getOrarioAppuntamento().setDataPrenotazione(dataAppuntamento);
-    }
+	public LocalDate getDataAppuntamento() {
+		return this.getOrarioAppuntamento().getDataPrenotazione();
+	}
 
-    public LocalTime getOraInizioAppuntamento() {
-        return this.getOrarioAppuntamento().getOraInizio();
-    }
+	public void setDataAppuntamento(LocalDate dataAppuntamento) {
+		this.getOrarioAppuntamento().setDataPrenotazione(dataAppuntamento);
+	}
 
-    public void setOraInizioAppuntamento(LocalTime oraInizioAppuntamento) {
-        this.getOrarioAppuntamento().setOraInizio(oraInizioAppuntamento);
-    }
+	public LocalTime getOraInizioAppuntamento() {
+		return this.getOrarioAppuntamento().getOraInizio();
+	}
 
-    public LocalTime getOraFineAppuntamento() {
-        return this.getOrarioAppuntamento().getOraFine();
-    }
+	public void setOraInizioAppuntamento(LocalTime oraInizioAppuntamento) {
+		this.getOrarioAppuntamento().setOraInizio(oraInizioAppuntamento);
+	}
 
-    public void setOraFineAppuntamento(LocalTime oraFineAppuntamento) {
-        this.getOrarioAppuntamento().setOraFine(oraFineAppuntamento);
-    }
+	public LocalTime getOraFineAppuntamento() {
+		return this.getOrarioAppuntamento().getOraFine();
+	}
 
+	public void setOraFineAppuntamento(LocalTime oraFineAppuntamento) {
+		this.getOrarioAppuntamento().setOraFine(oraFineAppuntamento);
+	}
 
-    public void aggiungiPartecipante(UtentePolisportivaDTO partecipante){
-        this.partecipanti.add(partecipante);
-    }
+	public void aggiungiPartecipante(UtentePolisportivaDTO partecipante) {
+		this.partecipanti.add(partecipante);
+	}
 
-    
+	@Override
+	public void impostaValoriDTO(Object modelDaConvertire) {
+		Appuntamento appuntamento = (Appuntamento) modelDaConvertire;
+		this.setIdAppuntamento(appuntamento.getIdAppuntamento());
+		setDataAppuntamento(appuntamento.getDataAppuntamento());
+		setOraInizioAppuntamento(appuntamento.getOraInizioAppuntamento());
+		setOraFineAppuntamento(appuntamento.getOraFineAppuntamento());
+		PrenotazioneSpecsDTO specificaDTO = FactorySpecifichePrenotazione
+				.getSpecifichePrenotazioneDTO(appuntamento.getPrenotazioneSpecsAppuntamento().getTipoPrenotazione());
+		specificaDTO.impostaValoriDTO(appuntamento.getPrenotazioneSpecsAppuntamento());
+		this.setSpecificaPrenotazione(specificaDTO);
+		for (UtentePolisportivaAbstract partecipante : appuntamento.getPartecipanti()) {
+			UtentePolisportivaDTO partecipanteDTO = new UtentePolisportivaDTO();
+			partecipanteDTO.impostaValoriDTO(partecipante);
+			this.aggiungiPartecipante(partecipanteDTO);
+		}
+		List<QuotaPartecipazioneDTO> listaQuote = new ArrayList<QuotaPartecipazioneDTO>();
+		for (QuotaPartecipazione quota : appuntamento.getQuotePartecipazione()) {
+			QuotaPartecipazioneDTO quotaDTO = new QuotaPartecipazioneDTO();
+			quotaDTO.impostaValoriDTO(quota);
+			listaQuote.add(quotaDTO);
 
-    @Override
-    public void impostaValoriDTO(Object modelDaConvertire){
-        Appuntamento appuntamento = (Appuntamento)modelDaConvertire;
-        this.setIdAppuntamento(appuntamento.getIdAppuntamento());
-        setDataAppuntamento(appuntamento.getDataAppuntamento());
-        setOraInizioAppuntamento(appuntamento.getOraInizioAppuntamento());
-        setOraFineAppuntamento(appuntamento.getOraFineAppuntamento());
-        PrenotazioneSpecsDTO specificaDTO = FactorySpecifichePrenotazione.getSpecifichePrenotazioneDTO(appuntamento.getPrenotazioneSpecsAppuntamento().getTipoPrenotazione());
-        specificaDTO.impostaValoriDTO(appuntamento.getPrenotazioneSpecsAppuntamento());
-        this.setSpecificaPrenotazione(specificaDTO);
-        for(UtentePolisportivaAbstract partecipante : appuntamento.getPartecipanti()){
-            UtentePolisportivaDTO partecipanteDTO = new UtentePolisportivaDTO();
-            partecipanteDTO.impostaValoriDTO(partecipante);
-            this.aggiungiPartecipante(partecipanteDTO);
-        }
-        List<QuotaPartecipazioneDTO> listaQuote = new ArrayList<QuotaPartecipazioneDTO>();
-        for(QuotaPartecipazione quota : appuntamento.getQuotePartecipazione()){
-            QuotaPartecipazioneDTO quotaDTO = new QuotaPartecipazioneDTO();
-            quotaDTO.impostaValoriDTO(quota);
-            listaQuote.add(quotaDTO);
-            
-        }
-        this.setQuotePartecipazione(listaQuote);
+		}
+		this.setQuotePartecipazione(listaQuote);
 
-        UtentePolisportivaDTO creatore = new UtentePolisportivaDTO();
-        creatore.impostaValoriDTO(appuntamento.creatoDa());
-        this.setCreatore(creatore);
-        UtentePolisportivaDTO manutentore = new UtentePolisportivaDTO();
-        manutentore.impostaValoriDTO(appuntamento.getManutentore());
-        this.setIdManutentore(appuntamento.getManutentore().getId());
-        
-    }
+		UtentePolisportivaDTO creatore = new UtentePolisportivaDTO();
+		creatore.impostaValoriDTO(appuntamento.creatoDa());
+		this.setCreatore(creatore);
+		UtentePolisportivaDTO manutentore = new UtentePolisportivaDTO();
+		manutentore.impostaValoriDTO(appuntamento.getManutentore());
+		if (appuntamento.getManutentore() != null) {
+			this.setIdManutentore(appuntamento.getManutentore().getId());
+		}
 
+	}
 
-    
 }
