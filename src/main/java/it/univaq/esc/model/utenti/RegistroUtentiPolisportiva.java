@@ -41,15 +41,16 @@ public class RegistroUtentiPolisportiva {
     private RegistroAppuntamenti registroAppuntamenti;
 
 
-    public RegistroUtentiPolisportiva(UtentePolisportivaAbstractRepository utentePolisportivaAbstractRepository) {
+    public RegistroUtentiPolisportiva(UtentePolisportivaAbstractRepository utentePolisportivaAbstractRepository, RegistroAppuntamenti registroAppuntamenti) {
     	this.setUtentiRepository(utentePolisportivaAbstractRepository);
+    	setRegistroAppuntamenti(registroAppuntamenti);
+    	popola();
     }
 
     /**
      * Viene invocato subito dopo l'istanziazione del registro utenti, per popolare quest'ultimo 
      * con tutti gli utenti presenti nel database
      */
-    @PostConstruct
     public void popola(){
         this.setListaUtentiPolisportiva(this.utentiRepository.findAll());
         if(!this.getListaUtentiPolisportiva().isEmpty()){

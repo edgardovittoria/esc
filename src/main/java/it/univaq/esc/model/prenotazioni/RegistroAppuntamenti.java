@@ -39,7 +39,7 @@ public class RegistroAppuntamenti {
     }
 
     
-    private void popola(){
+    public void popola(){
         setListaAppuntamenti(getAppuntamentoRepository().findAll());
         for(Appuntamento appuntamento : this.getListaAppuntamenti()){
             CalcolatoreCostoBase calcBase = new CalcolatoreCostoBase();
