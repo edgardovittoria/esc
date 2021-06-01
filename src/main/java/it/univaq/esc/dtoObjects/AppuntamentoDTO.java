@@ -22,7 +22,7 @@ public class AppuntamentoDTO implements IModelToDTO{
     private PrenotazioneSpecsDTO specificaPrenotazione;
     private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
     private UtentePolisportivaDTO creatore;
-    private UtentePolisportivaDTO manutentore;
+    private Integer idManutentore;
 
     
     public LocalDate getDataAppuntamento() {
@@ -85,7 +85,7 @@ public class AppuntamentoDTO implements IModelToDTO{
         this.setCreatore(creatore);
         UtentePolisportivaDTO manutentore = new UtentePolisportivaDTO();
         manutentore.impostaValoriDTO(appuntamento.getManutentore());
-        this.setManutentore(manutentore);
+        this.setIdManutentore(appuntamento.getManutentore().getId());
         
     }
 

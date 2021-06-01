@@ -9,12 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import lombok.Getter;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class UtentePolisportivaAbstract {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
     private Integer id;
 
     public abstract void setProprieta(Map<String, Object> mappaProprieta);
