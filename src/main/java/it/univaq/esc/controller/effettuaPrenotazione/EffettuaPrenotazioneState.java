@@ -12,6 +12,7 @@ import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
+import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.RegistroImpianti;
@@ -213,6 +214,26 @@ public abstract class EffettuaPrenotazioneState {
 		return listaSportiviDTO;
 	}
 	
+	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseACalendario(Calendario calendario) {
+		List<UtentePolisportivaDTO> listaSportivi = new ArrayList<UtentePolisportivaDTO>();
+		for(UtentePolisportivaAbstract utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO), calendario)) {
+			UtentePolisportivaDTO sportivoDTO = new UtentePolisportivaDTO();
+			sportivoDTO.impostaValoriDTO(utente);
+			listaSportivi.add(sportivoDTO);
+		}
+		return listaSportivi;
+	}
+	
+	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseAOrario(LocalDateTime oraInizio, LocalDateTime oraFine) {
+		List<UtentePolisportivaDTO> listaSportivi = new ArrayList<UtentePolisportivaDTO>();
+		for(UtentePolisportivaAbstract utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO), oraInizio, oraFine)) {
+			UtentePolisportivaDTO sportivoDTO = new UtentePolisportivaDTO();
+			sportivoDTO.impostaValoriDTO(utente);
+			listaSportivi.add(sportivoDTO);
+		}
+		return listaSportivi;
+	}
+	
 	
 	/**
 	 * Metodo di utilità. Restituisce tutti gli utenti registrati nel sistema della
@@ -232,6 +253,7 @@ public abstract class EffettuaPrenotazioneState {
 	}
 
 	
+		
 
 	/**
 	 * Metodo di utilità. Resituisce la lista degli istruttori, in formato DTO,

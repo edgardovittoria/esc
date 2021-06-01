@@ -1,6 +1,7 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -221,7 +222,18 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
 		Map<String, Object> datiAggiornati = new HashMap<String, Object>();
 		datiAggiornati.put("impiantiDisponibili", this.getImpiantiDTODisponibili(dati));
+		
+		
+		Map<String, String> orario = (Map<String, String>)dati.get("orario");
+		LocalDateTime oraInizio = LocalDateTime.parse(orario.get("oraInizio"),
+				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
+		LocalDateTime oraFine = LocalDateTime.parse(orario.get("oraFine"),
+				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
+		
+		datiAggiornati.put("sportiviInvitabili", getSportiviLiberiInBaseAOrario(oraInizio, oraFine));
 		return datiAggiornati;
+		
+		
 	}
 
 	/**

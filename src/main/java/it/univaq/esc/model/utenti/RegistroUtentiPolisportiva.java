@@ -271,5 +271,25 @@ public class RegistroUtentiPolisportiva {
     	}
     	return null;
     }
+    
+    public List<UtentePolisportivaAbstract> filtraUtentiLiberiInBaseACalendarioSportivo(List<UtentePolisportivaAbstract> listaDaFiltrare, Calendario calendario){
+    	List<UtentePolisportivaAbstract> listaFiltrata = new ArrayList<UtentePolisportivaAbstract>();
+    	for(UtentePolisportivaAbstract utente : listaDaFiltrare) {
+    		if(utente.getProprieta().containsKey("calendarioAppuntamentiSportivo") && !((Calendario)utente.getProprieta().get("calendarioAppuntamentiSportivo")).sovrapponeA(calendario)) {
+    			listaFiltrata.add(utente);
+    		}
+    	}
+    	return listaFiltrata;
+    }
+    
+    public List<UtentePolisportivaAbstract> filtraUtentiLiberiInBaseACalendarioSportivo(List<UtentePolisportivaAbstract> listaDaFiltrare, LocalDateTime oraInizio, LocalDateTime oraFine){
+    	List<UtentePolisportivaAbstract> listaFiltrata = new ArrayList<UtentePolisportivaAbstract>();
+    	for(UtentePolisportivaAbstract utente : listaDaFiltrare) {
+    		if(utente.getProprieta().containsKey("calendarioAppuntamentiSportivo") && !((Calendario)utente.getProprieta().get("calendarioAppuntamentiSportivo")).sovrapponeA(oraInizio, oraFine)) {
+    			listaFiltrata.add(utente);
+    		}
+    	}
+    	return listaFiltrata;
+    }
 
 }
