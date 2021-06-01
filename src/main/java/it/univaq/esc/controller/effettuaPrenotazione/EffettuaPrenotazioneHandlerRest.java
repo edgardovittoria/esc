@@ -301,6 +301,8 @@ public class EffettuaPrenotazioneHandlerRest {
 		this.getListaAppuntamentiPrenotazioneInAtto().clear();
 
 		PrenotazioneDTO prenDTO = this.getStato().impostaDatiPrenotazione(formPrenotaImpianto, this);
+		
+		
 
 //        PrenotazioneDTO prenDTO = new PrenotazioneDTO();
 //        Map<String, Object> mappa = new HashMap<String, Object>();
