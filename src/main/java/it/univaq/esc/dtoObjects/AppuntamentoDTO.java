@@ -82,8 +82,7 @@ public class AppuntamentoDTO implements IModelToDTO {
 		UtentePolisportivaDTO creatore = new UtentePolisportivaDTO();
 		creatore.impostaValoriDTO(appuntamento.creatoDa());
 		this.setCreatore(creatore);
-		UtentePolisportivaDTO manutentore = new UtentePolisportivaDTO();
-		manutentore.impostaValoriDTO(appuntamento.getManutentore());
+		
 		if (appuntamento.getManutentore() != null) {
 			this.setIdManutentore(appuntamento.getManutentore().getId());
 		}
