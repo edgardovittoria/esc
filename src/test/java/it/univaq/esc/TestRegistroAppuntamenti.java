@@ -14,6 +14,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -60,6 +61,7 @@ public class TestRegistroAppuntamenti {
 		
 		PrenotazioneSpecs lezionePrenotazioneSpecs = mock(PrenotazioneLezioneSpecs.class);
 		when(lezionePrenotazioneSpecs.getValoriSpecificheExtraPrenotazione()).thenReturn(new HashMap<String, Object>());
+		
 
 		Appuntamento appuntamento1 = mock(Appuntamento.class);
 		when(appuntamento1.isPending()).thenReturn(true);

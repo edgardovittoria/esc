@@ -13,14 +13,21 @@ import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
+import it.univaq.esc.model.RegistroImpianti;
+import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
+import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.model.costi.CatalogoPrenotabili;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
+import it.univaq.esc.model.notifiche.RegistroNotifiche;
+import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 /**
@@ -33,7 +40,13 @@ import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 @Component
 public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState {
 
-	public EffettuaPrenotazioneLezioneState() {
+	public EffettuaPrenotazioneLezioneState(
+			RegistroNotifiche registroNotifiche, RegistroSport registroSport,
+			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtentiPolisportiva,
+			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
+			CatalogoPrenotabili catalogoPrenotabili) {
+		
+		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti, registroPrenotazioni, catalogoPrenotabili);
 	}
 
 	/**

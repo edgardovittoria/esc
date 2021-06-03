@@ -29,6 +29,7 @@ import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,49 +47,49 @@ import lombok.Setter;
  * @author esc
  *
  */
-@Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PRIVATE) @NoArgsConstructor
+@Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PRIVATE) @AllArgsConstructor
 public abstract class EffettuaPrenotazioneState {
 	
 	/**
 	 * Registro delle notifiche. Utilizzato per invio e gestione generale delle notifiche relative alle prenotazioni.
 	 */
-	@Autowired
+	
 	private RegistroNotifiche registroNotifiche;
 
 	/**
 	 * Registro degli sport della polisportiva. Utilizzato per la ricerca e la
 	 * visualizzazione degli sport in fase di prenotazione.
 	 */
-	@Autowired
+	
 	private RegistroSport registroSport;
 
 	/**
 	 * Registro degli impianti della polisportiva. Utilizzato per la gestione degli
 	 * impianti selezionati in fase di prenotazione.
 	 */
-	@Autowired
+	
 	private RegistroImpianti registroImpianti;
 
 	/**
 	 * Registro degli utenti della polisportiva. Utilizzato per la gestione di tutti
 	 * gli utenti inerenti la prenotazione che si sta gestendo.
 	 */
-	@Autowired
+	
 	private RegistroUtentiPolisportiva registroUtenti;
 
 	/**
 	 * Registro degli appuntamenti. Utilizzato per la gestione degli appuntamenti
 	 * associati alla prenotazione che si sta gestendo.
 	 */
-	@Autowired
+	
 	private RegistroAppuntamenti registroAppuntamenti;
 	
 	
-	@Autowired 
+	
 	private RegistroPrenotazioni registroPrenotazioni;
 	
 	
-	@Autowired
+	
 	private CatalogoPrenotabili catalogoPrenotabili;
 
 

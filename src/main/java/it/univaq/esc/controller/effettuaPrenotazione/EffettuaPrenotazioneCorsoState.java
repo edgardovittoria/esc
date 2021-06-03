@@ -14,16 +14,23 @@ import it.univaq.esc.dtoObjects.IFormPrenotabile;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
+import it.univaq.esc.model.RegistroImpianti;
+import it.univaq.esc.model.RegistroSport;
+import it.univaq.esc.model.costi.CatalogoPrenotabili;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
+import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
+import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
+import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
@@ -36,7 +43,7 @@ import net.bytebuddy.asm.Advice.This;
 @Component
 @Getter(value = AccessLevel.PRIVATE)
 @Setter(value = AccessLevel.PRIVATE)
-@AllArgsConstructor
+
 public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	private EffettuaPrenotazioneLezioneState statoControllerLezioni;
@@ -48,6 +55,15 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	static {
 		FactoryStatoEffettuaPrenotazione.registra(TipiPrenotazione.CORSO.toString(),
 				EffettuaPrenotazioneCorsoState.class);
+	}
+	
+	public EffettuaPrenotazioneCorsoState(RegistroNotifiche registroNotifiche, RegistroSport registroSport,
+			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtentiPolisportiva,
+			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
+			CatalogoPrenotabili catalogoPrenotabili, EffettuaPrenotazioneLezioneState effettuaPrenotazioneLezioneState) {
+		
+		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti, registroPrenotazioni, catalogoPrenotabili);
+		setStatoControllerLezioni(effettuaPrenotazioneLezioneState);
 	}
 
 	@Override
