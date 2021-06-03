@@ -471,7 +471,7 @@ public abstract class EffettuaPrenotazioneState {
 			if (appuntamento.getPartecipanti().size() >= appuntamento.getSogliaMinimaPartecipantiPerConferma()) {
 				appuntamento.confermaAppuntamento();
 				appuntamento.getPartecipanti().forEach((partecipante) -> appuntamento.aggiungiQuotaPartecipazione(
-						this.creaQuotaPartecipazione(appuntamento, utente)));
+						this.creaQuotaPartecipazione(appuntamento, partecipante)));
 			}
 			this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 		}
