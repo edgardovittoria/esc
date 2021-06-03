@@ -102,12 +102,22 @@ public class TestCreazioneQuotePartecipazione {
 		calcolatoreCosto.aggiungiStrategiaCosto(calcBase);
 		getAppuntamento().setCalcolatoreCosto(calcolatoreCosto);
 		
+		
+		/*
+		 * Creiamo un utente base di prova
+		 */
 		String emailSportivo = "sportivo@email.com";
 		setSportivo(new UtentePolisportiva("pippo", "franco", emailSportivo, "password"));
 		
-		
+		/*
+		 * Creiamo l'oggetto con il metodo da testare
+		 */
 		effettuaPrenotazioneImpiantoState = new EffettuaPrenotazioneImpiantoState(null, null, null, getRegistroUtenti(), getRegistroAppuntamenti(), null, null);
 		
+		
+		/*
+		 * Impostiamo alcuni comportamenti necessari per i mock e gli spy creati.
+		 */
 		when(prenotazione.getSportivoPrenotante()).thenReturn(getSportivo());
 		when(impianto.getIdImpianto()).thenReturn(2);
 		when(impianto.getTipoPavimentazione()).thenReturn(Pavimentazione.TERRA_BATTUTA);
@@ -130,8 +140,17 @@ public class TestCreazioneQuotePartecipazione {
 		String emailPartecipante = (String)getSportivo().getProprieta().get("email");
 		
 		Object appuntamentoDTO = getEffettuaPrenotazioneImpiantoState()
-				.aggiungiPartecipanteAEventoEsistente(getIdEvento(), emailPartecipante);		
+				.aggiungiPartecipanteAEventoEsistente(getIdEvento(), emailPartecipante);
+	/*
+	 * Verifichiamo che sia ritornato effettivamente un oggetto.	
+	 */
 	assertThat(appuntamentoDTO != null);
-	assertEquals(1, ((AppuntamentoDTO)appuntamentoDTO).getQuotePartecipazione().size());
+	
+	/*
+	 * Verifichiamo che nel caso esista già una quota di partecipazione associata allo sportivo che vogliamo aggiungere, non 
+	 * ne venga creata un'altra nè venga aggiunto come partecipante un'altra volta.
+	 */
+	assertEquals(1, getAppuntamento().getQuotePartecipazione().size());
+	assertEquals(1, getAppuntamento().getPartecipanti().size());
 	}
 }
