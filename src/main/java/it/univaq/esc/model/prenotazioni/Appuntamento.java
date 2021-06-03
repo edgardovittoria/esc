@@ -1,5 +1,7 @@
 package it.univaq.esc.model.prenotazioni;
 
+import static org.junit.Assert.fail;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -70,7 +72,7 @@ public class Appuntamento {
 	private List<UtentePolisportivaAbstract> partecipanti = new ArrayList<UtentePolisportivaAbstract>();
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn
+	@JoinColumn(nullable = false)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<QuotaPartecipazione> quotePartecipazione = new ArrayList<QuotaPartecipazione>();
 

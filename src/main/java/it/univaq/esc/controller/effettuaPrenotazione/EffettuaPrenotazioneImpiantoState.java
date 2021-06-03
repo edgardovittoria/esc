@@ -285,7 +285,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
 		if (appuntamento != null) {
 			this.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
-			this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
+			//this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 			AppuntamentoDTO appuntamentoDTO = new AppuntamentoDTO();
 			appuntamentoDTO.impostaValoriDTO(appuntamento);
 			return appuntamentoDTO;
