@@ -1,5 +1,7 @@
 package it.univaq.esc.model.costi;
 
+import static org.mockito.Mockito.RETURNS_SMART_NULLS;
+
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -47,7 +49,7 @@ public class CatalogoPrenotabili {
         this.setCatalogoPrenotabili(this.getPrenotabileDescrizioneRepository().findAll());
     }
 
-    public CatalogoPrenotabili avviaCreazionePrenotabile(Sport sport, String tipoPrenotazione, Integer sogliaMinimaPartecipanti, Integer sogliaMassimaPartecipanti){
+    public CatalogoPrenotabili nuovoPrenotabile_avviaCreazione(Sport sport, String tipoPrenotazione, Integer sogliaMinimaPartecipanti, Integer sogliaMassimaPartecipanti){
         this.getPrenotabileDescrizioneBuilder().creaNuovaDescrizione()
         	.impostaSport(sport)
         	.impostaTipoPrenotazione(tipoPrenotazione)
@@ -56,34 +58,45 @@ public class CatalogoPrenotabili {
 
         return this;
     }
+    
+    public CatalogoPrenotabili nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente() {
+    	this.getPrenotabileDescrizioneBuilder().impostaModalitaPrenotazioneComeSingoloUtente();
+    	return this;
+    }
+    
+    
+    public CatalogoPrenotabili nuovoPrenotabile_impostaModalitaPrenotazioneComeSquadra() {
+		this.getPrenotabileDescrizioneBuilder().impostaModalitaPrenotazioneComeSquadra();
+		return this;
+	}
 
-    public CatalogoPrenotabili impostaCostoOrario(Float costo){
+    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoOrario(Float costo){
         this.getPrenotabileDescrizioneBuilder().impostaCostoOrario(costo);
 
         return this;
     }
 
-    public CatalogoPrenotabili impostaCostoUnaTantum(Float costo){
+    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoUnaTantum(Float costo){
         this.getPrenotabileDescrizioneBuilder().impostaCostoUnaTantum(costo);
 
         return this;
     }
 
-    public CatalogoPrenotabili impostaCostoPavimentazione(Float costo, String tipoPavimentazione){
+    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoPavimentazione(Float costo, String tipoPavimentazione){
         this.getPrenotabileDescrizioneBuilder().impostaCostoPavimentazione(costo, tipoPavimentazione);
 
         return this;
     }
 
-    public PrenotabileDescrizione salvaPrenotabileInCreazione(){
+    public PrenotabileDescrizione nuovoPrenotabile_salvaPrenotabileInCreazione(){
        return this.aggiungiPrenotabileACatalogo(this.getPrenotabileDescrizioneRepository().save(this.getPrenotabileDescrizioneBuilder().build()));
 
     }
 
 
-    public PrenotabileDescrizione getPrenotabileDescrizioneByTipoPrenotazioneESport(String tipoPrenotazione, Sport sport){
+    public PrenotabileDescrizione getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(String tipoPrenotazione, Sport sport, String modalitaPrenotazione){
         for(PrenotabileDescrizione desc : this.getCatalogoPrenotabili()){
-            if(desc.getSportAssociato().getNome().equals(sport.getNome()) && desc.getTipoPrenotazione().equals(tipoPrenotazione)){
+            if(desc.getSportAssociato().getNome().equals(sport.getNome()) && desc.getTipoPrenotazione().equals(tipoPrenotazione) && desc.getModalitaPrenotazione().equals(modalitaPrenotazione)){
                 return desc;
             }
         }

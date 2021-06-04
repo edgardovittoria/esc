@@ -18,7 +18,10 @@ public class Sport {
     @Id
     private String nome;
     @Column
-    private int numeroGiocatori;
+    private Integer numeroGiocatoriPerIncontro;
+    
+    @Column
+    private Integer numeroMinimoGiocatoriPerSquadra;
 
       
 }

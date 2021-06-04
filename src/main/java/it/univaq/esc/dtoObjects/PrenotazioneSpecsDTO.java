@@ -19,6 +19,7 @@ public abstract class PrenotazioneSpecsDTO implements IModelToDTO{
 
     private SportDTO sportAssociato;
     private String tipoSpecifica;
+    private String modalitaPrenotazione;
         
 
     @Override
@@ -30,6 +31,7 @@ public abstract class PrenotazioneSpecsDTO implements IModelToDTO{
         this.setIdPrenotazioneSpecsDTO(specs.getId());
         this.setTipoSpecifica(specs.getTipoPrenotazione());
         this.setCosto(specs.getCosto());
+        this.setModalitaPrenotazione(specs.getModalitaPrenotazione());
     };
     
 

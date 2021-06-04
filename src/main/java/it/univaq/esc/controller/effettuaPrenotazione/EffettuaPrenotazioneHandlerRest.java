@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.univaq.esc.dtoObjects.IFormPrenotabile;
+import it.univaq.esc.dtoObjects.FormPrenotabile;
 
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
@@ -297,7 +297,7 @@ public class EffettuaPrenotazioneHandlerRest {
 	 */
 	@PostMapping("/riepilogoPrenotazione")
 	@CrossOrigin
-	public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazione(@RequestBody IFormPrenotabile formPrenotaImpianto) {
+	public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazione(@RequestBody FormPrenotabile formPrenotaImpianto) {
 		this.getListaAppuntamentiPrenotazioneInAtto().clear();
 
 		PrenotazioneDTO prenDTO = this.getStato().impostaDatiPrenotazione(formPrenotaImpianto, this);

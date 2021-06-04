@@ -27,14 +27,18 @@ public class RegistroAppuntamenti {
 
 	@Setter(value = AccessLevel.PRIVATE)
     private AppuntamentoRepository appuntamentoRepository;
+	
+	@Setter(value = AccessLevel.PRIVATE)
+	private FactoryAppuntamenti factoryAppuntamenti;
     
 	//@Setter(value = AccessLevel.PRIVATE)
     private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
 
     
-    public RegistroAppuntamenti(AppuntamentoRepository appuntamentoRepository){
+    public RegistroAppuntamenti(AppuntamentoRepository appuntamentoRepository, FactoryAppuntamenti factoryAppuntamenti){
     	this.setAppuntamentoRepository(appuntamentoRepository);
+    	this.setFactoryAppuntamenti(factoryAppuntamenti);
     	popola();
     }
 
@@ -243,5 +247,10 @@ public class RegistroAppuntamenti {
     		}
     	}
     	return appuntamentiList;
+    }
+    
+    
+    public Appuntamento creaNuovoAppuntamentoPerModalitaPrenotazione(String modalitaPrenotazione) {
+    	return getFactoryAppuntamenti().getAppuntamento(modalitaPrenotazione);
     }
 }

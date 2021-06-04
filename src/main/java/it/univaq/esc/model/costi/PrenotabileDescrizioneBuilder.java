@@ -43,6 +43,17 @@ public class PrenotabileDescrizioneBuilder {
 		return this;
 	}
     
+    public PrenotabileDescrizioneBuilder impostaModalitaPrenotazioneComeSingoloUtente() {
+    	this.getPrenotabileDescrizione().setModalitaPrenotazione(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
+    	return this;
+    }
+    
+    public PrenotabileDescrizioneBuilder impostaModalitaPrenotazioneComeSquadra() {
+		this.getPrenotabileDescrizione().setModalitaPrenotazione(ModalitaPrenotazione.SQUADRA.toString());
+		return this;
+	}
+    
+    
     public PrenotabileDescrizioneBuilder impostaCostoOrario(Float costoDaImpostare){
         CostoPrenotabile costoOrario = new CostoPrenotabile();
         costoOrario.setCosto(costoDaImpostare);

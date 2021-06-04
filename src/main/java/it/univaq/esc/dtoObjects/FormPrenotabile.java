@@ -1,10 +1,16 @@
 package it.univaq.esc.dtoObjects;
 
-import java.util.HashMap;
+
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import org.springframework.stereotype.Component;
 
@@ -16,7 +22,10 @@ import org.springframework.stereotype.Component;
     @Type(value = FormPrenotaLezioneDTO.class, name = "LEZIONE"),
     @Type(value = FormCreaCorso.class, name = "CORSO")
 })
-public interface IFormPrenotabile {
+@Getter @Setter @NoArgsConstructor
+public abstract class FormPrenotabile {
     
-    public HashMap<String, Object> getValoriForm();
+	private String modalitaPrenotazione; 
+	
+    public abstract Map<String, Object> getValoriForm();
 }

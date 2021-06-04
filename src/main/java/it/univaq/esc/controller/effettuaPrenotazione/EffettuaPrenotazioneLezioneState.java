@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Component;
-import it.univaq.esc.dtoObjects.IFormPrenotabile;
+
+import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
@@ -73,7 +74,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 * Metodo che imposta i dati della prenotazione, passati tramite una form DTO, nella controparte software lato server.
 	 */
 	@Override
-	public PrenotazioneDTO impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller) {
+	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller) {
 		for (int i = 0; i < ((List<OrarioAppuntamento>) formDati.getValoriForm().get("listaOrariAppuntamenti"))
 				.size(); i++) {
 			PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione
@@ -86,7 +87,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 			calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
 			// ---------------------------------------------------------------------------------------
 
-			Appuntamento appuntamento = new Appuntamento();
+			Appuntamento appuntamento = getRegistroAppuntamenti().getFactoryAppuntamenti().getAppuntamento(formDati.getModalitaPrenotazione());
 			appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
 			appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 
@@ -160,14 +161,17 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 //					.calcolaCosto();
 //		}
 		
-		PrenotabileDescrizione descrizioneSpecifica = null;
-		for (PrenotabileDescrizione desc : this.getCatalogoPrenotabili()
-				.getCatalogoPrenotabili()) {
-			if (desc.getSportAssociato().getNome().equals((String) formDati.getValoriForm().get("sport"))
-					&& desc.getTipoPrenotazione().equals(controller.getTipoPrenotazioneInAtto())) {
-				descrizioneSpecifica = desc;
-			}
-		}
+		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili().getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
+					controller.getTipoPrenotazioneInAtto(), 
+					getRegistroSport().getSportByNome((String) formDati.getValoriForm().get("sport")), 
+					formDati.getModalitaPrenotazione());
+//		for (PrenotabileDescrizione desc : this.getCatalogoPrenotabili()
+//				.getCatalogoPrenotabili()) {
+//			if (desc.getSportAssociato().getNome().equals((String) formDati.getValoriForm().get("sport"))
+//					&& desc.getTipoPrenotazione().equals(controller.getTipoPrenotazioneInAtto())) {
+//				descrizioneSpecifica = desc;
+//			}
+//		}
 		
 		this.impostaValoriPrenotazioniSpecs(formDati, descrizioneSpecifica, controller.getTipoPrenotazioneInAtto(), controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione(), controller);
 
@@ -185,7 +189,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 
 	}
 	
-	public void impostaValoriPrenotazioniSpecs(IFormPrenotabile formDati, PrenotabileDescrizione descrizioneSpecifica, String tipoPrenotazione, List<PrenotazioneSpecs> listaSpecifiche, EffettuaPrenotazioneHandlerRest controller) {
+	public void impostaValoriPrenotazioniSpecs(FormPrenotabile formDati, PrenotabileDescrizione descrizioneSpecifica, String tipoPrenotazione, List<PrenotazioneSpecs> listaSpecifiche, EffettuaPrenotazioneHandlerRest controller) {
 
 		for (PrenotazioneSpecs spec : listaSpecifiche) {
 			spec.setSpecificaDescription(descrizioneSpecifica);

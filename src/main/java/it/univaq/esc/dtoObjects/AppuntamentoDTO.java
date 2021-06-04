@@ -65,7 +65,7 @@ public class AppuntamentoDTO implements IModelToDTO {
 				.getSpecifichePrenotazioneDTO(appuntamento.getPrenotazioneSpecsAppuntamento().getTipoPrenotazione());
 		specificaDTO.impostaValoriDTO(appuntamento.getPrenotazioneSpecsAppuntamento());
 		this.setSpecificaPrenotazione(specificaDTO);
-		for (UtentePolisportivaAbstract partecipante : appuntamento.getPartecipanti()) {
+		for (UtentePolisportivaAbstract partecipante : appuntamento.getUtentiPartecipanti()) {
 			UtentePolisportivaDTO partecipanteDTO = new UtentePolisportivaDTO();
 			partecipanteDTO.impostaValoriDTO(partecipante);
 			this.aggiungiPartecipante(partecipanteDTO);

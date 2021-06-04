@@ -38,16 +38,16 @@ public class Calendario {
      * @param dataOraFineAppuntamento data e ora di fine dell'appuntamento da aggiungere.
      * @param prenotazioneSpecs specifica di prenotazione da associare all'appuntamento da aggiungere.
      */
-    public void aggiungiAppuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento,
-            PrenotazioneSpecs prenotazioneSpecs) {
-
-        Appuntamento appuntamentoDaAggiungere = new Appuntamento(dataOraInizioAppuntamento, dataOraFineAppuntamento,
-                prenotazioneSpecs);
-        if (!this.sovrapponeA(appuntamentoDaAggiungere)) {
-            this.getListaAppuntamenti().add(appuntamentoDaAggiungere);
-        }
-
-    }
+//    public void aggiungiAppuntamento(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento,
+//            PrenotazioneSpecs prenotazioneSpecs) {
+//
+//        Appuntamento appuntamentoDaAggiungere = new Appuntamento(dataOraInizioAppuntamento, dataOraFineAppuntamento,
+//                prenotazioneSpecs);
+//        if (!this.sovrapponeA(appuntamentoDaAggiungere)) {
+//            this.getListaAppuntamenti().add(appuntamentoDaAggiungere);
+//        }
+//
+//    }
 
     /**
      * Verifica se due calendari si sovrappongono almeno in un appuntamento

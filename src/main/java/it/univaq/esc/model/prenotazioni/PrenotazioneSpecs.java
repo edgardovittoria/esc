@@ -77,7 +77,7 @@ public abstract class PrenotazioneSpecs {
 	}
 
 	public Integer getNumeroGiocatori() {
-		return this.getSportAssociato().getNumeroGiocatori();
+		return this.getSportAssociato().getNumeroGiocatoriPerIncontro();
 	}
 	
 	public Integer getSogliaMassimaPartecipanti() {
@@ -94,6 +94,10 @@ public abstract class PrenotazioneSpecs {
 	
 	public List<PrenotazioneSpecs> getPrenotazioniSpecsFiglie(){
 		return null;
+	}
+	
+	public String getModalitaPrenotazione() {
+		return getSpecificaDescription().getModalitaPrenotazione();
 	}
 	
 

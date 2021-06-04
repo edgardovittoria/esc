@@ -8,7 +8,7 @@ import lombok.Setter;
 
 
 @Getter @Setter @NoArgsConstructor
-public class FormCreaCorso implements IFormPrenotabile{
+public class FormCreaCorso extends FormPrenotabile{
 
 	private FormPrenotaLezioneDTO formLezione;
 	private List<String> invitatiCorso;

@@ -33,6 +33,8 @@ public class PrenotabileDescrizione {
     private Integer id;
     @Column
     private String tipoPrenotazione;
+    @Column
+    private String modalitaPrenotazione;
     @ManyToOne
     @JoinColumn
     private Sport sportAssociato;
@@ -59,4 +61,5 @@ public class PrenotabileDescrizione {
         }
         return mappaCosti;
     }
+    
 }

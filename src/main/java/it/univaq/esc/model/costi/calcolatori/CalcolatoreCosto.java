@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import it.univaq.esc.model.costi.TipoCostoPrenotabile;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
 import lombok.NoArgsConstructor;
 
 

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
-import it.univaq.esc.dtoObjects.IFormPrenotabile;
+import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
@@ -92,7 +92,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	 * fase di riepilogo della prenotazione Impianto.
 	 */
 	@Override
-	public PrenotazioneDTO impostaDatiPrenotazione(IFormPrenotabile formDati,
+	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
 			EffettuaPrenotazioneHandlerRest controller) {
 		for (int i = 0; i < ((List<OrarioAppuntamento>) formDati.getValoriForm().get("listaOrariAppuntamenti"))
 				.size(); i++) {
@@ -106,22 +106,25 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 			calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
 			// ---------------------------------------------------------------------------------------
 
-			Appuntamento appuntamento = new Appuntamento();
+			
+			
+			Appuntamento appuntamento = getRegistroAppuntamenti().creaNuovoAppuntamentoPerModalitaPrenotazione(formDati.getModalitaPrenotazione());
 			appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
 			appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 
 			controller.aggiungiAppuntamento(appuntamento);
 		}
 
-		PrenotabileDescrizione descrizioneSpecifica = null;
-		for (PrenotabileDescrizione desc : controller.getListinoPrezziDescrizioniPolisportiva()
-				.getCatalogoPrenotabili()) {
-			if (desc.getSportAssociato().getNome().equals((String) formDati.getValoriForm().get("sport"))
-					&& desc.getTipoPrenotazione().equals(controller.getPrenotazioneInAtto()
-							.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione())) {
-				descrizioneSpecifica = desc;
-			}
-		}
+		PrenotabileDescrizione descrizioneSpecifica = controller.getListinoPrezziDescrizioniPolisportiva().getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(controller.getPrenotazioneInAtto()
+							.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione(), getRegistroSport().getSportByNome((String)formDati.getValoriForm().get("sport")), formDati.getModalitaPrenotazione());
+//		for (PrenotabileDescrizione desc : controller.getListinoPrezziDescrizioniPolisportiva()
+//				.getCatalogoPrenotabili()) {
+//			if (desc.getSportAssociato().getNome().equals((String) formDati.getValoriForm().get("sport"))
+//					&& desc.getTipoPrenotazione().equals(controller.getPrenotazioneInAtto()
+//							.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione())) {
+//				descrizioneSpecifica = desc;
+//			}
+//		}
 
 		List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
 		for (String email : (List<String>) formDati.getValoriForm().get("invitati")) {

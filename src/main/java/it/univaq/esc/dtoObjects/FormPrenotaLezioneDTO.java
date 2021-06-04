@@ -10,7 +10,7 @@ import lombok.Setter;
 
 
 @Getter @Setter @NoArgsConstructor
-public class FormPrenotaLezioneDTO implements IFormPrenotabile{
+public class FormPrenotaLezioneDTO extends FormPrenotabile{
 
     private String sportSelezionato = "tennis";
 

@@ -10,7 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.stereotype.Component;
 
-import it.univaq.esc.dtoObjects.IFormPrenotabile;
+import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
@@ -98,7 +98,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public PrenotazioneDTO impostaDatiPrenotazione(IFormPrenotabile formDati,
+	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
 			EffettuaPrenotazioneHandlerRest controller) {
 		PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione
 				.getSpecifichePrenotazione(controller.getTipoPrenotazioneInAtto());
@@ -118,7 +118,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 			calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
 			// ---------------------------------------------------------------------------------------
 
-			Appuntamento appuntamento = new Appuntamento();
+			Appuntamento appuntamento = getRegistroAppuntamenti().getFactoryAppuntamenti().getAppuntamento(formDati.getModalitaPrenotazione());
 			appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneLezioneSpecs);
 			appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 
@@ -135,13 +135,14 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		prenotazioneSpecs.impostaValoriSpecificheExtraPrenotazione(mappa);
 
 		PrenotabileDescrizione descrizioneCorso = controller.getListinoPrezziDescrizioniPolisportiva()
-				.avviaCreazionePrenotabile(
+				.nuovoPrenotabile_avviaCreazione(
 						this.getRegistroSport().getSportByNome((String) formDati.getValoriForm().get("sport")),
 						controller.getTipoPrenotazioneInAtto(),
 						(Integer) formDati.getValoriForm().get("numeroMinimoPartecipanti"),
 						(Integer) formDati.getValoriForm().get("numeroMassimoPartecipanti"))
-				.impostaCostoUnaTantum((Float) formDati.getValoriForm().get("costoPerPartecipante"))
-				.salvaPrenotabileInCreazione();
+				.nuovoPrenotabile_impostaCostoUnaTantum((Float) formDati.getValoriForm().get("costoPerPartecipante"))
+				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
+				.nuovoPrenotabile_salvaPrenotabileInCreazione();
 
 		prenotazioneSpecs.setSpecificaDescription(descrizioneCorso);
 
@@ -250,10 +251,10 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	@Override
 	protected boolean aggiungiPartecipante(UtentePolisportivaAbstract utente, Appuntamento appuntamento) {
 		boolean partecipanteAggiunto = false;
-		if (appuntamento.getPartecipanti().size() < appuntamento.getNumeroPartecipantiMassimo()) {
+		if (appuntamento.getPartecipantiAppuntamento().size() < appuntamento.getNumeroPartecipantiMassimo()) {
 			appuntamento.aggiungiPartecipante(utente);
 			partecipanteAggiunto = true;
-			if (appuntamento.getPartecipanti().size() >= appuntamento.getSogliaMinimaPartecipantiPerConferma()) {
+			if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento.getSogliaMinimaPartecipantiPerConferma()) {
 				appuntamento.confermaAppuntamento();
 
 			}

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import it.univaq.esc.dtoObjects.IFormPrenotabile;
+
+import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
@@ -27,11 +27,9 @@ import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
-import it.univaq.esc.repository.AppuntamentoRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -124,7 +122,7 @@ public abstract class EffettuaPrenotazioneState {
 	 * @param controller istanza del controller cui lo stato è associato, per
 	 *                   poterne eventualmente aggiornare i dati.
 	 */
-	public abstract PrenotazioneDTO impostaDatiPrenotazione(IFormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller);
+	public abstract PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller);
 
 	/**
 	 * Definisce l'interfaccia del metodo che aggiorna gli oggetti intererssati
@@ -465,12 +463,12 @@ public abstract class EffettuaPrenotazioneState {
 	
 	protected boolean aggiungiPartecipante(UtentePolisportivaAbstract utente, Appuntamento appuntamento) {
 		boolean partecipanteAggiunto = false;
-		if (appuntamento.getPartecipanti().size() < appuntamento.getNumeroPartecipantiMassimo()) {
+		if (appuntamento.getPartecipantiAppuntamento().size() < appuntamento.getNumeroPartecipantiMassimo()) {
 			appuntamento.aggiungiPartecipante(utente);
 			partecipanteAggiunto = true;
-			if (appuntamento.getPartecipanti().size() >= appuntamento.getSogliaMinimaPartecipantiPerConferma()) {
+			if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento.getSogliaMinimaPartecipantiPerConferma()) {
 				appuntamento.confermaAppuntamento();
-				appuntamento.getPartecipanti().forEach((partecipante) -> appuntamento.aggiungiQuotaPartecipazione(
+				appuntamento.getUtentiPartecipanti().forEach((partecipante) -> appuntamento.aggiungiQuotaPartecipazione(
 						this.creaQuotaPartecipazione(appuntamento, partecipante)));
 			}
 			this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
-public class FormPrenotaImpianto implements IFormPrenotabile{
+public class FormPrenotaImpianto extends FormPrenotabile{
     private String sportSelezionato = "tennis";
 
     private List<OrarioAppuntamento> orariSelezionati = new ArrayList<OrarioAppuntamento>();

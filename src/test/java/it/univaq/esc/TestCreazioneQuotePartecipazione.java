@@ -34,6 +34,7 @@ import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
@@ -52,7 +53,7 @@ import lombok.Setter;
 public class TestCreazioneQuotePartecipazione {
 
 	@Spy
-	private Appuntamento appuntamento;
+	private AppuntamentoSingoliPartecipanti appuntamento;
 	
 	private Integer idEvento = 0;
 	
@@ -151,6 +152,6 @@ public class TestCreazioneQuotePartecipazione {
 	 * ne venga creata un'altra nè venga aggiunto come partecipante un'altra volta.
 	 */
 	assertEquals(1, getAppuntamento().getQuotePartecipazione().size());
-	assertEquals(1, getAppuntamento().getPartecipanti().size());
+	assertEquals(1, getAppuntamento().getPartecipantiAppuntamento().size());
 	}
 }
