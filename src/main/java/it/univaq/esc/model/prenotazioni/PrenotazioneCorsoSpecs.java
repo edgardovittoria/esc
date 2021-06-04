@@ -30,7 +30,7 @@ import net.bytebuddy.asm.Advice.This;
 @Getter
 @Setter
 public class PrenotazioneCorsoSpecs extends PrenotazioneSpecs {
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany()
 	@JoinColumn()
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<PrenotazioneSpecs> listaLezioni = new ArrayList<PrenotazioneSpecs>();
