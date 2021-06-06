@@ -1,6 +1,7 @@
 package it.univaq.esc.model.utenti;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -42,5 +43,21 @@ public class RegistroSquadre {
 			return true;
 		}
 		return false;
+	}
+	
+	
+	/**
+	 * Restituisce la lista delle squadre di cui un utente è membro.
+	 * @param membro utente di cui riciavare le squadre associate.
+	 * @return lista di squadre di cui l'utente passato come parametro è membro.
+	 */
+	public List<Squadra> getSquadrePerMembro(UtentePolisportivaAbstract membro){
+		List<Squadra> listaSquadreDiCuiMembro = new ArrayList<Squadra>();
+		for(Squadra squadra : getListaSquadre()) {
+			if(squadra.isMembro(membro)) {
+				listaSquadreDiCuiMembro.add(squadra);
+			}
+		}
+		return listaSquadreDiCuiMembro;
 	}
 }

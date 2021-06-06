@@ -107,6 +107,7 @@ public class Prenotazione extends Notificabile{
 		infoPrenotazionMap.put("sportNome", this.getNomeSportAssociatoAllaPrenotazione());
 		infoPrenotazionMap.put("identificativo", this.getIdPrenotazione());
 		infoPrenotazionMap.put("numeroIncontri", getNumeroIncontri());
+		infoPrenotazionMap.put("modalitaPrenotazione", getModalitaPrenotazione());
 		
 		return infoPrenotazionMap;
 	}
@@ -127,5 +128,8 @@ public class Prenotazione extends Notificabile{
 		return TipoEventoNotificabile.PRENOTAZIONE.toString();
 	}
 
+	public String getModalitaPrenotazione() {
+		return getListaSpecifichePrenotazione().get(0).getModalitaPrenotazione();
+	}
     
 }

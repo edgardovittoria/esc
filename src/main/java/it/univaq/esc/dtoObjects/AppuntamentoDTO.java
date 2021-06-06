@@ -25,6 +25,7 @@ public class AppuntamentoDTO implements IModelToDTO {
 	private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
 	private UtentePolisportivaDTO creatore;
 	private Integer idManutentore;
+	private String modalitaPrenotazione;
 
 	public LocalDate getDataAppuntamento() {
 		return this.getOrarioAppuntamento().getDataPrenotazione();
@@ -86,6 +87,8 @@ public class AppuntamentoDTO implements IModelToDTO {
 		if (appuntamento.getManutentore() != null) {
 			this.setIdManutentore(appuntamento.getManutentore().getId());
 		}
+		
+		setModalitaPrenotazione(appuntamento.getModalitaPrenotazione());
 
 	}
 

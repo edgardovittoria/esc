@@ -2,18 +2,22 @@ package it.univaq.esc.model.prenotazioni;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.swing.event.InternalFrameAdapter;
 
+import org.codehaus.groovy.runtime.callsite.AbstractCallSite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
+import it.univaq.esc.model.costi.ModalitaPrenotazione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.prenotazioni.utility.FetchDatiPrenotazioniAppuntamentiFunctionsUtlis;
+import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import lombok.AccessLevel;
@@ -247,6 +251,39 @@ public class RegistroAppuntamenti {
     		}
     	}
     	return appuntamentiList;
+    }
+    
+    private List<Appuntamento> filtraAppuntamentiModalitaSquadraPerSquadraPartecipante(List<Appuntamento> listaAppuntamentiModaitaSquadraDaFiltrare, Squadra squadraPartecipante){
+    	List<Appuntamento> listaFiltrata = new ArrayList<Appuntamento>();
+    	for(Appuntamento appuntamento : listaAppuntamentiModaitaSquadraDaFiltrare) {
+    		for(Object squadra : appuntamento.getPartecipantiAppuntamento()) {
+    			Squadra squadraIterator = (Squadra)squadra;
+    			if(squadraIterator.isEqual(squadraPartecipante)) {
+    				listaFiltrata.add(appuntamento);
+    			}
+    		}
+    		
+    	}
+    	return listaFiltrata;
+			
+    }
+    
+    private List<Appuntamento> filtraAppuntamentiPerModalitaPrenotazione(List<Appuntamento> listaAppuntamentiDaFiltrare, String modalitaPrenotazione){
+    	List<Appuntamento> listaFiltrata = new ArrayList<Appuntamento>();
+    	for(Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
+    		if(appuntamento.getModalitaPrenotazione().equals(modalitaPrenotazione)) {
+    			listaFiltrata.add(appuntamento);
+    		}
+    	}
+    	return listaFiltrata;
+    }
+    
+    
+    public List<Appuntamento> getAppuntamentiPerSquadraPartecipante(Squadra squadraPartecipante){
+    	List<Appuntamento> listaAppuntamentiSquadra = filtraAppuntamentiPerModalitaPrenotazione(getListaAppuntamenti(), ModalitaPrenotazione.SQUADRA.toString());
+    	listaAppuntamentiSquadra = filtraAppuntamentiModalitaSquadraPerSquadraPartecipante(listaAppuntamentiSquadra, squadraPartecipante);
+    	
+    	return listaAppuntamentiSquadra;
     }
     
     

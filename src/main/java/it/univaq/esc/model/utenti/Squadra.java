@@ -83,7 +83,7 @@ public class Squadra {
 		}
 	}
 
-	private boolean isMembro(UtentePolisportivaAbstract nuovoMembro) {
+	public boolean isMembro(UtentePolisportivaAbstract nuovoMembro) {
 		for (UtentePolisportivaAbstract membro : getMembri()) {
 			if (membro.isEqual(nuovoMembro)) {
 				return true;
@@ -103,5 +103,13 @@ public class Squadra {
 	
 	public Integer getNumeroMinimoMembri() {
 		return getSport().getNumeroMinimoGiocatoriPerSquadra();
+	}
+	
+	
+	public boolean isEqual(Squadra squadraDaConfrontare) {
+		if(squadraDaConfrontare.getIdSquadra() == this.getIdSquadra()) {
+			return true;
+		}
+		return false;
 	}
 }
