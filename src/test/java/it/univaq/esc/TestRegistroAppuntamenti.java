@@ -4,6 +4,7 @@ package it.univaq.esc;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,14 +19,18 @@ import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.internal.matchers.Any;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.authority.mapping.MappableAttributesRetriever;
 
+import ch.qos.logback.core.joran.util.StringToObjectConverter;
+import it.univaq.esc.model.costi.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.PrenotazioneLezioneSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.AppuntamentoRepository;
@@ -60,7 +65,8 @@ public class TestRegistroAppuntamenti {
 		when(user2.isEqual(utenteProva)).thenReturn(false);
 		
 		PrenotazioneSpecs lezionePrenotazioneSpecs = mock(PrenotazioneLezioneSpecs.class);
-		when(lezionePrenotazioneSpecs.getValoriSpecificheExtraPrenotazione()).thenReturn(new HashMap<String, Object>());
+		Map<String, Object> mappaLezione = mock(HashMap.class);
+		when(lezionePrenotazioneSpecs.getValoriSpecificheExtraPrenotazione()).thenReturn(mappaLezione);
 		
 
 		Appuntamento appuntamento1 = mock(Appuntamento.class);
@@ -69,6 +75,7 @@ public class TestRegistroAppuntamenti {
 		when(appuntamento1.creatoDa()).thenReturn(user2);
 		when(appuntamento1.utenteIsPartecipante(utenteProva)).thenReturn(false);
 		when(appuntamento1.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 7, 20, 15, 30));
+		when(appuntamento1.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 		
 
 		Appuntamento appuntamento2 = mock(Appuntamento.class);
@@ -77,6 +84,7 @@ public class TestRegistroAppuntamenti {
 		when(appuntamento2.creatoDa()).thenReturn(user2);
 		when(appuntamento2.utenteIsPartecipante(utenteProva)).thenReturn(false);
 		when(appuntamento2.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 7, 23, 15, 30));
+		when(appuntamento2.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 		
 
 		Appuntamento appuntamento3 = mock(Appuntamento.class);
@@ -85,6 +93,7 @@ public class TestRegistroAppuntamenti {
 		when(appuntamento3.creatoDa()).thenReturn(user1);
 		when(appuntamento3.utenteIsPartecipante(utenteProva)).thenReturn(false);
 		when(appuntamento3.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 8, 20, 15, 30));
+		when(appuntamento3.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 		
 
 		Appuntamento appuntamento4 = mock(Appuntamento.class);
@@ -93,6 +102,7 @@ public class TestRegistroAppuntamenti {
 		when(appuntamento4.creatoDa()).thenReturn(user2);
 		when(appuntamento4.utenteIsPartecipante(utenteProva)).thenReturn(false);
 		when(appuntamento4.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 6, 20, 15, 30));
+		when(appuntamento4.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 		
 		Appuntamento appuntamento5 = mock(Appuntamento.class);
 		when(appuntamento5.isPending()).thenReturn(false);
@@ -102,6 +112,7 @@ public class TestRegistroAppuntamenti {
 		when(appuntamento5.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 6, 20, 15, 30));
 		when(appuntamento5.getPrenotazioneSpecsAppuntamento()).thenReturn(lezionePrenotazioneSpecs);
 		when(appuntamento5.getPrenotazioneSpecsAppuntamento().getValoriSpecificheExtraPrenotazione().get("istruttore")).thenReturn(user1);
+		when(appuntamento5.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 		
 		Appuntamento appuntamento6 = mock(Appuntamento.class);
 		when(appuntamento6.isPending()).thenReturn(false);
@@ -111,6 +122,7 @@ public class TestRegistroAppuntamenti {
 		when(appuntamento6.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 6, 20, 15, 30));
 		when(appuntamento6.getPrenotazioneSpecsAppuntamento()).thenReturn(lezionePrenotazioneSpecs);
 		when(appuntamento6.getPrenotazioneSpecsAppuntamento().getValoriSpecificheExtraPrenotazione().get("istruttore")).thenReturn(user2);
+		when(appuntamento6.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 		
 		Appuntamento appuntamento7 = mock(Appuntamento.class);
 		when(appuntamento7.isPending()).thenReturn(false);
@@ -120,6 +132,7 @@ public class TestRegistroAppuntamenti {
 		when(appuntamento7.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 6, 20, 15, 30));
 		when(appuntamento7.getPrenotazioneSpecsAppuntamento()).thenReturn(lezionePrenotazioneSpecs);
 		when(appuntamento7.getPrenotazioneSpecsAppuntamento().getValoriSpecificheExtraPrenotazione().get("istruttore")).thenReturn(user1);
+		when(appuntamento7.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 		
 		Appuntamento appuntamento8 = mock(Appuntamento.class);
 		when(appuntamento8.isPending()).thenReturn(false);
@@ -129,6 +142,55 @@ public class TestRegistroAppuntamenti {
 		when(appuntamento8.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 6, 20, 15, 30));
 		when(appuntamento8.getPrenotazioneSpecsAppuntamento()).thenReturn(lezionePrenotazioneSpecs);
 		when(appuntamento8.getPrenotazioneSpecsAppuntamento().getValoriSpecificheExtraPrenotazione().get("istruttore")).thenReturn(user2);
+		when(appuntamento8.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
+		
+		
+		Squadra squadra1 = new Squadra();
+		squadra1.setIdSquadra(3);
+		Squadra squadra2 = new Squadra();
+		squadra2.setIdSquadra(4);
+		List<Object> listaSquadrePartecipanti1 = new ArrayList<Object>();
+		listaSquadrePartecipanti1.add(squadra1);
+		listaSquadrePartecipanti1.add(squadra2);
+		List<Object> listaSquadrePartecipanti2 = new ArrayList<Object>();
+		listaSquadrePartecipanti2.add(squadra1);
+		
+		Appuntamento appuntamentoSquadra1 = mock(Appuntamento.class);
+		when(appuntamentoSquadra1.isPending()).thenReturn(false);
+		when(appuntamentoSquadra1.getTipoPrenotazione()).thenReturn(TipiPrenotazione.IMPIANTO.toString());
+		when(appuntamentoSquadra1.creatoDa()).thenReturn(user2);
+		when(appuntamentoSquadra1.utenteIsPartecipante(utenteProva)).thenReturn(false);
+		when(appuntamentoSquadra1.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 6, 24, 15, 30));
+		when(appuntamentoSquadra1.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SQUADRA.toString());
+		when(appuntamentoSquadra1.getPartecipantiAppuntamento()).thenReturn(listaSquadrePartecipanti1);
+
+		
+		Appuntamento appuntamentoSquadra2 = mock(Appuntamento.class);
+		when(appuntamentoSquadra2.isPending()).thenReturn(false);
+		when(appuntamentoSquadra2.getTipoPrenotazione()).thenReturn(TipiPrenotazione.IMPIANTO.toString());
+		when(appuntamentoSquadra2.creatoDa()).thenReturn(user1);
+		when(appuntamentoSquadra2.utenteIsPartecipante(utenteProva)).thenReturn(true);
+		when(appuntamentoSquadra2.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 6, 25, 15, 30));
+		when(appuntamentoSquadra2.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SQUADRA.toString());
+		when(appuntamentoSquadra2.getPartecipantiAppuntamento()).thenReturn(listaSquadrePartecipanti1);
+		
+		Appuntamento appuntamentoSquadra3 = mock(Appuntamento.class);
+		when(appuntamentoSquadra3.isPending()).thenReturn(false);
+		when(appuntamentoSquadra3.getTipoPrenotazione()).thenReturn(TipiPrenotazione.IMPIANTO.toString());
+		when(appuntamentoSquadra3.creatoDa()).thenReturn(user2);
+		when(appuntamentoSquadra3.utenteIsPartecipante(utenteProva)).thenReturn(false);
+		when(appuntamentoSquadra3.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 6, 26, 15, 30));
+		when(appuntamentoSquadra3.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SQUADRA.toString());
+		when(appuntamentoSquadra3.getPartecipantiAppuntamento()).thenReturn(listaSquadrePartecipanti2);
+		
+		Appuntamento appuntamentoSquadra4 = mock(Appuntamento.class);
+		when(appuntamentoSquadra4.isPending()).thenReturn(false);
+		when(appuntamentoSquadra4.getTipoPrenotazione()).thenReturn(TipiPrenotazione.IMPIANTO.toString());
+		when(appuntamentoSquadra4.creatoDa()).thenReturn(user1);
+		when(appuntamentoSquadra4.utenteIsPartecipante(utenteProva)).thenReturn(false);
+		when(appuntamentoSquadra4.getDataOraInizioAppuntamento()).thenReturn(LocalDateTime.of(2021, 6, 27, 15, 30));
+		when(appuntamentoSquadra4.getModalitaPrenotazione()).thenReturn(ModalitaPrenotazione.SQUADRA.toString());
+		when(appuntamentoSquadra4.getPartecipantiAppuntamento()).thenReturn(listaSquadrePartecipanti2);
 		
 
 		List<Appuntamento> appuntamentiProva = new ArrayList<Appuntamento>();
@@ -140,6 +202,10 @@ public class TestRegistroAppuntamenti {
 		appuntamentiProva.add(appuntamento6);
 		appuntamentiProva.add(appuntamento7);
 		appuntamentiProva.add(appuntamento8);
+		appuntamentiProva.add(appuntamentoSquadra1);
+		appuntamentiProva.add(appuntamentoSquadra2);
+		appuntamentiProva.add(appuntamentoSquadra3);
+		appuntamentiProva.add(appuntamentoSquadra4);
 
 		setAppuntamenti(appuntamentiProva);
 		setUserProva(utenteProva);
@@ -150,16 +216,27 @@ public class TestRegistroAppuntamenti {
 	}
 
 	@Test
-	public void test_4AppuntamentiImpianto_2Sottoscrivibili() {
+	public void test_8AppuntamentiImpianto_2Sottoscrivibili() {
 		
 		List<Appuntamento> appuntamentiSottoscrivibili = getRegistroAppuntamenti().getAppuntamentiSottoscrivibiliPerTipo(TipiPrenotazione.IMPIANTO.toString(), getUserProva());
 		
 		assertEquals(2, appuntamentiSottoscrivibili.size());
 	}
 
-	@Test
+	//@Test
 	public void testGetLezioniPerIistruttore_2LezioniSu4() {
 		List<Appuntamento> lezioni = getRegistroAppuntamenti().getListaLezioniPerIstruttore(userProva);
 		assertEquals(2, lezioni.size());
+	}
+	
+	
+	@Test
+	public void testRicercaAppuntamentiSquadraPerSquadraPartecipante() {
+		Squadra squadraDiCuiPrendereAppuntamenti = spy(Squadra.class);
+		when(squadraDiCuiPrendereAppuntamenti.getIdSquadra()).thenReturn(4);
+		
+		List<Appuntamento> listaAppuntamentiSquadra = getRegistroAppuntamenti().getAppuntamentiPerSquadraPartecipante(squadraDiCuiPrendereAppuntamenti);
+		
+		assertEquals(2, listaAppuntamentiSquadra.size());
 	}
 }
