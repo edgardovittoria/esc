@@ -111,9 +111,9 @@ public class TestCreazioneQuotePartecipazione {
 		setSportivo(new UtentePolisportiva("pippo", "franco", emailSportivo, "password"));
 		
 		/*
-		 * Creiamo l'oggetto con il metodo da testare
+		 * Creiamo l'oggetto con il metodo da testares
 		 */
-		effettuaPrenotazioneImpiantoState = new EffettuaPrenotazioneImpiantoState(null, null, null, getRegistroUtenti(), getRegistroAppuntamenti(), null, null);
+		effettuaPrenotazioneImpiantoState = new EffettuaPrenotazioneImpiantoState(null, null, null, getRegistroUtenti(), getRegistroAppuntamenti(), null, null, null);
 		
 		
 		/*

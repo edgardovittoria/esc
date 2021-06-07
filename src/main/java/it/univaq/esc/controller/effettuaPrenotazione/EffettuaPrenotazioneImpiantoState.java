@@ -26,6 +26,7 @@ import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
+import it.univaq.esc.model.costi.ModalitaPrenotazione;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
@@ -33,6 +34,7 @@ import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.notifiche.Notifica;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
+import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.utility.BeanUtil;
@@ -57,9 +59,9 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 			RegistroNotifiche registroNotifiche, RegistroSport registroSport,
 			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtentiPolisportiva,
 			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
-			CatalogoPrenotabili catalogoPrenotabili) {
+			CatalogoPrenotabili catalogoPrenotabili, RegistroSquadre registroSquadre) {
 		
-		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti, registroPrenotazioni, catalogoPrenotabili);
+		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti, registroPrenotazioni, catalogoPrenotabili, registroSquadre);
 	}
 
 	/**
@@ -247,7 +249,13 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		LocalDateTime oraFine = LocalDateTime.parse(orario.get("oraFine"),
 				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
 		
-		datiAggiornati.put("sportiviInvitabili", getSportiviLiberiInBaseAOrario(oraInizio, oraFine));
+		if(((String)dati.get("modalitaPrenotazione")).equals(ModalitaPrenotazione.SQUADRA.toString())){
+			datiAggiornati.put("squadreInvitabili", getRegistroSquadre().getListaSquadreLiberePerOrarioAppuntamento(oraInizio, oraFine));
+		}
+		else {
+			datiAggiornati.put("sportiviInvitabili", getSportiviLiberiInBaseAOrario(oraInizio, oraFine));
+		}
+		
 		return datiAggiornati;
 		
 		

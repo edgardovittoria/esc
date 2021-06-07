@@ -1,5 +1,7 @@
 package it.univaq.esc.model.utenti;
 
+import java.sql.SQLInvalidAuthorizationSpecException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -84,6 +86,16 @@ public class RegistroSquadre {
 		
 	}
 	
+	private List<Squadra> filtraSquadreLiberePerOrarioAppuntamento(List<Squadra> listaDaFiltrare, LocalDateTime orarioInizio, LocalDateTime orarioFine){
+		List<Squadra> listaFiltrata = new  ArrayList<Squadra>();
+		for(Squadra squadra : listaDaFiltrare) {
+			if(!squadra.getCalendarioSquadra().sovrapponeA(orarioInizio, orarioFine)) {
+				listaFiltrata.add(squadra);
+			}
+		}
+		return listaFiltrata;
+	}
+	
 	/**
 	 * Restituisce le squadre libere sulla base di un certo calendario.
 	 * @param calendarioDaConfrontare calendario da confrontare con quello delle squadre
@@ -92,4 +104,9 @@ public class RegistroSquadre {
 	public List<Squadra> getListaSquadreLiberePerCalendario(Calendario calendarioDaConfrontare){
 		return filtraSquadreLiberePerCalendario(getListaSquadre(), calendarioDaConfrontare);
 	}
+	
+	public List<Squadra> getListaSquadreLiberePerOrarioAppuntamento(LocalDateTime orarioInizio, LocalDateTime orarioFine){
+		return filtraSquadreLiberePerOrarioAppuntamento(getListaSquadre(), orarioInizio, orarioFine);
+	}
+	
 }
