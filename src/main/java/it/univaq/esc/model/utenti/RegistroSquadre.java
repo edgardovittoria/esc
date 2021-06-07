@@ -72,4 +72,19 @@ public class RegistroSquadre {
 		}
 		return listaSquadreDiCuiMembro;
 	}
+	
+	private List<Squadra> filtraSquadreLiberePerCalendario(List<Squadra> listaSquadreDaFiltrare, Calendario calendarioDaConfrontare){
+		List<Squadra> listaFiltrata = new ArrayList<Squadra>();
+		for(Squadra squadra : listaSquadreDaFiltrare) {
+			if(!squadra.getCalendarioSquadra().sovrapponeA(calendarioDaConfrontare)) {
+				listaFiltrata.add(squadra);
+			}
+		}
+		return listaFiltrata;
+		
+	}
+	
+//	public List<Squadra> getListaSquadreLiberePerCalendario(Calendario calendarioDaConfrontare){
+//		
+//	}
 }

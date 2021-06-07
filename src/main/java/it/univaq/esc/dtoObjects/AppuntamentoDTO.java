@@ -5,9 +5,11 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.univaq.esc.model.costi.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazione;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
+import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,7 @@ public class AppuntamentoDTO implements IModelToDTO {
 	private Integer idAppuntamento;
 	private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
 	private List<UtentePolisportivaDTO> partecipanti = new ArrayList<UtentePolisportivaDTO>();
+	private List<SquadraDTO> squadrePartecipanti = new ArrayList<SquadraDTO>();
 	private PrenotazioneSpecsDTO specificaPrenotazione;
 	private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
 	private UtentePolisportivaDTO creatore;
@@ -83,13 +86,23 @@ public class AppuntamentoDTO implements IModelToDTO {
 		UtentePolisportivaDTO creatore = new UtentePolisportivaDTO();
 		creatore.impostaValoriDTO(appuntamento.creatoDa());
 		this.setCreatore(creatore);
-		
+
 		if (appuntamento.getManutentore() != null) {
 			this.setIdManutentore(appuntamento.getManutentore().getId());
 		}
-		
+
 		setModalitaPrenotazione(appuntamento.getModalitaPrenotazione());
 
+		if (appuntamento.getModalitaPrenotazione().equals(ModalitaPrenotazione.SQUADRA.toString())) {
+			List<SquadraDTO> squadrePartecipanti = new ArrayList<SquadraDTO>();
+			for (Object squadra : appuntamento.getPartecipantiAppuntamento()) {
+				SquadraDTO squadraPartecipanteDTO = new SquadraDTO();
+				squadraPartecipanteDTO.impostaValoriDTO(squadra);
+				squadrePartecipanti.add(squadraPartecipanteDTO);
+			}
+			setSquadrePartecipanti(squadrePartecipanti);
+
+		}
 	}
 
 }
