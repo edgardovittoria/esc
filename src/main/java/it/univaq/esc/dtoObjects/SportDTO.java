@@ -16,8 +16,9 @@ public class SportDTO implements IModelToDTO{
     @Override
     public void impostaValoriDTO(Object modelDaConvertire){
         Sport sport = (Sport)modelDaConvertire;
-        this.nome = sport.getNome();
-        this.postiLiberi = sport.getNumeroGiocatoriPerIncontro();
+        
+        setNome(sport.getNome());
+        setPostiLiberi(sport.getNumeroGiocatoriPerIncontro());
         setNumeroMinimoGiocatoriPerSquadra(sport.getNumeroMinimoGiocatoriPerSquadra());
     }
     

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.NotificaDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
+import it.univaq.esc.dtoObjects.SquadraDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
@@ -26,9 +27,12 @@ import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
+import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.bytebuddy.asm.Advice.This;
@@ -39,20 +43,21 @@ import it.univaq.esc.model.notifiche.RegistroNotifiche;
 
 @RestController
 @RequestMapping("/aggiornaOpzioni")
-@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE)
+@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE) @AllArgsConstructor
 public class GestioneProfiloHandler {
 	
-	@Autowired
+	
 	private RegistroNotifiche registroNotifiche;
 
-	@Autowired
 	private RegistroUtentiPolisportiva registroUtentiPolisportiva;
 
-	@Autowired
 	private RegistroPrenotazioni registroPrenotazioni;
-
-	@Autowired
+	
 	private RegistroAppuntamenti registroAppuntamenti;
+	
+	private RegistroSquadre registroSquadre;
+	
+	
 
 	/**
 	 * Ricava uno sportivo registrato nel sistema a partire dalla email associata,
@@ -154,7 +159,10 @@ public class GestioneProfiloHandler {
 		 */
 		List<NotificaDTO> notificheUtente = getNotificheDTOPerDestinatario(sportivo);
 		
-		
+		/*
+		 * Ricaviamo la lista delle squadre di cui l'utente è membro.
+		 */
+		List<SquadraDTO> squadreUtente = getSquadreDiCuiUtenteMembro(sportivo);
 		
 		/*
 		 * Creiamo la mappa con tutti i dati e la ritorniamo.
@@ -167,6 +175,7 @@ public class GestioneProfiloHandler {
 		mappaPrenotazioniPartecipazioni.put("partecipazioni", appuntamenti);
 		mappaPrenotazioniPartecipazioni.put("corsiACuiSiPartecipa", listaCorsiACuiSiPartecipaDTO);
 		mappaPrenotazioniPartecipazioni.put("notificheUtente", notificheUtente);
+		mappaPrenotazioniPartecipazioni.put("squadre", squadreUtente);
 
 		return mappaPrenotazioniPartecipazioni;
 
@@ -190,6 +199,18 @@ public class GestioneProfiloHandler {
 		}
 		
 		return notificheDtos;
+	}
+	
+	
+	private List<SquadraDTO> getSquadreDiCuiUtenteMembro(UtentePolisportivaAbstract membro){
+		List<SquadraDTO> listaSquadreDTO = new ArrayList<SquadraDTO>();
+		for(Squadra squadra : getRegistroSquadre().getSquadrePerMembro(membro)) {
+			SquadraDTO squadraDTO = new SquadraDTO();
+			squadraDTO.impostaValoriDTO(squadra);
+			listaSquadreDTO.add(squadraDTO);
+		}
+		
+		return listaSquadreDTO;
 	}
 
 }

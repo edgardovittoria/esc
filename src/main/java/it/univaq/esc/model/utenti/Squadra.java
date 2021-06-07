@@ -69,16 +69,20 @@ public class Squadra {
 		if (!isAmministratore(nuovoAmministratore)) {
 			getAmmministratori().add(nuovoAmministratore);
 		}
+		aggiungiMembro(nuovoAmministratore);
 	}
 
-	public Integer rimuoviMembro(UtentePolisportivaAbstract membro) {
-		getMembri().remove(membro);
+	public Integer rimuoviMembro(UtentePolisportivaAbstract membroCheRimuove, UtentePolisportivaAbstract membroDaRimuovere) {
+		if(isAmministratore(membroCheRimuove) || membroCheRimuove.isEqual(membroDaRimuovere)) {
+		getMembri().remove(membroDaRimuovere);
+		}
 		return getMembri().size();
 	}
 
 	public void rimuoviAmministratore(UtentePolisportivaAbstract amministratoreCheRimuove,
 			UtentePolisportivaAbstract amministratoreDaRimuovere) {
 		if (isAmministratore(amministratoreCheRimuove) && getAmmministratori().size() > 1) {
+			rimuoviMembro(amministratoreCheRimuove, amministratoreDaRimuovere);
 			getAmmministratori().remove(amministratoreDaRimuovere);
 		}
 	}
@@ -112,4 +116,5 @@ public class Squadra {
 		}
 		return false;
 	}
+	
 }

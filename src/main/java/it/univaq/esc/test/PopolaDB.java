@@ -28,12 +28,14 @@ import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
+import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.model.utenti.UtentePolisportivaBuilder;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.ImpiantoRepository;
 import it.univaq.esc.repository.PrenotazioneRepository;
 import it.univaq.esc.repository.SportRepository;
+import it.univaq.esc.repository.SquadraRepository;
 import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
 import javassist.expr.NewArray;
 import lombok.Getter;
@@ -67,6 +69,9 @@ public class PopolaDB {
     
     @Autowired
     private FactoryAppuntamenti factoryAppuntamenti;
+    
+    @Autowired
+    private SquadraRepository squadraRepository;
 
     
     public PopolaDB(){}
@@ -136,6 +141,28 @@ public class PopolaDB {
         utentePolisportivaRepository.save(sportivo1);
         utentePolisportivaRepository.save(sportivo2);
         utentePolisportivaRepository.save(sportivo3);
+        
+        
+        
+        Squadra squadra1 = new Squadra();
+        squadra1.setNome("I Dugonghi");
+        squadra1.setSport(calcetto);
+        squadra1.aggiungiAmministratore(sportivo3);
+        squadra1.aggiungiMembro(sportivo1);
+        squadra1.aggiungiMembro(sportivo2);
+        
+
+        Squadra squadra2 = new Squadra();
+        squadra2.setNome("Le Nutrie");
+        squadra2.setSport(pallavolo);
+        squadra2.aggiungiAmministratore(sportivoPrenotante);
+        squadra2.aggiungiMembro(sportivo1);
+        squadra2.aggiungiMembro(sportivo3);
+        
+        getSquadraRepository().save(squadra1);
+        getSquadraRepository().save(squadra2);
+        
+        
 
         List<Sport> sportPraticatiImpianto1 = new ArrayList<Sport>();
         sportPraticatiImpianto1.add(calcetto);
