@@ -20,7 +20,8 @@ import org.springframework.stereotype.Component;
 @JsonSubTypes({
     @Type(value = FormPrenotaImpianto.class, name = "IMPIANTO"),
     @Type(value = FormPrenotaLezioneDTO.class, name = "LEZIONE"),
-    @Type(value = FormCreaCorso.class, name = "CORSO")
+    @Type(value = FormCreaCorso.class, name = "CORSO"),
+    @Type(value = FormPrenotaImpiantoSquadra.class, name = "IMPIANTO_SQUADRA")
 })
 @Getter @Setter @NoArgsConstructor
 public abstract class FormPrenotabile {

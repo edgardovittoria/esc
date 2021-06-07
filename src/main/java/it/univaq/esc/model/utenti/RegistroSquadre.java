@@ -109,4 +109,12 @@ public class RegistroSquadre {
 		return filtraSquadreLiberePerOrarioAppuntamento(getListaSquadre(), orarioInizio, orarioFine);
 	}
 	
+	public Squadra getSquadraById(Integer idSquadra) {
+		for(Squadra squadra : getListaSquadre()) {
+			if(squadra.getIdSquadra()==idSquadra) {
+				return squadra;
+			}
+		}
+		return null;
+	}
 }

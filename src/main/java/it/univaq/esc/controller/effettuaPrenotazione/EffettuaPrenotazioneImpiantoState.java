@@ -36,6 +36,7 @@ import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
+import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.utility.BeanUtil;
 import lombok.AllArgsConstructor;
@@ -127,11 +128,24 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 //				descrizioneSpecifica = desc;
 //			}
 //		}
+		HashMap<String, Object> mappaValori = new HashMap<String, Object>();
 
-		List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
-		for (String email : (List<String>) formDati.getValoriForm().get("invitati")) {
-			sportivi.add(getRegistroUtenti().getUtenteByEmail(email));
+		if(formDati.getModalitaPrenotazione().equals(ModalitaPrenotazione.SQUADRA.toString())) {
+			List<Squadra> squadreInvitate = new ArrayList<Squadra>();
+			for (Integer idSquadra : (List<Integer>) formDati.getValoriForm().get("invitati")) {
+				squadreInvitate.add(getRegistroSquadre().getSquadraById(idSquadra));
+			}
+			mappaValori.put("invitati", squadreInvitate);
+
 		}
+		else {
+			List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
+			for (String email : (List<String>) formDati.getValoriForm().get("invitati")) {
+				sportivi.add(getRegistroUtenti().getUtenteByEmail(email));
+			}
+			mappaValori.put("invitati", sportivi);
+		}
+		
 
 		for (PrenotazioneSpecs spec : controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione()) {
 			spec.setSpecificaDescription(descrizioneSpecifica);
@@ -164,9 +178,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 			appuntamentoDaImpostare.setPending(pending);
 
-			HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-			mappaValori.put("invitati", sportivi);
-
+			
+			
 			Integer idImpianto = 0;
 			for (ImpiantoSelezionato impianto : (List<ImpiantoSelezionato>) formDati.getValoriForm().get("impianti")) {
 				if (impianto.getIdSelezione() == orario.getId()) {
