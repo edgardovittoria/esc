@@ -84,7 +84,12 @@ public class RegistroSquadre {
 		
 	}
 	
-//	public List<Squadra> getListaSquadreLiberePerCalendario(Calendario calendarioDaConfrontare){
-//		
-//	}
+	/**
+	 * Restituisce le squadre libere sulla base di un certo calendario.
+	 * @param calendarioDaConfrontare calendario da confrontare con quello delle squadre
+	 * @return lista di squadre libere nel calendario passato come parametro.
+	 */
+	public List<Squadra> getListaSquadreLiberePerCalendario(Calendario calendarioDaConfrontare){
+		return filtraSquadreLiberePerCalendario(getListaSquadre(), calendarioDaConfrontare);
+	}
 }

@@ -23,7 +23,7 @@ public class AppuntamentoDTO implements IModelToDTO {
 	private Integer idAppuntamento;
 	private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
 	private List<UtentePolisportivaDTO> partecipanti = new ArrayList<UtentePolisportivaDTO>();
-	private List<SquadraDTO> squadrePartecipanti = new ArrayList<SquadraDTO>();
+	private List<Integer> squadrePartecipanti = new ArrayList<Integer>();
 	private PrenotazioneSpecsDTO specificaPrenotazione;
 	private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
 	private UtentePolisportivaDTO creatore;
@@ -94,11 +94,10 @@ public class AppuntamentoDTO implements IModelToDTO {
 		setModalitaPrenotazione(appuntamento.getModalitaPrenotazione());
 
 		if (appuntamento.getModalitaPrenotazione().equals(ModalitaPrenotazione.SQUADRA.toString())) {
-			List<SquadraDTO> squadrePartecipanti = new ArrayList<SquadraDTO>();
+			List<Integer> squadrePartecipanti = new ArrayList<Integer>();
 			for (Object squadra : appuntamento.getPartecipantiAppuntamento()) {
-				SquadraDTO squadraPartecipanteDTO = new SquadraDTO();
-				squadraPartecipanteDTO.impostaValoriDTO(squadra);
-				squadrePartecipanti.add(squadraPartecipanteDTO);
+				Squadra squadraPartecipante = (Squadra) squadra;
+				squadrePartecipanti.add(squadraPartecipante.getIdSquadra());
 			}
 			setSquadrePartecipanti(squadrePartecipanti);
 
