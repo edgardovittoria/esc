@@ -41,7 +41,7 @@ public class SquadraDTO implements IModelToDTO{
 		
 		
 		List<UtentePolisportivaDTO> amministratoriDTO = new ArrayList<UtentePolisportivaDTO>();
-		for(UtentePolisportivaAbstract amministratore : squadra.getMembri()) {
+		for(UtentePolisportivaAbstract amministratore : squadra.getAmministratori()) {
 			UtentePolisportivaDTO amministratoreDTO = new UtentePolisportivaDTO();
 			amministratoreDTO.impostaValoriDTO(amministratore);
 			amministratoriDTO.add(amministratoreDTO);

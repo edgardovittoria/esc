@@ -51,7 +51,7 @@ public class Squadra {
 	@ManyToMany
 	@JoinColumn
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<UtentePolisportivaAbstract> ammministratori = new ArrayList<UtentePolisportivaAbstract>();
+	private List<UtentePolisportivaAbstract> amministratori = new ArrayList<UtentePolisportivaAbstract>();
 	
 	@Transient
 	private Calendario calendarioSquadra = new Calendario(); 
@@ -67,7 +67,7 @@ public class Squadra {
 
 	public void aggiungiAmministratore(UtentePolisportivaAbstract nuovoAmministratore) {
 		if (!isAmministratore(nuovoAmministratore)) {
-			getAmmministratori().add(nuovoAmministratore);
+			getAmministratori().add(nuovoAmministratore);
 		}
 		aggiungiMembro(nuovoAmministratore);
 	}
@@ -81,9 +81,9 @@ public class Squadra {
 
 	public void rimuoviAmministratore(UtentePolisportivaAbstract amministratoreCheRimuove,
 			UtentePolisportivaAbstract amministratoreDaRimuovere) {
-		if (isAmministratore(amministratoreCheRimuove) && getAmmministratori().size() > 1) {
+		if (isAmministratore(amministratoreCheRimuove) && getAmministratori().size() > 1) {
 			rimuoviMembro(amministratoreCheRimuove, amministratoreDaRimuovere);
-			getAmmministratori().remove(amministratoreDaRimuovere);
+			getAmministratori().remove(amministratoreDaRimuovere);
 		}
 	}
 
@@ -97,7 +97,7 @@ public class Squadra {
 	}
 
 	private boolean isAmministratore(UtentePolisportivaAbstract nuovoAmministratore) {
-		for (UtentePolisportivaAbstract amministratore : getAmmministratori()) {
+		for (UtentePolisportivaAbstract amministratore : getAmministratori()) {
 			if (amministratore.isEqual(nuovoAmministratore)) {
 				return true;
 			}
