@@ -7,6 +7,9 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
+import it.univaq.esc.model.Calendario;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.repository.SquadraRepository;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,16 +19,25 @@ import lombok.Setter;
 public class RegistroSquadre {
 	
 	private SquadraRepository squadraRepository;
+	
+	private RegistroAppuntamenti registroAppuntamenti;
 
 	private List<Squadra> listaSquadre = new ArrayList<Squadra>();
 	
-	public RegistroSquadre(SquadraRepository squadraRepository) {
+	public RegistroSquadre(SquadraRepository squadraRepository, RegistroAppuntamenti registroAppuntamenti) {
 		setSquadraRepository(squadraRepository);
+		setRegistroAppuntamenti(registroAppuntamenti);
 		popola();
 	}
 	
 	private void popola() {
 		setListaSquadre(getSquadraRepository().findAll());
+		for(Squadra squadra : getListaSquadre()) {
+			List<Appuntamento> appuntamentiSquadra = getRegistroAppuntamenti().getAppuntamentiPerSquadraPartecipante(squadra);
+			Calendario calendarioSquadra = new Calendario();
+			calendarioSquadra.setListaAppuntamenti(appuntamentiSquadra);
+			squadra.setCalendarioSquadra(calendarioSquadra);
+		}
 	}
 	
 	public void aggiungiSquadra(Squadra nuovaSquadra) {
