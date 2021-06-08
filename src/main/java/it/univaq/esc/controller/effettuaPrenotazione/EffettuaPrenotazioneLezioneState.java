@@ -17,7 +17,8 @@ import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazione;
+import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazioneSingoloUtente;
+import it.univaq.esc.model.prenotazioni.PrenotazioneLezioneSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
@@ -51,13 +52,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti, registroPrenotazioni, catalogoPrenotabili, registroSquadre);
 	}
 
-	/**
-	 * Blocco statico che la prima volta che si carica la classe, la registra nella FactoryStatoEffettuaPrenotazione
-	 */
-	static {
-		FactoryStatoEffettuaPrenotazione.registra(TipiPrenotazione.LEZIONE.toString(),
-				EffettuaPrenotazioneLezioneState.class);
-	}
+	
 
 	/**
 	 * Metodo che restituisce i dati per popolare le opzioni di prenotazione, in fase di avvio di una nuova prenotazione, nel 
@@ -78,8 +73,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller) {
 		for (int i = 0; i < ((List<OrarioAppuntamento>) formDati.getValoriForm().get("listaOrariAppuntamenti"))
 				.size(); i++) {
-			PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione
-					.getSpecifichePrenotazione(controller.getTipoPrenotazioneInAtto());
+			PrenotazioneLezioneSpecs prenotazioneSpecs = new PrenotazioneLezioneSpecs();
 			controller.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
 			prenotazioneSpecs.setPrenotazioneAssociata(controller.getPrenotazioneInAtto());
 

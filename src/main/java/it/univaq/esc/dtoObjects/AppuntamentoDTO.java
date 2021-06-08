@@ -7,7 +7,7 @@ import java.util.List;
 
 import it.univaq.esc.model.costi.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazione;
+import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazioneSingoloUtente;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
@@ -65,8 +65,7 @@ public class AppuntamentoDTO implements IModelToDTO {
 		setDataAppuntamento(appuntamento.getDataAppuntamento());
 		setOraInizioAppuntamento(appuntamento.getOraInizioAppuntamento());
 		setOraFineAppuntamento(appuntamento.getOraFineAppuntamento());
-		PrenotazioneSpecsDTO specificaDTO = FactorySpecifichePrenotazione
-				.getSpecifichePrenotazioneDTO(appuntamento.getPrenotazioneSpecsAppuntamento().getTipoPrenotazione());
+		PrenotazioneSpecsDTO specificaDTO = PrenotazioneSpecsDTOFactory.getPrenotazioneSpecsDTO(appuntamento.getModalitaPrenotazione(), appuntamento.getTipoPrenotazione());
 		specificaDTO.impostaValoriDTO(appuntamento.getPrenotazioneSpecsAppuntamento());
 		this.setSpecificaPrenotazione(specificaDTO);
 		for (UtentePolisportivaAbstract partecipante : appuntamento.getUtentiPartecipanti()) {

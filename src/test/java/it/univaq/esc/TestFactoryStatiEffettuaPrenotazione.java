@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import it.univaq.esc.controller.effettuaPrenotazione.FactoryStatoEffettuaPrenotazione;
+import it.univaq.esc.controller.effettuaPrenotazione.StatoEffettuaPrenotazioneSingoloUtenteFactory;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import lombok.AllArgsConstructor;
 
@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 public class TestFactoryStatiEffettuaPrenotazione {
 
 	@Autowired
-	private FactoryStatoEffettuaPrenotazione factoryStatoEffettuaPrenotazione;
+	private StatoEffettuaPrenotazioneSingoloUtenteFactory factoryStatoEffettuaPrenotazione;
 	
 	
 	@Test

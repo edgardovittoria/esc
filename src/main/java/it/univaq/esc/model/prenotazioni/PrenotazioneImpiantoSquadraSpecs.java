@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 
-import javax.persistence.Column;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -16,6 +14,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.Impianto;
+import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -24,16 +23,14 @@ import lombok.Setter;
 
 @Entity
 @NoArgsConstructor @Getter @Setter
-public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
+public class PrenotazioneImpiantoSquadraSpecs extends PrenotazioneSpecs {
 
     @ManyToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<UtentePolisportivaAbstract> invitati = new ArrayList<UtentePolisportivaAbstract>();
+    @Setter(value = AccessLevel.NONE)
+    private List<Squadra> squadreInvitate = new ArrayList<Squadra>();
 
-    @Column
-    private int numeroGiocatoriNonRegistratiAssociati = 0;
-
-
+    
     @ManyToOne
     @JoinColumn
     private Impianto impiantoPrenotato;
@@ -43,8 +40,8 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     private UtentePolisportivaAbstract manutentore;
  
   
-    public void invitaSportivi(List<UtentePolisportivaAbstract> listaSportiviDaInvitare) {
-        getInvitati().addAll(listaSportiviDaInvitare);
+    public void invitaSquadre(List<Squadra> listaSquadreDaInvitare) {
+        getSquadreInvitate().addAll(listaSquadreDaInvitare);
     }
 
     
@@ -58,10 +55,7 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
         for(String chiave : mappaValori.keySet()){
             switch (chiave) {
                 case "invitati":
-                    this.invitaSportivi((List<UtentePolisportivaAbstract>)mappaValori.get(chiave));
-                    break;
-                case "numeroGiocatoriNonIscritti" : 
-                    this.setNumeroGiocatoriNonRegistratiAssociati((Integer)mappaValori.get(chiave));
+                    invitaSquadre((List<Squadra>)mappaValori.get(chiave));
                     break;
                 case "manutentore":
                     this.setManutentore((UtentePolisportivaAbstract)mappaValori.get(chiave));
@@ -79,8 +73,7 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     @Override
     public Map<String, Object> getValoriSpecificheExtraPrenotazione() {
         HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-        mappaValori.put("invitati", this.getInvitati());
-        mappaValori.put("numeroGiocatoriNonIscritti", this.getNumeroGiocatoriNonRegistratiAssociati());
+        mappaValori.put("invitati", this.getSquadreInvitate());
         mappaValori.put("manutentore", this.getManutentore());
         mappaValori.put("impianto", this.getImpiantoPrenotato());
 

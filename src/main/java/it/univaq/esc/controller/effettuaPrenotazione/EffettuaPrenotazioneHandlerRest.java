@@ -33,9 +33,11 @@ import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
+import it.univaq.esc.model.costi.ModalitaPrenotazione;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.utility.BeanUtil;
 
 /**
  * Controller che gestisce la creazione di nuove prenotazioni, così come la
@@ -51,8 +53,7 @@ public class EffettuaPrenotazioneHandlerRest {
 	/**
 	 * Factory FactoryStaty utilizzata per ottenere gli stati del controller.
 	 */
-	@Autowired
-	private FactoryStatoEffettuaPrenotazione factoryStati;
+	private StatoEffettuaPrenotazioneFactory factoryStati;
 
 	/**
 	 * Registro degli appuntamenti, utilizzato per le operazioni di gestione della
@@ -120,7 +121,7 @@ public class EffettuaPrenotazioneHandlerRest {
 	 * 
 	 * @return la factory FactoryStati
 	 */
-	private FactoryStatoEffettuaPrenotazione getFactoryStati() {
+	private StatoEffettuaPrenotazioneFactory getFactoryStati() {
 		return factoryStati;
 	}
 
@@ -141,6 +142,7 @@ public class EffettuaPrenotazioneHandlerRest {
 	private void setStato(EffettuaPrenotazioneState stato) {
 		this.stato = stato;
 	}
+	
 
 	/**
 	 * Restituisce la lista completa degli appuntamenti associati alla prenotazione
@@ -229,12 +231,13 @@ public class EffettuaPrenotazioneHandlerRest {
 	@CrossOrigin
 	public @ResponseBody Map<String, Object> avviaNuovaPrenotazione(
 			@RequestParam(name = "email") String emailSportivoPrenotante,
-			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione) {
+			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione,
+			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
 
 		UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroUtenti()
 				.getUtenteByEmail(emailSportivoPrenotante);
 		if (!(boolean)sportivoPrenotante.getProprieta().get("moroso")) {
-			this.inizializzaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione);
+			this.inizializzaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione, modalitaPrenotazione);
 			return this.getStato().getDatiOpzioni(this);
 		}
 		else {
@@ -263,10 +266,11 @@ public class EffettuaPrenotazioneHandlerRest {
 	@CrossOrigin
 	public @ResponseBody Map<String, Object> avviaNuovaPrenotazioneEventoDirettore(
 			@RequestParam(name = "email") String emailDirettore,
-			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione) {
+			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione,
+			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
 		UtentePolisportivaAbstract direttore = this.getRegistroUtenti()
                 .getUtenteByEmail(emailDirettore);
-		this.inizializzaNuovaPrenotazione(direttore, tipoPrenotazione);
+		this.inizializzaNuovaPrenotazione(direttore, tipoPrenotazione, modalitaPrenotazione);
 		return this.getStato().getDatiOpzioniModalitaDirettore(this);
 	}
 
@@ -276,14 +280,24 @@ public class EffettuaPrenotazioneHandlerRest {
 		return null;
 	}
 
-	private void inizializzaNuovaPrenotazione(UtentePolisportivaAbstract sportivoPrenotante, String tipoPrenotazione) {
+	private void inizializzaNuovaPrenotazione(UtentePolisportivaAbstract sportivoPrenotante, String tipoPrenotazione, String modalitaPrenotazione) {
 
 		Integer lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
 
 		setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
 		getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
 
+		this.impostaFactoryStati(modalitaPrenotazione);
 		this.setTipoPrenotazioneInAtto(tipoPrenotazione);
+	}
+	
+	private StatoEffettuaPrenotazioneFactory impostaFactoryStati(String modalitaPrenotazione) {
+		if (modalitaPrenotazione.equals(ModalitaPrenotazione.SINGOLO_UTENTE.toString())) {
+			return BeanUtil.getBean(StatoEffettuaPrenotazioneSingoloUtenteFactory.class);
+		}
+		else {
+			return BeanUtil.getBean(StatoEffettuaPrenotazioneSquadraFactory.class);
+		}
 	}
 
 	/**

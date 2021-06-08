@@ -23,8 +23,10 @@ import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazione;
+import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazioneSingoloUtente;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
+import it.univaq.esc.model.prenotazioni.PrenotazioneCorsoSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneLezioneSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
@@ -49,14 +51,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	private EffettuaPrenotazioneLezioneState statoControllerLezioni;
 
-	/**
-	 * Blocco static. La prima volta che viene caricata la classe, la registra nella
-	 * FactoryStatoEffettuaPrenotazione
-	 */
-	static {
-		FactoryStatoEffettuaPrenotazione.registra(TipiPrenotazione.CORSO.toString(),
-				EffettuaPrenotazioneCorsoState.class);
-	}
+	
 	
 	public EffettuaPrenotazioneCorsoState(RegistroNotifiche registroNotifiche, RegistroSport registroSport,
 			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtentiPolisportiva,
@@ -101,15 +96,13 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
 			EffettuaPrenotazioneHandlerRest controller) {
-		PrenotazioneSpecs prenotazioneSpecs = FactorySpecifichePrenotazione
-				.getSpecifichePrenotazione(controller.getTipoPrenotazioneInAtto());
+		PrenotazioneCorsoSpecs prenotazioneSpecs = new PrenotazioneCorsoSpecs();
 		controller.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
 		List<PrenotazioneSpecs> listaLezioniSpecs = new ArrayList<PrenotazioneSpecs>();
 		Map<String, Object> mappa = new HashMap<String, Object>();
 		for (int i = 0; i < ((List<OrarioAppuntamento>) formDati.getValoriForm().get("listaOrariAppuntamenti"))
 				.size(); i++) {
-			PrenotazioneSpecs prenotazioneLezioneSpecs = FactorySpecifichePrenotazione
-					.getSpecifichePrenotazione(TipiPrenotazione.LEZIONE.toString());
+			PrenotazioneLezioneSpecs prenotazioneLezioneSpecs = new PrenotazioneLezioneSpecs();
 			listaLezioniSpecs.add(prenotazioneLezioneSpecs);
 
 			prenotazioneLezioneSpecs.setPrenotazioneAssociata(controller.getPrenotazioneInAtto());
