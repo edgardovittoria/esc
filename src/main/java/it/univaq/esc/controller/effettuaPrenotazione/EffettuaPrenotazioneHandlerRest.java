@@ -38,6 +38,9 @@ import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.utility.BeanUtil;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Controller che gestisce la creazione di nuove prenotazioni, così come la
@@ -53,6 +56,8 @@ public class EffettuaPrenotazioneHandlerRest {
 	/**
 	 * Factory FactoryStaty utilizzata per ottenere gli stati del controller.
 	 */
+	@Getter(value = AccessLevel.PRIVATE)
+	@Setter(value = AccessLevel.PRIVATE)
 	private StatoEffettuaPrenotazioneFactory factoryStati;
 
 	/**
@@ -287,11 +292,11 @@ public class EffettuaPrenotazioneHandlerRest {
 		setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
 		getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
 
-		this.impostaFactoryStati(modalitaPrenotazione);
+		setFactoryStati(this.creaFactoryStati(modalitaPrenotazione));
 		this.setTipoPrenotazioneInAtto(tipoPrenotazione);
 	}
 	
-	private StatoEffettuaPrenotazioneFactory impostaFactoryStati(String modalitaPrenotazione) {
+	private StatoEffettuaPrenotazioneFactory creaFactoryStati(String modalitaPrenotazione) {
 		if (modalitaPrenotazione.equals(ModalitaPrenotazione.SINGOLO_UTENTE.toString())) {
 			return BeanUtil.getBean(StatoEffettuaPrenotazioneSingoloUtenteFactory.class);
 		}
