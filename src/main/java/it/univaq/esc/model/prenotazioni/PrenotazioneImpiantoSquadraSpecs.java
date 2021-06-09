@@ -27,7 +27,6 @@ public class PrenotazioneImpiantoSquadraSpecs extends PrenotazioneSpecs {
 
     @ManyToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    @Setter(value = AccessLevel.NONE)
     private List<Squadra> squadreInvitate = new ArrayList<Squadra>();
 
     

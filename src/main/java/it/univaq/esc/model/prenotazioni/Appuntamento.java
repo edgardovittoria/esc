@@ -27,6 +27,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import it.univaq.esc.model.Impianto;
+import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
@@ -194,11 +195,26 @@ public abstract class Appuntamento {
 	}
 	
 	
-	public abstract boolean utenteIsPartecipante(UtentePolisportivaAbstract utente);
+	public boolean utenteIsPartecipante(UtentePolisportivaAbstract utente) {
+		for (UtentePolisportivaAbstract partecipante : this.getUtentiPartecipanti()) {
+			if (partecipante.isEqual(utente)) {
+				return true;
+			}
+		}
+		return false;
+	};
 	
-	public abstract Integer getNumeroPartecipantiMassimo();
+	public Integer getNumeroPartecipantiMassimo() {
+		return this.getPrenotazioneSpecsAppuntamento().getSogliaMassimaPartecipanti();
+	};
 	
-	public abstract Integer getSogliaMinimaPartecipantiPerConferma();
+	public Sport getSportAssociato() {
+		return getPrenotazioneSpecsAppuntamento().getSportAssociato();
+	}
+	
+	public Integer getSogliaMinimaPartecipantiPerConferma() {
+		return this.getPrenotazioneSpecsAppuntamento().getSogliaPartecipantiPerConferma();
+	};
 	
 	public abstract void aggiungiPartecipante(Object sportivoOSquadraPartecipante);
 	

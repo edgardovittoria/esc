@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.model.Calendario;
+import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.repository.SquadraRepository;
@@ -116,5 +117,16 @@ public class RegistroSquadre {
 			}
 		}
 		return null;
+	}
+	
+	public List<Squadra> filtraSquadrePerSport(Sport sport, List<Squadra> squadreDaFiltrare) {
+		List<Squadra> listaSquadre = new ArrayList<Squadra>();
+		for(Squadra squadra : squadreDaFiltrare) {
+			if(squadra.getSport().getNome().equals(sport.getNome())) {
+				listaSquadre.add(squadra);
+			}
+		}
+		return listaSquadre;
+		
 	}
 }

@@ -463,7 +463,7 @@ public abstract class EffettuaPrenotazioneState {
 		return null;
 	}
 	
-	protected boolean aggiungiPartecipante(UtentePolisportivaAbstract utente, Appuntamento appuntamento) {
+	protected boolean aggiungiPartecipante(Object utente, Appuntamento appuntamento) {
 		boolean partecipanteAggiunto = false;
 		if (appuntamento.getPartecipantiAppuntamento().size() < appuntamento.getNumeroPartecipantiMassimo()) {
 			appuntamento.aggiungiPartecipante(utente);
