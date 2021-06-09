@@ -222,12 +222,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		LocalDateTime oraFine = LocalDateTime.parse(orario.get("oraFine"),
 				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
 
-		if (((String) dati.get("modalitaPrenotazione")).equals(ModalitaPrenotazione.SQUADRA.toString())) {
-			datiAggiornati.put("squadreInvitabili",
-					getRegistroSquadre().getListaSquadreLiberePerOrarioAppuntamento(oraInizio, oraFine));
-		} else {
 			datiAggiornati.put("sportiviInvitabili", getSportiviLiberiInBaseAOrario(oraInizio, oraFine));
-		}
+		
 
 		return datiAggiornati;
 

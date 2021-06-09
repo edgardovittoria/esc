@@ -1,5 +1,7 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +16,7 @@ import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
+import it.univaq.esc.model.costi.ModalitaPrenotazione;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
@@ -63,8 +66,21 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 
 	@Override
 	public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> datiAggiornati = new HashMap<String, Object>();
+		datiAggiornati.put("impiantiDisponibili", this.getImpiantiDTODisponibili(dati));
+
+		Map<String, String> orario = (Map<String, String>) dati.get("orario");
+		LocalDateTime oraInizio = LocalDateTime.parse(orario.get("oraInizio"),
+				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
+		LocalDateTime oraFine = LocalDateTime.parse(orario.get("oraFine"),
+				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
+
+		
+			datiAggiornati.put("squadreInvitabili",
+					getRegistroSquadre().getListaSquadreLiberePerOrarioAppuntamento(oraInizio, oraFine));
+		
+
+		return datiAggiornati;
 	}
 
 	@Override
