@@ -23,6 +23,7 @@ import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
 import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazioneSingoloUtente;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneCorsoSpecs;
@@ -96,38 +97,16 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
 			EffettuaPrenotazioneHandlerRest controller) {
+		/*
+		 * Creriamo la specifica del corso e la associamo alla prenotazione in atto tramite il controller.
+		 */
 		PrenotazioneCorsoSpecs prenotazioneSpecs = new PrenotazioneCorsoSpecs();
 		controller.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
-		List<PrenotazioneSpecs> listaLezioniSpecs = new ArrayList<PrenotazioneSpecs>();
-		Map<String, Object> mappa = new HashMap<String, Object>();
-		for (int i = 0; i < ((List<OrarioAppuntamento>) formDati.getValoriForm().get("listaOrariAppuntamenti"))
-				.size(); i++) {
-			PrenotazioneLezioneSpecs prenotazioneLezioneSpecs = new PrenotazioneLezioneSpecs();
-			listaLezioniSpecs.add(prenotazioneLezioneSpecs);
-
-			prenotazioneLezioneSpecs.setPrenotazioneAssociata(controller.getPrenotazioneInAtto());
-
-			// Creazione calcolatore che poi dovrà finire altrove
-			CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
-			calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
-			// ---------------------------------------------------------------------------------------
-
-			Appuntamento appuntamento = getRegistroAppuntamenti().getFactoryAppuntamenti().getAppuntamento(formDati.getModalitaPrenotazione());
-			appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneLezioneSpecs);
-			appuntamento.setCalcolatoreCosto(calcolatoreCosto);
-
-			controller.aggiungiAppuntamento(appuntamento);
-		}
-		mappa.put("listaLezioniCorso", listaLezioniSpecs);
-
-		List<UtentePolisportivaAbstract> listaInvitati = new ArrayList<UtentePolisportivaAbstract>();
-		for (String emailInvitato : (List<String>) formDati.getValoriForm().get("invitati")) {
-			UtentePolisportivaAbstract invitato = this.getRegistroUtenti().getUtenteByEmail(emailInvitato);
-			listaInvitati.add(invitato);
-		}
-		mappa.put("invitati", listaInvitati);
-		prenotazioneSpecs.impostaValoriSpecificheExtraPrenotazione(mappa);
-
+		
+		/*
+		 * Creiamo l'oggetto descrizione del corso da passare alla specifiche delle lezioni e del corso.
+		 * Nel caso dei corsi infatti avremo speciche di LEZIONI ma con descrizioni del corso anziche delle LEZIONI
+		 */
 		PrenotabileDescrizione descrizioneCorso = controller.getListinoPrezziDescrizioniPolisportiva()
 				.nuovoPrenotabile_avviaCreazione(
 						this.getRegistroSport().getSportByNome((String) formDati.getValoriForm().get("sport")),
@@ -137,11 +116,88 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 				.nuovoPrenotabile_impostaCostoUnaTantum((Float) formDati.getValoriForm().get("costoPerPartecipante"))
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
 				.nuovoPrenotabile_salvaPrenotabileInCreazione();
+		
+		
+		/*
+		 * Inizializziamo una lista di specifiche che useremo per passare le specifiche delle LEZIONI alla specifica del CORSO.
+		 */
+		List<PrenotazioneSpecs> listaLezioniSpecs = new ArrayList<PrenotazioneSpecs>();
+
+		
+		/*
+		 * Cicliamo sugli orari impostati in fase di compilazione, per creare e impostare tante specifiche di LEZIONI con relativi appuntamenti.
+		 * Aggiungiamo le specifiche così impostate alla lista inizializzata prima.
+		 * Infine associamo gli appuntamenti al controller.
+		 */
+		for (OrarioAppuntamento orario : (List<OrarioAppuntamento>)formDati.getValoriForm().get("listaOrariAppuntamenti")) {
+			
+			PrenotazioneLezioneSpecs prenotazioneLezioneSpecs = new PrenotazioneLezioneSpecs();
+			getStatoControllerLezioni().impostaValoriPrenotazioniSpecs(formDati, prenotazioneLezioneSpecs, descrizioneCorso, controller, orario);
+			
+			listaLezioniSpecs.add(prenotazioneLezioneSpecs);
+
+			AppuntamentoSingoliPartecipanti appuntamento = new AppuntamentoSingoliPartecipanti();
+			getStatoControllerLezioni().impostaValoriAppuntamento(formDati, controller, appuntamento, prenotazioneLezioneSpecs, orario);
+
+			controller.aggiungiAppuntamento(appuntamento);
+		}
+		
+		
+		/*
+		 * Impostiamo i valori della specifica del corso
+		 */
+		impostaValoriPrenotazioneCorsoSpecs(formDati, prenotazioneSpecs, descrizioneCorso, listaLezioniSpecs, controller);
+	
+		
+		/*
+		 * Convertiamo la lista degli invitati al corso in DTO, per passarla poi alla prenotazioneDTO che andremo a ritornare alla fine.
+		 */
+		List<UtentePolisportivaDTO> invitatiDTO = new ArrayList<UtentePolisportivaDTO>();
+		for (UtentePolisportivaAbstract invitato : prenotazioneSpecs.getInvitati()) {
+			UtentePolisportivaDTO invitatoDTO = new UtentePolisportivaDTO();
+			invitatoDTO.impostaValoriDTO(invitato);
+			invitatiDTO.add(invitatoDTO);
+		}
+		
+		/*
+		 * Creiamo e impostiamo la PrenotazioneDTO che andremo a ritornare.
+		 */
+		PrenotazioneDTO prenDTO = new PrenotazioneDTO();
+		Map<String, Object> mappaPrenotazione = new HashMap<String, Object>();
+		Map<String, Object> infoGeneraliEvento = new HashMap<String, Object>();
+		infoGeneraliEvento.put("numeroMinimoPartecipanti", descrizioneCorso.getMinimoNumeroPartecipanti());
+		infoGeneraliEvento.put("numeroMassimoPartecipanti", descrizioneCorso.getMassimoNumeroPartecipanti());
+		infoGeneraliEvento.put("invitatiCorso", invitatiDTO);
+		infoGeneraliEvento.put("costoPerPartecipante", prenotazioneSpecs.getCosto());
+		mappaPrenotazione.put("prenotazione", controller.getPrenotazioneInAtto());
+		mappaPrenotazione.put("appuntamentiPrenotazione", controller.getListaAppuntamentiPrenotazioneInAtto());
+		mappaPrenotazione.put("infoGeneraliEvento", infoGeneraliEvento);
+		prenDTO.impostaValoriDTO(mappaPrenotazione);
+
+		return prenDTO;
+
+	}
+	
+	/**
+	 * Impostiamo i dati della specifica del corso.
+	 * @param formDati form su cui sono mappati i dati ricevuti dal client.
+	 * @param prenotazioneSpecs la specifica del corso da impostare.
+	 * @param descrizioneCorso descrizione del corso da passare alla specificia del corso.
+	 * @param listaLezioniSpecs lista delle specifiche delle lezioni del corso, già impostate, da inserire nella specifica del corso.
+	 * @param controller riferimento al controller prinicipale, necessario per rivcavare la prenotazione in atto da associare alla specifica del corso.
+	 */
+	private void impostaValoriPrenotazioneCorsoSpecs(FormPrenotabile formDati, PrenotazioneCorsoSpecs prenotazioneSpecs, PrenotabileDescrizione descrizioneCorso, List<PrenotazioneSpecs> listaLezioniSpecs, EffettuaPrenotazioneHandlerRest controller) {
+		prenotazioneSpecs.setListaLezioni(listaLezioniSpecs);
+		
+		List<UtentePolisportivaAbstract> listaInvitati = new ArrayList<UtentePolisportivaAbstract>();
+		for (String emailInvitato : (List<String>) formDati.getValoriForm().get("invitati")) {
+			UtentePolisportivaAbstract invitato = this.getRegistroUtenti().getUtenteByEmail(emailInvitato);
+			listaInvitati.add(invitato);
+		}
+		prenotazioneSpecs.setInvitati(listaInvitati);
 
 		prenotazioneSpecs.setSpecificaDescription(descrizioneCorso);
-
-		this.getStatoControllerLezioni().impostaValoriPrenotazioniSpecs(formDati, descrizioneCorso,
-				TipiPrenotazione.LEZIONE.toString(), listaLezioniSpecs, controller);
+		
 		/*
 		 * Impostiamo il costo della specifica che rappresenta il corso con il costo per
 		 * partecipante impostato nella form, dopodiché sovrascriviamo i costi delle
@@ -155,27 +211,6 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		}
 		prenotazioneSpecs.setPrenotazioneAssociata(controller.getPrenotazioneInAtto());
 		prenotazioneSpecs.setPending(true);
-
-		List<UtentePolisportivaDTO> invitatiDTO = new ArrayList<UtentePolisportivaDTO>();
-		for (UtentePolisportivaAbstract invitato : listaInvitati) {
-			UtentePolisportivaDTO invitatoDTO = new UtentePolisportivaDTO();
-			invitatoDTO.impostaValoriDTO(invitato);
-			invitatiDTO.add(invitatoDTO);
-		}
-		PrenotazioneDTO prenDTO = new PrenotazioneDTO();
-		Map<String, Object> mappaPrenotazione = new HashMap<String, Object>();
-		Map<String, Object> infoGeneraliEvento = new HashMap<String, Object>();
-		infoGeneraliEvento.put("numeroMinimoPartecipanti", descrizioneCorso.getMinimoNumeroPartecipanti());
-		infoGeneraliEvento.put("numeroMassimoPartecipanti", descrizioneCorso.getMassimoNumeroPartecipanti());
-		infoGeneraliEvento.put("invitatiCorso", invitatiDTO);
-		infoGeneraliEvento.put("costoPerPartecipante", prenotazioneSpecs.getCosto());
-		mappa.put("prenotazione", controller.getPrenotazioneInAtto());
-		mappa.put("appuntamentiPrenotazione", controller.getListaAppuntamentiPrenotazioneInAtto());
-		mappa.put("infoGeneraliEvento", infoGeneraliEvento);
-		prenDTO.impostaValoriDTO(mappa);
-
-		return prenDTO;
-
 	}
 
 	@Override
