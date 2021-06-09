@@ -218,7 +218,7 @@ public class TestRegistroAppuntamenti {
 	@Test
 	public void test_8AppuntamentiImpianto_2Sottoscrivibili() {
 		
-		List<Appuntamento> appuntamentiSottoscrivibili = getRegistroAppuntamenti().getAppuntamentiSottoscrivibiliPerTipo(TipiPrenotazione.IMPIANTO.toString(), getUserProva());
+		List<Appuntamento> appuntamentiSottoscrivibili = getRegistroAppuntamenti().getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(TipiPrenotazione.IMPIANTO.toString(), getUserProva());
 		
 		assertEquals(2, appuntamentiSottoscrivibili.size());
 	}
