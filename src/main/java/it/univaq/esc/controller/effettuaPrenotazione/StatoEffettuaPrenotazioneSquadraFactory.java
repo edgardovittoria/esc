@@ -1,7 +1,12 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
+import org.springframework.stereotype.Component;
+
+import groovy.lang.Singleton;
 import it.univaq.esc.utility.BeanUtil;
 
+@Component
+@Singleton
 public class StatoEffettuaPrenotazioneSquadraFactory extends StatoEffettuaPrenotazioneFactory {
 
 	@Override
