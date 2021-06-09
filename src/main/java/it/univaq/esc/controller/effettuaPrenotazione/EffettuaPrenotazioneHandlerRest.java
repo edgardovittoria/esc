@@ -113,6 +113,10 @@ public class EffettuaPrenotazioneHandlerRest {
 	 * di prenotazione.
 	 */
 	private EffettuaPrenotazioneState stato;
+	
+	@Getter()
+	@Setter(value = AccessLevel.PRIVATE)
+	private Integer idSquadraPrenotante;
 
 	/**
 	 * Costruttore del controller EffettuaPrenotazioneHandlerRest
@@ -236,9 +240,11 @@ public class EffettuaPrenotazioneHandlerRest {
 	@CrossOrigin
 	public @ResponseBody Map<String, Object> avviaNuovaPrenotazione(
 			@RequestParam(name = "email") String emailSportivoPrenotante,
+			@RequestParam(name = "idSquadra") Integer idSquadra,
 			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione,
 			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
 
+		this.setIdSquadraPrenotante(idSquadra);
 		UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroUtenti()
 				.getUtenteByEmail(emailSportivoPrenotante);
 		if (!(boolean)sportivoPrenotante.getProprieta().get("moroso")) {

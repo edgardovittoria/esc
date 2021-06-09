@@ -250,7 +250,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	private List<AppuntamentoDTO> getAppuntamentiImpiantoSottoscrivibiliDaUtente(
 			UtentePolisportivaAbstract utentePerCuiCercareAppuntamentiSottoscrivibili) {
 		List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
-		for (Appuntamento appuntamento : this.getRegistroAppuntamenti().getAppuntamentiSottoscrivibiliPerTipo(
+		for (Appuntamento appuntamento : this.getRegistroAppuntamenti().getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(
 				TipiPrenotazione.IMPIANTO.toString(), utentePerCuiCercareAppuntamentiSottoscrivibili)) {
 			AppuntamentoDTO appDTO = new AppuntamentoDTO();
 			appDTO.impostaValoriDTO(appuntamento);

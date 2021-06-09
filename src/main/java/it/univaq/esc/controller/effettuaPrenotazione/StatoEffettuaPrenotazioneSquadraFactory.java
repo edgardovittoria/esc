@@ -8,11 +8,11 @@ public class StatoEffettuaPrenotazioneSquadraFactory extends StatoEffettuaPrenot
 	public EffettuaPrenotazioneState getStato(String tipoPrenotazione) {
 		switch (tipoPrenotazione) {
 		case "IMPIANTO":
-			return BeanUtil.getBean(EffettuaPrenotazioneImpiantoState.class);
+			return BeanUtil.getBean(EffettuaPrenotazioneImpiantoSquadraState.class);
 		case "LEZIONE":
-			return BeanUtil.getBean(EffettuaPrenotazioneLezioneState.class);
+			return null;
 		case "CORSO":
-			return BeanUtil.getBean(EffettuaPrenotazioneCorsoState.class);
+			return null;
 		default:
 			return null;
 		}
