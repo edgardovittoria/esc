@@ -27,7 +27,7 @@ public class RicercaAppuntamentiSottoscrivibili {
 
         System.out.println(
             this.getRegistroAppuntamenti()
-                .getAppuntamentiSottoscrivibiliPerTipo(tipoPrenotazioneAppuntamentiDaRicercare, 
+                .getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(tipoPrenotazioneAppuntamentiDaRicercare, 
                 this.getRegistroUtentiPolisportiva().getUtenteByEmail(emailUtentePerCuiCercareAppuntamentiSottoscrivibili)));
     }
 
