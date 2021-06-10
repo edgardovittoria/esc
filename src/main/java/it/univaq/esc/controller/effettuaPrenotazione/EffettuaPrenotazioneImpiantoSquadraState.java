@@ -169,18 +169,18 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		 * Creiamo le notifiche relative alle squadre invitate, creandone una per ogni membro 
 		 * di ogni squadra.
 		 */
-		for (UtentePolisportivaAbstract invitato : (List<UtentePolisportivaAbstract>) controller.getPrenotazioneInAtto()
-				.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione().get("invitati")) {
-
-			NotificaService notifica = BeanUtil.getBean(NotificaService.class);
-			notifica.setDestinatario(invitato);
-			notifica.setEvento(controller.getPrenotazioneInAtto());
-			notifica.setLetta(false);
-			notifica.setMittente(controller.getSportivoPrenotante());
-
-			getRegistroNotifiche().salvaNotifica(notifica);
-
-		}
+//		for (UtentePolisportivaAbstract invitato : (List<UtentePolisportivaAbstract>) controller.getPrenotazioneInAtto()
+//				.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione().get("invitati")) {
+//
+//			NotificaService notifica = BeanUtil.getBean(NotificaService.class);
+//			notifica.setDestinatario(invitato);
+//			notifica.setEvento(controller.getPrenotazioneInAtto());
+//			notifica.setLetta(false);
+//			notifica.setMittente(controller.getSportivoPrenotante());
+//
+//			getRegistroNotifiche().salvaNotifica(notifica);
+//
+//		}
 		
 	}
 
