@@ -27,6 +27,9 @@ import it.univaq.esc.dtoObjects.FormPrenotabile;
 
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
+import it.univaq.esc.factory.ElementiPrenotazioneFactory;
+import it.univaq.esc.factory.ElementiPrenotazioneSingoloUtenteFactory;
+import it.univaq.esc.factory.ElementiPrenotazioneSquadraFactory;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
@@ -58,7 +61,7 @@ public class EffettuaPrenotazioneHandlerRest {
 	 */
 	@Getter(value = AccessLevel.PRIVATE)
 	@Setter(value = AccessLevel.PRIVATE)
-	private StatoEffettuaPrenotazioneFactory factoryStati;
+	private ElementiPrenotazioneFactory factoryStati;
 
 	/**
 	 * Registro degli appuntamenti, utilizzato per le operazioni di gestione della
@@ -130,7 +133,7 @@ public class EffettuaPrenotazioneHandlerRest {
 	 * 
 	 * @return la factory FactoryStati
 	 */
-	private StatoEffettuaPrenotazioneFactory getFactoryStati() {
+	private ElementiPrenotazioneFactory getFactoryStati() {
 		return factoryStati;
 	}
 
@@ -172,7 +175,8 @@ public class EffettuaPrenotazioneHandlerRest {
 	 */
 	private void setTipoPrenotazioneInAtto(String tipoPrenotazione) {
 		this.tipoPrenotazioneInAtto = tipoPrenotazione;
-		this.setStato(this.getFactoryStati().getStato(tipoPrenotazione));
+		this.setStato(this.getFactoryStati().getStatoEffettuaPrenotazioneHandler(tipoPrenotazione));
+		getStato().setElementiPrenotazioneFactory(factoryStati);
 	}
 
 	/**
@@ -302,12 +306,12 @@ public class EffettuaPrenotazioneHandlerRest {
 		this.setTipoPrenotazioneInAtto(tipoPrenotazione);
 	}
 	
-	private StatoEffettuaPrenotazioneFactory creaFactoryStati(String modalitaPrenotazione) {
+	private ElementiPrenotazioneFactory creaFactoryStati(String modalitaPrenotazione) {
 		if (modalitaPrenotazione.equals(ModalitaPrenotazione.SINGOLO_UTENTE.toString())) {
-			return BeanUtil.getBean(StatoEffettuaPrenotazioneSingoloUtenteFactory.class);
+			return BeanUtil.getBean(ElementiPrenotazioneSingoloUtenteFactory.class);
 		}
 		else {
-			return BeanUtil.getBean(StatoEffettuaPrenotazioneSquadraFactory.class);
+			return BeanUtil.getBean(ElementiPrenotazioneSquadraFactory.class);
 		}
 	}
 

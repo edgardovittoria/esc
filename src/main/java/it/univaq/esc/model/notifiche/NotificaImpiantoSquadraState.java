@@ -10,8 +10,19 @@ public class NotificaImpiantoSquadraState extends NotificaState{
 
 	@Override
 	public String getMessaggioNotifica(NotificaService notificaDiCuiCostruireIlMessaggio) {
-		// TODO Auto-generated method stub
-		return null;
+		String messaggio = "";
+		Integer numeroIncontri = (Integer)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("numeroIncontri");
+		String sport = (String)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("sportNome");
+		String nomeSquadraDestinatario = ((NotificaSquadraService)notificaDiCuiCostruireIlMessaggio).getSquadraDelDestinatario().getNome();
+		if(numeroIncontri > 1) {
+			messaggio = "La tua squadra "+ nomeSquadraDestinatario + " è stata invitata a partecipare a una serie di " + numeroIncontri + " incontri di " + sport + ".";
+		}
+		else {
+			messaggio = "La tua squadra "+ nomeSquadraDestinatario + " è stata invitata a partecipare a un incontro di " + sport + ".";
+		}
+		 
+		return messaggio;
+	
 	}
 
 }

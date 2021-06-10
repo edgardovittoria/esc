@@ -27,6 +27,7 @@ import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.notifiche.NotificaService;
+import it.univaq.esc.model.notifiche.NotificaSquadraService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
@@ -169,18 +170,22 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		 * Creiamo le notifiche relative alle squadre invitate, creandone una per ogni membro 
 		 * di ogni squadra.
 		 */
-//		for (UtentePolisportivaAbstract invitato : (List<UtentePolisportivaAbstract>) controller.getPrenotazioneInAtto()
-//				.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione().get("invitati")) {
-//
-//			NotificaService notifica = BeanUtil.getBean(NotificaService.class);
-//			notifica.setDestinatario(invitato);
-//			notifica.setEvento(controller.getPrenotazioneInAtto());
-//			notifica.setLetta(false);
-//			notifica.setMittente(controller.getSportivoPrenotante());
-//
-//			getRegistroNotifiche().salvaNotifica(notifica);
-//
-//		}
+		for (Squadra invitato : (List<Squadra>) controller.getPrenotazioneInAtto()
+				.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione().get("invitati")) {
+
+			for(UtentePolisportivaAbstract amministratore : invitato.getAmministratori()) {
+			NotificaSquadraService notifica = (NotificaSquadraService)getElementiPrenotazioneFactory().getNotifica();
+			notifica.setDestinatario(amministratore);
+			notifica.setEvento(controller.getPrenotazioneInAtto());
+			notifica.setLetta(false);
+			notifica.setMittente(controller.getSportivoPrenotante());
+			notifica.setSquadraDelDestinatario(invitato);
+			notifica.setSquadraDelMittente(getRegistroSquadre().getSquadraById(controller.getIdSquadraPrenotante()));
+
+			getRegistroNotifiche().salvaNotifica(notifica);
+
+			}
+		}
 		
 	}
 

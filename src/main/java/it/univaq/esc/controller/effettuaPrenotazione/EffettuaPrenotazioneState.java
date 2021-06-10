@@ -7,9 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
+import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.model.Calendario;
@@ -46,7 +49,7 @@ import lombok.Setter;
  * @author esc
  *
  */
-@Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PRIVATE) @AllArgsConstructor
+@Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PRIVATE) 
 public abstract class EffettuaPrenotazioneState {
 	
 	/**
@@ -95,6 +98,24 @@ public abstract class EffettuaPrenotazioneState {
 
 	private RegistroSquadre registroSquadre;
 	
+	@Setter(value = AccessLevel.PUBLIC)
+	private ElementiPrenotazioneFactory elementiPrenotazioneFactory;
+	
+	
+	
+	public EffettuaPrenotazioneState(RegistroNotifiche registroNotifiche, RegistroSport registroSport,
+			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtenti,
+			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
+			CatalogoPrenotabili catalogoPrenotabili, RegistroSquadre registroSquadre) {
+		setRegistroAppuntamenti(registroAppuntamenti);
+		setRegistroImpianti(registroImpianti);
+		setCatalogoPrenotabili(catalogoPrenotabili);
+		setRegistroNotifiche(registroNotifiche);
+		setRegistroPrenotazioni(registroPrenotazioni);
+		setRegistroSport(registroSport);
+		setRegistroSquadre(registroSquadre);
+		setRegistroUtenti(registroUtenti);
+	}
 	
 	/**
 	 * Definisce l'interfaccia per il metodo che restituisce i dati necessari per

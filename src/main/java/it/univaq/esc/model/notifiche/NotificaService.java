@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,18 +20,18 @@ public class NotificaService {
 	private Notifica notifica;
 	
 	@Getter(value = AccessLevel.PRIVATE)
-	private FactoryStatiNotifiche factoryStatiNotifiche;
+	private ElementiPrenotazioneFactory factoryStatiNotifiche;
 	
 	private NotificaState statoNotifica;
 	
 	@Autowired
-	public NotificaService(FactoryStatiNotifiche factoryStatiNotifiche) {
+	public NotificaService(ElementiPrenotazioneFactory factoryStatiNotifiche) {
 		setFactoryStatiNotifiche(factoryStatiNotifiche);
 		setNotifica(new Notifica());
 		
 	}
 	
-	public NotificaService(Notifica notifica, FactoryStatiNotifiche factoryStatiNotifiche) {
+	public NotificaService(Notifica notifica, ElementiPrenotazioneFactory factoryStatiNotifiche) {
 		setFactoryStatiNotifiche(factoryStatiNotifiche);
 		setNotifica(notifica);
 		setStatoNotifica();
@@ -81,7 +82,7 @@ public class NotificaService {
 	}
 	
 	private void setStatoNotifica() {
-		this.statoNotifica = getFactoryStatiNotifiche().getStato((String)getEvento().getInfo().get("tipoPrenotazione"));
+		this.statoNotifica = getFactoryStatiNotifiche().getStatoNotifica((String)getEvento().getInfo().get("tipoPrenotazione"));
 				
 	}
 	
