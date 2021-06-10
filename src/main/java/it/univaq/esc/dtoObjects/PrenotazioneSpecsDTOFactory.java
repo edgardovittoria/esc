@@ -19,11 +19,11 @@ public class PrenotazioneSpecsDTOFactory {
 		} else {
 			switch (tipoPrenotazione) {
 			case "IMPIANTO":
-				return new PrenotazioneImpiantoSpecsDTO();
+				return new PrenotazioneImpiantoSquadraSpecsDTO();
 			case "LEZIONE":
-				return new PrenotazioneLezioneSpecsDTO();
+				return null;
 			case "CORSO":
-				return new PrenotazioneCorsoSpecsDTO();
+				return null;
 			default:
 				return null;
 			}
