@@ -235,6 +235,33 @@ public class PopolaDB {
             .nuovoPrenotabile_impostaCostoPavimentazione(Float.parseFloat("30"), Pavimentazione.SINTETICO.toString())
             .nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
             .nuovoPrenotabile_salvaPrenotabileInCreazione();
+            
+            
+            this.listinoPrezziDescrizioniPolisportiva
+            .nuovoPrenotabile_avviaCreazione(tennis, TipiPrenotazione.IMPIANTO.toString(), tennis.getNumeroGiocatoriPerIncontro(), tennis.getNumeroGiocatoriPerIncontro())
+            .nuovoPrenotabile_impostaCostoOrario(Float.parseFloat("10"))
+            .nuovoPrenotabile_impostaCostoPavimentazione(Float.parseFloat("10") ,Pavimentazione.CEMENTO.toString())
+            .nuovoPrenotabile_impostaCostoPavimentazione(Float.parseFloat("50") ,Pavimentazione.TERRA_BATTUTA.toString())
+            .nuovoPrenotabile_impostaCostoPavimentazione(Float.parseFloat("20") ,Pavimentazione.SINTETICO.toString())
+            .nuovoPrenotabile_impostaModalitaPrenotazioneComeSquadra()
+            .nuovoPrenotabile_salvaPrenotabileInCreazione();
+
+            this.listinoPrezziDescrizioniPolisportiva
+            .nuovoPrenotabile_avviaCreazione(calcetto, TipiPrenotazione.IMPIANTO.toString(), calcetto.getNumeroGiocatoriPerIncontro(), calcetto.getNumeroGiocatoriPerIncontro())
+            .nuovoPrenotabile_impostaCostoOrario(Float.parseFloat("10"))
+            .nuovoPrenotabile_impostaCostoPavimentazione(Float.parseFloat("10") ,Pavimentazione.CEMENTO.toString())
+            .nuovoPrenotabile_impostaCostoPavimentazione(Float.parseFloat("20"), Pavimentazione.SINTETICO.toString())
+            .nuovoPrenotabile_impostaModalitaPrenotazioneComeSquadra()
+            .nuovoPrenotabile_salvaPrenotabileInCreazione();
+
+            this.listinoPrezziDescrizioniPolisportiva
+            .nuovoPrenotabile_avviaCreazione(pallavolo,TipiPrenotazione.IMPIANTO.toString(), pallavolo.getNumeroGiocatoriPerIncontro(), pallavolo.getNumeroGiocatoriPerIncontro())
+            .nuovoPrenotabile_impostaCostoOrario(Float.parseFloat("10"))
+            .nuovoPrenotabile_impostaCostoPavimentazione(Float.parseFloat("20"), Pavimentazione.CEMENTO.toString())
+            .nuovoPrenotabile_impostaCostoPavimentazione(Float.parseFloat("30"), Pavimentazione.SINTETICO.toString())
+            .nuovoPrenotabile_impostaModalitaPrenotazioneComeSquadra()
+            .nuovoPrenotabile_salvaPrenotabileInCreazione();
+
 
 
             this.listinoPrezziDescrizioniPolisportiva
