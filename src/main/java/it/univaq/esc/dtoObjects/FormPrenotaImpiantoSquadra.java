@@ -15,7 +15,7 @@ public class FormPrenotaImpiantoSquadra extends FormPrenotabile{
 	private List<OrarioAppuntamento> orariSelezionati;
 	private List<ImpiantoSelezionato> impianti;
 	private List<Integer> squadreInvitate;
-	private List<CheckboxPendingSelezionato> cheboxesPending;
+	private List<CheckboxPendingSelezionato> checkboxesPending;
 
 	@Override
 	public Map<String, Object> getValoriForm() {
@@ -24,7 +24,7 @@ public class FormPrenotaImpiantoSquadra extends FormPrenotabile{
         mappaValori.put("listaOrariAppuntamenti", this.getOrariSelezionati());
         mappaValori.put("impianti", this.getImpianti());
         mappaValori.put("squadreInvitate", getSquadreInvitate());
-        mappaValori.put("checkboxesPending", getCheboxesPending());
+        mappaValori.put("checkboxesPending", getCheckboxesPending());
 
         return mappaValori;
 	}
