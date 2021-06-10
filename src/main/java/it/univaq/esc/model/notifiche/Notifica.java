@@ -1,6 +1,7 @@
 package it.univaq.esc.model.notifiche;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,7 @@ import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorValue(value = "NOTIFICA")
 @Getter
 @Setter
 @NoArgsConstructor

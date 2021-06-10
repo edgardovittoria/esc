@@ -1,6 +1,7 @@
 package it.univaq.esc.model.notifiche;
 
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@DiscriminatorColumn(name = "NOTIFICA_SQUADRA")
+@DiscriminatorValue(value = "NOTIFICA_SQUADRA")
 @Getter
 @Setter
 @NoArgsConstructor
