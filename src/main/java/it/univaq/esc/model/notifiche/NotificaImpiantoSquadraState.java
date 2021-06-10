@@ -13,7 +13,10 @@ public class NotificaImpiantoSquadraState extends NotificaState{
 		String messaggio = "";
 		Integer numeroIncontri = (Integer)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("numeroIncontri");
 		String sport = (String)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("sportNome");
-		String nomeSquadraDestinatario = ((NotificaSquadraService)notificaDiCuiCostruireIlMessaggio).getSquadraDelDestinatario().getNome();
+		String nomeSquadraDestinatario = "";
+		if (notificaDiCuiCostruireIlMessaggio instanceof NotificaSquadraService) {
+			((NotificaSquadraService)notificaDiCuiCostruireIlMessaggio).getSquadraDelDestinatario().getNome();
+		}
 		if(numeroIncontri > 1) {
 			messaggio = "La tua squadra "+ nomeSquadraDestinatario + " è stata invitata a partecipare a una serie di " + numeroIncontri + " incontri di " + sport + ".";
 		}
