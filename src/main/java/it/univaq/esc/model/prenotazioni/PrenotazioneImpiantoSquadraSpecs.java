@@ -72,7 +72,7 @@ public class PrenotazioneImpiantoSquadraSpecs extends PrenotazioneSpecs {
     @Override
     public Map<String, Object> getValoriSpecificheExtraPrenotazione() {
         HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-        mappaValori.put("invitati", this.getSquadreInvitate());
+        mappaValori.put("squadreInvitate", this.getSquadreInvitate());
         mappaValori.put("manutentore", this.getManutentore());
         mappaValori.put("impianto", this.getImpiantoPrenotato());
 
