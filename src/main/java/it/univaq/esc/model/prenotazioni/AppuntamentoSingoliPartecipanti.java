@@ -30,16 +30,10 @@ import lombok.Setter;
 
 @Entity
 @DiscriminatorValue(value = "Singolo_Utente")
-@Getter(value = AccessLevel.PRIVATE)
-@Setter(value = AccessLevel.PRIVATE)
 @NoArgsConstructor
 public class AppuntamentoSingoliPartecipanti extends Appuntamento {
 
-	@ManyToMany()
-	@JoinColumn()
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<UtentePolisportivaAbstract> partecipanti = new ArrayList<UtentePolisportivaAbstract>();
-
+	
 	public AppuntamentoSingoliPartecipanti(LocalDateTime dataOraInizioAppuntamento,
 			LocalDateTime dataOraFineAppuntamento, PrenotazioneSpecs specificaPrenotazione) {
 		setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
@@ -51,23 +45,15 @@ public class AppuntamentoSingoliPartecipanti extends Appuntamento {
 	public void aggiungiPartecipante(Object sportivoPartecipante) {
 		UtentePolisportivaAbstract partecipante = (UtentePolisportivaAbstract) sportivoPartecipante;
 		if (!this.utenteIsPartecipante(partecipante)) {
-			this.getPartecipanti().add(partecipante);
+			this.getUtentiPartecipanti().add(partecipante);
 		}
 	}
 
 
-
-	
-
-	@Override
-	public List<UtentePolisportivaAbstract> getUtentiPartecipanti() {
-		return getPartecipanti();
-	}
-
 	@Override
 	public List<Object> getPartecipantiAppuntamento() {
 		List<Object> partecipanti = new ArrayList<Object>();
-		getPartecipanti().forEach((partecipante) -> partecipanti.add(partecipante));
+		getUtentiPartecipanti().forEach((partecipante) -> partecipanti.add(partecipante));
 		
 		return partecipanti;
 	}

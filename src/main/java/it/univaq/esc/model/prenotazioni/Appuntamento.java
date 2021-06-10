@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -44,6 +45,14 @@ public abstract class Appuntamento {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Setter(value = AccessLevel.NONE)
 	private Integer idAppuntamento;
+	
+	@ManyToMany()
+	@JoinColumn()
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@Getter(value = AccessLevel.PRIVATE)
+	@Setter(value = AccessLevel.PRIVATE)
+	private List<UtentePolisportivaAbstract> partecipanti = new ArrayList<UtentePolisportivaAbstract>();
+	
 	@Column
 	private LocalDateTime dataOraInizioAppuntamento;
 	@Column
@@ -218,7 +227,9 @@ public abstract class Appuntamento {
 	
 	public abstract void aggiungiPartecipante(Object sportivoOSquadraPartecipante);
 	
-	public abstract List<UtentePolisportivaAbstract> getUtentiPartecipanti();
+	public List<UtentePolisportivaAbstract> getUtentiPartecipanti(){
+		return getPartecipanti();
+	};
 	public abstract List<Object>  getPartecipantiAppuntamento();
 	
 	

@@ -29,11 +29,6 @@ public class AppuntamentoSquadra extends Appuntamento {
 	@ManyToMany()
 	@JoinColumn()
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<UtentePolisportivaAbstract> partecipanti = new ArrayList<UtentePolisportivaAbstract>();
-
-	@ManyToMany()
-	@JoinColumn()
-	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Squadra> squadrePartecipanti = new ArrayList<Squadra>();
 
 	public AppuntamentoSquadra(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento,
@@ -50,11 +45,6 @@ public class AppuntamentoSquadra extends Appuntamento {
 			this.getSquadrePartecipanti().add(partecipante);
 		}
 
-	}
-
-	@Override
-	public List<UtentePolisportivaAbstract> getUtentiPartecipanti() {
-		return getPartecipanti();
 	}
 
 	@Override
@@ -78,7 +68,7 @@ public class AppuntamentoSquadra extends Appuntamento {
 		if (!utenteIsPartecipante(nuovoPartecipante)) {
 			for (Squadra squadraPartecipante : getSquadrePartecipanti()) {
 				if (squadraPartecipante.isMembro(nuovoPartecipante)) {
-					getPartecipanti().add(nuovoPartecipante);
+					getUtentiPartecipanti().add(nuovoPartecipante);
 				}
 			}
 		}
