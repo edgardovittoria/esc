@@ -149,6 +149,9 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		appuntamento.setPending(pending);
 
 		appuntamento.calcolaCosto();
+		
+		Squadra partecipante = getRegistroSquadre().getSquadraById(controller.getIdSquadraPrenotante());
+		this.aggiungiPartecipante(partecipante, appuntamento);
 
 	}
 	
