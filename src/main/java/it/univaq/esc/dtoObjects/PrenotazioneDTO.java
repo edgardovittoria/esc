@@ -45,7 +45,7 @@ public class PrenotazioneDTO extends NotificabileDTO implements IModelToDTO{
 			this.setInfoGeneraliEvento((Map<String, Object>) mappa.get("infoGeneraliEvento"));
 		}
 		
-		setTipoEventoNotificabile(prenotazione.getTipoEventoPrenotabile());
+		setTipoEventoNotificabile(prenotazione.getTipoEventoNotificabile());
 
 	}
 

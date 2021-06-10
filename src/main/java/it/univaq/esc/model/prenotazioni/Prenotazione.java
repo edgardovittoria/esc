@@ -124,7 +124,7 @@ public class Prenotazione extends Notificabile{
 	}
 
 	@Override
-	public String getTipoEventoPrenotabile() {
+	public String getTipoEventoNotificabile() {
 		return TipoEventoNotificabile.PRENOTAZIONE.toString();
 	}
 

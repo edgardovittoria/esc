@@ -23,5 +23,5 @@ public abstract class Notificabile {
 	}
 
 	public abstract Map<String, Object> getInfo();
-	public abstract String getTipoEventoPrenotabile();
+	public abstract String getTipoEventoNotificabile();
 }

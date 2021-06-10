@@ -23,7 +23,7 @@ public class FormPrenotaImpiantoSquadra extends FormPrenotabile{
         mappaValori.put("sport", this.getSportSelezionato());
         mappaValori.put("listaOrariAppuntamenti", this.getOrariSelezionati());
         mappaValori.put("impianti", this.getImpianti());
-        mappaValori.put("invitati", getSquadreInvitate());
+        mappaValori.put("squadreInvitate", getSquadreInvitate());
         mappaValori.put("checkboxesPending", getCheboxesPending());
 
         return mappaValori;

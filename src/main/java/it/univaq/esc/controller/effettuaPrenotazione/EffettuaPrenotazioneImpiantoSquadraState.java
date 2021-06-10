@@ -16,6 +16,8 @@ import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
+import it.univaq.esc.model.Calendario;
+import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
@@ -24,6 +26,7 @@ import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
+import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
@@ -37,6 +40,7 @@ import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.utility.BeanUtil;
 
 @Component
 @DependsOn("beanUtil")
@@ -48,7 +52,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 			CatalogoPrenotabili catalogoPrenotabili, RegistroSquadre registroSquadre) {
 		super(registroNotifiche, registroSport, registroImpianti, registroUtenti, registroAppuntamenti, registroPrenotazioni,
 				catalogoPrenotabili, registroSquadre);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
@@ -146,13 +150,34 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 
 		appuntamento.calcolaCosto();
 
-		//this.aggiungiPartecipante(controller.getPrenotazioneInAtto().getSportivoPrenotante(), appuntamento);
 	}
 	
 	
 	@Override
 	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandlerRest controller) {
-		// TODO Auto-generated method stub
+		for (Appuntamento app : controller.getListaAppuntamentiPrenotazioneInAtto()) {
+			Calendario calendarioDaUnire = new Calendario();
+			calendarioDaUnire.aggiungiAppuntamento(app);
+			getRegistroImpianti().aggiornaCalendarioImpianto((Impianto) controller.getPrenotazioneInAtto()
+					.getSingolaSpecificaExtra("impianto", app.getPrenotazioneSpecsAppuntamento()), calendarioDaUnire);
+		}
+		
+		/*
+		 * Creiamo le notifiche relative alle squadre invitate, creandone una per ogni membro 
+		 * di ogni squadra.
+		 */
+		for (UtentePolisportivaAbstract invitato : (List<UtentePolisportivaAbstract>) controller.getPrenotazioneInAtto()
+				.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione().get("invitati")) {
+
+			NotificaService notifica = BeanUtil.getBean(NotificaService.class);
+			notifica.setDestinatario(invitato);
+			notifica.setEvento(controller.getPrenotazioneInAtto());
+			notifica.setLetta(false);
+			notifica.setMittente(controller.getSportivoPrenotante());
+
+			getRegistroNotifiche().salvaNotifica(notifica);
+
+		}
 		
 	}
 
