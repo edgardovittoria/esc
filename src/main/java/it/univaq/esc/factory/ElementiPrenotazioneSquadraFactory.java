@@ -1,5 +1,9 @@
 package it.univaq.esc.factory;
 
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Component;
+
+import groovy.lang.Singleton;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneCorsoState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneImpiantoSquadraState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneImpiantoState;
@@ -11,6 +15,9 @@ import it.univaq.esc.model.notifiche.NotificaSquadraService;
 import it.univaq.esc.model.notifiche.NotificaState;
 import it.univaq.esc.utility.BeanUtil;
 
+@Component
+@Singleton
+@DependsOn("beanUtil")
 public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFactory{
 
 	@Override
