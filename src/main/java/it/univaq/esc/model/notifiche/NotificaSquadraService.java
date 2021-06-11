@@ -16,9 +16,9 @@ import lombok.Setter;
 @Getter @Setter(value = AccessLevel.PRIVATE)
 public class NotificaSquadraService extends NotificaService{
 
-	public NotificaSquadraService(ElementiPrenotazioneFactory factoryStatiNotifiche) {
-		super(factoryStatiNotifiche);
-		// TODO Auto-generated constructor stub
+	public NotificaSquadraService() {
+		super();
+		
 	}
 	
 	public NotificaSquadraService(Notifica notifica, ElementiPrenotazioneFactory factoryStatiNotifiche) {
