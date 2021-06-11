@@ -50,5 +50,13 @@ public class NotificaSquadraService extends NotificaService{
 		return null;
 	}
 	
+	@Override
+	public void impostaParametri(Notifica notifica) {
+		super.impostaParametri(notifica);
+		NotificaSquadra notificaSquadra = (NotificaSquadra) notifica;
+		setSquadraDelDestinatario(notificaSquadra.getSquadraDelDestinatario());
+		setSquadraDelMittente(notificaSquadra.getSquadraDelMittente());
+	}
+	
 
 }

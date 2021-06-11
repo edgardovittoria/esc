@@ -89,5 +89,12 @@ public class NotificaService {
 	public Integer getIdNotifica() {
 		return getNotifica().getIdNotifica();
 	}
+	
+	public void impostaParametri(Notifica notifica) {
+		setDestinatario(notifica.getDestinatario());
+		setMittente(notifica.getMittente());
+		setEvento(notifica.getEvento());
+		setLetta(notifica.isLetta());
+	}
 }
 

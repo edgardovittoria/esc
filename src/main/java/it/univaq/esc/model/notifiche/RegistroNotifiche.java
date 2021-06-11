@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 import com.mysql.cj.result.IntegerValueFactory;
 
 import groovy.lang.Singleton;
+import it.univaq.esc.factory.ElementiPrenotazioneFactory;
+import it.univaq.esc.model.costi.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.NotificaRepository;
@@ -52,12 +54,20 @@ public class RegistroNotifiche {
 		List<NotificaService> listaNotifiche = new ArrayList<NotificaService>();
 		for (Notifica notifica : getNotificaRepository().findAll()) {
 			notifica.setEvento((Notificabile) getRegistroPrenotazioni().getPrenotazioneById(notifica.getIdEvento()));
-			NotificaService notificaService = BeanUtil.getBean(NotificaService.class);
-			notificaService.setDestinatario(notifica.getDestinatario());
-			notificaService.setMittente(notifica.getMittente());
-			notificaService.setEvento(notifica.getEvento());
-			notificaService.setLetta(notifica.isLetta());
-			listaNotifiche.add(notificaService);
+			
+			if(notifica.getEvento().getInfo().get("modalitaPrenotazione").equals(ModalitaPrenotazione.SINGOLO_UTENTE.toString())) {
+				ElementiPrenotazioneFactory factory = BeanUtil.getBean(ModalitaPrenotazione.SINGOLO_UTENTE.toString(), ElementiPrenotazioneFactory.class);
+				NotificaService notificaService = factory.getNotifica();
+				notificaService.impostaParametri(notifica);
+				listaNotifiche.add(notificaService);
+			}
+			else {
+				ElementiPrenotazioneFactory factory = BeanUtil.getBean(ModalitaPrenotazione.SQUADRA.toString(), ElementiPrenotazioneFactory.class);
+				NotificaSquadraService notificaService = (NotificaSquadraService)factory.getNotifica();
+				notificaService.impostaParametri(notifica);
+				listaNotifiche.add(notificaService);
+			}
+		
 		}
 		
 		setListaNotifiche(listaNotifiche);
