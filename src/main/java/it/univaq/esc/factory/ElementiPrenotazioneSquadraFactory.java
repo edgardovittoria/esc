@@ -88,7 +88,7 @@ public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFact
 	}
 
 	@Override
-	public Appuntamento getAppuntamento(String tipoPrenotazione) {
+	public Appuntamento getAppuntamento() {
 		return new AppuntamentoSquadra();
 	}
 

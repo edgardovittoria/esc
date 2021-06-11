@@ -73,14 +73,14 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 
 		for (OrarioAppuntamento orario : (List<OrarioAppuntamento>) formDati.getValoriForm()
 				.get("listaOrariAppuntamenti")) {
-			PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs = new PrenotazioneImpiantoSquadraSpecs();
+			PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs = (PrenotazioneImpiantoSquadraSpecs) getElementiPrenotazioneFactory().getPrenotazioneSpecs(controller.getTipoPrenotazioneInAtto());
 			controller.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
 
 			impostaDatiPrenotazioneSpecs(prenotazioneSpecs, formDati, orario, controller);
 
 			// ---------------------------------------------------------------------------------------
 
-			AppuntamentoSquadra appuntamento = new AppuntamentoSquadra();
+			AppuntamentoSquadra appuntamento = (AppuntamentoSquadra) getElementiPrenotazioneFactory().getAppuntamento();
 			impostaDatiAppuntamento(prenotazioneSpecs, formDati, appuntamento, orario, controller);
 
 			controller.aggiungiAppuntamento(appuntamento);

@@ -99,7 +99,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 			// ---------------------------------------------------------------------------------------
 
-			AppuntamentoSingoliPartecipanti appuntamento = (AppuntamentoSingoliPartecipanti)getElementiPrenotazioneFactory().getAppuntamento(controller.getTipoPrenotazioneInAtto());
+			AppuntamentoSingoliPartecipanti appuntamento = (AppuntamentoSingoliPartecipanti)getElementiPrenotazioneFactory().getAppuntamento();
 			impostaDatiAppuntamento(prenotazioneSpecs, formDati, appuntamento, orario, controller);
 
 			controller.aggiungiAppuntamento(appuntamento);

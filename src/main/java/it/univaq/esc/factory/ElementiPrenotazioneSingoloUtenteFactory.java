@@ -97,7 +97,7 @@ public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazio
 	}
 
 	@Override
-	public Appuntamento getAppuntamento(String tipoPrenotazione) {
+	public Appuntamento getAppuntamento() {
 		return new AppuntamentoSingoliPartecipanti();
 	}
 
