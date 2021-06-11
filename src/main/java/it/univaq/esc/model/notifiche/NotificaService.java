@@ -11,7 +11,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-@Service
+@Service(value = "NOTIFICA_SINGOLO_UTENTE")
 @Scope("prototype")
 @Getter @Setter(value = AccessLevel.PRIVATE)
 public class NotificaService {
