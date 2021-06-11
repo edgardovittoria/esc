@@ -11,14 +11,14 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-@Service(value = "NOTIFICA_SQUADRA")
+@Service()
 @Scope("prototype")
 @Getter @Setter(value = AccessLevel.PRIVATE)
 public class NotificaSquadraService extends NotificaService{
 
-	public NotificaSquadraService() {
-		super();
-		
+	public NotificaSquadraService(ElementiPrenotazioneFactory factoryStatiNotifiche) {
+		super(factoryStatiNotifiche);
+		// TODO Auto-generated constructor stub
 	}
 	
 	public NotificaSquadraService(Notifica notifica, ElementiPrenotazioneFactory factoryStatiNotifiche) {

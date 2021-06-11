@@ -6,14 +6,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
-import it.univaq.esc.model.costi.ModalitaPrenotazione;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
-import it.univaq.esc.utility.BeanUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-@Service(value = "NOTIFICA_SINGOLO_UTENTE")
+@Service()
 @Scope("prototype")
 @Getter @Setter(value = AccessLevel.PRIVATE)
 public class NotificaService {
@@ -26,9 +24,9 @@ public class NotificaService {
 	
 	private NotificaState statoNotifica;
 	
-	
-	public NotificaService() {
-		setFactoryStatiNotifiche(BeanUtil.getBean(ModalitaPrenotazione.SINGOLO_UTENTE.toString(), ElementiPrenotazioneFactory.class));
+	@Autowired
+	public NotificaService(ElementiPrenotazioneFactory factoryStatiNotifiche) {
+		setFactoryStatiNotifiche(factoryStatiNotifiche);
 		setNotifica(new Notifica());
 		
 	}

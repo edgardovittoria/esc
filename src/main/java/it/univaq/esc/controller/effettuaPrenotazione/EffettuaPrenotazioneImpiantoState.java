@@ -194,7 +194,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		for (UtentePolisportivaAbstract invitato : (List<UtentePolisportivaAbstract>) controller.getPrenotazioneInAtto()
 				.getListaSpecifichePrenotazione().get(0).getValoriSpecificheExtraPrenotazione().get("invitati")) {
 
-			NotificaService notifica = BeanUtil.getBean("NOTIFICA_SINGOLO_UTENTE", NotificaService.class);
+			NotificaService notifica = getElementiPrenotazioneFactory().getNotifica();
 			notifica.setDestinatario(invitato);
 			notifica.setEvento(controller.getPrenotazioneInAtto());
 			notifica.setLetta(false);
