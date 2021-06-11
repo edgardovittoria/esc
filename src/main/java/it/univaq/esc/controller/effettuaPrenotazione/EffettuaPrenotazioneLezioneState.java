@@ -1,12 +1,12 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.dialect.identity.Oracle12cIdentityColumnSupport;
+
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.FormPrenotabile;
@@ -20,12 +20,11 @@ import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
-import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazioneSingoloUtente;
 import it.univaq.esc.model.prenotazioni.PrenotazioneLezioneSpecs;
-import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
+
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
-import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
 import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;

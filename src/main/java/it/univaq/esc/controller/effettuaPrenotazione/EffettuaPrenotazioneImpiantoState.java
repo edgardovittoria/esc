@@ -21,7 +21,6 @@ import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
-import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazioneSingoloUtente;
 import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
@@ -93,14 +92,14 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 		for (OrarioAppuntamento orario : (List<OrarioAppuntamento>) formDati.getValoriForm()
 				.get("listaOrariAppuntamenti")) {
-			PrenotazioneImpiantoSpecs prenotazioneSpecs = new PrenotazioneImpiantoSpecs();
+			PrenotazioneImpiantoSpecs prenotazioneSpecs = (PrenotazioneImpiantoSpecs)getElementiPrenotazioneFactory().getPrenotazioneSpecs(controller.getTipoPrenotazioneInAtto());
 			controller.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
 
 			impostaDatiPrenotazioneSpecs(prenotazioneSpecs, formDati, orario, controller);
 
 			// ---------------------------------------------------------------------------------------
 
-			AppuntamentoSingoliPartecipanti appuntamento = new AppuntamentoSingoliPartecipanti();
+			AppuntamentoSingoliPartecipanti appuntamento = (AppuntamentoSingoliPartecipanti)getElementiPrenotazioneFactory().getAppuntamento(controller.getTipoPrenotazioneInAtto());
 			impostaDatiAppuntamento(prenotazioneSpecs, formDati, appuntamento, orario, controller);
 
 			controller.aggiungiAppuntamento(appuntamento);

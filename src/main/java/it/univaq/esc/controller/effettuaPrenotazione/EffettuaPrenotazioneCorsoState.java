@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.FormPrenotabile;
@@ -18,13 +16,9 @@ import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.costi.CatalogoPrenotabili;
 import it.univaq.esc.model.costi.PrenotabileDescrizione;
-import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
-import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoBase;
-import it.univaq.esc.model.costi.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
-import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazioneSingoloUtente;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneCorsoSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneLezioneSpecs;
@@ -35,14 +29,14 @@ import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
-import it.univaq.esc.model.utenti.TipoRuolo;
+
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
 
 import lombok.Setter;
-import net.bytebuddy.asm.Advice.This;
+
 
 @Component
 @Getter(value = AccessLevel.PRIVATE)

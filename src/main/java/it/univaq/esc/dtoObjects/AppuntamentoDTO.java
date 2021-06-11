@@ -5,12 +5,13 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.costi.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.FactorySpecifichePrenotazioneSingoloUtente;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.utility.BeanUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -65,7 +66,7 @@ public class AppuntamentoDTO implements IModelToDTO {
 		setDataAppuntamento(appuntamento.getDataAppuntamento());
 		setOraInizioAppuntamento(appuntamento.getOraInizioAppuntamento());
 		setOraFineAppuntamento(appuntamento.getOraFineAppuntamento());
-		PrenotazioneSpecsDTO specificaDTO = PrenotazioneSpecsDTOFactory.getPrenotazioneSpecsDTO(appuntamento.getModalitaPrenotazione(), appuntamento.getTipoPrenotazione());
+		PrenotazioneSpecsDTO specificaDTO = (BeanUtil.getBean(appuntamento.getModalitaPrenotazione(), ElementiPrenotazioneFactory.class)).getPrenotazioneSpecsDTO(appuntamento.getTipoPrenotazione());
 		specificaDTO.impostaValoriDTO(appuntamento.getPrenotazioneSpecsAppuntamento());
 		this.setSpecificaPrenotazione(specificaDTO);
 		for (UtentePolisportivaAbstract partecipante : appuntamento.getUtentiPartecipanti()) {

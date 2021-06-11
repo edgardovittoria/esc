@@ -8,17 +8,27 @@ import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneCorsoSt
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneImpiantoState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneLezioneState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneState;
-import it.univaq.esc.model.notifiche.Notifica;
+import it.univaq.esc.dtoObjects.PrenotazioneCorsoSpecsDTO;
+import it.univaq.esc.dtoObjects.PrenotazioneImpiantoSpecsDTO;
+import it.univaq.esc.dtoObjects.PrenotazioneLezioneSpecsDTO;
+import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 import it.univaq.esc.model.notifiche.NotificaCorsoState;
 import it.univaq.esc.model.notifiche.NotificaImpiantoState;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.NotificaState;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
+import it.univaq.esc.model.prenotazioni.PrenotazioneCorsoSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneLezioneSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.utility.BeanUtil;
 
-@Component
+@Component(value = "SINGOLO_UTENTE")
 @Singleton
 @DependsOn("beanUtil")
 public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazioneFactory{
+	
 
 	@Override
 	public EffettuaPrenotazioneState getStatoEffettuaPrenotazioneHandler(String tipoPrenotazione) {
@@ -53,6 +63,42 @@ public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazio
 		}
 
 		
+	}
+
+	@Override
+	public PrenotazioneSpecsDTO getPrenotazioneSpecsDTO(String tipoPrenotazione) {
+		switch (tipoPrenotazione) {
+		case "IMPIANTO":
+			return new PrenotazioneImpiantoSpecsDTO();
+		case "LEZIONE":
+			return new PrenotazioneLezioneSpecsDTO();
+		case "CORSO":
+			return new PrenotazioneCorsoSpecsDTO();
+		default:
+			return null;
+		}
+	}
+
+	@Override
+	public PrenotazioneSpecs getPrenotazioneSpecs(String tipoPrenotazione) {
+		switch (tipoPrenotazione) {
+		default:
+			return null;
+
+		case "IMPIANTO":
+			return new PrenotazioneImpiantoSpecs();
+
+		case "LEZIONE":
+			return new PrenotazioneLezioneSpecs();
+		case "CORSO":
+			return new PrenotazioneCorsoSpecs();
+
+		}
+	}
+
+	@Override
+	public Appuntamento getAppuntamento(String tipoPrenotazione) {
+		return new AppuntamentoSingoliPartecipanti();
 	}
 
 }

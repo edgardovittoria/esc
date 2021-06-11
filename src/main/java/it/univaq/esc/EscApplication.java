@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import it.univaq.esc.test.PopolaDB;
-import it.univaq.esc.test.TestFactoryStatiNotifiche;
 import it.univaq.esc.test.TestVerificaImpostazioneStatiNelleNotifiche;
 import it.univaq.esc.utility.BeanUtil;
 

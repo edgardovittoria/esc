@@ -1,21 +1,24 @@
 package it.univaq.esc.factory;
 
+
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
-import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneCorsoState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneImpiantoSquadraState;
-import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneImpiantoState;
-import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneLezioneState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneState;
+import it.univaq.esc.dtoObjects.PrenotazioneImpiantoSquadraSpecsDTO;
+import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 import it.univaq.esc.model.notifiche.NotificaImpiantoSquadraState;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.NotificaSquadraService;
 import it.univaq.esc.model.notifiche.NotificaState;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.AppuntamentoSquadra;
+import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSquadraSpecs;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.utility.BeanUtil;
 
-@Component
+@Component(value = "SQUADRA")
 @Singleton
 @DependsOn("beanUtil")
 public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFactory{
@@ -51,6 +54,42 @@ public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFact
 		default:
 			return null;
 		}
+	}
+
+	@Override
+	public PrenotazioneSpecsDTO getPrenotazioneSpecsDTO(String tipoPrenotazione) {
+		switch (tipoPrenotazione) {
+		case "IMPIANTO":
+			return new PrenotazioneImpiantoSquadraSpecsDTO();
+		case "LEZIONE":
+			return null;
+		case "CORSO":
+			return null;
+		default:
+			return null;
+		}
+	}
+
+	@Override
+	public PrenotazioneSpecs getPrenotazioneSpecs(String tipoPrenotazione) {
+		switch (tipoPrenotazione) {
+		default:
+			return null;
+
+		case "IMPIANTO":
+			return new PrenotazioneImpiantoSquadraSpecs();
+
+		case "LEZIONE":
+			return null;
+		case "CORSO":
+			return null;
+
+		}
+	}
+
+	@Override
+	public Appuntamento getAppuntamento(String tipoPrenotazione) {
+		return new AppuntamentoSquadra();
 	}
 
 }
