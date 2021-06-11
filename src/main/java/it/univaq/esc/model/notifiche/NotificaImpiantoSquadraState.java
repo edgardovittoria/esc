@@ -10,13 +10,12 @@ public class NotificaImpiantoSquadraState extends NotificaState{
 
 	@Override
 	public String getMessaggioNotifica(NotificaService notificaDiCuiCostruireIlMessaggio) {
+		NotificaSquadraService notificaSquadraService = (NotificaSquadraService) notificaDiCuiCostruireIlMessaggio;
 		String messaggio = "";
 		Integer numeroIncontri = (Integer)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("numeroIncontri");
 		String sport = (String)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("sportNome");
-		String nomeSquadraDestinatario = "";
-		if (notificaDiCuiCostruireIlMessaggio instanceof NotificaSquadraService) {
-			nomeSquadraDestinatario = ((NotificaSquadraService)notificaDiCuiCostruireIlMessaggio).getSquadraDelDestinatario().getNome();
-		}
+		String nomeSquadraDestinatario = notificaSquadraService.getSquadraDelDestinatario().getNome();
+		
 		if(numeroIncontri > 1) {
 			messaggio = "La tua squadra "+ nomeSquadraDestinatario + " è stata invitata a partecipare a una serie di " + numeroIncontri + " incontri di " + sport + ".";
 		}
