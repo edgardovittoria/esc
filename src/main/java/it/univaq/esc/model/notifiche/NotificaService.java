@@ -13,7 +13,7 @@ import lombok.Setter;
 
 @Service()
 @Scope("prototype")
-@Getter @Setter(value = AccessLevel.PRIVATE)
+@Getter @Setter(value = AccessLevel.PROTECTED)
 public class NotificaService {
 
 
@@ -24,7 +24,7 @@ public class NotificaService {
 	
 	private NotificaState statoNotifica;
 	
-	@Autowired
+	
 	public NotificaService(ElementiPrenotazioneFactory factoryStatiNotifiche) {
 		setFactoryStatiNotifiche(factoryStatiNotifiche);
 		setNotifica(new Notifica());
@@ -81,7 +81,7 @@ public class NotificaService {
 		setStatoNotifica();
 	}
 	
-	private void setStatoNotifica() {
+	protected void setStatoNotifica() {
 		this.statoNotifica = getFactoryStatiNotifiche().getStatoNotifica((String)getEvento().getInfo().get("tipoPrenotazione"));
 				
 	}

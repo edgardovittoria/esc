@@ -17,11 +17,11 @@ import lombok.Setter;
 public class NotificaSquadraService extends NotificaService{
 
 	public NotificaSquadraService(ElementiPrenotazioneFactory factoryStatiNotifiche) {
-		super(factoryStatiNotifiche);
-		// TODO Auto-generated constructor stub
+		super(factoryStatiNotifiche);		
+		setNotifica(new NotificaSquadra());
 	}
 	
-	public NotificaSquadraService(Notifica notifica, ElementiPrenotazioneFactory factoryStatiNotifiche) {
+	public NotificaSquadraService(NotificaSquadra notifica, ElementiPrenotazioneFactory factoryStatiNotifiche) {
 		super(notifica, factoryStatiNotifiche);
 		
 	}
