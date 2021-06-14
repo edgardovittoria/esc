@@ -77,7 +77,7 @@ public class AppuntamentoMapper extends EntityDTOMapper {
 
 		}
 		
-		appuntamentoDTO.setTipoPrenotazione(appuntamentoDaConvertire.getTipoPrenotazione());
+		appuntamentoDTO.setTipoPrenotazione(appuntamentoDaConvertire.getTipoPrenotazioneDescrizione());
 
 		return appuntamentoDTO;
 	}
