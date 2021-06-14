@@ -99,5 +99,9 @@ public abstract class PrenotazioneSpecs {
 		return getSpecificaDescription().getModalitaPrenotazione();
 	}
 	
+	public String getTipoPrenotazioneDescrizione() {
+		return getSpecificaDescription().getTipoPrenotazione();
+	}
+	
 
 }

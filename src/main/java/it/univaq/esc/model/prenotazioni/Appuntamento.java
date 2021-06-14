@@ -173,7 +173,7 @@ public abstract class Appuntamento {
 	}
 	
 	public String getTipoPrenotazione() {
-		return this.getPrenotazioneSpecsAppuntamento().getTipoPrenotazione();
+		return this.getPrenotazioneSpecsAppuntamento().getTipoPrenotazioneDescrizione();
 	}
 	
 	public void confermaAppuntamento() {

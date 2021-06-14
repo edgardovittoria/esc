@@ -310,7 +310,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 			if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento
 					.getSogliaMinimaPartecipantiPerConferma()) {
 				appuntamento.confermaAppuntamento();
-
+				
 			}
 		}
 		return partecipanteAggiunto;

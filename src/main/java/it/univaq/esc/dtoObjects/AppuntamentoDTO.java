@@ -30,6 +30,7 @@ public class AppuntamentoDTO {
 	private UtentePolisportivaDTO creatore;
 	private Integer idManutentore;
 	private String modalitaPrenotazione;
+	private String tipoPrenotazione;
 
 	public LocalDate getDataAppuntamento() {
 		return this.getOrarioAppuntamento().getDataPrenotazione();
