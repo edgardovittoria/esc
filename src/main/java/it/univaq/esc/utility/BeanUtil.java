@@ -36,6 +36,14 @@ public class BeanUtil implements ApplicationContextAware {
     public static Object getBeanPerNome(String nomeBean) {
         return context.getBean(nomeBean);
     }
+    
+    public static <T> T getBean(Class<T> beanClass, Object parametro) {
+        return context.getBean(beanClass, parametro);
+    }
+    
+    public static Object getBean(String nomeComponente, Object parametro) {
+        return context.getBean(nomeComponente, parametro);
+    }
 
 
 

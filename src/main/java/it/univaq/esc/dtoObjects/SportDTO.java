@@ -6,20 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
-public class SportDTO implements IModelToDTO{
+public class SportDTO {
     
     private String nome;
     private Integer postiLiberi;
     private Integer numeroMinimoGiocatoriPerSquadra;
 
 
-    @Override
-    public void impostaValoriDTO(Object modelDaConvertire){
-        Sport sport = (Sport)modelDaConvertire;
-        
-        setNome(sport.getNome());
-        setPostiLiberi(sport.getNumeroGiocatoriPerIncontro());
-        setNumeroMinimoGiocatoriPerSquadra(sport.getNumeroMinimoGiocatoriPerSquadra());
-    }
+
     
 }

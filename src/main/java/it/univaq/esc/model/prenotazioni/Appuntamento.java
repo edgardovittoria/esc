@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Sport;
-import it.univaq.esc.model.costi.calcolatori.CalcolatoreCosto;
+import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
 import lombok.Getter;

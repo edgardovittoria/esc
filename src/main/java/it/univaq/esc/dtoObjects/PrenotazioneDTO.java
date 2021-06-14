@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PrenotazioneDTO extends NotificabileDTO implements IModelToDTO{
+public class PrenotazioneDTO extends NotificabileDTO{
 	
 	private Integer idPrenotazione;
 	private UtentePolisportivaDTO sportivoPrenotante;
@@ -27,26 +27,6 @@ public class PrenotazioneDTO extends NotificabileDTO implements IModelToDTO{
 		this.getAppuntamenti().add(appuntamento);
 	}
 
-	@Override
-	public void impostaValoriDTO(Object modelDaConvertire) {
-		Map<String, Object> mappa = (HashMap<String, Object>) modelDaConvertire;
-		Prenotazione prenotazione = (Prenotazione) mappa.get("prenotazione");
-		List<Appuntamento> listaAppuntamentiPrenotazione = (List<Appuntamento>) mappa.get("appuntamentiPrenotazione");
-		this.setSportivoPrenotante(new UtentePolisportivaDTO());
-		this.getSportivoPrenotante().impostaValoriDTO(prenotazione.getSportivoPrenotante());
-		this.setIdPrenotazione(prenotazione.getIdPrenotazione());
-		
-		for (Appuntamento app : listaAppuntamentiPrenotazione) {
-			AppuntamentoDTO appDTO = new AppuntamentoDTO();
-			appDTO.impostaValoriDTO(app);
-			this.aggiungiAppuntamento(appDTO);
-		}
-		if (mappa.containsKey("infoGeneraliEvento")) {
-			this.setInfoGeneraliEvento((Map<String, Object>) mappa.get("infoGeneraliEvento"));
-		}
-		
-		setTipoEventoNotificabile(prenotazione.getTipoEventoNotificabile());
-
-	}
+	
 
 }

@@ -1,5 +1,9 @@
 package it.univaq.esc.controller;
 
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -10,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
@@ -20,18 +26,26 @@ import it.univaq.esc.security.MyUserDetailsService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @RestController
-@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE) @AllArgsConstructor
+@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE) @NoArgsConstructor
 public class AutenticazioneUtentiHandler {
+	
+	@Resource(name = "MAPPER_SINGOLO_UTENTE")
+	private MapperFactory mapperFactory;
 
+	@Autowired
 	private RegistroUtentiPolisportiva registroUtentiPolisportiva;
 
+	@Autowired
 	private AuthenticationManager authenticationManager;
 
+	@Autowired
 	private MyUserDetailsService myUserDetailsService;
 
+	@Autowired
 	private JwtUtil jwtUtil;
 
 	// @RequestMapping("/login")
@@ -70,8 +84,7 @@ public class AutenticazioneUtentiHandler {
 			.loadUserByUsername(authenticationRequest.getUsername());
 
 		UtentePolisportivaAbstract utente = registroUtentiPolisportiva.getUtenteByEmail(userDetails.getUsername());
-		UtentePolisportivaDTO sportivoDTO = new UtentePolisportivaDTO();
-		sportivoDTO.impostaValoriDTO(utente);
+		UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 
 		final String jwt = jwtUtil.generateToken(userDetails);
 

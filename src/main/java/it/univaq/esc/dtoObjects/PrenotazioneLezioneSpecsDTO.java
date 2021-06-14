@@ -18,16 +18,6 @@ public class PrenotazioneLezioneSpecsDTO extends PrenotazioneSpecsDTO {
     private String pavimentazioneImpianto;
 
    
-
-    @Override
-    public void impostaValoriDTO(Object specifica) {
-    	PrenotazioneSpecs specs = (PrenotazioneSpecs)specifica;
-        this.setIstruttore((String)((UtentePolisportivaAbstract)specs.getValoriSpecificheExtraPrenotazione().get("istruttore")).getProprieta().get("email"));
-        this.setIdImpiantoPrenotato(((Impianto)specs.getValoriSpecificheExtraPrenotazione().get("impianto")).getIdImpianto());
-        this.setPavimentazioneImpianto(((Impianto)specs.getValoriSpecificheExtraPrenotazione().get("impianto")).getTipoPavimentazione().toString());
-        super.impostaValoriDTO(specifica);
-        
-    }
     
 }
 

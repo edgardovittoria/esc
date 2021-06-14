@@ -24,7 +24,7 @@ import it.univaq.esc.model.prenotazioni.PrenotazioneLezioneSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.utility.BeanUtil;
 
-@Component(value = "SINGOLO_UTENTE")
+@Component(value = "ELEMENTI_PRENOTAZIONE_SINGOLO_UTENTE")
 @Singleton
 @DependsOn("beanUtil")
 public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazioneFactory{
@@ -65,19 +65,7 @@ public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazio
 		
 	}
 
-	@Override
-	public PrenotazioneSpecsDTO getPrenotazioneSpecsDTO(String tipoPrenotazione) {
-		switch (tipoPrenotazione) {
-		case "IMPIANTO":
-			return new PrenotazioneImpiantoSpecsDTO();
-		case "LEZIONE":
-			return new PrenotazioneLezioneSpecsDTO();
-		case "CORSO":
-			return new PrenotazioneCorsoSpecsDTO();
-		default:
-			return null;
-		}
-	}
+	
 
 	@Override
 	public PrenotazioneSpecs getPrenotazioneSpecs(String tipoPrenotazione) {

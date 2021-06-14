@@ -24,7 +24,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.authority.mapping.MappableAttributesRetriever;
 
 import ch.qos.logback.core.joran.util.StringToObjectConverter;
-import it.univaq.esc.model.costi.ModalitaPrenotazione;
+import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.PrenotazioneLezioneSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;

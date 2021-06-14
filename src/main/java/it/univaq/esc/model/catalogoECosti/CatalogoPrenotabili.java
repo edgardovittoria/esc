@@ -1,4 +1,4 @@
-package it.univaq.esc.model.costi;
+package it.univaq.esc.model.catalogoECosti;
 
 import static org.mockito.Mockito.RETURNS_SMART_NULLS;
 

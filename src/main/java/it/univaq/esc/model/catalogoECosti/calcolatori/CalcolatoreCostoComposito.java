@@ -1,4 +1,4 @@
-package it.univaq.esc.model.costi.calcolatori;
+package it.univaq.esc.model.catalogoECosti.calcolatori;
 
 import java.util.ArrayList;
 import java.util.List;

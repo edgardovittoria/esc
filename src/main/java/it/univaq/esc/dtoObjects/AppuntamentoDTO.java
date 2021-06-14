@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
-import it.univaq.esc.model.costi.ModalitaPrenotazione;
+import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import it.univaq.esc.model.utenti.Squadra;
@@ -19,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AppuntamentoDTO implements IModelToDTO {
+public class AppuntamentoDTO {
 
 	private Integer idAppuntamento;
 	private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
@@ -59,49 +59,6 @@ public class AppuntamentoDTO implements IModelToDTO {
 		this.partecipanti.add(partecipante);
 	}
 
-	@Override
-	public void impostaValoriDTO(Object modelDaConvertire) {
-		Appuntamento appuntamento = (Appuntamento) modelDaConvertire;
-		this.setIdAppuntamento(appuntamento.getIdAppuntamento());
-		setDataAppuntamento(appuntamento.getDataAppuntamento());
-		setOraInizioAppuntamento(appuntamento.getOraInizioAppuntamento());
-		setOraFineAppuntamento(appuntamento.getOraFineAppuntamento());
-		PrenotazioneSpecsDTO specificaDTO = (BeanUtil.getBean(appuntamento.getModalitaPrenotazione(), ElementiPrenotazioneFactory.class)).getPrenotazioneSpecsDTO(appuntamento.getTipoPrenotazione());
-		specificaDTO.impostaValoriDTO(appuntamento.getPrenotazioneSpecsAppuntamento());
-		this.setSpecificaPrenotazione(specificaDTO);
-		for (UtentePolisportivaAbstract partecipante : appuntamento.getUtentiPartecipanti()) {
-			UtentePolisportivaDTO partecipanteDTO = new UtentePolisportivaDTO();
-			partecipanteDTO.impostaValoriDTO(partecipante);
-			this.aggiungiPartecipante(partecipanteDTO);
-		}
-		List<QuotaPartecipazioneDTO> listaQuote = new ArrayList<QuotaPartecipazioneDTO>();
-		for (QuotaPartecipazione quota : appuntamento.getQuotePartecipazione()) {
-			QuotaPartecipazioneDTO quotaDTO = new QuotaPartecipazioneDTO();
-			quotaDTO.impostaValoriDTO(quota);
-			listaQuote.add(quotaDTO);
-
-		}
-		this.setQuotePartecipazione(listaQuote);
-
-		UtentePolisportivaDTO creatore = new UtentePolisportivaDTO();
-		creatore.impostaValoriDTO(appuntamento.creatoDa());
-		this.setCreatore(creatore);
-
-		if (appuntamento.getManutentore() != null) {
-			this.setIdManutentore(appuntamento.getManutentore().getId());
-		}
-
-		setModalitaPrenotazione(appuntamento.getModalitaPrenotazione());
-
-		if (appuntamento.getModalitaPrenotazione().equals(ModalitaPrenotazione.SQUADRA.toString())) {
-			List<Integer> squadrePartecipanti = new ArrayList<Integer>();
-			for (Object squadra : appuntamento.getPartecipantiAppuntamento()) {
-				Squadra squadraPartecipante = (Squadra) squadra;
-				squadrePartecipanti.add(squadraPartecipante.getIdSquadra());
-			}
-			setSquadrePartecipanti(squadrePartecipanti);
-
-		}
-	}
+	
 
 }

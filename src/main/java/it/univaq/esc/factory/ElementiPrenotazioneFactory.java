@@ -15,8 +15,6 @@ public abstract class ElementiPrenotazioneFactory {
 	
 	public abstract NotificaState getStatoNotifica(String tipoPrenotazione);
 	
-	public abstract PrenotazioneSpecsDTO getPrenotazioneSpecsDTO(String tipoPrenotazione);
-	
 	public abstract PrenotazioneSpecs getPrenotazioneSpecs(String tipoPrenotazione);
 	
 	public abstract Appuntamento getAppuntamento();

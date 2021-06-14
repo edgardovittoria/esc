@@ -1,8 +1,8 @@
-package it.univaq.esc.model.costi.calcolatori;
+package it.univaq.esc.model.catalogoECosti.calcolatori;
 
 import org.springframework.stereotype.Component;
 
-import it.univaq.esc.model.costi.TipoCostoPrenotabile;
+import it.univaq.esc.model.catalogoECosti.TipoCostoPrenotabile;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import lombok.NoArgsConstructor;

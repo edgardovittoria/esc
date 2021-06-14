@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
@@ -35,8 +36,8 @@ import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.Calendario;
-import it.univaq.esc.model.costi.CatalogoPrenotabili;
-import it.univaq.esc.model.costi.ModalitaPrenotazione;
+import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
+import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
@@ -63,13 +64,15 @@ public class EffettuaPrenotazioneHandlerRest {
 	@Setter(value = AccessLevel.PRIVATE)
 	private ElementiPrenotazioneFactory factoryStati;
 
+	@Getter(value = AccessLevel.PRIVATE)
+	@Setter(value = AccessLevel.PRIVATE)
+	private MapperFactory mapperFactory;
 	/**
 	 * Registro degli appuntamenti, utilizzato per le operazioni di gestione della
 	 * lista degli appuntamenti della prenotazione in atto.
 	 */
 	@Autowired
 	private RegistroAppuntamenti registroAppuntamenti;
-
 
 	/**
 	 * Registro degli utenti della polisportiva, usato per tutte le operazioni di
@@ -116,7 +119,7 @@ public class EffettuaPrenotazioneHandlerRest {
 	 * di prenotazione.
 	 */
 	private EffettuaPrenotazioneState stato;
-	
+
 	@Getter()
 	@Setter(value = AccessLevel.PRIVATE)
 	private Integer idSquadraPrenotante;
@@ -154,7 +157,6 @@ public class EffettuaPrenotazioneHandlerRest {
 	private void setStato(EffettuaPrenotazioneState stato) {
 		this.stato = stato;
 	}
-	
 
 	/**
 	 * Restituisce la lista completa degli appuntamenti associati alla prenotazione
@@ -176,7 +178,8 @@ public class EffettuaPrenotazioneHandlerRest {
 	private void setTipoPrenotazioneInAtto(String tipoPrenotazione) {
 		this.tipoPrenotazioneInAtto = tipoPrenotazione;
 		this.setStato(this.getFactoryStati().getStatoEffettuaPrenotazioneHandler(tipoPrenotazione));
-		getStato().setElementiPrenotazioneFactory(factoryStati);
+		getStato().setElementiPrenotazioneFactory(getFactoryStati());
+		getStato().setMapperFactory(getMapperFactory());
 	}
 
 	/**
@@ -251,11 +254,10 @@ public class EffettuaPrenotazioneHandlerRest {
 		this.setIdSquadraPrenotante(idSquadra);
 		UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroUtenti()
 				.getUtenteByEmail(emailSportivoPrenotante);
-		if (!(boolean)sportivoPrenotante.getProprieta().get("moroso")) {
+		if (!(boolean) sportivoPrenotante.getProprieta().get("moroso")) {
 			this.inizializzaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione, modalitaPrenotazione);
 			return this.getStato().getDatiOpzioni(this);
-		}
-		else {
+		} else {
 			/*
 			 * In futuro possiamo ritornare la lista dei debiti dello sportivo.
 			 */
@@ -283,8 +285,7 @@ public class EffettuaPrenotazioneHandlerRest {
 			@RequestParam(name = "email") String emailDirettore,
 			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione,
 			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
-		UtentePolisportivaAbstract direttore = this.getRegistroUtenti()
-                .getUtenteByEmail(emailDirettore);
+		UtentePolisportivaAbstract direttore = this.getRegistroUtenti().getUtenteByEmail(emailDirettore);
 		this.inizializzaNuovaPrenotazione(direttore, tipoPrenotazione, modalitaPrenotazione);
 		return this.getStato().getDatiOpzioniModalitaDirettore(this);
 	}
@@ -295,7 +296,8 @@ public class EffettuaPrenotazioneHandlerRest {
 		return null;
 	}
 
-	private void inizializzaNuovaPrenotazione(UtentePolisportivaAbstract sportivoPrenotante, String tipoPrenotazione, String modalitaPrenotazione) {
+	private void inizializzaNuovaPrenotazione(UtentePolisportivaAbstract sportivoPrenotante, String tipoPrenotazione,
+			String modalitaPrenotazione) {
 
 		Integer lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
 
@@ -303,16 +305,16 @@ public class EffettuaPrenotazioneHandlerRest {
 		getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
 
 		setFactoryStati(this.creaFactoryStati(modalitaPrenotazione));
+		setMapperFactory(creaMapperFactory(modalitaPrenotazione));
 		this.setTipoPrenotazioneInAtto(tipoPrenotazione);
 	}
-	
+
 	private ElementiPrenotazioneFactory creaFactoryStati(String modalitaPrenotazione) {
-		if (modalitaPrenotazione.equals(ModalitaPrenotazione.SINGOLO_UTENTE.toString())) {
-			return BeanUtil.getBean(ElementiPrenotazioneSingoloUtenteFactory.class);
-		}
-		else {
-			return BeanUtil.getBean(ElementiPrenotazioneSquadraFactory.class);
-		}
+		return BeanUtil.getBean("ELEMENTI_PRENOTAZIONE_" + modalitaPrenotazione, ElementiPrenotazioneFactory.class);
+	}
+
+	private MapperFactory creaMapperFactory(String modalitaPrenotazione) {
+		return BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class);
 	}
 
 	/**
@@ -330,14 +332,7 @@ public class EffettuaPrenotazioneHandlerRest {
 		this.getListaAppuntamentiPrenotazioneInAtto().clear();
 
 		PrenotazioneDTO prenDTO = this.getStato().impostaDatiPrenotazione(formPrenotaImpianto, this);
-		
-		
 
-//        PrenotazioneDTO prenDTO = new PrenotazioneDTO();
-//        Map<String, Object> mappa = new HashMap<String, Object>();
-//        mappa.put("prenotazione", this.getPrenotazioneInAtto());
-//        mappa.put("appuntamentiPrenotazione", this.getListaAppuntamentiPrenotazioneInAtto());
-//        prenDTO.impostaValoriDTO(mappa);
 		return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.OK);
 
 	}
@@ -354,27 +349,22 @@ public class EffettuaPrenotazioneHandlerRest {
 	@CrossOrigin
 	public ResponseEntity<PrenotazioneDTO> confermaPrenotazione() {
 
-		for(Appuntamento appuntamento : getListaAppuntamentiPrenotazioneInAtto()) {
+		for (Appuntamento appuntamento : getListaAppuntamentiPrenotazioneInAtto()) {
 			Calendario calendarioAppuntamento = new Calendario();
 			calendarioAppuntamento.aggiungiAppuntamento(appuntamento);
 			UtentePolisportivaAbstract manutentore = getRegistroUtenti().getManutentoreLibero(calendarioAppuntamento);
 			appuntamento.setManutentore(manutentore);
 			getRegistroUtenti().aggiornaCalendarioManutentore(calendarioAppuntamento, manutentore);
-			
-			
+
 		}
 		this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
 		this.getRegistroAppuntamenti().salvaListaAppuntamenti(this.getListaAppuntamentiPrenotazioneInAtto());
 
 		this.getStato().aggiornaElementiDopoConfermaPrenotazione(this);
 
-		
-		
-		PrenotazioneDTO prenDTO = new PrenotazioneDTO();
-		Map<String, Object> mappa = new HashMap<String, Object>();
-		mappa.put("prenotazione", this.getPrenotazioneInAtto());
-		mappa.put("appuntamentiPrenotazione", this.getListaAppuntamentiPrenotazioneInAtto());
-		prenDTO.impostaValoriDTO(mappa);
+		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper()
+				.convertiInPrenotazioneDTO(getPrenotazioneInAtto(), getListaAppuntamentiPrenotazioneInAtto());
+
 		return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
 	}
 

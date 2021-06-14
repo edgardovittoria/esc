@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
@@ -21,7 +22,7 @@ import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.Sport;
-import it.univaq.esc.model.costi.CatalogoPrenotabili;
+import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
@@ -100,6 +101,9 @@ public abstract class EffettuaPrenotazioneState {
 	
 	@Setter(value = AccessLevel.PUBLIC)
 	private ElementiPrenotazioneFactory elementiPrenotazioneFactory;
+	
+	@Setter(value = AccessLevel.PUBLIC)
+	private MapperFactory mapperFactory;
 	
 	
 	
@@ -212,8 +216,7 @@ public abstract class EffettuaPrenotazioneState {
 
 		List<SportDTO> listaSportPraticabiliDTO = new ArrayList<SportDTO>();
 		for (Sport sport : listaSportPraticabili) {
-			SportDTO sportDTO = new SportDTO();
-			sportDTO.impostaValoriDTO(sport);
+			SportDTO sportDTO = getMapperFactory().getSportMapper().convertiInSportDTO(sport);
 			listaSportPraticabiliDTO.add(sportDTO);
 		}
 		return listaSportPraticabiliDTO;
@@ -228,8 +231,7 @@ public abstract class EffettuaPrenotazioneState {
 	protected List<UtentePolisportivaDTO> getSportiviPolisportiva() {
 		List<UtentePolisportivaDTO> listaSportiviDTO = new ArrayList<UtentePolisportivaDTO>();
 		for (UtentePolisportivaAbstract utente : getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO)) {
-			UtentePolisportivaDTO sportivoDTO = new UtentePolisportivaDTO();
-			sportivoDTO.impostaValoriDTO(utente);
+			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 			listaSportiviDTO.add(sportivoDTO);
 		}
 
@@ -239,8 +241,7 @@ public abstract class EffettuaPrenotazioneState {
 	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseACalendario(Calendario calendario) {
 		List<UtentePolisportivaDTO> listaSportivi = new ArrayList<UtentePolisportivaDTO>();
 		for(UtentePolisportivaAbstract utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO), calendario)) {
-			UtentePolisportivaDTO sportivoDTO = new UtentePolisportivaDTO();
-			sportivoDTO.impostaValoriDTO(utente);
+			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 			listaSportivi.add(sportivoDTO);
 		}
 		return listaSportivi;
@@ -249,8 +250,7 @@ public abstract class EffettuaPrenotazioneState {
 	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseAOrario(LocalDateTime oraInizio, LocalDateTime oraFine) {
 		List<UtentePolisportivaDTO> listaSportivi = new ArrayList<UtentePolisportivaDTO>();
 		for(UtentePolisportivaAbstract utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO), oraInizio, oraFine)) {
-			UtentePolisportivaDTO sportivoDTO = new UtentePolisportivaDTO();
-			sportivoDTO.impostaValoriDTO(utente);
+			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 			listaSportivi.add(sportivoDTO);
 		}
 		return listaSportivi;
@@ -266,8 +266,7 @@ public abstract class EffettuaPrenotazioneState {
 	protected List<UtentePolisportivaDTO> getUtentiPolisportiva() {
 		List<UtentePolisportivaDTO> listaSportiviDTO = new ArrayList<UtentePolisportivaDTO>();
 		for (UtentePolisportivaAbstract utente : getRegistroUtenti().getListaUtentiPolisportiva()) {
-			UtentePolisportivaDTO sportivoDTO = new UtentePolisportivaDTO();
-			sportivoDTO.impostaValoriDTO(utente);
+			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 			listaSportiviDTO.add(sportivoDTO);
 		}
 
@@ -291,8 +290,7 @@ public abstract class EffettuaPrenotazioneState {
 
 		List<UtentePolisportivaAbstract> istruttori = this.getRegistroUtenti().getIstruttoriPerSport(sportRichiesto);
 		for (UtentePolisportivaAbstract istruttore : istruttori) {
-			UtentePolisportivaDTO istDTO = new UtentePolisportivaDTO();
-			istDTO.impostaValoriDTO(istruttore);
+			UtentePolisportivaDTO istDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(istruttore);
 			listaIstruttori.add(istDTO);
 		}
 
@@ -333,8 +331,7 @@ public abstract class EffettuaPrenotazioneState {
 		List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
 		for (Impianto impianto : listaImpiantiDisponibili) {
 
-			ImpiantoDTO impiantoDTO = new ImpiantoDTO();
-			impiantoDTO.impostaValoriDTO(impianto);
+			ImpiantoDTO impiantoDTO = getMapperFactory().getImpiantoMapper().convertiInImpiantoDTO(impianto);
 			listaImpiantiDTODisponibili.add(impiantoDTO);
 
 		}
@@ -456,8 +453,7 @@ public abstract class EffettuaPrenotazioneState {
 		List<UtentePolisportivaDTO> listaIstruttoriDTODisponibili = new ArrayList<UtentePolisportivaDTO>();
 		for (UtentePolisportivaAbstract istruttore : istruttoriDisponibili) {
 
-			UtentePolisportivaDTO istruttoreDTO = new UtentePolisportivaDTO();
-			istruttoreDTO.impostaValoriDTO(istruttore);
+			UtentePolisportivaDTO istruttoreDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(istruttore);
 			listaIstruttoriDTODisponibili.add(istruttoreDTO);
 
 		}

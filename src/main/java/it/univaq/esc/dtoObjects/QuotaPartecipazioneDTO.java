@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
-public class QuotaPartecipazioneDTO implements IModelToDTO{
+public class QuotaPartecipazioneDTO {
 
     private float costo;
 
@@ -15,14 +15,4 @@ public class QuotaPartecipazioneDTO implements IModelToDTO{
     private boolean pagata;
 
 
-    @Override
-    public void impostaValoriDTO(Object modelDaConvertire) {
-       QuotaPartecipazione quota = (QuotaPartecipazione)modelDaConvertire;
-       this.setCosto(quota.getCosto());
-       this.setPagata(quota.isPagata());
-       UtentePolisportivaDTO sportivo = new UtentePolisportivaDTO();
-       sportivo.impostaValoriDTO(quota.getSportivoAssociato());
-       this.setSportivo(sportivo);
-        
-    }
 }

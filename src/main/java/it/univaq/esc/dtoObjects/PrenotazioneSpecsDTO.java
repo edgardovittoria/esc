@@ -7,7 +7,7 @@ import lombok.Setter;
 
 
 @Getter @Setter @NoArgsConstructor
-public abstract class PrenotazioneSpecsDTO implements IModelToDTO{
+public abstract class PrenotazioneSpecsDTO {
 
     private Integer idPrenotazioneSpecsDTO;
 
@@ -20,20 +20,6 @@ public abstract class PrenotazioneSpecsDTO implements IModelToDTO{
     private SportDTO sportAssociato;
     private String tipoSpecifica;
     private String modalitaPrenotazione;
-        
-
-    @Override
-    public void impostaValoriDTO(Object prenotazioneSpecs){
-    	PrenotazioneSpecs specs = (PrenotazioneSpecs)prenotazioneSpecs;
-        SportDTO sportAssociato = new SportDTO();
-        sportAssociato.impostaValoriDTO(specs.getSportAssociato());
-        this.setSportAssociato(sportAssociato);
-        this.setIdPrenotazioneSpecsDTO(specs.getId());
-        this.setTipoSpecifica(specs.getTipoPrenotazione());
-        this.setCosto(specs.getCosto());
-        this.setModalitaPrenotazione(specs.getModalitaPrenotazione());
-    };
-    
-
+       
     
 }

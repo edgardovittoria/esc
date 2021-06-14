@@ -1,4 +1,4 @@
-package it.univaq.esc.model.costi;
+package it.univaq.esc.model.catalogoECosti;
 
 import java.util.HashMap;
 

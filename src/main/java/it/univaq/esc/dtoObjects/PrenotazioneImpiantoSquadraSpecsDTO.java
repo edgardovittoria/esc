@@ -19,23 +19,5 @@ public class PrenotazioneImpiantoSquadraSpecsDTO extends PrenotazioneSpecsDTO{
     private Integer idImpiantoPrenotato;
     private String pavimentazioneImpianto;
 
-   
-
-    @Override
-    public void impostaValoriDTO(Object specifica) {
-    	PrenotazioneSpecs specs = (PrenotazioneSpecs)specifica;
-    	
-        // I posti liberi sono da eliminare perché si possono calcolare in automatico
-        setPostiLiberi(12);
-        
-        for(Squadra invitato : (List<Squadra>) specs.getValoriSpecificheExtraPrenotazione().get("invitati")){
-            
-            this.getInvitati().add((String)invitato.getNome());
-        }
-        
-        this.setIdImpiantoPrenotato(((Impianto)specs.getValoriSpecificheExtraPrenotazione().get("impianto")).getIdImpianto());
-        this.setPavimentazioneImpianto(((Impianto)specs.getValoriSpecificheExtraPrenotazione().get("impianto")).getTipoPavimentazione().toString());
-        super.impostaValoriDTO(specifica);
-        
-    }
+  
 }

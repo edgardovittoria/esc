@@ -7,10 +7,5 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class PrenotazioneCorsoSpecsDTO extends PrenotazioneSpecsDTO{
 
-	@Override
-	public void impostaValoriDTO(Object modelDaConvertire) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

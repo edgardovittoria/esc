@@ -18,7 +18,7 @@ import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSquadraSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.utility.BeanUtil;
 
-@Component(value = "SQUADRA")
+@Component(value = "ELEMENTI_PRENOTAZIONE_SQUADRA")
 @Singleton
 @DependsOn("beanUtil")
 public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFactory{
@@ -56,19 +56,7 @@ public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFact
 		}
 	}
 
-	@Override
-	public PrenotazioneSpecsDTO getPrenotazioneSpecsDTO(String tipoPrenotazione) {
-		switch (tipoPrenotazione) {
-		case "IMPIANTO":
-			return new PrenotazioneImpiantoSquadraSpecsDTO();
-		case "LEZIONE":
-			return null;
-		case "CORSO":
-			return null;
-		default:
-			return null;
-		}
-	}
+	
 
 	@Override
 	public PrenotazioneSpecs getPrenotazioneSpecs(String tipoPrenotazione) {
