@@ -64,6 +64,9 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	@Override
 	public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller) {
+
+		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState)getElementiPrenotazioneFactory().getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
+	
 		Map<String, Object> mappaCorsiDisponibili = new HashMap<String, Object>();
 		List<Prenotazione> corsiDisponibili = this.getRegistroPrenotazioni().filtraPrenotazioniPerTipo(
 				this.getRegistroPrenotazioni().getPrenotazioniRegistrate(), TipiPrenotazione.CORSO.toString());
@@ -96,8 +99,6 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
 			EffettuaPrenotazioneHandlerRest controller) {
 		
-		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState)getElementiPrenotazioneFactory().getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
-	
 		/*
 		 * Creriamo la specifica del corso e la associamo alla prenotazione in atto
 		 * tramite il controller.
