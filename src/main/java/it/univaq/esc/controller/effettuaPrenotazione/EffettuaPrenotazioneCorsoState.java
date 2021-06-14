@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.FormPrenotabile;
@@ -44,7 +47,6 @@ import lombok.Setter;
 
 public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
-	
 	private EffettuaPrenotazioneLezioneState statoControllerLezioni;
 
 	public EffettuaPrenotazioneCorsoState(RegistroNotifiche registroNotifiche, RegistroSport registroSport,
@@ -55,8 +57,10 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti,
 				registroPrenotazioni, catalogoPrenotabili, registroSquadre);
-		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState)getElementiPrenotazioneFactory().getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
+		
+		
 	}
+	
 
 	@Override
 	public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller) {
@@ -91,6 +95,9 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
 			EffettuaPrenotazioneHandlerRest controller) {
+		
+		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState)getElementiPrenotazioneFactory().getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
+	
 		/*
 		 * Creriamo la specifica del corso e la associamo alla prenotazione in atto
 		 * tramite il controller.
