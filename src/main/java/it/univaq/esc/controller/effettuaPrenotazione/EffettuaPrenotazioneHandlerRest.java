@@ -401,6 +401,7 @@ public class EffettuaPrenotazioneHandlerRest {
 	@CrossOrigin
 	public @ResponseBody Object aggiungiPartecipanteAEventoEsistente(@RequestBody Map<String, Object> mappaDati) {
 
+		setTipoPrenotazioneInAtto(tipoPrenotazioneInAtto);
 		Integer idEvento = (Integer) mappaDati.get("idEvento");
 		String emailPartecipante = (String) mappaDati.get("emailPartecipante");
 		return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante);
