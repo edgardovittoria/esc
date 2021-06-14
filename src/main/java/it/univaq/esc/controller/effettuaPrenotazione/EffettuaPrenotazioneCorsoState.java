@@ -64,9 +64,6 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	@Override
 	public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller) {
-
-		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState)getElementiPrenotazioneFactory().getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
-	
 		Map<String, Object> mappaCorsiDisponibili = new HashMap<String, Object>();
 		List<Prenotazione> corsiDisponibili = this.getRegistroPrenotazioni().filtraPrenotazioniPerTipo(
 				this.getRegistroPrenotazioni().getPrenotazioniRegistrate(), TipiPrenotazione.CORSO.toString());
@@ -295,9 +292,11 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	@Override
 	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandlerRest controller) {
+		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState)getElementiPrenotazioneFactory().getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
+		
 		Map<String, Object> mappaDati = this.getStatoControllerLezioni().getDatiOpzioni(controller);
 		mappaDati.put("sportiviInvitabili", this.getSportiviPolisportiva());
-
+		
 		return mappaDati;
 	}
 
