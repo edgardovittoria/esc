@@ -44,6 +44,7 @@ import lombok.Setter;
 
 public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
+	
 	private EffettuaPrenotazioneLezioneState statoControllerLezioni;
 
 	public EffettuaPrenotazioneCorsoState(RegistroNotifiche registroNotifiche, RegistroSport registroSport,
@@ -54,7 +55,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti,
 				registroPrenotazioni, catalogoPrenotabili, registroSquadre);
-		setStatoControllerLezioni(effettuaPrenotazioneLezioneState);
+		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState)getElementiPrenotazioneFactory().getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
 	}
 
 	@Override
