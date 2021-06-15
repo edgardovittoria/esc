@@ -57,7 +57,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	}
 
 	@Override
-	public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller) {
+	public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandler controller) {
 		Map<String, Object> mappaValori = new HashMap<String, Object>();
 		mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
 		mappaValori.put("squadreInvitabili", getRegistroSquadre().getListaSquadre());
@@ -69,7 +69,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
-			EffettuaPrenotazioneHandlerRest controller) {
+			EffettuaPrenotazioneHandler controller) {
 
 		for (OrarioAppuntamento orario : (List<OrarioAppuntamento>) formDati.getValoriForm()
 				.get("listaOrariAppuntamenti")) {
@@ -94,7 +94,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	}
 
 	private void impostaDatiPrenotazioneSpecs(PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs,
-			FormPrenotabile formDati, OrarioAppuntamento orario, EffettuaPrenotazioneHandlerRest controller) {
+			FormPrenotabile formDati, OrarioAppuntamento orario, EffettuaPrenotazioneHandler controller) {
 		PrenotabileDescrizione descrizioneSpecifica = controller.getListinoPrezziDescrizioniPolisportiva()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)
@@ -121,7 +121,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	}
 
 	private void impostaDatiAppuntamento(PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs, FormPrenotabile formDati,
-			AppuntamentoSquadra appuntamento, OrarioAppuntamento orario, EffettuaPrenotazioneHandlerRest controller) {
+			AppuntamentoSquadra appuntamento, OrarioAppuntamento orario, EffettuaPrenotazioneHandler controller) {
 		// Creazione calcolatore che poi dovrà finire altrove
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
 		calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
@@ -153,7 +153,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	}
 
 	@Override
-	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandlerRest controller) {
+	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandler controller) {
 		for (Appuntamento app : controller.getListaAppuntamentiPrenotazioneInAtto()) {
 			Calendario calendarioDaUnire = new Calendario();
 			calendarioDaUnire.aggiungiAppuntamento(app);
@@ -212,7 +212,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	}
 
 	@Override
-	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandlerRest controller) {
+	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandler controller) {
 		// TODO Auto-generated method stub
 		return null;
 	}

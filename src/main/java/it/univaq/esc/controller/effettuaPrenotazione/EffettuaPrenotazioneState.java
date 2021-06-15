@@ -131,7 +131,7 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return mappa con i dati iniziali delle varie opzioni selezionabili in fase
 	 *         di prenotazione.
 	 */
-	public abstract Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller);
+	public abstract Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandler controller);
 
 	/**
 	 * Definisce l'interfaccia per il metodo che imposta tutti i valori selezionati
@@ -149,7 +149,7 @@ public abstract class EffettuaPrenotazioneState {
 	 * @param controller istanza del controller cui lo stato è associato, per
 	 *                   poterne eventualmente aggiornare i dati.
 	 */
-	public abstract PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller);
+	public abstract PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller);
 
 	/**
 	 * Definisce l'interfaccia del metodo che aggiorna gli oggetti intererssati
@@ -160,7 +160,7 @@ public abstract class EffettuaPrenotazioneState {
 	 * @param controller istanza del controller cui lo stato è associato, per
 	 *                   poterne aggiornare i dati.
 	 */
-	public abstract void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandlerRest controller);
+	public abstract void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandler controller);
 
 	/**
 	 * Definisce l'interfaccia del metodo che aggiorna i dati usati per popolare le
@@ -203,7 +203,7 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return mappa con i dati iniziali delle varie opzioni selezionabili in fase
 	 *         di prenotazione.
 	 */
-	public abstract Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandlerRest controller);
+	public abstract Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandler controller);
 	
 	/**
 	 * Metodo di utilità, utilizzato in quelli principali, che resituisce la lista

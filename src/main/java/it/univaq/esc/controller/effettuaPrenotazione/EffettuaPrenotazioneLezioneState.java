@@ -60,7 +60,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 * fase di avvio di una nuova prenotazione, nel caso di una Lezione.
 	 */
 	@Override
-	public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller) {
+	public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandler controller) {
 		Map<String, Object> mappaValori = new HashMap<String, Object>();
 		mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
 
@@ -73,7 +73,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 */
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
-			EffettuaPrenotazioneHandlerRest controller) {
+			EffettuaPrenotazioneHandler controller) {
 
 		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
@@ -105,7 +105,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	}
 
 	public void impostaValoriPrenotazioniSpecs(FormPrenotabile formDati, PrenotazioneLezioneSpecs prenotazioneSpecs,
-			PrenotabileDescrizione descrizioneSpecifica, EffettuaPrenotazioneHandlerRest controller,
+			PrenotabileDescrizione descrizioneSpecifica, EffettuaPrenotazioneHandler controller,
 			OrarioAppuntamento orario) {
 
 		prenotazioneSpecs.setPrenotazioneAssociata(controller.getPrenotazioneInAtto());
@@ -131,7 +131,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 
 	}
 
-	public void impostaValoriAppuntamento(FormPrenotabile formDati, EffettuaPrenotazioneHandlerRest controller,
+	public void impostaValoriAppuntamento(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller,
 			AppuntamentoSingoliPartecipanti appuntamento, PrenotazioneLezioneSpecs prenotazioneSpecs,
 			OrarioAppuntamento orario) {
 		// Creazione calcolatore che poi dovrà finire altrove
@@ -156,7 +156,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 * sta gestendo, u na volta che questa è stata confermata.
 	 */
 	@Override
-	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandlerRest controller) {
+	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandler controller) {
 		for (Appuntamento app : controller.getListaAppuntamentiPrenotazioneInAtto()) {
 			Calendario calendarioDaUnire = new Calendario();
 			calendarioDaUnire.aggiungiAppuntamento(app);
@@ -191,7 +191,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	}
 
 	@Override
-	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandlerRest controller) {
+	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandler controller) {
 		// TODO Auto-generated method stub
 		return null;
 	}

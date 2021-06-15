@@ -63,7 +63,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	
 
 	@Override
-	public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandlerRest controller) {
+	public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandler controller) {
 		Map<String, Object> mappaCorsiDisponibili = new HashMap<String, Object>();
 		List<Prenotazione> corsiDisponibili = this.getRegistroPrenotazioni().filtraPrenotazioniPerTipo(
 				this.getRegistroPrenotazioni().getPrenotazioniRegistrate(), TipiPrenotazione.CORSO.toString());
@@ -94,7 +94,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
-			EffettuaPrenotazioneHandlerRest controller) {
+			EffettuaPrenotazioneHandler controller) {
 		
 		/*
 		 * Creriamo la specifica del corso e la associamo alla prenotazione in atto
@@ -194,7 +194,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	 */
 	private void impostaValoriPrenotazioneCorsoSpecs(FormPrenotabile formDati, PrenotazioneCorsoSpecs prenotazioneSpecs,
 			PrenotabileDescrizione descrizioneCorso, List<PrenotazioneSpecs> listaLezioniSpecs,
-			EffettuaPrenotazioneHandlerRest controller) {
+			EffettuaPrenotazioneHandler controller) {
 		prenotazioneSpecs.setListaLezioni(listaLezioniSpecs);
 
 		List<UtentePolisportivaAbstract> listaInvitati = new ArrayList<UtentePolisportivaAbstract>();
@@ -222,7 +222,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandlerRest controller) {
+	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandler controller) {
 		this.statoControllerLezioni.aggiornaElementiDopoConfermaPrenotazione(controller);
 		
 		/*
@@ -291,7 +291,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandlerRest controller) {
+	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandler controller) {
 		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState)getElementiPrenotazioneFactory().getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
 		getStatoControllerLezioni().setMapperFactory(getMapperFactory());
 		

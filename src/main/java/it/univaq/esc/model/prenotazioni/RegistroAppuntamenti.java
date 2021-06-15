@@ -236,6 +236,11 @@ public class RegistroAppuntamenti {
 		return null;
 	}
 
+	/**
+	 * Restituisce gli appuntamenti relativi ad una specifica prenotazione.
+	 * @param idPrenotazione identificativo della prenotazione di cui trovare gli appuntamenti.
+	 * @return la lista degli appuntamenti relativi alla prenotazione il cui identificativo è passato come parametro.
+	 */
 	public List<Appuntamento> getAppuntamentiByPrenotazioneId(Integer idPrenotazione) {
 		List<Appuntamento> appuntamenti = new ArrayList<Appuntamento>();
 		for (Appuntamento appuntamento : this.getListaAppuntamenti()) {

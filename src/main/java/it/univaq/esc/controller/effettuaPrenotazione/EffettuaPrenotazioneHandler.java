@@ -55,7 +55,7 @@ import lombok.Setter;
  */
 @RestController
 @RequestMapping("/effettuaPrenotazione")
-public class EffettuaPrenotazioneHandlerRest {
+public class EffettuaPrenotazioneHandler {
 
 	/**
 	 * Factory FactoryStaty utilizzata per ottenere gli stati del controller.
@@ -127,7 +127,7 @@ public class EffettuaPrenotazioneHandlerRest {
 	/**
 	 * Costruttore del controller EffettuaPrenotazioneHandlerRest
 	 */
-	public EffettuaPrenotazioneHandlerRest() {
+	public EffettuaPrenotazioneHandler() {
 	}
 
 	/**
@@ -400,10 +400,18 @@ public class EffettuaPrenotazioneHandlerRest {
 	@PatchMapping("/partecipazioneEventoEsistente")
 	@CrossOrigin
 	public @ResponseBody Object aggiungiPartecipanteAEventoEsistente(@RequestBody Map<String, Object> mappaDati) {
-
-		setTipoPrenotazioneInAtto((String)mappaDati.get("tipoPrenotazione"));
 		Integer idEvento = (Integer) mappaDati.get("idEvento");
 		String emailPartecipante = (String) mappaDati.get("emailPartecipante");
+		
+		setPrenotazioneInAtto(getRegistroPrenotazioni().getPrenotazioneById(idEvento));
+		setListaAppuntamentiPrenotazioneInAtto(getRegistroAppuntamenti().getAppuntamentiByPrenotazioneId(idEvento));
+		
+		setFactoryStati(creaFactoryStati(getPrenotazioneInAtto().getModalitaPrenotazione()));
+		setMapperFactory(creaMapperFactory(getPrenotazioneInAtto().getModalitaPrenotazione()));
+		
+		setTipoPrenotazioneInAtto((getPrenotazioneInAtto().getTipoPrenotazione()));
+		
+		
 		return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante);
 	}
 
