@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
+import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.utenti.Squadra;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -56,6 +57,11 @@ public class NotificaSquadraService extends NotificaService{
 		NotificaSquadra notificaSquadra = (NotificaSquadra) notifica;
 		setSquadraDelDestinatario(notificaSquadra.getSquadraDelDestinatario());
 		setSquadraDelMittente(notificaSquadra.getSquadraDelMittente());
+	}
+	
+	@Override
+	public String getModalitaNotifica() {
+		return ModalitaPrenotazione.SQUADRA.toString();
 	}
 	
 

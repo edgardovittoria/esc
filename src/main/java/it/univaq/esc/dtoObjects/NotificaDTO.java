@@ -13,6 +13,8 @@ public class NotificaDTO {
 	private String mittente;
 	private Integer idEvento;
 	private String tipoEventoNotificabile;
+	private SquadraDTO squadraDelMittente;
+	private SquadraDTO squadraDelDestinatario;
 	private boolean letta;
 	
 	

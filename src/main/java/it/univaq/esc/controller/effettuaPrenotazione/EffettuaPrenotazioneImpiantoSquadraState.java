@@ -206,8 +206,15 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	}
 
 	@Override
-	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
-		// TODO Auto-generated method stub
+	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, Object identificativoPartecipante) {
+		Integer idSquadra = (Integer) identificativoPartecipante;
+		Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
+		if (appuntamento != null) {
+			this.aggiungiPartecipante(getRegistroSquadre().getSquadraById(idSquadra), appuntamento);
+			// this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
+			AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper().convertiInAppuntamentoDTO(appuntamento);
+			return appuntamentoDTO;
+		}
 		return null;
 	}
 

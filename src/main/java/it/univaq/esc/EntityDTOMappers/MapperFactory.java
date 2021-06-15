@@ -66,12 +66,7 @@ public abstract class MapperFactory {
 		return impiantoMapper;
 	}
 	
-	public NotificaMapper getNotificaMapper() {
-		NotificaMapper notificaMapper = BeanUtil.getBean(NotificaMapper.class);
-		notificaMapper.setMapperFactory(this);
-		
-		return notificaMapper;
-	}
+	public abstract NotificaMapper getNotificaMapper() ;
 
 }
 

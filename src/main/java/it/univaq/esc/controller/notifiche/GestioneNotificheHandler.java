@@ -21,6 +21,7 @@ import it.univaq.esc.dtoObjects.NotificaDTO;
 import it.univaq.esc.dtoObjects.NotificabileDTO;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
+import it.univaq.esc.utility.BeanUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -58,12 +59,18 @@ public class GestioneNotificheHandler {
 		Integer idNotifica = (Integer) mappaDati.get("idNotifica");
 		NotificaService notifica = getRegistroNotifiche().getNotificaById(idNotifica);
 		
+		impostaMapperFactory(notifica.getModalitaNotifica());
+		
 		if(notifica != null) {
 			getRegistroNotifiche().impostaNotificaComeLetta(notifica);
-			NotificaDTO notificaDTO = getMapperFactory().getNotificaMapper().convertiiNotificaDTO(notifica);
+			NotificaDTO notificaDTO = getMapperFactory().getNotificaMapper().convertiInNotificaDTO(notifica);
 								
 			return notificaDTO;
 		}
 		return null;
+	}
+	
+	private void impostaMapperFactory(String modalitaPrenotazione) {
+		setMapperFactory(BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class));
 	}
 }

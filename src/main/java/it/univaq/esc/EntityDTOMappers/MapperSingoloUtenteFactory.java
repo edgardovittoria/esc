@@ -31,6 +31,12 @@ public class MapperSingoloUtenteFactory extends MapperFactory{@Override
 		}
 	}
 
+@Override
+public NotificaMapper getNotificaMapper() {
+	NotificaMapper mapper = (NotificaMapper) BeanUtil.getBean("MAPPER_NOTIFICA_SINGOLO_UTENTE", NotificaMapper.class);
+	return mapper;
+}
+
 	
 
 }

@@ -27,4 +27,10 @@ public class MapperSquadraFactory extends MapperFactory {
 		}
 	}
 
+	@Override
+	public NotificaMapper getNotificaMapper() {
+		NotificaMapper mapper = BeanUtil.getBean("MAPPER_NOTIFICA_SQUADRA", NotificaMapper.class);
+		return mapper;
+	}
+
 }

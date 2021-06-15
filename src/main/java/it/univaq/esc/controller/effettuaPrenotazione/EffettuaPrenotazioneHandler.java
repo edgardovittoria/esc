@@ -401,7 +401,7 @@ public class EffettuaPrenotazioneHandler {
 	@CrossOrigin
 	public @ResponseBody Object aggiungiPartecipanteAEventoEsistente(@RequestBody Map<String, Object> mappaDati) {
 		Integer idEvento = (Integer) mappaDati.get("idEvento");
-		String emailPartecipante = (String) mappaDati.get("emailPartecipante");
+		Object identificativoPartecipante = (Object) mappaDati.get("identificativoPartecipante");
 		String modalitaPrenotazione = (String) mappaDati.get("modalitaPrenotazione");
 		String tipoPrenotazione = (String) mappaDati.get("tipoPrenotazione");
 		
@@ -411,7 +411,7 @@ public class EffettuaPrenotazioneHandler {
 		setTipoPrenotazioneInAtto(tipoPrenotazione);
 		
 		
-		return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante);
+		return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, identificativoPartecipante);
 	}
 
 	/**

@@ -34,6 +34,7 @@ import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.utility.BeanUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -204,7 +205,8 @@ public class GestioneProfiloHandler {
 	private List<NotificaDTO> getNotificheDTOPerDestinatario(UtentePolisportivaAbstract destinatario) {
 		List<NotificaDTO> notificheDtos = new ArrayList<NotificaDTO>();
 		for (NotificaService notifica : getRegistroNotifiche().getNotifichePerDestinatario(destinatario)) {
-			NotificaDTO notificaDTO = getMapperFactory().getNotificaMapper().convertiiNotificaDTO(notifica);
+			impostaMapperFactory(notifica.getModalitaNotifica());
+			NotificaDTO notificaDTO = getMapperFactory().getNotificaMapper().convertiInNotificaDTO(notifica);
 
 			notificheDtos.add(notificaDTO);
 		}
@@ -220,6 +222,10 @@ public class GestioneProfiloHandler {
 		}
 
 		return listaSquadreDTO;
+	}
+	
+	private void impostaMapperFactory(String modalitaPrenotazione) {
+		setMapperFactory(BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class));
 	}
 
 }

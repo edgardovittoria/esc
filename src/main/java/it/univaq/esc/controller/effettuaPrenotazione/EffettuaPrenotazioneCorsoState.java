@@ -47,6 +47,9 @@ import lombok.Setter;
 
 public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
+	/**
+	 * Stato 
+	 */
 	private EffettuaPrenotazioneLezioneState statoControllerLezioni;
 
 	public EffettuaPrenotazioneCorsoState(RegistroNotifiche registroNotifiche, RegistroSport registroSport,
@@ -260,7 +263,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, String emailPartecipante) {
+	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, Object identificativoPartecipante) {
+		String emailPartecipante = (String) identificativoPartecipante;
 		Prenotazione corsoPrenotazione = this.getRegistroPrenotazioni().getPrenotazioneById(idEvento);
 		List<Appuntamento> listaAppuntamentiCorso = this.getRegistroAppuntamenti()
 				.getAppuntamentiByPrenotazioneId(idEvento);

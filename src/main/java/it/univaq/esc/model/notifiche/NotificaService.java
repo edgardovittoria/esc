@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
+import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
+import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -95,6 +97,10 @@ public class NotificaService {
 		setMittente(notifica.getMittente());
 		setEvento(notifica.getEvento());
 		setLetta(notifica.isLetta());
+	}
+	
+	public String getModalitaNotifica() {
+		return ModalitaPrenotazione.SINGOLO_UTENTE.toString();
 	}
 }
 
