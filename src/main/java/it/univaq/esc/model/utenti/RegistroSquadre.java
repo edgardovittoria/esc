@@ -129,4 +129,14 @@ public class RegistroSquadre {
 		return listaSquadre;
 		
 	}
+	
+	public void aggiornaCalendarioSquadra(Squadra squadra, Calendario calendario) {
+		Calendario calendarioAttuale = squadra.getCalendarioSquadra();
+		calendarioAttuale.unisciCalendario(calendario);
+		squadra.setCalendarioSquadra(calendarioAttuale);
+	}
+	
+	public void aggiornaCalendarioSquadra(Squadra squadra, Appuntamento nuovoAppuntamento) {
+		squadra.getCalendarioSquadra().aggiungiAppuntamento(nuovoAppuntamento);
+	}
 }
