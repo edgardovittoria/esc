@@ -402,14 +402,13 @@ public class EffettuaPrenotazioneHandler {
 	public @ResponseBody Object aggiungiPartecipanteAEventoEsistente(@RequestBody Map<String, Object> mappaDati) {
 		Integer idEvento = (Integer) mappaDati.get("idEvento");
 		String emailPartecipante = (String) mappaDati.get("emailPartecipante");
+		String modalitaPrenotazione = (String) mappaDati.get("modalitaPrenotazione");
+		String tipoPrenotazione = (String) mappaDati.get("tipoPrenotazione");
 		
-		setPrenotazioneInAtto(getRegistroPrenotazioni().getPrenotazioneById(idEvento));
-		setListaAppuntamentiPrenotazioneInAtto(getRegistroAppuntamenti().getAppuntamentiByPrenotazioneId(idEvento));
+		setFactoryStati(creaFactoryStati(modalitaPrenotazione));
+		setMapperFactory(creaMapperFactory(modalitaPrenotazione));
 		
-		setFactoryStati(creaFactoryStati(getPrenotazioneInAtto().getModalitaPrenotazione()));
-		setMapperFactory(creaMapperFactory(getPrenotazioneInAtto().getModalitaPrenotazione()));
-		
-		setTipoPrenotazioneInAtto((getPrenotazioneInAtto().getTipoPrenotazione()));
+		setTipoPrenotazioneInAtto(tipoPrenotazione);
 		
 		
 		return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, emailPartecipante);

@@ -57,10 +57,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti,
 				registroPrenotazioni, catalogoPrenotabili, registroSquadre);
-		
-		
+
 	}
-	
 
 	@Override
 	public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandler controller) {
@@ -93,9 +91,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
-			EffettuaPrenotazioneHandler controller) {
-		
+	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
+
 		/*
 		 * Creriamo la specifica del corso e la associamo alla prenotazione in atto
 		 * tramite il controller.
@@ -133,13 +130,15 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		for (OrarioAppuntamento orario : (List<OrarioAppuntamento>) formDati.getValoriForm()
 				.get("listaOrariAppuntamenti")) {
 
-			PrenotazioneLezioneSpecs prenotazioneLezioneSpecs = (PrenotazioneLezioneSpecs) getElementiPrenotazioneFactory().getPrenotazioneSpecs(TipiPrenotazione.LEZIONE.toString());
+			PrenotazioneLezioneSpecs prenotazioneLezioneSpecs = (PrenotazioneLezioneSpecs) getElementiPrenotazioneFactory()
+					.getPrenotazioneSpecs(TipiPrenotazione.LEZIONE.toString());
 			getStatoControllerLezioni().impostaValoriPrenotazioniSpecs(formDati, prenotazioneLezioneSpecs,
 					descrizioneCorso, controller, orario);
 
 			listaLezioniSpecs.add(prenotazioneLezioneSpecs);
 
-			AppuntamentoSingoliPartecipanti appuntamento = (AppuntamentoSingoliPartecipanti) getElementiPrenotazioneFactory().getAppuntamento();
+			AppuntamentoSingoliPartecipanti appuntamento = (AppuntamentoSingoliPartecipanti) getElementiPrenotazioneFactory()
+					.getAppuntamento();
 			getStatoControllerLezioni().impostaValoriAppuntamento(formDati, controller, appuntamento,
 					prenotazioneLezioneSpecs, orario);
 
@@ -158,7 +157,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		 */
 		List<UtentePolisportivaDTO> invitatiDTO = new ArrayList<UtentePolisportivaDTO>();
 		for (UtentePolisportivaAbstract invitato : prenotazioneSpecs.getInvitati()) {
-			UtentePolisportivaDTO invitatoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(invitato);
+			UtentePolisportivaDTO invitatoDTO = getMapperFactory().getUtenteMapper()
+					.convertiInUtentePolisportivaDTO(invitato);
 			invitatiDTO.add(invitatoDTO);
 		}
 
@@ -224,7 +224,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	@Override
 	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandler controller) {
 		this.statoControllerLezioni.aggiornaElementiDopoConfermaPrenotazione(controller);
-		
+
 		/*
 		 * Creiamo le notifiche relative agli invitati, impostandole con tutti i dati
 		 * necessari.
@@ -241,7 +241,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 			getRegistroNotifiche().salvaNotifica(notifica);
 
 		}
-		
+
 	}
 
 	@Override
@@ -265,16 +265,32 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		List<Appuntamento> listaAppuntamentiCorso = this.getRegistroAppuntamenti()
 				.getAppuntamentiByPrenotazioneId(idEvento);
 
+		UtentePolisportivaAbstract nuovoPartecipante = this.getRegistroUtenti().getUtenteByEmail(emailPartecipante);
 		Appuntamento appuntamentoPerCreazioneQuota = listaAppuntamentiCorso.get(0);
-		QuotaPartecipazione quotaPartecipazione = this.creaQuotaPartecipazione(appuntamentoPerCreazioneQuota,
-				this.getRegistroUtenti().getUtenteByEmail(emailPartecipante));
+		List<UtentePolisportivaAbstract> partecipantiAttuali = appuntamentoPerCreazioneQuota.getUtentiPartecipanti();
+		partecipantiAttuali.add(nuovoPartecipante);
+		List<QuotaPartecipazione> quotePartecipazione = new ArrayList<QuotaPartecipazione>();
+		for (UtentePolisportivaAbstract partecipante : partecipantiAttuali) {
+			QuotaPartecipazione quotaPartecipazione = this.creaQuotaPartecipazione(appuntamentoPerCreazioneQuota,
+					partecipante);
+			quotePartecipazione.add(quotaPartecipazione);
+		}
+		boolean partecipanteAggiunto = false;
 		for (Appuntamento appuntamento : listaAppuntamentiCorso) {
-			boolean partecipanteAggiunto = this
+			partecipanteAggiunto = this
 					.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
-			if (partecipanteAggiunto) {
-				appuntamento.aggiungiQuotaPartecipazione(quotaPartecipazione);
+		}
+
+		if (partecipanteAggiunto && appuntamentoPerCreazioneQuota.isConfermato()) {
+			for (Appuntamento appuntamento : listaAppuntamentiCorso) {
+				for (QuotaPartecipazione quota : quotePartecipazione) {
+					appuntamento.aggiungiQuotaPartecipazione(quota);
+				}
 			}
-			this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
+		}
+		
+		for(Appuntamento appuntamento : listaAppuntamentiCorso) {
+			getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 		}
 
 		Map<String, Object> infoGeneraliCorso = new HashMap<String, Object>();
@@ -292,12 +308,13 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	@Override
 	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandler controller) {
-		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState)getElementiPrenotazioneFactory().getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
+		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState) getElementiPrenotazioneFactory()
+				.getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
 		getStatoControllerLezioni().setMapperFactory(getMapperFactory());
-		
+
 		Map<String, Object> mappaDati = this.getStatoControllerLezioni().getDatiOpzioni(controller);
 		mappaDati.put("sportiviInvitabili", this.getSportiviPolisportiva());
-		
+
 		return mappaDati;
 	}
 
@@ -307,10 +324,10 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		if (appuntamento.getPartecipantiAppuntamento().size() < appuntamento.getNumeroPartecipantiMassimo()) {
 			appuntamento.aggiungiPartecipante(utente);
 			partecipanteAggiunto = true;
-			if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento
+			if (!appuntamento.isConfermato() && appuntamento.getPartecipantiAppuntamento().size() >= appuntamento
 					.getSogliaMinimaPartecipantiPerConferma()) {
 				appuntamento.confermaAppuntamento();
-				
+
 			}
 		}
 		return partecipanteAggiunto;

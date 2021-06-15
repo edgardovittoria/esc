@@ -236,5 +236,7 @@ public abstract class Appuntamento {
 	};
 	public abstract List<Object>  getPartecipantiAppuntamento();
 	
-	
+	public boolean isConfermato() {
+		return getPrenotazioneSpecsAppuntamento().isConfermata();
+	}
 }
