@@ -159,7 +159,10 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 			calendarioDaUnire.aggiungiAppuntamento(app);
 			getRegistroImpianti().aggiornaCalendarioImpianto((Impianto) controller.getPrenotazioneInAtto()
 					.getSingolaSpecificaExtra("impianto", app.getPrenotazioneSpecsAppuntamento()), calendarioDaUnire);
+			getRegistroSquadre().aggiornaCalendarioSquadra(getRegistroSquadre().getSquadraById(controller.getIdSquadraPrenotante()), calendarioDaUnire);
 		}
+		
+		
 
 		/*
 		 * Creiamo le notifiche relative alle squadre invitate, creandone una per ogni
