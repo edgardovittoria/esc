@@ -43,10 +43,9 @@ public class AppuntamentoMapper extends EntityDTOMapper {
 
 		appuntamentoDTO.setSpecificaPrenotazione(specificaDTO);
 		for (UtentePolisportivaAbstract partecipante : appuntamentoDaConvertire.getUtentiPartecipanti()) {
-			UtentePolisportivaDTO partecipanteDTO = getMapperFactory().getUtenteMapper()
-					.convertiInUtentePolisportivaDTO(partecipante);
+			
 
-			appuntamentoDTO.aggiungiPartecipante(partecipanteDTO);
+			appuntamentoDTO.aggiungiPartecipante((String)partecipante.getProprieta().get("email"));
 		}
 		List<QuotaPartecipazioneDTO> listaQuote = new ArrayList<QuotaPartecipazioneDTO>();
 		for (QuotaPartecipazione quota : appuntamentoDaConvertire.getQuotePartecipazione()) {
@@ -57,9 +56,8 @@ public class AppuntamentoMapper extends EntityDTOMapper {
 		}
 		appuntamentoDTO.setQuotePartecipazione(listaQuote);
 
-		UtentePolisportivaDTO creatore = getMapperFactory().getUtenteMapper()
-				.convertiInUtentePolisportivaDTO(appuntamentoDaConvertire.creatoDa());
-		appuntamentoDTO.setCreatore(creatore);
+		
+		appuntamentoDTO.setCreatore((String)appuntamentoDaConvertire.creatoDa().getProprieta().get("email"));
 
 		if (appuntamentoDaConvertire.getManutentore() != null) {
 			appuntamentoDTO.setIdManutentore(appuntamentoDaConvertire.getManutentore().getId());

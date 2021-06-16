@@ -22,9 +22,8 @@ public class QuotaPartecipazioneMapper extends EntityDTOMapper{
 		quotaDTO.setCosto(quotaDaConvertire.getCosto());
 		quotaDTO.setPagata(quotaDaConvertire.isPagata());
 
-		UtentePolisportivaDTO sportivo = getMapperFactory().getUtenteMapper()
-				.convertiInUtentePolisportivaDTO(quotaDaConvertire.getSportivoAssociato());
-		quotaDTO.setSportivo(sportivo);
+		
+		quotaDTO.setSportivo((String)quotaDaConvertire.getSportivoAssociato().getProprieta().get("email"));
 		
 		return quotaDTO;
 	}

@@ -10,7 +10,7 @@ public class QuotaPartecipazioneDTO {
 
     private float costo;
 
-    private UtentePolisportivaDTO sportivo;
+    private String sportivo;
 
     private boolean pagata;
 

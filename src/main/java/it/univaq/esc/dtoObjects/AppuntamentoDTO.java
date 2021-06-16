@@ -23,11 +23,11 @@ public class AppuntamentoDTO {
 
 	private Integer idAppuntamento;
 	private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
-	private List<UtentePolisportivaDTO> partecipanti = new ArrayList<UtentePolisportivaDTO>();
+	private List<String> partecipanti = new ArrayList<String>();
 	private List<Integer> squadrePartecipanti = new ArrayList<Integer>();
 	private PrenotazioneSpecsDTO specificaPrenotazione;
 	private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
-	private UtentePolisportivaDTO creatore;
+	private String creatore;
 	private Integer idManutentore;
 	private String modalitaPrenotazione;
 	private String tipoPrenotazione;
@@ -56,8 +56,8 @@ public class AppuntamentoDTO {
 		this.getOrarioAppuntamento().setOraFine(oraFineAppuntamento);
 	}
 
-	public void aggiungiPartecipante(UtentePolisportivaDTO partecipante) {
-		this.partecipanti.add(partecipante);
+	public void aggiungiPartecipante(String emailPartecipante) {
+		this.partecipanti.add(emailPartecipante);
 	}
 
 	
