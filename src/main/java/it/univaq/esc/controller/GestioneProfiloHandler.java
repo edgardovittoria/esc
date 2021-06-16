@@ -79,14 +79,11 @@ public class GestioneProfiloHandler {
 	 */
 	@GetMapping("/sportivo")
 	@CrossOrigin
-	public @ResponseBody Map<String, Object> getDatiSportivo(@RequestParam(name = "email") String email) {
+	public @ResponseBody UtentePolisportivaDTO getDatiSportivo(@RequestParam(name = "email") String email) {
 		UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper()
 				.convertiInUtentePolisportivaDTO(registroUtentiPolisportiva.getUtenteByEmail(email));
-		List<SquadraDTO> squadreSportivo = getSquadreDiCuiUtenteMembro(getRegistroUtentiPolisportiva().getUtenteByEmail(email));
-		Map<String, Object> mappaDatiSportivo = new HashMap<String, Object>();
-		mappaDatiSportivo.put("utente", sportivoDTO);
-		mappaDatiSportivo.put("squadreUtente", squadreSportivo);
-		return mappaDatiSportivo;
+		
+		return sportivoDTO;
 	}
 
 	/**
@@ -198,7 +195,14 @@ public class GestioneProfiloHandler {
 //	}
 
 	
-
+	@GetMapping("/squadreSportivo")
+	@CrossOrigin
+	public List<SquadraDTO> getSquadreSportivoMembro(@RequestParam(name = "email") String email){
+		UtentePolisportivaAbstract sportivo = getRegistroUtentiPolisportiva().getUtenteByEmail(email);
+		return getSquadreDiCuiUtenteMembro(sportivo);
+	}
+	
+	
 	private List<SquadraDTO> getSquadreDiCuiUtenteMembro(UtentePolisportivaAbstract membro) {
 		List<SquadraDTO> listaSquadreDTO = new ArrayList<SquadraDTO>();
 		for (Squadra squadra : getRegistroSquadre().getSquadrePerMembro(membro)) {
