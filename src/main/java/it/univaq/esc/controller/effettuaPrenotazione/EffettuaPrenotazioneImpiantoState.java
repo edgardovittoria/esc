@@ -179,12 +179,19 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	 */
 	@Override
 	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandler controller) {
+		Calendario calendarioSportivo = new Calendario();
 		for (Appuntamento app : controller.getListaAppuntamentiPrenotazioneInAtto()) {
 			Calendario calendarioDaUnire = new Calendario();
 			calendarioDaUnire.aggiungiAppuntamento(app);
+			calendarioSportivo.aggiungiAppuntamento(app);
 			getRegistroImpianti().aggiornaCalendarioImpianto((Impianto) controller.getPrenotazioneInAtto()
 					.getSingolaSpecificaExtra("impianto", app.getPrenotazioneSpecsAppuntamento()), calendarioDaUnire);
 		}
+		
+		
+		getRegistroUtenti().aggiornaCalendarioSportivo(calendarioSportivo, controller.getSportivoPrenotante());
+		
+		
 
 		/*
 		 * Creiamo le notifiche relative agli invitati, impostandole con tutti i dati
@@ -261,7 +268,11 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		String emailPartecipante = (String) identificativoPartecipante;
 		Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
 		if (appuntamento != null) {
-			this.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
+			boolean partecipanteAggiunto = this.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
+			
+			if(partecipanteAggiunto) {
+				getRegistroUtenti().aggiornaCalendarioSportivo(appuntamento, getRegistroUtenti().getUtenteByEmail(emailPartecipante));
+			}
 			// this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 			AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper().convertiInAppuntamentoDTO(appuntamento);
 			return appuntamentoDTO;

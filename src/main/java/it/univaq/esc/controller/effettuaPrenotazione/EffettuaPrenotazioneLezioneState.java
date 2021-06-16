@@ -165,6 +165,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 			getRegistroUtenti().aggiornaCalendarioIstruttore(calendarioDaUnire,
 					(UtentePolisportivaAbstract) controller.getPrenotazioneInAtto()
 							.getSingolaSpecificaExtra("istruttore", app.getPrenotazioneSpecsAppuntamento()));
+			getRegistroUtenti().aggiornaCalendarioSportivo(calendarioDaUnire, controller.getSportivoPrenotante());
 		}
 
 	}

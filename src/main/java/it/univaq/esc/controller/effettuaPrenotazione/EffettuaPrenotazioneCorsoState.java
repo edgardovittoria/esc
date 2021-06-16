@@ -15,6 +15,7 @@ import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
+import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
@@ -297,6 +298,12 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 			getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 		}
 
+		Calendario calendarioSportivo = new Calendario();
+		for(Appuntamento appuntamento : listaAppuntamentiCorso) {
+			calendarioSportivo.aggiungiAppuntamento(appuntamento);
+		}
+		getRegistroUtenti().aggiornaCalendarioSportivo(calendarioSportivo, nuovoPartecipante);
+		
 		Map<String, Object> infoGeneraliCorso = new HashMap<String, Object>();
 		infoGeneraliCorso.put("numeroMinimoPartecipanti",
 				corsoPrenotazione.getListaSpecifichePrenotazione().get(0).getSogliaPartecipantiPerConferma());

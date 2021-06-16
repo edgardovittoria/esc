@@ -56,9 +56,8 @@ public class GestioneProfiloHandler {
 	@Resource(name = "MAPPER_SINGOLO_UTENTE")
 	private MapperFactory mapperFactory;
 
-	@Autowired
-	private RegistroNotifiche registroNotifiche;
-
+	
+	
 	@Autowired
 	private RegistroUtentiPolisportiva registroUtentiPolisportiva;
 
@@ -80,11 +79,14 @@ public class GestioneProfiloHandler {
 	 */
 	@GetMapping("/sportivo")
 	@CrossOrigin
-	public @ResponseBody UtentePolisportivaDTO getSportivo(@RequestParam(name = "email") String email) {
+	public @ResponseBody Map<String, Object> getDatiSportivo(@RequestParam(name = "email") String email) {
 		UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper()
 				.convertiInUtentePolisportivaDTO(registroUtentiPolisportiva.getUtenteByEmail(email));
-
-		return sportivoDTO;
+		List<SquadraDTO> squadreSportivo = getSquadreDiCuiUtenteMembro(getRegistroUtentiPolisportiva().getUtenteByEmail(email));
+		Map<String, Object> mappaDatiSportivo = new HashMap<String, Object>();
+		mappaDatiSportivo.put("utente", sportivoDTO);
+		mappaDatiSportivo.put("squadreUtente", squadreSportivo);
+		return mappaDatiSportivo;
 	}
 
 	/**
@@ -96,123 +98,106 @@ public class GestioneProfiloHandler {
 	 * @return prenotazioni effettuate e partecipazioni dell'utente registrato con
 	 *         l'email passata come parametro.
 	 */
-	@GetMapping("/prenotazioniEPartecipazioniSportivo")
-	@CrossOrigin
-	public @ResponseBody Map<String, Object> getAppuntamentiSportivo(@RequestParam(name = "email") String email) {
+//	@GetMapping("/prenotazioniEPartecipazioniSportivo")
+//	@CrossOrigin
+//	public @ResponseBody Map<String, Object> getAppuntamentiSportivo(@RequestParam(name = "email") String email) {
+//
+//		/*
+//		 * Ricaviamo la lista delle prenotazioni effettuate dall'utente, trasformandola
+//		 * in DTO.
+//		 */
+//		List<PrenotazioneDTO> prenotazioni = new ArrayList<PrenotazioneDTO>();
+//		if (!this.registroPrenotazioni.getPrenotazioniByEmailSportivo(email).isEmpty()) {
+//			for (Prenotazione pren : registroPrenotazioni.escludiPrenotazioniPerTipo(
+//					registroPrenotazioni.getPrenotazioniByEmailSportivo(email), TipiPrenotazione.CORSO.toString())) {
+//
+//				List<Appuntamento> listaAppuntamnenti = new ArrayList<Appuntamento>();
+//				for (PrenotazioneSpecs spec : pren.getListaSpecifichePrenotazione()) {
+//					listaAppuntamnenti.add(registroAppuntamenti.getAppuntamentoBySpecificaAssociata(spec));
+//				}
+//				PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper().convertiInPrenotazioneDTO(pren,
+//						listaAppuntamnenti);
+//
+//				prenotazioni.add(prenDTO);
+//			}
+//		}
+//
+//		/*
+//		 * Ricaviamo la lista degli appuntamenti non creati dallo sportivo, ma dei quali
+//		 * è un partecipante, trasformandola in DTO.
+//		 */
+//		UtentePolisportivaAbstract sportivo = this.registroUtentiPolisportiva.getUtenteByEmail(email);
+//		List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
+//		if (!this.registroAppuntamenti.escludiAppuntamentiDiCorsi(
+//				this.registroAppuntamenti.getAppuntamentiPerPartecipanteNonCreatore(sportivo)).isEmpty()) {
+//			for (Appuntamento appuntamento : this.registroAppuntamenti.escludiAppuntamentiDiCorsi(
+//					this.registroAppuntamenti.getAppuntamentiPerPartecipanteNonCreatore(sportivo))) {
+//				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper()
+//						.convertiInAppuntamentoDTO(appuntamento);
+//				appuntamenti.add(appDTO);
+//			}
+//		}
+//
+//		/*
+//		 * Ricaviamo la lista dei corsi a cui si partecipa, come prenotazioni DTO. Prima
+//		 * ricaviamo gli appuntamenti riferiti ai corsi, ai quali si partecipa. Poi
+//		 * ricaviamo le prenotazioni a cui gli appuntamenti si riferiscono e li mettiamo
+//		 * in un Set così che vengano inserite una sola volta automaticamente. Infine
+//		 * trasformiamo il Set in List e la convertiamo in DTO.
+//		 * 
+//		 */
+//		List<Appuntamento> appuntamentiCorsiACuiSiPartecipa = this.registroAppuntamenti
+//				.filtraAppuntamentiPerPartecipante(this.registroAppuntamenti
+//						.filtraAppuntamentiDiCorsi(this.registroAppuntamenti.getListaAppuntamenti()), sportivo);
+//		Set<Prenotazione> corsiACuiSiPartecipa = new HashSet<Prenotazione>();
+//		appuntamentiCorsiACuiSiPartecipa
+//				.forEach((appuntamento) -> corsiACuiSiPartecipa.add(appuntamento.getPrenotazionePrincipale()));
+//		List<Prenotazione> listaCorsiACuiSiPartecipa = new ArrayList<Prenotazione>(corsiACuiSiPartecipa);
+//
+//		List<PrenotazioneDTO> listaCorsiACuiSiPartecipaDTO = new ArrayList<PrenotazioneDTO>();
+//		for (Prenotazione prenotazione : listaCorsiACuiSiPartecipa) {
+//			Map<String, Object> infoGenerali = new HashMap<String, Object>();
+//			PrenotazioneSpecs specificaCorso = prenotazione.getListaSpecifichePrenotazione().get(0);
+//			infoGenerali.put("numeroMinimoParteciapanti", specificaCorso.getSogliaPartecipantiPerConferma());
+//			infoGenerali.put("numeroMassimoPartecipanti", specificaCorso.getSogliaMassimaPartecipanti());
+//			infoGenerali.put("costoPerPartecipante", specificaCorso.getCosto());
+//
+//			PrenotazioneDTO prenotazioneDTO = getMapperFactory().getPrenotazioneMapper().convertiInPrenotazioneDTO(
+//					prenotazione,
+//					this.registroAppuntamenti.getAppuntamentiByPrenotazioneId(prenotazione.getIdPrenotazione()),
+//					infoGenerali);
+//			listaCorsiACuiSiPartecipaDTO.add(prenotazioneDTO);
+//		}
+//
+//		/*
+//		 * Ricaviamo le notifiche dell'utente autenticato per mostrarle nel suo profilo.
+//		 */
+//		List<NotificaDTO> notificheUtente = getNotificheDTOPerDestinatario(sportivo);
+//
+//		/*
+//		 * Ricaviamo la lista delle squadre di cui l'utente è membro.
+//		 */
+//		List<SquadraDTO> squadreUtente = getSquadreDiCuiUtenteMembro(sportivo);
+//
+//		/*
+//		 * Creiamo la mappa con tutti i dati e la ritorniamo. "prenotazioniEffettuate":
+//		 * lista delle prenotazioni effettuate dallo sportivo. "partecipazioni": lista
+//		 * degli appuntamenti non creati dall'utente, ma di cui l'utente è partecipante.
+//		 * "corsiAcuiSiPartecipa": lista delle prenotazioni di corsi a cui ci si è
+//		 * prenotati.
+//		 */
+//		Map<String, Object> mappaPrenotazioniPartecipazioni = new HashMap<String, Object>();
+//		mappaPrenotazioniPartecipazioni.put("prenotazioniEffettuate", prenotazioni);
+//		mappaPrenotazioniPartecipazioni.put("partecipazioni", appuntamenti);
+//		mappaPrenotazioniPartecipazioni.put("corsiACuiSiPartecipa", listaCorsiACuiSiPartecipaDTO);
+//		mappaPrenotazioniPartecipazioni.put("notificheUtente", notificheUtente);
+//		mappaPrenotazioniPartecipazioni.put("squadre", squadreUtente);
+//
+//		return mappaPrenotazioniPartecipazioni;
+//
+//	}
 
-		/*
-		 * Ricaviamo la lista delle prenotazioni effettuate dall'utente, trasformandola
-		 * in DTO.
-		 */
-		List<PrenotazioneDTO> prenotazioni = new ArrayList<PrenotazioneDTO>();
-		if (!this.registroPrenotazioni.getPrenotazioniByEmailSportivo(email).isEmpty()) {
-			for (Prenotazione pren : registroPrenotazioni.escludiPrenotazioniPerTipo(
-					registroPrenotazioni.getPrenotazioniByEmailSportivo(email), TipiPrenotazione.CORSO.toString())) {
-
-				List<Appuntamento> listaAppuntamnenti = new ArrayList<Appuntamento>();
-				for (PrenotazioneSpecs spec : pren.getListaSpecifichePrenotazione()) {
-					listaAppuntamnenti.add(registroAppuntamenti.getAppuntamentoBySpecificaAssociata(spec));
-				}
-				PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper().convertiInPrenotazioneDTO(pren,
-						listaAppuntamnenti);
-
-				prenotazioni.add(prenDTO);
-			}
-		}
-
-		/*
-		 * Ricaviamo la lista degli appuntamenti non creati dallo sportivo, ma dei quali
-		 * è un partecipante, trasformandola in DTO.
-		 */
-		UtentePolisportivaAbstract sportivo = this.registroUtentiPolisportiva.getUtenteByEmail(email);
-		List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
-		if (!this.registroAppuntamenti.escludiAppuntamentiDiCorsi(
-				this.registroAppuntamenti.getAppuntamentiPerPartecipanteNonCreatore(sportivo)).isEmpty()) {
-			for (Appuntamento appuntamento : this.registroAppuntamenti.escludiAppuntamentiDiCorsi(
-					this.registroAppuntamenti.getAppuntamentiPerPartecipanteNonCreatore(sportivo))) {
-				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper()
-						.convertiInAppuntamentoDTO(appuntamento);
-				appuntamenti.add(appDTO);
-			}
-		}
-
-		/*
-		 * Ricaviamo la lista dei corsi a cui si partecipa, come prenotazioni DTO. Prima
-		 * ricaviamo gli appuntamenti riferiti ai corsi, ai quali si partecipa. Poi
-		 * ricaviamo le prenotazioni a cui gli appuntamenti si riferiscono e li mettiamo
-		 * in un Set così che vengano inserite una sola volta automaticamente. Infine
-		 * trasformiamo il Set in List e la convertiamo in DTO.
-		 * 
-		 */
-		List<Appuntamento> appuntamentiCorsiACuiSiPartecipa = this.registroAppuntamenti
-				.filtraAppuntamentiPerPartecipante(this.registroAppuntamenti
-						.filtraAppuntamentiDiCorsi(this.registroAppuntamenti.getListaAppuntamenti()), sportivo);
-		Set<Prenotazione> corsiACuiSiPartecipa = new HashSet<Prenotazione>();
-		appuntamentiCorsiACuiSiPartecipa
-				.forEach((appuntamento) -> corsiACuiSiPartecipa.add(appuntamento.getPrenotazionePrincipale()));
-		List<Prenotazione> listaCorsiACuiSiPartecipa = new ArrayList<Prenotazione>(corsiACuiSiPartecipa);
-
-		List<PrenotazioneDTO> listaCorsiACuiSiPartecipaDTO = new ArrayList<PrenotazioneDTO>();
-		for (Prenotazione prenotazione : listaCorsiACuiSiPartecipa) {
-			Map<String, Object> infoGenerali = new HashMap<String, Object>();
-			PrenotazioneSpecs specificaCorso = prenotazione.getListaSpecifichePrenotazione().get(0);
-			infoGenerali.put("numeroMinimoParteciapanti", specificaCorso.getSogliaPartecipantiPerConferma());
-			infoGenerali.put("numeroMassimoPartecipanti", specificaCorso.getSogliaMassimaPartecipanti());
-			infoGenerali.put("costoPerPartecipante", specificaCorso.getCosto());
-
-			PrenotazioneDTO prenotazioneDTO = getMapperFactory().getPrenotazioneMapper().convertiInPrenotazioneDTO(
-					prenotazione,
-					this.registroAppuntamenti.getAppuntamentiByPrenotazioneId(prenotazione.getIdPrenotazione()),
-					infoGenerali);
-			listaCorsiACuiSiPartecipaDTO.add(prenotazioneDTO);
-		}
-
-		/*
-		 * Ricaviamo le notifiche dell'utente autenticato per mostrarle nel suo profilo.
-		 */
-		List<NotificaDTO> notificheUtente = getNotificheDTOPerDestinatario(sportivo);
-
-		/*
-		 * Ricaviamo la lista delle squadre di cui l'utente è membro.
-		 */
-		List<SquadraDTO> squadreUtente = getSquadreDiCuiUtenteMembro(sportivo);
-
-		/*
-		 * Creiamo la mappa con tutti i dati e la ritorniamo. "prenotazioniEffettuate":
-		 * lista delle prenotazioni effettuate dallo sportivo. "partecipazioni": lista
-		 * degli appuntamenti non creati dall'utente, ma di cui l'utente è partecipante.
-		 * "corsiAcuiSiPartecipa": lista delle prenotazioni di corsi a cui ci si è
-		 * prenotati.
-		 */
-		Map<String, Object> mappaPrenotazioniPartecipazioni = new HashMap<String, Object>();
-		mappaPrenotazioniPartecipazioni.put("prenotazioniEffettuate", prenotazioni);
-		mappaPrenotazioniPartecipazioni.put("partecipazioni", appuntamenti);
-		mappaPrenotazioniPartecipazioni.put("corsiACuiSiPartecipa", listaCorsiACuiSiPartecipaDTO);
-		mappaPrenotazioniPartecipazioni.put("notificheUtente", notificheUtente);
-		mappaPrenotazioniPartecipazioni.put("squadre", squadreUtente);
-
-		return mappaPrenotazioniPartecipazioni;
-
-	}
-
-	@GetMapping("/notificheUtente")
-	@CrossOrigin
-	public @ResponseBody List<NotificaDTO> getNotificheUtente(@RequestParam(name = "email") String email) {
-		UtentePolisportivaAbstract utente = getRegistroUtentiPolisportiva().getUtenteByEmail(email);
-		return getNotificheDTOPerDestinatario(utente);
-	}
-
-	private List<NotificaDTO> getNotificheDTOPerDestinatario(UtentePolisportivaAbstract destinatario) {
-		List<NotificaDTO> notificheDtos = new ArrayList<NotificaDTO>();
-		for (NotificaService notifica : getRegistroNotifiche().getNotifichePerDestinatario(destinatario)) {
-			impostaMapperFactory(notifica.getModalitaNotifica());
-			NotificaDTO notificaDTO = getMapperFactory().getNotificaMapper().convertiInNotificaDTO(notifica);
-
-			notificheDtos.add(notificaDTO);
-		}
-
-		return notificheDtos;
-	}
+	
 
 	private List<SquadraDTO> getSquadreDiCuiUtenteMembro(UtentePolisportivaAbstract membro) {
 		List<SquadraDTO> listaSquadreDTO = new ArrayList<SquadraDTO>();
@@ -224,8 +209,6 @@ public class GestioneProfiloHandler {
 		return listaSquadreDTO;
 	}
 	
-	private void impostaMapperFactory(String modalitaPrenotazione) {
-		setMapperFactory(BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class));
-	}
+	
 
 }

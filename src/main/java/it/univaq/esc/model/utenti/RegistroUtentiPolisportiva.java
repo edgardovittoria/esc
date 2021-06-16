@@ -245,6 +245,21 @@ public class RegistroUtentiPolisportiva {
 		return istruttori;
 	}
 
+    public void aggiornaCalendarioSportivo(Calendario calendarioDaUnire, UtentePolisportivaAbstract sportivo) {
+    	Calendario calendarioPrecedente = (Calendario)sportivo.getProprieta().get("calendarioAppuntamentiSportivo");
+        calendarioPrecedente.unisciCalendario(calendarioDaUnire);
+        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
+        mappaProprieta.put("calendarioAppuntamentiSportivo", calendarioPrecedente);
+        sportivo.setProprieta(mappaProprieta);
+    }
+    
+    public void aggiornaCalendarioSportivo(Appuntamento nuovoAppuntamento, UtentePolisportivaAbstract sportivo) {
+    	Calendario calendarioPrecedente = (Calendario)sportivo.getProprieta().get("calendarioAppuntamentiSportivo");
+        calendarioPrecedente.aggiungiAppuntamento(nuovoAppuntamento);
+        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
+        mappaProprieta.put("calendarioAppuntamentiSportivo", calendarioPrecedente);
+        sportivo.setProprieta(mappaProprieta);
+    }
 
     public void aggiornaCalendarioIstruttore(Calendario calendarioDaUnire, UtentePolisportivaAbstract istruttore){
         Calendario calendarioPrecedente = (Calendario)istruttore.getProprieta().get("calendarioLezioni");

@@ -2,6 +2,8 @@ package it.univaq.esc.controller.notifiche;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -21,6 +23,8 @@ import it.univaq.esc.dtoObjects.NotificaDTO;
 import it.univaq.esc.dtoObjects.NotificabileDTO;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
+import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
+import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.utility.BeanUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -42,6 +46,9 @@ public class GestioneNotificheHandler {
 	
 	@Autowired
 	private RegistroNotifiche registroNotifiche;
+	
+	@Autowired
+	private RegistroUtentiPolisportiva RegistroUtentiPolisportiva;
 	
 	
 	@GetMapping("/dettagliNotifica")
@@ -73,4 +80,25 @@ public class GestioneNotificheHandler {
 	private void impostaMapperFactory(String modalitaPrenotazione) {
 		setMapperFactory(BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class));
 	}
+	
+	@GetMapping("/notificheUtente")
+	@CrossOrigin
+	public @ResponseBody List<NotificaDTO> getNotificheUtente(@RequestParam(name = "email") String email) {
+		UtentePolisportivaAbstract utente = getRegistroUtentiPolisportiva().getUtenteByEmail(email);
+		return getNotificheDTOPerDestinatario(utente);
+	}
+
+	private List<NotificaDTO> getNotificheDTOPerDestinatario(UtentePolisportivaAbstract destinatario) {
+		List<NotificaDTO> notificheDtos = new ArrayList<NotificaDTO>();
+		for (NotificaService notifica : getRegistroNotifiche().getNotifichePerDestinatario(destinatario)) {
+			impostaMapperFactory(notifica.getModalitaNotifica());
+			NotificaDTO notificaDTO = getMapperFactory().getNotificaMapper().convertiInNotificaDTO(notifica);
+
+			notificheDtos.add(notificaDTO);
+		}
+
+		return notificheDtos;
+	}
+	
+	
 }

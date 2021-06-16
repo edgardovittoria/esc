@@ -47,6 +47,7 @@ public class UtenteMapper extends EntityDTOMapper{
 			}
 			mappaAttributi.put("sportPraticati", sportPraticati);
 			mappaAttributi.put("moroso", (Boolean) utenteDaConvertire.getProprieta().get("moroso"));
+			mappaAttributi.put("appuntamentiSportivo", utenteDaConvertire.getProprieta().get("calendarioAppuntamentiSportivo"));
 
 		}
 
