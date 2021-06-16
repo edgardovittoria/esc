@@ -203,6 +203,8 @@ public class GestioneProfiloHandler {
 	}
 	
 	
+	
+	
 	private List<SquadraDTO> getSquadreDiCuiUtenteMembro(UtentePolisportivaAbstract membro) {
 		List<SquadraDTO> listaSquadreDTO = new ArrayList<SquadraDTO>();
 		for (Squadra squadra : getRegistroSquadre().getSquadrePerMembro(membro)) {
@@ -213,6 +215,8 @@ public class GestioneProfiloHandler {
 		return listaSquadreDTO;
 	}
 	
-	
+	private void impostaMapperFactory(String modalitaPrenotazione) {
+		setMapperFactory(BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class));
+	}
 
 }
