@@ -50,7 +50,7 @@ import lombok.Setter;
  * @author esc
  *
  */
-@Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PRIVATE) 
+@Getter(value = AccessLevel.PUBLIC) @Setter(value = AccessLevel.PRIVATE) 
 public abstract class EffettuaPrenotazioneState {
 	
 	/**

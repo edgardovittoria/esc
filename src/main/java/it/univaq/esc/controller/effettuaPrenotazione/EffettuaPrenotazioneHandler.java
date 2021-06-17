@@ -88,14 +88,7 @@ public class EffettuaPrenotazioneHandler {
 	@Autowired
 	private RegistroPrenotazioni registroPrenotazioni;
 
-	/**
-	 * Catalogo con le descrizioni delle prenotazioni effettuabili, necessarie per
-	 * operazioni come il calcolo delle quote di partecipazione della prenotazione
-	 * in atto.
-	 */
-	@Autowired
-	private CatalogoPrenotabili listinoPrezziDescrizioniPolisportiva;
-
+	
 	/**
 	 * Prenotazione in atto gestita dal controller.
 	 */
@@ -213,15 +206,6 @@ public class EffettuaPrenotazioneHandler {
 		this.getListaAppuntamentiPrenotazioneInAtto().add(appuntamento);
 	}
 
-	/**
-	 * Restituisce il catalogo con le descrizioni (comprensive di prezzi) delle
-	 * prenotazioni effettuabili
-	 * 
-	 * @return il catalogo delle descrizioni delle prenotazioni effettuabili
-	 */
-	public CatalogoPrenotabili getListinoPrezziDescrizioniPolisportiva() {
-		return listinoPrezziDescrizioniPolisportiva;
-	}
 
 	/**
 	 * Restituisce il registro degli appuntamenti
@@ -299,7 +283,7 @@ public class EffettuaPrenotazioneHandler {
 	private void inizializzaNuovaPrenotazione(UtentePolisportivaAbstract sportivoPrenotante, String tipoPrenotazione,
 			String modalitaPrenotazione) {
 
-		Integer lastIdPrenotazione = this.registroPrenotazioni.getLastIdPrenotazione();
+		Integer lastIdPrenotazione = this.getRegistroPrenotazioni().getLastIdPrenotazione();
 
 		setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
 		getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);

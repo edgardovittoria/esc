@@ -95,7 +95,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 
 	private void impostaDatiPrenotazioneSpecs(PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs,
 			FormPrenotabile formDati, OrarioAppuntamento orario, EffettuaPrenotazioneHandler controller) {
-		PrenotabileDescrizione descrizioneSpecifica = controller.getListinoPrezziDescrizioniPolisportiva()
+		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)
 								.getTipoPrenotazione(),

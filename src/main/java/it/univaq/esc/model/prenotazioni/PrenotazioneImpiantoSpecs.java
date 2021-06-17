@@ -38,9 +38,7 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
     @JoinColumn
     private Impianto impiantoPrenotato;
 
-    @ManyToOne()
-    @JoinColumn()
-    private UtentePolisportivaAbstract manutentore;
+ 
  
   
     public void invitaSportivi(List<UtentePolisportivaAbstract> listaSportiviDaInvitare) {
@@ -63,9 +61,6 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
                 case "numeroGiocatoriNonIscritti" : 
                     this.setNumeroGiocatoriNonRegistratiAssociati((Integer)mappaValori.get(chiave));
                     break;
-                case "manutentore":
-                    this.setManutentore((UtentePolisportivaAbstract)mappaValori.get(chiave));
-                    break;
                 case "impianto":
                     this.setImpiantoPrenotato((Impianto)mappaValori.get(chiave));   
                     break;  
@@ -81,7 +76,6 @@ public class PrenotazioneImpiantoSpecs extends PrenotazioneSpecs {
         HashMap<String, Object> mappaValori = new HashMap<String, Object>();
         mappaValori.put("invitati", this.getInvitati());
         mappaValori.put("numeroGiocatoriNonIscritti", this.getNumeroGiocatoriNonRegistratiAssociati());
-        mappaValori.put("manutentore", this.getManutentore());
         mappaValori.put("impianto", this.getImpiantoPrenotato());
 
         return mappaValori;

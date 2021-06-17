@@ -66,6 +66,10 @@ public abstract class MapperFactory {
 		return impiantoMapper;
 	}
 	
+	public FormMapperToPrenotazioneSpecs getFormMapperToPrenotazioneSpecs() {
+		return BeanUtil.getBean(FormMapperToPrenotazioneSpecs.class);
+	}
+	
 	public abstract NotificaMapper getNotificaMapper() ;
 
 }

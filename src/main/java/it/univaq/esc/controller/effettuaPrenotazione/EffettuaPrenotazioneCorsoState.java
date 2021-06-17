@@ -109,7 +109,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		 * lezioni e del corso. Nel caso dei corsi infatti avremo speciche di LEZIONI ma
 		 * con descrizioni del corso anziche delle LEZIONI
 		 */
-		PrenotabileDescrizione descrizioneCorso = controller.getListinoPrezziDescrizioniPolisportiva()
+		PrenotabileDescrizione descrizioneCorso = getCatalogoPrenotabili()
 				.nuovoPrenotabile_avviaCreazione(
 						this.getRegistroSport().getSportByNome((String) formDati.getValoriForm().get("sport")),
 						controller.getTipoPrenotazioneInAtto(),

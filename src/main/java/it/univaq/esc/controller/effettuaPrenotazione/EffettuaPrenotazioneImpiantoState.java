@@ -87,8 +87,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	 * fase di riepilogo della prenotazione Impianto.
 	 */
 	@Override
-	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
-			EffettuaPrenotazioneHandler controller) {
+	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
 
 		for (OrarioAppuntamento orario : (List<OrarioAppuntamento>) formDati.getValoriForm()
 				.get("listaOrariAppuntamenti")) {
@@ -96,7 +95,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 					.getPrenotazioneSpecs(controller.getTipoPrenotazioneInAtto());
 			controller.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
 
-			impostaDatiPrenotazioneSpecs(prenotazioneSpecs, formDati, orario, controller);
+			getMapperFactory().getFormMapperToPrenotazioneSpecs().impostaDatiPrenotazioneImpiantoSpecs(
+					prenotazioneSpecs, formDati, orario, this, controller.getPrenotazioneInAtto());
 
 			// ---------------------------------------------------------------------------------------
 
@@ -114,32 +114,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 	}
 
-	private void impostaDatiPrenotazioneSpecs(PrenotazioneImpiantoSpecs prenotazioneSpecs, FormPrenotabile formDati,
-			OrarioAppuntamento orario, EffettuaPrenotazioneHandler controller) {
-		PrenotabileDescrizione descrizioneSpecifica = controller.getListinoPrezziDescrizioniPolisportiva()
-				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
-						controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)
-								.getTipoPrenotazione(),
-						getRegistroSport().getSportByNome((String) formDati.getValoriForm().get("sport")),
-						formDati.getModalitaPrenotazione());
-
-		prenotazioneSpecs.setPrenotazioneAssociata(controller.getPrenotazioneInAtto());
-
-		Integer idImpianto = 0;
-		for (ImpiantoSelezionato impianto : (List<ImpiantoSelezionato>) formDati.getValoriForm().get("impianti")) {
-			if (impianto.getIdSelezione() == orario.getId()) {
-				idImpianto = impianto.getIdImpianto();
-			}
-		}
-		prenotazioneSpecs.setImpiantoPrenotato(getRegistroImpianti().getImpiantoByID(idImpianto));
-
-		List<UtentePolisportivaAbstract> sportivi = new ArrayList<UtentePolisportivaAbstract>();
-		for (String email : (List<String>) formDati.getValoriForm().get("invitati")) {
-			sportivi.add(getRegistroUtenti().getUtenteByEmail(email));
-		}
-		prenotazioneSpecs.setInvitati(sportivi);
-		prenotazioneSpecs.setSpecificaDescription(descrizioneSpecifica);
-	}
+	
 
 	private void impostaDatiAppuntamento(PrenotazioneImpiantoSpecs prenotazioneSpecs, FormPrenotabile formDati,
 			AppuntamentoSingoliPartecipanti appuntamento, OrarioAppuntamento orario,
@@ -187,11 +162,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 			getRegistroImpianti().aggiornaCalendarioImpianto((Impianto) controller.getPrenotazioneInAtto()
 					.getSingolaSpecificaExtra("impianto", app.getPrenotazioneSpecsAppuntamento()), calendarioDaUnire);
 		}
-		
-		
+
 		getRegistroUtenti().aggiornaCalendarioSportivo(calendarioSportivo, controller.getSportivoPrenotante());
-		
-		
 
 		/*
 		 * Creiamo le notifiche relative agli invitati, impostandole con tutti i dati
@@ -268,13 +240,16 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		String emailPartecipante = (String) identificativoPartecipante;
 		Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
 		if (appuntamento != null) {
-			boolean partecipanteAggiunto = this.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
-			
-			if(partecipanteAggiunto) {
-				getRegistroUtenti().aggiornaCalendarioSportivo(appuntamento, getRegistroUtenti().getUtenteByEmail(emailPartecipante));
+			boolean partecipanteAggiunto = this
+					.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
+
+			if (partecipanteAggiunto) {
+				getRegistroUtenti().aggiornaCalendarioSportivo(appuntamento,
+						getRegistroUtenti().getUtenteByEmail(emailPartecipante));
 			}
 			// this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
-			AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper().convertiInAppuntamentoDTO(appuntamento);
+			AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper()
+					.convertiInAppuntamentoDTO(appuntamento);
 			return appuntamentoDTO;
 		}
 		return null;
