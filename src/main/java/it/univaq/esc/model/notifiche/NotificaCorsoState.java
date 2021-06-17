@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Component
 @NoArgsConstructor
-public class NotificaCorsoState implements NotificaState{
+public class NotificaCorsoState extends NotificaState{
 
 	
 	@Override

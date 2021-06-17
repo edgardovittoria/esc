@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Component
 @NoArgsConstructor
-public class NotificaImpiantoState implements NotificaState{
+public class NotificaImpiantoState extends NotificaState{
 	
 	
 	

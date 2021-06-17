@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Component
 @NoArgsConstructor
-public class NotificaImpiantoSquadraState implements NotificaState{
+public class NotificaImpiantoSquadraState extends NotificaState{
 
 	@Override
 	public String getMessaggioNotifica(NotificaService notificaDiCuiCostruireIlMessaggio) {
