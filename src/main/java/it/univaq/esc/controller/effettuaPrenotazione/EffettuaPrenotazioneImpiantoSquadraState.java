@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
+import it.univaq.esc.dtoObjects.FormPrenotaImpiantoSquadra;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
@@ -71,18 +72,18 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
 			EffettuaPrenotazioneHandler controller) {
 
-		for (OrarioAppuntamento orario : (List<OrarioAppuntamento>) formDati.getValoriForm()
-				.get("listaOrariAppuntamenti")) {
+		FormPrenotaImpiantoSquadra formSquadra = (FormPrenotaImpiantoSquadra)formDati;
+		for (OrarioAppuntamento orario : formSquadra.getOrariSelezionati()) {
 			PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs = (PrenotazioneImpiantoSquadraSpecs) getElementiPrenotazioneFactory()
 					.getPrenotazioneSpecs(controller.getTipoPrenotazioneInAtto());
 			controller.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
 
-			impostaDatiPrenotazioneSpecs(prenotazioneSpecs, formDati, orario, controller);
+			impostaDatiPrenotazioneSpecs(prenotazioneSpecs, formSquadra, orario, controller);
 
 			// ---------------------------------------------------------------------------------------
 
 			AppuntamentoSquadra appuntamento = (AppuntamentoSquadra) getElementiPrenotazioneFactory().getAppuntamento();
-			impostaDatiAppuntamento(prenotazioneSpecs, formDati, appuntamento, orario, controller);
+			impostaDatiAppuntamento(prenotazioneSpecs, formSquadra, appuntamento, orario, controller);
 
 			controller.aggiungiAppuntamento(appuntamento);
 		}
@@ -94,18 +95,18 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	}
 
 	private void impostaDatiPrenotazioneSpecs(PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs,
-			FormPrenotabile formDati, OrarioAppuntamento orario, EffettuaPrenotazioneHandler controller) {
+			FormPrenotaImpiantoSquadra formDati, OrarioAppuntamento orario, EffettuaPrenotazioneHandler controller) {
 		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)
 								.getTipoPrenotazione(),
-						getRegistroSport().getSportByNome((String) formDati.getValoriForm().get("sport")),
+						getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
 						formDati.getModalitaPrenotazione());
 
 		prenotazioneSpecs.setPrenotazioneAssociata(controller.getPrenotazioneInAtto());
 
 		Integer idImpianto = 0;
-		for (ImpiantoSelezionato impianto : (List<ImpiantoSelezionato>) formDati.getValoriForm().get("impianti")) {
+		for (ImpiantoSelezionato impianto : formDati.getImpianti()) {
 			if (impianto.getIdSelezione() == orario.getId()) {
 				idImpianto = impianto.getIdImpianto();
 			}
@@ -113,14 +114,14 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		prenotazioneSpecs.setImpiantoPrenotato(getRegistroImpianti().getImpiantoByID(idImpianto));
 
 		List<Squadra> squadreInvitate = new ArrayList<Squadra>();
-		for (Integer idSquadra : (List<Integer>) formDati.getValoriForm().get("squadreInvitate")) {
+		for (Integer idSquadra : formDati.getSquadreInvitate()) {
 			squadreInvitate.add(getRegistroSquadre().getSquadraById(idSquadra));
 		}
 		prenotazioneSpecs.setSquadreInvitate(squadreInvitate);
 		prenotazioneSpecs.setSpecificaDescription(descrizioneSpecifica);
 	}
 
-	private void impostaDatiAppuntamento(PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs, FormPrenotabile formDati,
+	private void impostaDatiAppuntamento(PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs, FormPrenotaImpiantoSquadra formDati,
 			AppuntamentoSquadra appuntamento, OrarioAppuntamento orario, EffettuaPrenotazioneHandler controller) {
 		// Creazione calcolatore che poi dovrà finire altrove
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
@@ -136,8 +137,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		appuntamento.setDataOraFineAppuntamento(dataFine);
 
 		boolean pending = false;
-		for (CheckboxPendingSelezionato checkbox : (List<CheckboxPendingSelezionato>) formDati.getValoriForm()
-				.get("checkboxesPending")) {
+		for (CheckboxPendingSelezionato checkbox : formDati.getCheckboxesPending()) {
 			if (checkbox.getIdSelezione() == orario.getId()) {
 				pending = checkbox.isPending();
 			}

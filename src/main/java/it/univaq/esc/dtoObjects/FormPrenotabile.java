@@ -27,6 +27,5 @@ import org.springframework.stereotype.Component;
 public abstract class FormPrenotabile {
     
 	private String modalitaPrenotazione; 
-	
-    public abstract Map<String, Object> getValoriForm();
+	private String sportSelezionato;
 }

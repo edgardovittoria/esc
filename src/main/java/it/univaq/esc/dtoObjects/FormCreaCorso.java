@@ -16,16 +16,5 @@ public class FormCreaCorso extends FormPrenotabile{
 	private Integer numeroMassimoPartecipanti;
 	private Float costoPerPartecipante;
 	
-	
-	
-	@Override
-	public HashMap<String, Object> getValoriForm() {
-		HashMap<String, Object> mappaValori = this.getFormLezione().getValoriForm();
-		mappaValori.put("invitati", this.getInvitatiCorso());
-		mappaValori.put("numeroMinimoPartecipanti", getNumeroMinimoPartecipanti());
-		mappaValori.put("numeroMassimoPartecipanti", getNumeroMassimoPartecipanti());
-		mappaValori.put("costoPerPartecipante", getCostoPerPartecipante());
-		
-		return mappaValori;
-	}
+
 }

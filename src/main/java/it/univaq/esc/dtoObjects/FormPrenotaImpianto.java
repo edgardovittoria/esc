@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
 public class FormPrenotaImpianto extends FormPrenotabile{
-    private String sportSelezionato = "tennis";
+    
 
     private List<OrarioAppuntamento> orariSelezionati = new ArrayList<OrarioAppuntamento>();
 
@@ -25,21 +25,6 @@ public class FormPrenotaImpianto extends FormPrenotabile{
     private List<CheckboxPendingSelezionato> checkboxesPending;
 
 
-
-
-    @Override
-    public HashMap<String, Object> getValoriForm() {
-        HashMap<String, Object> mappaValori = new HashMap<String, Object>();
-        mappaValori.put("sport", this.getSportSelezionato());
-        mappaValori.put("listaOrariAppuntamenti", this.getOrariSelezionati());
-        mappaValori.put("impianti", this.getImpianti());
-        mappaValori.put("invitati", this.getSportiviInvitati());
-        mappaValori.put("postiLiberi", this.getPostiLiberi());
-        mappaValori.put("numeroPartecipantiNonIscritti", this.getNumeroGiocatoriNonIscritti());
-        mappaValori.put("checkboxesPending", this.getCheckboxesPending());
-
-        return mappaValori;
-    }
 
 
 }

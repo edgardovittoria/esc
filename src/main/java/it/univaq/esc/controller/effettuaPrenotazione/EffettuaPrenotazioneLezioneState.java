@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import it.univaq.esc.dtoObjects.FormPrenotaLezioneDTO;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
@@ -74,18 +75,18 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
 			EffettuaPrenotazioneHandler controller) {
+		FormPrenotaLezioneDTO formLezione = (FormPrenotaLezioneDTO)formDati;
 
 		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						controller.getTipoPrenotazioneInAtto(),
-						getRegistroSport().getSportByNome((String) formDati.getValoriForm().get("sport")),
+						getRegistroSport().getSportByNome(formLezione.getSportSelezionato()),
 						formDati.getModalitaPrenotazione());
 
-		for (OrarioAppuntamento orario : (List<OrarioAppuntamento>) formDati.getValoriForm()
-				.get("listaOrariAppuntamenti")) {
+		for (OrarioAppuntamento orario : formLezione.getOrariSelezionati()) {
 			PrenotazioneLezioneSpecs prenotazioneSpecs = new PrenotazioneLezioneSpecs();
 			controller.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
-			impostaValoriPrenotazioniSpecs(formDati, prenotazioneSpecs, descrizioneSpecifica, controller, orario);
+			impostaValoriPrenotazioniSpecs(formLezione, prenotazioneSpecs, descrizioneSpecifica, controller, orario);
 
 			// ---------------------------------------------------------------------------------------
 
@@ -104,7 +105,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 
 	}
 
-	public void impostaValoriPrenotazioniSpecs(FormPrenotabile formDati, PrenotazioneLezioneSpecs prenotazioneSpecs,
+	public void impostaValoriPrenotazioniSpecs(FormPrenotaLezioneDTO formDati, PrenotazioneLezioneSpecs prenotazioneSpecs,
 			PrenotabileDescrizione descrizioneSpecifica, EffettuaPrenotazioneHandler controller,
 			OrarioAppuntamento orario) {
 
@@ -113,7 +114,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 		prenotazioneSpecs.setSpecificaDescription(descrizioneSpecifica);
 
 		Integer idImpianto = 0;
-		for (ImpiantoSelezionato impianto : (List<ImpiantoSelezionato>) formDati.getValoriForm().get("impianti")) {
+		for (ImpiantoSelezionato impianto : formDati.getImpianti()) {
 			if (impianto.getIdSelezione() == orario.getId()) {
 				idImpianto = impianto.getIdImpianto();
 			}
@@ -121,8 +122,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 		prenotazioneSpecs.setImpiantoPrenotato(getRegistroImpianti().getImpiantoByID(idImpianto));
 
 		String emailIstruttore = "";
-		for (IstruttoreSelezionato istruttore : (List<IstruttoreSelezionato>) formDati.getValoriForm()
-				.get("istruttori")) {
+		for (IstruttoreSelezionato istruttore : formDati.getIstruttori()) {
 			if (istruttore.getIdSelezione() == orario.getId()) {
 				emailIstruttore = istruttore.getIstruttore();
 			}

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
+import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
@@ -89,8 +90,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
 
-		for (OrarioAppuntamento orario : (List<OrarioAppuntamento>) formDati.getValoriForm()
-				.get("listaOrariAppuntamenti")) {
+		FormPrenotaImpianto formImpianto = (FormPrenotaImpianto)formDati;
+		for (OrarioAppuntamento orario : formImpianto.getOrariSelezionati()) {
 			PrenotazioneImpiantoSpecs prenotazioneSpecs = (PrenotazioneImpiantoSpecs) getElementiPrenotazioneFactory()
 					.getPrenotazioneSpecs(controller.getTipoPrenotazioneInAtto());
 			controller.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
@@ -102,7 +103,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 			AppuntamentoSingoliPartecipanti appuntamento = (AppuntamentoSingoliPartecipanti) getElementiPrenotazioneFactory()
 					.getAppuntamento();
-			impostaDatiAppuntamento(prenotazioneSpecs, formDati, appuntamento, orario, controller);
+			impostaDatiAppuntamento(prenotazioneSpecs, formImpianto, appuntamento, orario, controller);
 
 			controller.aggiungiAppuntamento(appuntamento);
 		}
@@ -116,7 +117,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 	
 
-	private void impostaDatiAppuntamento(PrenotazioneImpiantoSpecs prenotazioneSpecs, FormPrenotabile formDati,
+	private void impostaDatiAppuntamento(PrenotazioneImpiantoSpecs prenotazioneSpecs, FormPrenotaImpianto formDati,
 			AppuntamentoSingoliPartecipanti appuntamento, OrarioAppuntamento orario,
 			EffettuaPrenotazioneHandler controller) {
 		// Creazione calcolatore che poi dovrà finire altrove
@@ -133,8 +134,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		appuntamento.setDataOraFineAppuntamento(dataFine);
 
 		boolean pending = false;
-		for (CheckboxPendingSelezionato checkbox : (List<CheckboxPendingSelezionato>) formDati.getValoriForm()
-				.get("checkboxesPending")) {
+		for (CheckboxPendingSelezionato checkbox : formDati.getCheckboxesPending()) {
 			if (checkbox.getIdSelezione() == orario.getId()) {
 				pending = checkbox.isPending();
 			}

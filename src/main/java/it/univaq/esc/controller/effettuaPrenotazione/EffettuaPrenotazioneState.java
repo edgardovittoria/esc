@@ -419,36 +419,17 @@ public abstract class EffettuaPrenotazioneState {
 
 	
 
-	protected QuotaPartecipazione creaQuotaPartecipazione(Appuntamento appuntamento,
-			UtentePolisportivaAbstract sportivo) {
-		boolean quotaGiaPresente = false;
-		for (QuotaPartecipazione quotaPartecipazione : appuntamento.getQuotePartecipazione()) {
-			if (quotaPartecipazione.getSportivoAssociato().isEqual(sportivo)) {
-				quotaGiaPresente = true;
-			}
-		}
-		if (!quotaGiaPresente) {
-			QuotaPartecipazione quota = new QuotaPartecipazione();
-			quota.setCosto(appuntamento.getCalcolatoreCosto().calcolaQuotaPartecipazione(appuntamento));
-			quota.setSportivoAssociato(sportivo);
-			quota.setPagata(false);
-			return quota;
-		}
-		return null;
-	}
+	
 	
 	protected boolean aggiungiPartecipante(Object utente, Appuntamento appuntamento) {
 		boolean partecipanteAggiunto = false;
-		if (appuntamento.getPartecipantiAppuntamento().size() < appuntamento.getNumeroPartecipantiMassimo()) {
-			appuntamento.aggiungiPartecipante(utente);
-			partecipanteAggiunto = true;
-			if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento.getSogliaMinimaPartecipantiPerConferma()) {
-				appuntamento.confermaAppuntamento();
-				appuntamento.getUtentiPartecipanti().forEach((partecipante) -> appuntamento.aggiungiQuotaPartecipazione(
-						this.creaQuotaPartecipazione(appuntamento, partecipante)));
+		
+			partecipanteAggiunto = appuntamento.aggiungiPartecipante(utente);
+			
+			if (partecipanteAggiunto) {
+				getRegistroAppuntamenti().creaQuotePartecipazionePerAppuntamento(appuntamento);
 			}
-			this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
-		}
+			
 		return partecipanteAggiunto;
 	}
 

@@ -42,11 +42,13 @@ public class AppuntamentoSingoliPartecipanti extends Appuntamento {
 	}
 
 	@Override
-	public void aggiungiPartecipante(Object sportivoPartecipante) {
+	public boolean aggiungiPartecipante(Object sportivoPartecipante) {
 		UtentePolisportivaAbstract partecipante = (UtentePolisportivaAbstract) sportivoPartecipante;
-		if (!this.utenteIsPartecipante(partecipante)) {
+		if (!this.utenteIsPartecipante(partecipante) && getPartecipantiAppuntamento().size() < getNumeroPartecipantiMassimo()) {
 			this.getUtentiPartecipanti().add(partecipante);
+			return true;
 		}
+		return false;
 	}
 
 

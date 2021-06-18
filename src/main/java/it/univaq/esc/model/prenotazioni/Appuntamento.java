@@ -181,7 +181,10 @@ public abstract class Appuntamento {
 	}
 	
 	public void confermaAppuntamento() {
-		this.getPrenotazioneSpecsAppuntamento().setConfermata(true);
+		if (!isConfermato() && getPartecipantiAppuntamento().size() >= getSogliaMinimaPartecipantiPerConferma()) {
+			getPrenotazioneSpecsAppuntamento().setConfermata(true);
+
+		}
 	}
 	
 	public void calcolaCosto() {
@@ -229,7 +232,7 @@ public abstract class Appuntamento {
 		return this.getPrenotazioneSpecsAppuntamento().getSogliaPartecipantiPerConferma();
 	};
 	
-	public abstract void aggiungiPartecipante(Object sportivoOSquadraPartecipante);
+	public abstract boolean aggiungiPartecipante(Object sportivoOSquadraPartecipante);
 	
 	public List<UtentePolisportivaAbstract> getUtentiPartecipanti(){
 		return getPartecipanti();

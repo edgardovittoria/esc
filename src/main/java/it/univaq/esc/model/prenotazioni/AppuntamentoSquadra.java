@@ -39,11 +39,13 @@ public class AppuntamentoSquadra extends Appuntamento {
 	}
 
 	@Override
-	public void aggiungiPartecipante(Object sportivoOSquadraPartecipante) {
+	public boolean aggiungiPartecipante(Object sportivoOSquadraPartecipante) {
 		Squadra partecipante = (Squadra) sportivoOSquadraPartecipante;
-		if (!this.squadraIsPartecipante(partecipante)) {
+		if (!this.squadraIsPartecipante(partecipante) && getPartecipantiAppuntamento().size() < getNumeroPartecipantiMassimo()) {
 			this.getSquadrePartecipanti().add(partecipante);
+			return true;
 		}
+		return false;
 
 	}
 
