@@ -311,7 +311,7 @@ public abstract class EffettuaPrenotazioneState {
 		List<Impianto> listaImpiantiDisponibili = this.getRegistroImpianti().getListaImpiantiPolisportiva();
 		if (dati.containsKey("orario")) {
 			Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
-			listaImpiantiDisponibili = this.filtraImpiantiDisponibiliByOrario(
+			listaImpiantiDisponibili = this.getRegistroImpianti().filtraImpiantiDisponibiliPerOrario(
 					LocalDateTime.parse(orario.get("oraInizio"),
 							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
 					LocalDateTime.parse(orario.get("oraFine"),
@@ -339,29 +339,7 @@ public abstract class EffettuaPrenotazioneState {
 		return listaImpiantiDTODisponibili;
 	}
 
-	/**
-	 * Metodo di utilità. Filtra una lista di impianti passata come parametro,
-	 * restituendo solamente quelli disponibili ad un determinato orario, anch'esso
-	 * passato come parametro.
-	 * 
-	 * @param oraInizio     ora di inizio dell'intervallo per cui filtrare.
-	 * @param oraFine       ora di fine dell'intervallo per cui filtrare.
-	 * @param listaImpianti lista degli impianti da filtrare.
-	 * @return lista dei soli impianti disponibili nello specifico orario, filtrati
-	 *         a partire dalla lista passata come parametro.
-	 */
-	protected List<Impianto> filtraImpiantiDisponibiliByOrario(LocalDateTime oraInizio, LocalDateTime oraFine,
-			List<Impianto> listaImpianti) {
-		List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
-
-		for (Impianto impianto : listaImpianti) {
-			if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)) {
-				listaImpiantiDisponibili.add(impianto);
-			}
-		}
-
-		return listaImpiantiDisponibili;
-	}
+	
 
 	/**
 	 * Metodo di utilità. Filtra una lista di impianti passata come parametro, in
@@ -373,17 +351,8 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return lista dei soli impianti della lista passata come parametro, in cui
 	 *         sia praticabile lo sport dato come parametro.
 	 */
-	protected List<Impianto> filtraImpiantiPerSport(String nomeSport, List<Impianto> listaImpianti) {
-		List<Impianto> impianti = new ArrayList<Impianto>();
-		for (Impianto impianto : listaImpianti) {
-			for (ImpiantoSpecs specifica : impianto.getSpecificheImpianto()) {
-				if (specifica.getSportPraticabile().getNome().equals(nomeSport)) {
-					impianti.add(impianto);
-				}
-			}
-
-		}
-		return impianti;
+	private List<Impianto> filtraImpiantiPerSport(String nomeSport, List<Impianto> listaImpianti) {
+		return getRegistroImpianti().filtraImpiantiPerSport(getRegistroSport().getSportByNome(nomeSport), listaImpianti);
 	}
 
 	/**
@@ -395,7 +364,7 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return lista dei soli istruttori della lista data, associati allo sport
 	 *         passato come parametro.
 	 */
-	protected List<UtentePolisportivaAbstract> filtraIstruttoriPerSport(String nomeSport,
+	private List<UtentePolisportivaAbstract> filtraIstruttoriPerSport(String nomeSport,
 			List<UtentePolisportivaAbstract> listaIstruttori) {
 
 		Sport sportPerCuiFiltrare = this.getRegistroSport().getSportByNome(nomeSport);
@@ -403,20 +372,7 @@ public abstract class EffettuaPrenotazioneState {
 
 	}
 
-	/**
-	 * Metodo di utilità. Filtra una lista di istruttori passata come parametro,
-	 * sulla base di un orario passato come parametro.
-	 * 
-	 * @param oraInizio       ora di inizio dell'orario per cui filtrare.
-	 * @param oraFine         ora di fine dell'orario per cui filtrare.
-	 * @param listaIstruttori lista degli istruttori da filtrare.
-	 * @return la lista dei soli istruttori della lista data, liberi nell'orario
-	 *         passato come parametro.
-	 */
-	protected List<UtentePolisportivaAbstract> filtraIstruttoriPerOrario(LocalDateTime oraInizio, LocalDateTime oraFine,
-			List<UtentePolisportivaAbstract> listaIstruttori) {
-		return this.getRegistroUtenti().filtraIstruttorePerOrario(listaIstruttori, oraInizio, oraFine);
-	}
+	
 
 	/**
 	 * Metodo di utilità. Resituisce la lista, in formato DTO, degli istruttori
@@ -435,12 +391,13 @@ public abstract class EffettuaPrenotazioneState {
 				.getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE);
 		if (dati.containsKey("orario")) {
 			Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
-			istruttoriDisponibili = this.filtraIstruttoriPerOrario(
+			istruttoriDisponibili = getRegistroUtenti().filtraIstruttorePerOrario(
+					istruttoriDisponibili,
 					LocalDateTime.parse(orario.get("oraInizio"),
 							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
 					LocalDateTime.parse(orario.get("oraFine"),
-							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
-					istruttoriDisponibili);
+							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"))
+					);
 
 			if (dati.containsKey("sport")) {
 				istruttoriDisponibili = this.filtraIstruttoriPerSport((String) dati.get("sport"),

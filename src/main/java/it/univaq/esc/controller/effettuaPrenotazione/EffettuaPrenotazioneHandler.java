@@ -274,12 +274,7 @@ public class EffettuaPrenotazioneHandler {
 		return this.getStato().getDatiOpzioniModalitaDirettore(this);
 	}
 
-	@PostMapping("/aggiornaOpzioniPrenotazione")
-	@CrossOrigin
-	public @ResponseBody Map<String, Object> aggiornaOpzioniPrenotazione(@RequestBody HashMap<String, Object> dati) {
-		return null;
-	}
-
+	
 	private void inizializzaNuovaPrenotazione(UtentePolisportivaAbstract sportivoPrenotante, String tipoPrenotazione,
 			String modalitaPrenotazione) {
 

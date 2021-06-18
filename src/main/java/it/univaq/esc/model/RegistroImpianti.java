@@ -1,5 +1,6 @@
 package it.univaq.esc.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,5 +80,31 @@ public class RegistroImpianti {
         }
         return null;
     }
+    
+    public List<Impianto> filtraImpiantiDisponibiliPerOrario(LocalDateTime oraInizio, LocalDateTime oraFine,
+			List<Impianto> listaImpiantiDaFiltrare){
+    	List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
+
+		for (Impianto impianto : listaImpiantiDaFiltrare) {
+			if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)) {
+				listaImpiantiDisponibili.add(impianto);
+			}
+		}
+
+		return listaImpiantiDisponibili;
+    }
+    
+    public List<Impianto> filtraImpiantiPerSport(Sport sport, List<Impianto> listaImpiantiDaFiltrare) {
+		List<Impianto> impianti = new ArrayList<Impianto>();
+		for (Impianto impianto : listaImpiantiDaFiltrare) {
+			for (Sport sportPraticabile : impianto.getSportPraticabili()) {
+				if (sportPraticabile.isEqual(sport)) {
+					impianti.add(impianto);
+				}
+			}
+
+		}
+		return impianti;
+	}
     
 }

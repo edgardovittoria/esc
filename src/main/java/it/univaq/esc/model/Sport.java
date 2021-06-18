@@ -24,4 +24,10 @@ public class Sport {
     private Integer numeroMinimoGiocatoriPerSquadra;
 
       
+    public boolean isEqual(Sport sportDaConfrontare) {
+    	if(getNome().equals(sportDaConfrontare.getNome())) {
+    		return true;
+    	}
+    	return false;
+    }
 }
