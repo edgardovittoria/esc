@@ -21,6 +21,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.Pattern.Flag;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -29,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
@@ -37,7 +39,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter @Setter @NoArgsConstructor
 public abstract class Appuntamento {
 
@@ -58,23 +60,38 @@ public abstract class Appuntamento {
 	@Column
 	private LocalDateTime dataOraFineAppuntamento;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "PrenotazioneSpecs_ID", nullable = false)
-	@JsonIdentityReference(alwaysAsId = true)
-	private PrenotazioneSpecs prenotazioneSpecsAppuntamento;
+	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn()
-	@JsonIdentityReference(alwaysAsId = true)
 	private UtentePolisportivaAbstract manutentore;
+	
+	@Column
+	private boolean confermato = false;
+	
+	@Column
+	private boolean pending = false;
+	
+	
+	@ManyToOne
+	@JoinColumn
+	private PrenotabileDescrizione descrizioneEventoPrenotato;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<QuotaPartecipazione> quotePartecipazione = new ArrayList<QuotaPartecipazione>();
+	
+	@Column
+	private Impianto impiantoPrenotato;
+	
+	@Column
+	private float costoAppuntamento;
 
 	@Transient
 	private CalcolatoreCosto calcolatoreCosto;
+	
+	
 	
 	
 	public LocalDate getDataAppuntamento() {
@@ -88,30 +105,15 @@ public abstract class Appuntamento {
 	public LocalTime getOraFineAppuntamento() {
 		return this.dataOraFineAppuntamento.toLocalTime();
 	}
-	
-	public void setPending(boolean pending) {
-		this.prenotazioneSpecsAppuntamento.setPending(pending);
-	}
-	
-	public boolean isPending() {
-		return this.getPrenotazioneSpecsAppuntamento().isPending();
-	}
-	
-	
-	public Float getCostoAppuntamento() {
-		return this.prenotazioneSpecsAppuntamento.getCosto();
-	}
+		
 	
 	public Map<String, Float> getMappaCostiAppuntamento(){
-		return this.getPrenotazioneSpecsAppuntamento().getMappaCosti();
+		return getDescrizioneEventoPrenotato().getMappaCosti();
 	}
 	
-	/**
-	 * Restituisce il tipo della prenotazione principale a cui l'appuntamento fa capo.
-	 * @return il tipo della prenotazione principale.
-	 */
+	
 	public String appartieneA() {
-		return this.getPrenotazioneSpecsAppuntamento().appartieneA();
+		return getDescrizioneEventoPrenotato().getTipoPrenotazione();
 	}
 	
 	/**
@@ -120,17 +122,17 @@ public abstract class Appuntamento {
 	 * 
 	 * @return Utente che ha creato la prenotazione per questo appuntamento.
 	 */
-	public UtentePolisportivaAbstract creatoDa() {
-		return this.getPrenotazioneSpecsAppuntamento().getSportivoPrenotante();
-	}
+//	public UtentePolisportivaAbstract creatoDa() {
+//		return this.getPrenotazioneSpecsAppuntamento().getSportivoPrenotante();
+//	}
 	
 	/**
 	 * Restituisce la prenotazione principale a cui l'appuntamento fa capo
 	 * @return la prenotazione principale.
 	 */
-	public Prenotazione getPrenotazionePrincipale() {
-		return this.getPrenotazioneSpecsAppuntamento().getPrenotazioneAssociata();
-	}
+//	public Prenotazione getPrenotazionePrincipale() {
+//		return this.getPrenotazioneSpecsAppuntamento().getPrenotazioneAssociata();
+//	}
 	
 	/**
 	 * Verifica se l'appuntamento passato come parametro si sovrappone a quello sul
@@ -173,32 +175,26 @@ public abstract class Appuntamento {
 	}
 	
 	public String getTipoPrenotazione() {
-		return this.getPrenotazioneSpecsAppuntamento().getTipoPrenotazione();
+		return this.getDescrizioneEventoPrenotato().getTipoPrenotazione();
 	}
 	
-	public String getTipoPrenotazioneDescrizione() {
-		return this.getPrenotazioneSpecsAppuntamento().getTipoPrenotazioneDescrizione();
-	}
 	
 	public void confermaAppuntamento() {
 		if (!isConfermato() && getPartecipantiAppuntamento().size() >= getSogliaMinimaPartecipantiPerConferma()) {
-			getPrenotazioneSpecsAppuntamento().setConfermata(true);
+			setConfermato(true);
 
 		}
 	}
 	
 	public void calcolaCosto() {
-		this.getPrenotazioneSpecsAppuntamento().setCosto(getCalcolatoreCosto().calcolaCosto(this));
+		setCostoAppuntamento(getCalcolatoreCosto().calcolaCosto(this));
 	}
 	
-	public Integer getIdPrenotazione() {
-		return this.getPrenotazioneSpecsAppuntamento().getIdPrenotazioneAssociata();
-	}
+//	public Integer getIdPrenotazione() {
+//		return this.getPrenotazioneSpecsAppuntamento().getIdPrenotazioneAssociata();
+//	}
 
-	public Impianto getImpiantoPrenotato() {
-		return (Impianto) this.getPrenotazioneSpecsAppuntamento().getValoriSpecificheExtraPrenotazione()
-				.get("impianto");
-	}
+	
 	
 	public void aggiungiQuotaPartecipazione(QuotaPartecipazione quota) {
 		if (quota != null) {
@@ -207,7 +203,7 @@ public abstract class Appuntamento {
 	}
 	
 	public String getModalitaPrenotazione() {
-		return this.getPrenotazioneSpecsAppuntamento().getModalitaPrenotazione();
+		return getDescrizioneEventoPrenotato().getModalitaPrenotazione();
 	}
 	
 	
@@ -225,16 +221,20 @@ public abstract class Appuntamento {
 //	};
 	
 	public Sport getSportAssociato() {
-		return getPrenotazioneSpecsAppuntamento().getSportAssociato();
+		return getDescrizioneEventoPrenotato().getSportAssociato();
 	}
 	
 	public boolean accettaNuoviPartecipantiOltre(Integer numeroPartecipantiAttuali) {
-		return getPrenotazioneSpecsAppuntamento().accettaPartecipantiOltre(numeroPartecipantiAttuali);
+		return getDescrizioneEventoPrenotato().accettaNuoviPartecipantiOltre(numeroPartecipantiAttuali);
 	}
 	
 	public Integer getSogliaMinimaPartecipantiPerConferma() {
-		return this.getPrenotazioneSpecsAppuntamento().getSogliaPartecipantiPerConferma();
-	};
+		return getDescrizioneEventoPrenotato().getMinimoNumeroPartecipanti();
+	}
+	
+	public boolean isEqual(Appuntamento appuntamento) {
+		return this.getIdAppuntamento() == appuntamento.getIdAppuntamento();
+	}
 	
 	public abstract boolean aggiungiPartecipante(Object sportivoOSquadraPartecipante);
 	
@@ -245,7 +245,4 @@ public abstract class Appuntamento {
 	};
 	public abstract List<Object>  getPartecipantiAppuntamento();
 	
-	public boolean isConfermato() {
-		return getPrenotazioneSpecsAppuntamento().isConfermata();
-	}
 }

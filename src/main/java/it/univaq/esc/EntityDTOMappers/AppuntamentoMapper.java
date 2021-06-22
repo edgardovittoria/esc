@@ -37,11 +37,11 @@ public class AppuntamentoMapper extends EntityDTOMapper {
 		appuntamentoDTO.setOraFineAppuntamento(appuntamentoDaConvertire.getOraFineAppuntamento());
 
 		impostaMapperFactory(appuntamentoDaConvertire.getModalitaPrenotazione());
-		PrenotazioneSpecsDTO specificaDTO = getMapperFactory()
-				.getPrenotazioneSpecsMapper(appuntamentoDaConvertire.getTipoPrenotazione())
-				.convertiInPrenotazioneSpecsDTO(appuntamentoDaConvertire.getPrenotazioneSpecsAppuntamento());
-
-		appuntamentoDTO.setSpecificaPrenotazione(specificaDTO);
+//		PrenotazioneSpecsDTO specificaDTO = getMapperFactory()
+//				.getPrenotazioneSpecsMapper(appuntamentoDaConvertire.getTipoPrenotazione())
+//				.convertiInPrenotazioneSpecsDTO(appuntamentoDaConvertire.getPrenotazioneSpecsAppuntamento());
+//
+//		appuntamentoDTO.setSpecificaPrenotazione(specificaDTO);
 		for (UtentePolisportivaAbstract partecipante : appuntamentoDaConvertire.getUtentiPartecipanti()) {
 			
 

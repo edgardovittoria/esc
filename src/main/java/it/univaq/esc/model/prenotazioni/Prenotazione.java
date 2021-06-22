@@ -55,30 +55,21 @@ public class Prenotazione extends Notificabile{
     @OneToMany(mappedBy = "prenotazioneAssociata", cascade = CascadeType.ALL)
     //@JoinColumn
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<PrenotazioneSpecs> listaSpecifichePrenotazione = new ArrayList<PrenotazioneSpecs>();
+    private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
 
     public Prenotazione(Integer lastIdPrenotazione){
         super(lastIdPrenotazione);
     }
 
-    public Prenotazione(Integer lastIdPrenotazione, PrenotazioneSpecs prenotazioneSpecs) {
-        super(lastIdPrenotazione);
-        //aggiungiQuotaPartecipazione(sportivoPrenotante, 0, false);
-        this.getListaSpecifichePrenotazione().add(prenotazioneSpecs);
-    }
 
     
-    public void aggiungiSpecifica(PrenotazioneSpecs specifica){
-        this.getListaSpecifichePrenotazione().add(specifica);
+    public void aggiungi(Appuntamento appuntamento){
+        getListaAppuntamenti().add(appuntamento);
     }
 
 
-    public void impostaValoriListaSpecifichePrenotazione(List<Map<String, Object>> listaMappeValori){
-        for(PrenotazioneSpecs specifica : this.getListaSpecifichePrenotazione()){
-            specifica.impostaValoriSpecificheExtraPrenotazione(listaMappeValori.get(this.getListaSpecifichePrenotazione().indexOf(specifica)));
-        }
-    }
+    
 
     public void impostaValoriSpecificheExtraSingolaPrenotazioneSpecs(Map<String, Object> mappaValori, PrenotazioneSpecs specifica){
         specifica.impostaValoriSpecificheExtraPrenotazione(mappaValori);
@@ -95,11 +86,11 @@ public class Prenotazione extends Notificabile{
 
     public String getTipoPrenotazione(){
     
-        return this.getListaSpecifichePrenotazione().get(0).getTipoPrenotazione();
+        return this.getListaAppuntamenti().get(0).getTipoPrenotazione();
     }
     
     public String getNomeSportAssociatoAllaPrenotazione() {
-    	return this.getListaSpecifichePrenotazione().get(0).getSportAssociato().getNome();
+    	return this.getListaAppuntamenti().get(0).getSportAssociato().getNome();
     }
 
 	@Override
@@ -119,10 +110,7 @@ public class Prenotazione extends Notificabile{
 	}
 	
 	public Integer getNumeroIncontri() {
-		if(getTipoPrenotazione().equals(TipiPrenotazione.CORSO.toString())) {
-			return getListaSpecifichePrenotazione().get(0).getPrenotazioniSpecsFiglie().size();
-		}
-		return getListaSpecifichePrenotazione().size();
+		return getListaAppuntamenti().size();
 	}
 
 	@Override
@@ -131,7 +119,16 @@ public class Prenotazione extends Notificabile{
 	}
 
 	public String getModalitaPrenotazione() {
-		return getListaSpecifichePrenotazione().get(0).getModalitaPrenotazione();
+		return getListaAppuntamenti().get(0).getModalitaPrenotazione();
+	}
+	
+	public boolean isAssociataA(Appuntamento appuntamento) {
+		for(Appuntamento appuntamentoPrenotazione : getListaAppuntamenti()) {
+			if(appuntamentoPrenotazione.isEqual(appuntamento)) {
+				return true;
+			}
+		}
+		return false;
 	}
     
 }

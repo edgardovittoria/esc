@@ -13,7 +13,8 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
@@ -29,17 +30,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@DiscriminatorValue(value = "Singolo_Utente")
-@NoArgsConstructor
-public class AppuntamentoSingoliPartecipanti extends Appuntamento {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class AppuntamentoSingoliPartecipanti extends Appuntamento {
 
 	
-	public AppuntamentoSingoliPartecipanti(LocalDateTime dataOraInizioAppuntamento,
-			LocalDateTime dataOraFineAppuntamento, PrenotazioneSpecs specificaPrenotazione) {
-		setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
-		setDataOraFineAppuntamento(dataOraFineAppuntamento);
-		setPrenotazioneSpecsAppuntamento(specificaPrenotazione);
-	}
+	
 
 	@Override
 	public boolean aggiungiPartecipante(Object sportivoPartecipante) {

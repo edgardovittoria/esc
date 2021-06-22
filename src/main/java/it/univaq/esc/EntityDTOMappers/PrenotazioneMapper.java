@@ -40,17 +40,17 @@ public class PrenotazioneMapper extends EntityDTOMapper{
 		PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO();
 		Map<String, Object> infoGeneraliCorso = new HashMap<String, Object>();
 		infoGeneraliCorso.put("numeroMinimoPartecipanti",
-				corsoPrenotazione.getListaSpecifichePrenotazione().get(0).getSogliaPartecipantiPerConferma());
+				corsoPrenotazione.getListaAppuntamenti().get(0).getDescrizioneEventoPrenotato().getMinimoNumeroPartecipanti());
 		infoGeneraliCorso.put("numeroMassimoPartecipanti",
-				corsoPrenotazione.getListaSpecifichePrenotazione().get(0).getSogliaMassimaPartecipanti());
+				corsoPrenotazione.getListaAppuntamenti().get(0).getDescrizioneEventoPrenotato().getMassimoNumeroPartecipanti());
 		infoGeneraliCorso.put("costoPerPartecipante",
-				corsoPrenotazione.getListaSpecifichePrenotazione().get(0).getCosto());
-		List<UtentePolisportivaAbstract> invitati = ((PrenotazioneCorsoSpecs)corsoPrenotazione.getListaSpecifichePrenotazione().get(0)).getInvitati();
-		List<UtentePolisportivaDTO> invitatiDTO = new ArrayList<UtentePolisportivaDTO>();
-		for(UtentePolisportivaAbstract invitato : invitati) {
-			invitatiDTO.add(getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(invitato));
-		}
-		infoGeneraliCorso.put("invitatiCorso", invitatiDTO);
+				corsoPrenotazione.getListaAppuntamenti().get(0).getCostoAppuntamento());
+//		List<UtentePolisportivaAbstract> invitati = ((PrenotazioneCorsoSpecs)corsoPrenotazione.getListaSpecifichePrenotazione().get(0)).getInvitati();
+//		List<UtentePolisportivaDTO> invitatiDTO = new ArrayList<UtentePolisportivaDTO>();
+//		for(UtentePolisportivaAbstract invitato : invitati) {
+//			invitatiDTO.add(getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(invitato));
+//		}
+//		infoGeneraliCorso.put("invitatiCorso", invitatiDTO);
 
 		
 		impostaDatiGeneraliPrenotazioneDTO(prenotazioneDTO, corsoPrenotazione, listaAppuntamentiPrenotazione);

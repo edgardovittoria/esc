@@ -19,11 +19,10 @@ public class CalcolatoreCostoBase extends CalcolatoreCosto{
 
     @Override
     public float calcolaCosto(Appuntamento appuntamento) {
-        PrenotazioneSpecs prenotazioneSpecs = appuntamento.getPrenotazioneSpecsAppuntamento();
         LocalTime oraInizio = appuntamento.getOraInizioAppuntamento();
         LocalTime oraFine = appuntamento.getOraFineAppuntamento();
         Long minutiDurataAppuntamento = MINUTES.between(oraInizio, oraFine);
-        Impianto impiantoAppuntamento = (Impianto)prenotazioneSpecs.getValoriSpecificheExtraPrenotazione().get("impianto");
+        Impianto impiantoAppuntamento = appuntamento.getImpiantoPrenotato();
         String pavimentazione = impiantoAppuntamento.getTipoPavimentazione().toString();
         Map<String, Float> mappaCosti = appuntamento.getMappaCostiAppuntamento();
         Float costo;

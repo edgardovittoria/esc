@@ -62,4 +62,11 @@ public class PrenotabileDescrizione {
         return mappaCosti;
     }
     
+    public boolean accettaNuoviPartecipantiOltre(Integer numeroPartecipantiAttuali) {
+    	if(numeroPartecipantiAttuali < getMassimoNumeroPartecipanti()) {
+    		return true;
+    	}
+    	return false;
+    }
+    
 }

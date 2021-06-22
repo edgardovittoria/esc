@@ -17,6 +17,8 @@ import it.univaq.esc.model.notifiche.NotificaImpiantoState;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.NotificaState;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
+import it.univaq.esc.model.prenotazioni.AppuntamentoLezione;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
 import it.univaq.esc.model.prenotazioni.PrenotazioneCorsoSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSpecs;
@@ -85,8 +87,20 @@ public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazio
 	}
 
 	@Override
-	public Appuntamento getAppuntamento() {
-		return new AppuntamentoSingoliPartecipanti();
+	public Appuntamento getAppuntamento(String tipoPrenotazione) {
+		switch (tipoPrenotazione) {
+		default:
+			return null;
+
+		case "IMPIANTO":
+			return new AppuntamentoImpianto();
+
+		case "LEZIONE":
+			return new AppuntamentoLezione();
+		case "CORSO":
+			return new AppuntamentoLezione();
+
+		}
 	}
 
 }

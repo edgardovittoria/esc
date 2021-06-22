@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 
@@ -20,23 +22,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@DiscriminatorValue(value = "Squadra")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter(value = AccessLevel.PRIVATE)
 @Setter(value = AccessLevel.PRIVATE)
-@NoArgsConstructor
-public class AppuntamentoSquadra extends Appuntamento {
+public abstract class AppuntamentoSquadra extends Appuntamento {
 
 	@ManyToMany()
 	@JoinColumn()
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Squadra> squadrePartecipanti = new ArrayList<Squadra>();
-
-	public AppuntamentoSquadra(LocalDateTime dataOraInizioAppuntamento, LocalDateTime dataOraFineAppuntamento,
-			PrenotazioneSpecs specificaPrenotazione) {
-		setDataOraInizioAppuntamento(dataOraInizioAppuntamento);
-		setDataOraFineAppuntamento(dataOraFineAppuntamento);
-		setPrenotazioneSpecsAppuntamento(specificaPrenotazione);
-	}
 
 	@Override
 	public boolean aggiungiPartecipante(Object sportivoOSquadraPartecipante) {

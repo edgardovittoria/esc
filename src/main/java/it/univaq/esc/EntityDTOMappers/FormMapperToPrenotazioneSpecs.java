@@ -29,7 +29,7 @@ public class FormMapperToPrenotazioneSpecs{
 		
 		PrenotabileDescrizione descrizioneSpecifica = statoEffettuaPrenotazione.getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
-						prenotazioneAssociata.getListaSpecifichePrenotazione().get(0)
+						prenotazioneAssociata.getListaAppuntamenti().get(0)
 								.getTipoPrenotazione(),
 						statoEffettuaPrenotazione.getRegistroSport().getSportByNome(formDatiImpianto.getSportSelezionato()),
 						formDati.getModalitaPrenotazione());

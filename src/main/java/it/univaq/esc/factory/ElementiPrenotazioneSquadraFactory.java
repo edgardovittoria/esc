@@ -13,6 +13,7 @@ import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.NotificaSquadraService;
 import it.univaq.esc.model.notifiche.NotificaState;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.AppuntamentoImpiantoSquadra;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSquadra;
 import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSquadraSpecs;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
@@ -76,8 +77,20 @@ public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFact
 	}
 
 	@Override
-	public Appuntamento getAppuntamento() {
-		return new AppuntamentoSquadra();
+	public Appuntamento getAppuntamento(String tipoPrenotazione) {
+		switch (tipoPrenotazione) {
+		default:
+			return null;
+
+		case "IMPIANTO":
+			return new AppuntamentoImpiantoSquadra();
+
+		case "LEZIONE":
+			return null;
+		case "CORSO":
+			return null;
+
+		}
 	}
 
 }
