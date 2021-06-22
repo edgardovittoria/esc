@@ -22,8 +22,8 @@ public class EscApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 
-		PopolaDB popolaDB = BeanUtil.getBean(PopolaDB.class);
-		popolaDB.popola();
+//		PopolaDB popolaDB = BeanUtil.getBean(PopolaDB.class);
+//		popolaDB.popola();
 
 
 	}
