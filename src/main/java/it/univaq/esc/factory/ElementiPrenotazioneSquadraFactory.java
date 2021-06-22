@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneImpiantoSquadraState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneState;
-import it.univaq.esc.dtoObjects.PrenotazioneImpiantoSquadraSpecsDTO;
-import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 import it.univaq.esc.model.notifiche.NotificaImpiantoSquadraState;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.NotificaSquadraService;
@@ -15,8 +13,6 @@ import it.univaq.esc.model.notifiche.NotificaState;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpiantoSquadra;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSquadra;
-import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSquadraSpecs;
-import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.utility.BeanUtil;
 
 @Component(value = "ELEMENTI_PRENOTAZIONE_SQUADRA")
@@ -58,23 +54,6 @@ public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFact
 	}
 
 	
-
-	@Override
-	public PrenotazioneSpecs getPrenotazioneSpecs(String tipoPrenotazione) {
-		switch (tipoPrenotazione) {
-		default:
-			return null;
-
-		case "IMPIANTO":
-			return new PrenotazioneImpiantoSquadraSpecs();
-
-		case "LEZIONE":
-			return null;
-		case "CORSO":
-			return null;
-
-		}
-	}
 
 	@Override
 	public Appuntamento getAppuntamento(String tipoPrenotazione) {

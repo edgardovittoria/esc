@@ -28,7 +28,7 @@ public class ImpiantoMapper extends EntityDTOMapper{
             impiantoDTO.getSportPraticabili().add(sportDTO);
         }
         for(Appuntamento appuntamento : impiantoDaConvertire.getListaAppuntamenti()){
-            AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper().convertiInAppuntamentoDTO(appuntamento);
+            AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);
             impiantoDTO.getAppuntamenti().add(appuntamentoDTO);
         }
         

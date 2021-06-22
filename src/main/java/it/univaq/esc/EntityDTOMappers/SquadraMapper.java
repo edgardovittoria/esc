@@ -49,7 +49,7 @@ public class SquadraMapper extends EntityDTOMapper{
 		
 		List<AppuntamentoDTO> appuntamentiDTO = new ArrayList<AppuntamentoDTO>();
 		for(Appuntamento appuntamento : squadraDaConvertire.getCalendarioSquadra().getListaAppuntamenti()) {
-			AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper().convertiInAppuntamentoDTO(appuntamento);
+			AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);
 			appuntamentiDTO.add(appuntamentoDTO);
 		}
 		squadraDTO.setAppuntamenti(appuntamentiDTO);

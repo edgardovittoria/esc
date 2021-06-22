@@ -10,28 +10,28 @@ import lombok.NoArgsConstructor;
 @Singleton
 @NoArgsConstructor
 public class MapperSquadraFactory extends MapperFactory {
-	@Override
-	public PrenotazioneSpecsMapper getPrenotazioneSpecsMapper(String tipoPrenotazione) {
-		switch (tipoPrenotazione) {
-		case "IMPIANTO":
-			PrenotazioneImpiantoSquadraSpecsMapper prenotazioneImpiantoSquadraSpecsMapper = BeanUtil.getBean(PrenotazioneImpiantoSquadraSpecsMapper.class);
-			prenotazioneImpiantoSquadraSpecsMapper.setMapperFactory(this);
-			return prenotazioneImpiantoSquadraSpecsMapper;
-		case "LEZIONE":
-			return null;
-		case "CORSO":
-			return null;
-
-		default:
-			return null;
-		}
-	}
+	
 
 	@Override
 	public NotificaMapper getNotificaMapper() {
 		NotificaMapper mapper = BeanUtil.getBean("MAPPER_NOTIFICA_SQUADRA", NotificaMapper.class);
 		mapper.setMapperFactory(this);
 		return mapper;
+	}
+	
+	
+	@Override
+	public AppuntamentoMapper getAppuntamentoMapper(String tipoPrenotazione) {
+		switch (tipoPrenotazione) {
+		case "IMPIANTO":
+			return new AppuntamentoImpiantoSquadraMapper();
+		case "LEZIONE":
+			return null;
+		case "CORSO":
+			return null;
+		default:
+			return null;
+		}
 	}
 
 }

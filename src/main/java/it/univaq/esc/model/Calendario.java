@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -118,6 +117,16 @@ public class Calendario {
         if (!this.sovrapponeA(calendarioDaUnire)) {
             this.getListaAppuntamenti().addAll(calendarioDaUnire.getListaAppuntamenti());
         }
+    }
+    
+    public boolean ha(Appuntamento appuntamento) {
+    	for(Appuntamento appuntamentoCalendario : getListaAppuntamenti()) {
+    		if(appuntamentoCalendario.isEqual(appuntamento)) {
+    			return true;
+    			
+    		}
+    	}
+    	return false;
     }
 
 }

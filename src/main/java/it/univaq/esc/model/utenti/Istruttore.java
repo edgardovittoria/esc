@@ -12,6 +12,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -76,6 +77,11 @@ public class Istruttore extends RuoloUtentePolisportivaDecorator{
         listaRuoli.add(TipoRuolo.ISTRUTTORE.toString());
 
         return listaRuoli;
+    }
+    
+    
+    public boolean haInCalendario(Appuntamento appuntamento) {
+    	return getCalendarioLezioni().ha(appuntamento);
     }
     
 }

@@ -99,11 +99,6 @@ public class EffettuaPrenotazioneHandler {
 	 */
 	private String tipoPrenotazioneInAtto;
 
-	/**
-	 * Lista degli appuntamenti associati alla prenotaizione in atto gestita dal
-	 * controller.
-	 */
-	private List<Appuntamento> listaAppuntamentiPrenotazioneInAtto = new ArrayList<Appuntamento>();
 
 	/**
 	 * Stato del controller, dipendente dal tipo della prenotazione in atto.
@@ -151,15 +146,7 @@ public class EffettuaPrenotazioneHandler {
 		this.stato = stato;
 	}
 
-	/**
-	 * Restituisce la lista completa degli appuntamenti associati alla prenotazione
-	 * in atto
-	 * 
-	 * @return lista di appuntamenti associati alla prenotazione in atto
-	 */
-	public List<Appuntamento> getListaAppuntamentiPrenotazioneInAtto() {
-		return listaAppuntamentiPrenotazioneInAtto;
-	}
+	
 
 	/**
 	 * Imposta la tipologia della prenotazione in atto, passata come parametro. In
@@ -184,27 +171,8 @@ public class EffettuaPrenotazioneHandler {
 		return this.tipoPrenotazioneInAtto;
 	}
 
-	/**
-	 * Imposta l'intera lista degli appuntamenti da associare alla prenotazione in
-	 * atto
-	 * 
-	 * @param listaAppuntamentiPrenotazioneInAtto lista completa degli appuntamenti
-	 *                                            da associare alla prenotazione in
-	 *                                            atto
-	 */
-	private void setListaAppuntamentiPrenotazioneInAtto(List<Appuntamento> listaAppuntamentiPrenotazioneInAtto) {
-		this.listaAppuntamentiPrenotazioneInAtto = listaAppuntamentiPrenotazioneInAtto;
-	}
 
-	/**
-	 * Aggiunge l'appuntamento passato come parametro alla lista degli appuntamenti
-	 * associati alla prenotazione in atto
-	 * 
-	 * @param appuntamento da associare alla prenotazione in atto
-	 */
-	public void aggiungiAppuntamento(Appuntamento appuntamento) {
-		this.getListaAppuntamentiPrenotazioneInAtto().add(appuntamento);
-	}
+	
 
 
 	/**
@@ -308,8 +276,7 @@ public class EffettuaPrenotazioneHandler {
 	@PostMapping("/riepilogoPrenotazione")
 	@CrossOrigin
 	public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazione(@RequestBody FormPrenotabile formPrenotaImpianto) {
-		this.getListaAppuntamentiPrenotazioneInAtto().clear();
-
+		
 		PrenotazioneDTO prenDTO = this.getStato().impostaDatiPrenotazione(formPrenotaImpianto, this);
 
 		return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.OK);
@@ -328,7 +295,7 @@ public class EffettuaPrenotazioneHandler {
 	@CrossOrigin
 	public ResponseEntity<PrenotazioneDTO> confermaPrenotazione() {
 
-		for (Appuntamento appuntamento : getListaAppuntamentiPrenotazioneInAtto()) {
+		for (Appuntamento appuntamento : getPrenotazioneInAtto().getListaAppuntamenti()) {
 			Calendario calendarioAppuntamento = new Calendario();
 			calendarioAppuntamento.aggiungiAppuntamento(appuntamento);
 			UtentePolisportivaAbstract manutentore = getRegistroUtenti().getManutentoreLibero(calendarioAppuntamento);
@@ -337,12 +304,12 @@ public class EffettuaPrenotazioneHandler {
 
 		}
 		this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
-		this.getRegistroAppuntamenti().salvaListaAppuntamenti(this.getListaAppuntamentiPrenotazioneInAtto());
+		this.getRegistroAppuntamenti().salvaListaAppuntamenti(getPrenotazioneInAtto().getListaAppuntamenti());
 
 		this.getStato().aggiornaElementiDopoConfermaPrenotazione(this);
 
 		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper()
-				.convertiInPrenotazioneDTO(getPrenotazioneInAtto(), getListaAppuntamentiPrenotazioneInAtto());
+				.convertiInPrenotazioneDTO(getPrenotazioneInAtto());
 
 		return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
 	}

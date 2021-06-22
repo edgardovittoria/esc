@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
-import it.univaq.esc.dtoObjects.PrenotazioneSpecsDTO;
 import it.univaq.esc.dtoObjects.QuotaPartecipazioneDTO;
+import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
@@ -21,12 +21,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@Component
-@Singleton
-@NoArgsConstructor
-public class AppuntamentoMapper extends EntityDTOMapper {
 
-	
+public abstract class AppuntamentoMapper extends EntityDTOMapper {
 
 	public AppuntamentoDTO convertiInAppuntamentoDTO(Appuntamento appuntamentoDaConvertire) {
 		AppuntamentoDTO appuntamentoDTO = new AppuntamentoDTO();
@@ -43,10 +39,12 @@ public class AppuntamentoMapper extends EntityDTOMapper {
 //
 //		appuntamentoDTO.setSpecificaPrenotazione(specificaDTO);
 		for (UtentePolisportivaAbstract partecipante : appuntamentoDaConvertire.getUtentiPartecipanti()) {
-			
 
-			appuntamentoDTO.aggiungiPartecipante((String)partecipante.getProprieta().get("email"));
+			appuntamentoDTO.aggiungiPartecipante((String) partecipante.getProprieta().get("email"));
 		}
+		
+		
+
 		List<QuotaPartecipazioneDTO> listaQuote = new ArrayList<QuotaPartecipazioneDTO>();
 		for (QuotaPartecipazione quota : appuntamentoDaConvertire.getQuotePartecipazione()) {
 			QuotaPartecipazioneDTO quotaDTO = getMapperFactory().getQuotaPartecipazioneMapper()
@@ -56,8 +54,7 @@ public class AppuntamentoMapper extends EntityDTOMapper {
 		}
 		appuntamentoDTO.setQuotePartecipazione(listaQuote);
 
-		
-		appuntamentoDTO.setCreatore((String)appuntamentoDaConvertire.creatoDa().getProprieta().get("email"));
+		//appuntamentoDTO.setCreatore((String) appuntamentoDaConvertire.creatoDa().getProprieta().get("email"));
 
 		if (appuntamentoDaConvertire.getManutentore() != null) {
 			appuntamentoDTO.setIdManutentore(appuntamentoDaConvertire.getManutentore().getId());
@@ -65,22 +62,19 @@ public class AppuntamentoMapper extends EntityDTOMapper {
 
 		appuntamentoDTO.setModalitaPrenotazione(appuntamentoDaConvertire.getModalitaPrenotazione());
 
-		if (appuntamentoDaConvertire.getModalitaPrenotazione().equals(ModalitaPrenotazione.SQUADRA.toString())) {
-			List<Integer> squadrePartecipanti = new ArrayList<Integer>();
-			for (Object squadra : appuntamentoDaConvertire.getPartecipantiAppuntamento()) {
-				Squadra squadraPartecipante = (Squadra) squadra;
-				squadrePartecipanti.add(squadraPartecipante.getIdSquadra());
-			}
-			appuntamentoDTO.setSquadrePartecipanti(squadrePartecipanti);
-
-		}
 		
-		appuntamentoDTO.setTipoPrenotazione(appuntamentoDaConvertire.getTipoPrenotazioneDescrizione());
+		appuntamentoDTO.setTipoPrenotazione(appuntamentoDaConvertire.getTipoPrenotazione());
+		appuntamentoDTO.setPending(appuntamentoDaConvertire.isPending());
+		appuntamentoDTO.setConfermata(appuntamentoDaConvertire.isConfermato());
+		appuntamentoDTO.setCosto(appuntamentoDaConvertire.getCostoAppuntamento());
+		SportDTO sportDTO = getMapperFactory().getSportMapper().convertiInSportDTO(appuntamentoDaConvertire.getDescrizioneEventoPrenotato().getSportAssociato());
+		appuntamentoDTO.setSportAssociato(sportDTO);
+		appuntamentoDTO.setIdAppuntamento(appuntamentoDaConvertire.getImpiantoPrenotato().getIdImpianto());
+		appuntamentoDTO.setPavimentazioneImpianto(appuntamentoDaConvertire.getImpiantoPrenotato().getTipoPavimentazione().toString());
 
 		return appuntamentoDTO;
 	}
-	
-	
+
 	private void impostaMapperFactory(String modalitaPrenotazione) {
 		setMapperFactory(BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class));
 	}

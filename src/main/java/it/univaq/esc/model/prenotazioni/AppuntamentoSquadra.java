@@ -23,14 +23,20 @@ import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Getter(value = AccessLevel.PRIVATE)
-@Setter(value = AccessLevel.PRIVATE)
+@Getter
+@Setter
 public abstract class AppuntamentoSquadra extends Appuntamento {
 
 	@ManyToMany()
 	@JoinColumn()
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Squadra> squadrePartecipanti = new ArrayList<Squadra>();
+	
+	@ManyToMany()
+	@JoinColumn()
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Squadra> squadreInvitate = new ArrayList<Squadra>();
+	
 
 	@Override
 	public boolean aggiungiPartecipante(Object sportivoOSquadraPartecipante) {
@@ -79,6 +85,10 @@ public abstract class AppuntamentoSquadra extends Appuntamento {
 			}
 		}
 		return false;
+	}
+	
+	public void aggiungi(Squadra squadraAgliInvitati) {
+		getSquadreInvitate().add(squadraAgliInvitati);
 	}
 
 }

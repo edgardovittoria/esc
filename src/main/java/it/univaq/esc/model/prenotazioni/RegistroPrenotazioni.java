@@ -22,8 +22,7 @@ public class RegistroPrenotazioni {
 	@Setter(value = AccessLevel.PRIVATE)
 	private List<Prenotazione> prenotazioniRegistrate = new ArrayList<Prenotazione>();
 
-	public RegistroPrenotazioni(PrenotazioneRepository prenotazioneRepository,
-			RegistroAppuntamenti registroAppuntamenti) {
+	public RegistroPrenotazioni(PrenotazioneRepository prenotazioneRepository) {
 		this.setPrenotazioneRepository(prenotazioneRepository);
 		popola();
 	}
@@ -35,7 +34,7 @@ public class RegistroPrenotazioni {
 
 	public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {
 		getPrenotazioniRegistrate().add(prenotazioneDaAggiungere);
-		//this.getPrenotazioneRepository().save(prenotazioneDaAggiungere);
+		this.getPrenotazioneRepository().save(prenotazioneDaAggiungere);
 
 	}
 
@@ -110,6 +109,7 @@ public class RegistroPrenotazioni {
 		
 		return listaAppuntamenti;
 	}
+	
 	
 	public Prenotazione trovaPrenotazioneAssociataA(Appuntamento appuntamento) {
 		for(Prenotazione prenotazione : getPrenotazioniRegistrate()) {

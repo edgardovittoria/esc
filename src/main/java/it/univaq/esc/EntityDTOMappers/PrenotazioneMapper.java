@@ -14,7 +14,6 @@ import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
-import it.univaq.esc.model.prenotazioni.PrenotazioneCorsoSpecs;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,16 +26,16 @@ public class PrenotazioneMapper extends EntityDTOMapper{
 	
 	
 	
-	public PrenotazioneDTO convertiInPrenotazioneDTO(Prenotazione prenotazione, List<Appuntamento> listaAppuntamentiPrenotazione) {
+	public PrenotazioneDTO convertiInPrenotazioneDTO(Prenotazione prenotazione) {
 		PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO();
-		impostaDatiGeneraliPrenotazioneDTO(prenotazioneDTO, prenotazione, listaAppuntamentiPrenotazione);
+		impostaDatiGeneraliPrenotazioneDTO(prenotazioneDTO, prenotazione);
 		
 		
 		return prenotazioneDTO;
 	}
 	
 	
-	public PrenotazioneDTO convertiCorsoInPrenotazioneDTO(Prenotazione corsoPrenotazione, List<Appuntamento> listaAppuntamentiPrenotazione) {
+	public PrenotazioneDTO convertiCorsoInPrenotazioneDTO(Prenotazione corsoPrenotazione) {
 		PrenotazioneDTO prenotazioneDTO = new PrenotazioneDTO();
 		Map<String, Object> infoGeneraliCorso = new HashMap<String, Object>();
 		infoGeneraliCorso.put("numeroMinimoPartecipanti",
@@ -53,7 +52,7 @@ public class PrenotazioneMapper extends EntityDTOMapper{
 //		infoGeneraliCorso.put("invitatiCorso", invitatiDTO);
 
 		
-		impostaDatiGeneraliPrenotazioneDTO(prenotazioneDTO, corsoPrenotazione, listaAppuntamentiPrenotazione);
+		impostaDatiGeneraliPrenotazioneDTO(prenotazioneDTO, corsoPrenotazione);
 		
 		prenotazioneDTO.setInfoGeneraliEvento(infoGeneraliCorso);
 		
@@ -63,12 +62,12 @@ public class PrenotazioneMapper extends EntityDTOMapper{
 	
 	
 	
-	private void impostaDatiGeneraliPrenotazioneDTO(PrenotazioneDTO prenotazioneDTO, Prenotazione prenotazione, List<Appuntamento> listaAppuntamentiPrenotazione) {
+	private void impostaDatiGeneraliPrenotazioneDTO(PrenotazioneDTO prenotazioneDTO, Prenotazione prenotazione) {
 		prenotazioneDTO.setSportivoPrenotante(getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(prenotazione.getSportivoPrenotante()));
 		prenotazioneDTO.setIdPrenotazione(prenotazione.getIdPrenotazione());
 		
-		for (Appuntamento app : listaAppuntamentiPrenotazione) {
-			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper().convertiInAppuntamentoDTO(app);
+		for (Appuntamento app : prenotazione.getListaAppuntamenti()) {
+			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione()).convertiInAppuntamentoDTO(app);
 			prenotazioneDTO.aggiungiAppuntamento(appDTO);
 		}
 		prenotazioneDTO.setTipoEventoNotificabile(prenotazione.getTipoEventoNotificabile());

@@ -26,7 +26,6 @@ import it.univaq.esc.dtoObjects.SquadraDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
-import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;

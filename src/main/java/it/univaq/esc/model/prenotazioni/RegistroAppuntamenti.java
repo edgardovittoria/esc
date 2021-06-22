@@ -15,10 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
+import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
-import it.univaq.esc.model.prenotazioni.utility.FetchDatiPrenotazioniAppuntamentiFunctionsUtlis;
+import it.univaq.esc.model.utenti.Istruttore;
 import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import it.univaq.esc.repository.AppuntamentoRepository;
@@ -69,12 +70,10 @@ public class RegistroAppuntamenti {
 
 	public void salvaListaAppuntamenti(List<Appuntamento> listaAppuntamenti) {
 		this.getListaAppuntamenti().addAll(listaAppuntamenti);
-		this.getAppuntamentoRepository().saveAll(listaAppuntamenti);
+		
 	}
 
-	public Appuntamento getAppuntamentoBySpecificaAssociata(PrenotazioneSpecs prenotazioneSpecs) {
-		return this.getAppuntamentoRepository().findByPrenotazioneSpecsAppuntamento_Id(prenotazioneSpecs.getId());
-	}
+	
 
 	public List<Appuntamento> getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(String tipoPrenotazione,
 			UtentePolisportivaAbstract utentePerCuiTrovareAppuntamenti) {
@@ -237,20 +236,7 @@ public class RegistroAppuntamenti {
 		return null;
 	}
 
-	/**
-	 * Restituisce gli appuntamenti relativi ad una specifica prenotazione.
-	 * @param idPrenotazione identificativo della prenotazione di cui trovare gli appuntamenti.
-	 * @return la lista degli appuntamenti relativi alla prenotazione il cui identificativo è passato come parametro.
-	 */
-//	public List<Appuntamento> getAppuntamentiByPrenotazioneId(Integer idPrenotazione) {
-//		List<Appuntamento> appuntamenti = new ArrayList<Appuntamento>();
-//		for (Appuntamento appuntamento : this.getListaAppuntamenti()) {
-//			if (appuntamento.getIdPrenotazione() == idPrenotazione) {
-//				appuntamenti.add(appuntamento);
-//			}
-//		}
-//		return appuntamenti;
-//	}
+
 
 	public List<Prenotazione> getPrenotazioniAssociateAListaAppuntamenti(List<Appuntamento> listaAppuntamenti) {
 		Set<Prenotazione> setPrenotazioni = new HashSet<Prenotazione>();
@@ -270,22 +256,24 @@ public class RegistroAppuntamenti {
 		return appuntamenti;
 	}
 
-	private List<Appuntamento> filtraLezioniPerIstruttore(List<Appuntamento> listaLezioniDaFiltrare,
+	private List<Appuntamento> filtraLezioniPerIstruttore(List<AppuntamentoLezione> listaLezioniDaFiltrare,
 			UtentePolisportivaAbstract istruttore) {
-		List<Appuntamento> listaLezioniIstruttore = new ArrayList<Appuntamento>();
-		for (Appuntamento appuntamento : listaLezioniDaFiltrare) {
-			if (((UtentePolisportivaAbstract) appuntamento.getPrenotazioneSpecsAppuntamento()
-					.getValoriSpecificheExtraPrenotazione().get("istruttore")).isEqual(istruttore)) {
+		
+		List<AppuntamentoLezione> listaLezioniIstruttore = new ArrayList<AppuntamentoLezione>();
+		for (AppuntamentoLezione appuntamento : listaLezioniDaFiltrare) {
+			if (((Calendario)istruttore.getProprieta().get("calendarioLezioni")).ha(appuntamento)) {
 				listaLezioniIstruttore.add(appuntamento);
 			}
 		}
-		return listaLezioniIstruttore;
+		
+		return (List<Appuntamento>)(List<?>)listaLezioniIstruttore;
 	}
 
 	public List<Appuntamento> getListaLezioniPerIstruttore(UtentePolisportivaAbstract istruttore) {
 		List<Appuntamento> listaLezioni = filtraAppuntamentiPerTipoPrenotazione(getListaAppuntamenti(),
 				TipiPrenotazione.LEZIONE.toString());
-		listaLezioni = filtraLezioniPerIstruttore(listaLezioni, istruttore);
+		
+		listaLezioni = filtraLezioniPerIstruttore((List<AppuntamentoLezione>)(List<?>)listaLezioni, istruttore);
 
 		return listaLezioni;
 	}

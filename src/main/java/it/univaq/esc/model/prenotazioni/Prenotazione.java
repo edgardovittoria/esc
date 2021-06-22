@@ -4,6 +4,7 @@ import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,8 @@ import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
@@ -24,6 +26,10 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import groovy.transform.Generated;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GeneratorType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -47,13 +53,14 @@ public class Prenotazione extends Notificabile{
     @JoinColumn()
     private UtentePolisportivaAbstract sportivoPrenotante;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    
+    
     @Column
+    @CreationTimestamp
     private LocalDateTime oraDataPrenotazione;
   
     
-    @OneToMany(mappedBy = "prenotazioneAssociata", cascade = CascadeType.ALL)
-    //@JoinColumn
+    @OneToMany(cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
@@ -69,19 +76,6 @@ public class Prenotazione extends Notificabile{
     }
 
 
-    
-
-    public void impostaValoriSpecificheExtraSingolaPrenotazioneSpecs(Map<String, Object> mappaValori, PrenotazioneSpecs specifica){
-        specifica.impostaValoriSpecificheExtraPrenotazione(mappaValori);
-    }
-
-    public Object getSingolaSpecificaExtra(String etichettaSpecifica, PrenotazioneSpecs specifica){
-        return specifica.getValoriSpecificheExtraPrenotazione().get(etichettaSpecifica);
-    }
-
-    public Map<String, Object> getSpecificheExtraSingolaPrenotazioneSpecs(PrenotazioneSpecs specifica){
-        return specifica.getValoriSpecificheExtraPrenotazione();
-    }
 
 
     public String getTipoPrenotazione(){

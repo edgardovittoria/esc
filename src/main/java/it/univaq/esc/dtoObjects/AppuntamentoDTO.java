@@ -25,12 +25,19 @@ public class AppuntamentoDTO {
 	private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
 	private List<String> partecipanti = new ArrayList<String>();
 	private List<Integer> squadrePartecipanti = new ArrayList<Integer>();
-	private PrenotazioneSpecsDTO specificaPrenotazione;
 	private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
 	private String creatore;
 	private Integer idManutentore;
 	private String modalitaPrenotazione;
 	private String tipoPrenotazione;
+	private boolean confermata;
+	private boolean pending;
+	private Float costo;
+	private SportDTO sportAssociato;
+	private List<String> invitati = new ArrayList<String>();
+	private Integer idImpiantoPrenotato;
+	private String pavimentazioneImpianto;
+	private String istruttore;
 
 	public LocalDate getDataAppuntamento() {
 		return this.getOrarioAppuntamento().getDataPrenotazione();
@@ -60,6 +67,12 @@ public class AppuntamentoDTO {
 		this.partecipanti.add(emailPartecipante);
 	}
 
+	public void aggiungiInvitato(String emailInvitato) {
+		getInvitati().add(emailInvitato);
+	}
 	
 
+	public void aggiungiSquadraPartecipante(Integer idSquadra) {
+		getSquadrePartecipanti().add(idSquadra);
+	}
 }

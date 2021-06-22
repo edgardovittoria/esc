@@ -27,12 +27,7 @@ public abstract class MapperFactory {
 	}
 
 	
-	public AppuntamentoMapper getAppuntamentoMapper() {
-		AppuntamentoMapper appuntamentoMapper = BeanUtil.getBean(AppuntamentoMapper.class);
-		appuntamentoMapper.setMapperFactory(this);
-		
-		return appuntamentoMapper;
-	}
+	public abstract AppuntamentoMapper getAppuntamentoMapper(String tipoPrenotazione);
 
 	
 	public QuotaPartecipazioneMapper getQuotaPartecipazioneMapper() {
@@ -50,7 +45,7 @@ public abstract class MapperFactory {
 		return sportMapper;
 	}
 	
-	public abstract PrenotazioneSpecsMapper getPrenotazioneSpecsMapper(String tipoPrenotazione);
+	
 	
 	public SquadraMapper getSquadraMapper() {
 		SquadraMapper squadraMapper = BeanUtil.getBean(SquadraMapper.class);
@@ -66,9 +61,7 @@ public abstract class MapperFactory {
 		return impiantoMapper;
 	}
 	
-	public FormMapperToPrenotazioneSpecs getFormMapperToPrenotazioneSpecs() {
-		return BeanUtil.getBean(FormMapperToPrenotazioneSpecs.class);
-	}
+	
 	
 	public abstract NotificaMapper getNotificaMapper() ;
 

@@ -82,7 +82,8 @@ public abstract class Appuntamento {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<QuotaPartecipazione> quotePartecipazione = new ArrayList<QuotaPartecipazione>();
 	
-	@Column
+	@ManyToOne
+	@JoinColumn
 	private Impianto impiantoPrenotato;
 	
 	@Column

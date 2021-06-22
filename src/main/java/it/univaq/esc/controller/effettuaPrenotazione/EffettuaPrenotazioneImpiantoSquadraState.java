@@ -33,8 +33,6 @@ import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSquadra;
-import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSpecs;
-import it.univaq.esc.model.prenotazioni.PrenotazioneImpiantoSquadraSpecs;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
@@ -74,60 +72,35 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 
 		FormPrenotaImpiantoSquadra formSquadra = (FormPrenotaImpiantoSquadra)formDati;
 		for (OrarioAppuntamento orario : formSquadra.getOrariSelezionati()) {
-			PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs = (PrenotazioneImpiantoSquadraSpecs) getElementiPrenotazioneFactory()
-					.getPrenotazioneSpecs(controller.getTipoPrenotazioneInAtto());
-			controller.getPrenotazioneInAtto().aggiungiSpecifica(prenotazioneSpecs);
-
-			impostaDatiPrenotazioneSpecs(prenotazioneSpecs, formSquadra, orario, controller);
-
+			
 			// ---------------------------------------------------------------------------------------
 
-			AppuntamentoSquadra appuntamento = (AppuntamentoSquadra) getElementiPrenotazioneFactory().getAppuntamento();
-			impostaDatiAppuntamento(prenotazioneSpecs, formSquadra, appuntamento, orario, controller);
+			AppuntamentoSquadra appuntamento = (AppuntamentoSquadra) getElementiPrenotazioneFactory().getAppuntamento(TipiPrenotazione.IMPIANTO.toString());
+			impostaDatiAppuntamento(formSquadra, appuntamento, orario, controller);
 
-			controller.aggiungiAppuntamento(appuntamento);
+			controller.getPrenotazioneInAtto().aggiungi(appuntamento);
 		}
 
 		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper().convertiInPrenotazioneDTO(
-				controller.getPrenotazioneInAtto(), controller.getListaAppuntamentiPrenotazioneInAtto());
+				controller.getPrenotazioneInAtto());
 
 		return prenDTO;
 	}
 
-	private void impostaDatiPrenotazioneSpecs(PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs,
-			FormPrenotaImpiantoSquadra formDati, OrarioAppuntamento orario, EffettuaPrenotazioneHandler controller) {
+
+	private void impostaDatiAppuntamento(FormPrenotaImpiantoSquadra formDati,
+			AppuntamentoSquadra appuntamento, OrarioAppuntamento orario, EffettuaPrenotazioneHandler controller) {
+		
 		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
-						controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione().get(0)
-								.getTipoPrenotazione(),
+						TipiPrenotazione.IMPIANTO.toString(),
 						getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
 						formDati.getModalitaPrenotazione());
-
-		prenotazioneSpecs.setPrenotazioneAssociata(controller.getPrenotazioneInAtto());
-
-		Integer idImpianto = 0;
-		for (ImpiantoSelezionato impianto : formDati.getImpianti()) {
-			if (impianto.getIdSelezione() == orario.getId()) {
-				idImpianto = impianto.getIdImpianto();
-			}
-		}
-		prenotazioneSpecs.setImpiantoPrenotato(getRegistroImpianti().getImpiantoByID(idImpianto));
-
-		List<Squadra> squadreInvitate = new ArrayList<Squadra>();
-		for (Integer idSquadra : formDati.getSquadreInvitate()) {
-			squadreInvitate.add(getRegistroSquadre().getSquadraById(idSquadra));
-		}
-		prenotazioneSpecs.setSquadreInvitate(squadreInvitate);
-		prenotazioneSpecs.setSpecificaDescription(descrizioneSpecifica);
-	}
-
-	private void impostaDatiAppuntamento(PrenotazioneImpiantoSquadraSpecs prenotazioneSpecs, FormPrenotaImpiantoSquadra formDati,
-			AppuntamentoSquadra appuntamento, OrarioAppuntamento orario, EffettuaPrenotazioneHandler controller) {
 		// Creazione calcolatore che poi dovrà finire altrove
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
 		calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
 
-		appuntamento.setPrenotazioneSpecsAppuntamento(prenotazioneSpecs);
+		appuntamento.setDescrizioneEventoPrenotato(descrizioneSpecifica);
 		appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 
 		LocalDateTime dataInizio = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraInizio());
@@ -146,6 +119,10 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		appuntamento.setPending(pending);
 
 		appuntamento.calcolaCosto();
+		
+		for(Integer idSquadraInvitata : formDati.getSquadreInvitate()) {
+			appuntamento.aggiungi(getRegistroSquadre().getSquadraById(idSquadraInvitata));
+		}
 
 		Squadra partecipante = getRegistroSquadre().getSquadraById(controller.getIdSquadraPrenotante());
 		this.aggiungiPartecipanteECreaQuotePartecipazione(partecipante, appuntamento);
@@ -154,11 +131,10 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 
 	@Override
 	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandler controller) {
-		for (Appuntamento app : controller.getListaAppuntamentiPrenotazioneInAtto()) {
+		for (Appuntamento app : controller.getPrenotazioneInAtto().getListaAppuntamenti()) {
 			Calendario calendarioDaUnire = new Calendario();
 			calendarioDaUnire.aggiungiAppuntamento(app);
-			getRegistroImpianti().aggiornaCalendarioImpianto((Impianto) controller.getPrenotazioneInAtto()
-					.getSingolaSpecificaExtra("impianto", app.getPrenotazioneSpecsAppuntamento()), calendarioDaUnire);
+			getRegistroImpianti().aggiornaCalendarioImpianto(app.getImpiantoPrenotato(), calendarioDaUnire);
 			getRegistroSquadre().aggiornaCalendarioSquadra(getRegistroSquadre().getSquadraById(controller.getIdSquadraPrenotante()), calendarioDaUnire);
 		}
 		
@@ -166,10 +142,10 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 
 		/*
 		 * Creiamo le notifiche relative alle squadre invitate, creandone una per ogni
-		 * membro di ogni squadra.
+		 * amministratore di ogni squadra.
 		 */
-		for (Squadra invitato : (List<Squadra>) controller.getPrenotazioneInAtto().getListaSpecifichePrenotazione()
-				.get(0).getValoriSpecificheExtraPrenotazione().get("invitati")) {
+		for (Squadra invitato : ((AppuntamentoSquadra)controller.getPrenotazioneInAtto().getListaAppuntamenti()
+				.get(0)).getSquadreInvitate()) {
 
 			for (UtentePolisportivaAbstract amministratore : invitato.getAmministratori()) {
 				NotificaSquadraService notifica = (NotificaSquadraService) getElementiPrenotazioneFactory()
@@ -221,7 +197,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 			}
 			
 			// this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
-			AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper().convertiInAppuntamentoDTO(appuntamento);
+			AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);
 			return appuntamentoDTO;
 		}
 		return null;
@@ -238,7 +214,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
 		for (Appuntamento appuntamento : this.getRegistroAppuntamenti().getAppuntamentiSottoscrivibiliSquadraPerTipo(
 				TipiPrenotazione.IMPIANTO.toString(), squadraPerCuiCercareAppuntamentiSottoscrivibili)) {
-			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper().convertiInAppuntamentoDTO(appuntamento);
+			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);
 			listaAppuntamentiDTO.add(appDTO);
 		}
 		return listaAppuntamentiDTO;

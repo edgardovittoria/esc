@@ -50,9 +50,8 @@ public class DettagliNotificaPrenotazioneStrategy extends DettagliNotificaStrate
 	public NotificabileDTO getDettagliNotifica(Integer idEvento) {
 		
 		Prenotazione prenotazione = getRegistroPrenotazioni().getPrenotazioneById(idEvento);
-		List<Appuntamento> appuntamentiPrenotazione = getRegistroAppuntamenti().getAppuntamentiByPrenotazioneId(idEvento);
 		 
-		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper().convertiInPrenotazioneDTO(prenotazione, appuntamentiPrenotazione);
+		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper().convertiInPrenotazioneDTO(prenotazione);
 						
 		return prenDTO;
 	}
