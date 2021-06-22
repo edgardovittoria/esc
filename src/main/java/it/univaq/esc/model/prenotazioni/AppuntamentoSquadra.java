@@ -40,9 +40,9 @@ public class AppuntamentoSquadra extends Appuntamento {
 
 	@Override
 	public boolean aggiungiPartecipante(Object sportivoOSquadraPartecipante) {
-		Squadra partecipante = (Squadra) sportivoOSquadraPartecipante;
-		if (!this.squadraIsPartecipante(partecipante) && getPartecipantiAppuntamento().size() < getNumeroPartecipantiMassimo()) {
-			this.getSquadrePartecipanti().add(partecipante);
+		Squadra squadraDaAggiungereComePartecipante = (Squadra) sportivoOSquadraPartecipante;
+		if (!this.haComePartecipante(squadraDaAggiungereComePartecipante) && this.accettaNuoviPartecipantiOltre(getPartecipantiAppuntamento().size())) {
+			this.getSquadrePartecipanti().add(squadraDaAggiungereComePartecipante);
 			return true;
 		}
 		return false;
@@ -51,20 +51,20 @@ public class AppuntamentoSquadra extends Appuntamento {
 
 	@Override
 	public List<Object> getPartecipantiAppuntamento() {
-		List<Object> partecipanti = new ArrayList<Object>();
-		getSquadrePartecipanti().forEach((partecipante) -> partecipanti.add(partecipante));
+		List<Object> squadrePartecipanti = new ArrayList<Object>();
+		getSquadrePartecipanti().forEach((squadraPartecipante) -> squadrePartecipanti.add(squadraPartecipante));
 
-		return partecipanti;
+		return squadrePartecipanti;
 	}
 
-	private boolean squadraIsPartecipante(Squadra squadraDaVerificare) {
-		for (Squadra partecipante : getSquadrePartecipanti()) {
-			if (partecipante.isEqual(squadraDaVerificare)) {
-				return true;
-			}
-		}
-		return false;
-	}
+//	private boolean squadraIsPartecipante(Squadra squadraDaVerificare) {
+//		for (Squadra partecipante : getSquadrePartecipanti()) {
+//			if (partecipante.isEqual(squadraDaVerificare)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 	public void aggiungiUtentePartecipante(UtentePolisportivaAbstract nuovoPartecipante) {
 		if (!utenteIsPartecipante(nuovoPartecipante)) {
@@ -74,6 +74,17 @@ public class AppuntamentoSquadra extends Appuntamento {
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean haComePartecipante(Object squadra) {
+		Squadra squadraDaVerificare = (Squadra) squadra;
+		for (Squadra partecipante : getSquadrePartecipanti()) {
+			if (partecipante.isEqual(squadraDaVerificare)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

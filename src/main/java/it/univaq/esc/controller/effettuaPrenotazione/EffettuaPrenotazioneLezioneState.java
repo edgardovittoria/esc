@@ -93,7 +93,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 			AppuntamentoSingoliPartecipanti appuntamento = new AppuntamentoSingoliPartecipanti();
 			impostaValoriAppuntamento(formDati, controller, appuntamento, prenotazioneSpecs, orario);
 
-			this.aggiungiPartecipante(controller.getPrenotazioneInAtto().getSportivoPrenotante(), appuntamento);
+			this.aggiungiPartecipanteECreaQuotePartecipazione(descrizioneSpecifica, appuntamento);
 
 			controller.aggiungiAppuntamento(appuntamento);
 		}
@@ -178,7 +178,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	@Override
 	public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
 		Map<String, Object> mappaDatiAggiornati = new HashMap<String, Object>();
-		mappaDatiAggiornati.put("impiantiDisponibili", this.getImpiantiDTODisponibili(dati));
+		mappaDatiAggiornati.put("impiantiDisponibili", this.getImpiantiPrenotabiliInBaseA(dati));
 		mappaDatiAggiornati.put("istruttoriDisponibili", this.getIstruttoriDTODisponibili(dati));
 		return mappaDatiAggiornati;
 	}

@@ -307,10 +307,10 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return lista, in formato DTO, degli impianti disponibili sulla base di sport
 	 *         e orario.
 	 */
-	protected List<ImpiantoDTO> getImpiantiDTODisponibili(Map<String, Object> dati) {
+	protected List<ImpiantoDTO> getImpiantiPrenotabiliInBaseA(Map<String, Object> datiInseritiInCompilazione) {
 		List<Impianto> listaImpiantiDisponibili = this.getRegistroImpianti().getListaImpiantiPolisportiva();
-		if (dati.containsKey("orario")) {
-			Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
+		if (datiInseritiInCompilazione.containsKey("orario")) {
+			Map<String, String> orario = (HashMap<String, String>) datiInseritiInCompilazione.get("orario");
 			listaImpiantiDisponibili = this.getRegistroImpianti().filtraImpiantiDisponibiliPerOrario(
 					LocalDateTime.parse(orario.get("oraInizio"),
 							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
@@ -318,13 +318,13 @@ public abstract class EffettuaPrenotazioneState {
 							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
 					listaImpiantiDisponibili);
 
-			if (dati.containsKey("sport")) {
-				listaImpiantiDisponibili = this.filtraImpiantiPerSport((String) dati.get("sport"),
+			if (datiInseritiInCompilazione.containsKey("sport")) {
+				listaImpiantiDisponibili = this.filtraImpiantiPerSport((String) datiInseritiInCompilazione.get("sport"),
 						listaImpiantiDisponibili);
 
 			}
-		} else if (dati.containsKey("sport")) {
-			listaImpiantiDisponibili = this.filtraImpiantiPerSport((String) dati.get("sport"),
+		} else if (datiInseritiInCompilazione.containsKey("sport")) {
+			listaImpiantiDisponibili = this.filtraImpiantiPerSport((String) datiInseritiInCompilazione.get("sport"),
 					listaImpiantiDisponibili);
 		}
 
@@ -421,10 +421,10 @@ public abstract class EffettuaPrenotazioneState {
 
 	
 	
-	protected boolean aggiungiPartecipante(Object utente, Appuntamento appuntamento) {
+	protected boolean aggiungiPartecipanteECreaQuotePartecipazione(Object partecipante, Appuntamento appuntamento) {
 		boolean partecipanteAggiunto = false;
 		
-			partecipanteAggiunto = appuntamento.aggiungiPartecipante(utente);
+			partecipanteAggiunto = appuntamento.aggiungiPartecipante(partecipante);
 			
 			if (partecipanteAggiunto) {
 				getRegistroAppuntamenti().creaQuotePartecipazionePerAppuntamento(appuntamento);

@@ -83,6 +83,13 @@ public abstract class PrenotazioneSpecs {
 		return this.getSpecificaDescription().getMassimoNumeroPartecipanti();
 	}
 	
+	public boolean accettaPartecipantiOltre(Integer numeroPartecipantiAttuali) {
+		if(numeroPartecipantiAttuali < getSpecificaDescription().getMassimoNumeroPartecipanti()) {
+			return true;
+		}
+		return false;
+	}
+	
 	public Integer getSogliaPartecipantiPerConferma() {
 		return this.getSpecificaDescription().getMinimoNumeroPartecipanti();
 	};

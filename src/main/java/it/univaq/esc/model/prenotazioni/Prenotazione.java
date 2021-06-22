@@ -18,7 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
-
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -46,6 +47,7 @@ public class Prenotazione extends Notificabile{
     @JoinColumn()
     private UtentePolisportivaAbstract sportivoPrenotante;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column
     private LocalDateTime oraDataPrenotazione;
   

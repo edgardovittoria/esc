@@ -220,12 +220,16 @@ public abstract class Appuntamento {
 		return false;
 	};
 	
-	public Integer getNumeroPartecipantiMassimo() {
-		return this.getPrenotazioneSpecsAppuntamento().getSogliaMassimaPartecipanti();
-	};
+//	public Integer getNumeroPartecipantiMassimo() {
+//		return this.getPrenotazioneSpecsAppuntamento().getSogliaMassimaPartecipanti();
+//	};
 	
 	public Sport getSportAssociato() {
 		return getPrenotazioneSpecsAppuntamento().getSportAssociato();
+	}
+	
+	public boolean accettaNuoviPartecipantiOltre(Integer numeroPartecipantiAttuali) {
+		return getPrenotazioneSpecsAppuntamento().accettaPartecipantiOltre(numeroPartecipantiAttuali);
 	}
 	
 	public Integer getSogliaMinimaPartecipantiPerConferma() {
@@ -233,6 +237,8 @@ public abstract class Appuntamento {
 	};
 	
 	public abstract boolean aggiungiPartecipante(Object sportivoOSquadraPartecipante);
+	
+	public abstract boolean haComePartecipante(Object sportivoOSquadra);
 	
 	public List<UtentePolisportivaAbstract> getUtentiPartecipanti(){
 		return getPartecipanti();

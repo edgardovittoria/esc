@@ -144,7 +144,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 		appuntamento.calcolaCosto();
 
-		this.aggiungiPartecipante(controller.getPrenotazioneInAtto().getSportivoPrenotante(), appuntamento);
+		this.aggiungiPartecipanteECreaQuotePartecipazione(dataFine, appuntamento);
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	@Override
 	public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
 		Map<String, Object> datiAggiornati = new HashMap<String, Object>();
-		datiAggiornati.put("impiantiDisponibili", this.getImpiantiDTODisponibili(dati));
+		datiAggiornati.put("impiantiDisponibili", this.getImpiantiPrenotabiliInBaseA(dati));
 
 		Map<String, String> orario = (Map<String, String>) dati.get("orario");
 		LocalDateTime oraInizio = LocalDateTime.parse(orario.get("oraInizio"),
@@ -241,7 +241,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
 		if (appuntamento != null) {
 			boolean partecipanteAggiunto = this
-					.aggiungiPartecipante(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
+					.aggiungiPartecipanteECreaQuotePartecipazione(this.getRegistroUtenti().getUtenteByEmail(emailPartecipante), appuntamento);
 
 			if (partecipanteAggiunto) {
 				getRegistroUtenti().aggiornaCalendarioSportivo(appuntamento,

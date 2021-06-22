@@ -43,9 +43,9 @@ public class AppuntamentoSingoliPartecipanti extends Appuntamento {
 
 	@Override
 	public boolean aggiungiPartecipante(Object sportivoPartecipante) {
-		UtentePolisportivaAbstract partecipante = (UtentePolisportivaAbstract) sportivoPartecipante;
-		if (!this.utenteIsPartecipante(partecipante) && getPartecipantiAppuntamento().size() < getNumeroPartecipantiMassimo()) {
-			this.getUtentiPartecipanti().add(partecipante);
+		UtentePolisportivaAbstract sportivoDaAggiungereComePartecipante = (UtentePolisportivaAbstract) sportivoPartecipante;
+		if (!this.haComePartecipante(sportivoDaAggiungereComePartecipante) && this.accettaNuoviPartecipantiOltre(getPartecipantiAppuntamento().size())) {
+			this.getUtentiPartecipanti().add(sportivoDaAggiungereComePartecipante);
 			return true;
 		}
 		return false;
@@ -58,6 +58,17 @@ public class AppuntamentoSingoliPartecipanti extends Appuntamento {
 		getUtentiPartecipanti().forEach((partecipante) -> partecipanti.add(partecipante));
 		
 		return partecipanti;
+	}
+
+	@Override
+	public boolean haComePartecipante(Object sportivo) {
+		UtentePolisportivaAbstract partecipante = (UtentePolisportivaAbstract) sportivo;
+		for (UtentePolisportivaAbstract utentePartecipante : this.getUtentiPartecipanti()) {
+			if (utentePartecipante.isEqual(partecipante)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	

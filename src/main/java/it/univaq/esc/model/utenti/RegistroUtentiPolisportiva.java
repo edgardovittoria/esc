@@ -28,18 +28,14 @@ import lombok.Setter;
 
 @Component
 @Singleton
-@Getter @Setter
+@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE)
 public class RegistroUtentiPolisportiva {
 
-	@Setter(value = AccessLevel.PRIVATE)
-	@Getter(value = AccessLevel.PRIVATE)
     private UtentePolisportivaAbstractRepository utentiRepository; 
     
-    @Setter(value = AccessLevel.PRIVATE)
+    @Getter(value = AccessLevel.PUBLIC)
     private List<UtentePolisportivaAbstract> listaUtentiPolisportiva = new ArrayList<UtentePolisportivaAbstract>();
     
-    @Setter(value = AccessLevel.PRIVATE)
-	@Getter(value = AccessLevel.PRIVATE)
     private RegistroAppuntamenti registroAppuntamenti;
 
 

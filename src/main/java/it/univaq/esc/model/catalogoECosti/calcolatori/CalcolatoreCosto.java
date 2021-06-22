@@ -19,7 +19,7 @@ public abstract class CalcolatoreCosto {
     	if(appuntamento.getMappaCostiAppuntamento().containsKey(TipoCostoPrenotabile.COSTO_UNA_TANTUM.toString())) {
     		return this.calcolaCosto(appuntamento);
     	}
-        return this.calcolaCosto(appuntamento) / appuntamento.getNumeroPartecipantiMassimo();
+        return this.calcolaCosto(appuntamento) / appuntamento.getUtentiPartecipanti().size();
     };
 
     public void aggiungiStrategiaCosto(CalcolatoreCosto calcolatoreCosto){

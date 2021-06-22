@@ -130,7 +130,7 @@ public class TestCreazioneQuotePartecipazione {
 	
 	@Test
 	public void testAggiungiPartecipanteECreaQuotaPartecipazioneConQuotaSportivoGiaPresente() {
-		when(getAppuntamento().getNumeroPartecipantiMassimo()).thenReturn(40);
+		// when(getAppuntamento().getNumeroPartecipantiMassimo()).thenReturn(40);
 		when(getAppuntamento().getSogliaMinimaPartecipantiPerConferma()).thenReturn(1);
 		
 		QuotaPartecipazione quotaProva = new QuotaPartecipazione();

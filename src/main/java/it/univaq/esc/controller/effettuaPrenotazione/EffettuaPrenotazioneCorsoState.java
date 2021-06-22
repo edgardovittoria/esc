@@ -259,7 +259,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		UtentePolisportivaAbstract nuovoPartecipante = this.getRegistroUtenti().getUtenteByEmail(emailPartecipante);
 		boolean partecipanteAggiunto = false;
 		for (Appuntamento appuntamento : listaAppuntamentiCorso) {
-			partecipanteAggiunto = this.aggiungiPartecipante(nuovoPartecipante, appuntamento);
+			partecipanteAggiunto = this.aggiungiPartecipanteECreaQuotePartecipazione(nuovoPartecipante, appuntamento);
 		}
 		Appuntamento appuntamentoPerCreazioneQuota = listaAppuntamentiCorso.get(0);
 
@@ -302,7 +302,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	protected boolean aggiungiPartecipante(Object utente, Appuntamento appuntamento) {
+	protected boolean aggiungiPartecipanteECreaQuotePartecipazione(Object utente, Appuntamento appuntamento) {
 		boolean partecipanteAggiunto = appuntamento.aggiungiPartecipante(utente);
 
 		appuntamento.confermaAppuntamento();

@@ -148,7 +148,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		appuntamento.calcolaCosto();
 
 		Squadra partecipante = getRegistroSquadre().getSquadraById(controller.getIdSquadraPrenotante());
-		this.aggiungiPartecipante(partecipante, appuntamento);
+		this.aggiungiPartecipanteECreaQuotePartecipazione(partecipante, appuntamento);
 
 	}
 
@@ -192,7 +192,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	@Override
 	public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
 		Map<String, Object> datiAggiornati = new HashMap<String, Object>();
-		datiAggiornati.put("impiantiDisponibili", this.getImpiantiDTODisponibili(dati));
+		datiAggiornati.put("impiantiDisponibili", this.getImpiantiPrenotabiliInBaseA(dati));
 
 		Map<String, String> orario = (Map<String, String>) dati.get("orario");
 		LocalDateTime oraInizio = LocalDateTime.parse(orario.get("oraInizio"),
@@ -214,7 +214,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		Squadra squadraPartecipante = getRegistroSquadre().getSquadraById(idSquadra);
 		Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
 		if (appuntamento != null) {
-			boolean partecipanteAggiunto = this.aggiungiPartecipante(squadraPartecipante, appuntamento);
+			boolean partecipanteAggiunto = this.aggiungiPartecipanteECreaQuotePartecipazione(squadraPartecipante, appuntamento);
 			
 			if(partecipanteAggiunto) {
 				getRegistroSquadre().aggiornaCalendarioSquadra(squadraPartecipante, appuntamento);
@@ -245,18 +245,16 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	}
 
 	@Override
-	protected boolean aggiungiPartecipante(Object squadra, Appuntamento appuntamento) {
-		boolean partecipanteAggiunto = false;
-		if (appuntamento.getPartecipantiAppuntamento().size() < appuntamento.getNumeroPartecipantiMassimo()) {
-			appuntamento.aggiungiPartecipante(squadra);
-			partecipanteAggiunto = true;
-			if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento
+	protected boolean aggiungiPartecipanteECreaQuotePartecipazione(Object squadra, Appuntamento appuntamento) {
+		boolean partecipanteAggiunto = appuntamento.aggiungiPartecipante(squadra);
+			
+			if (partecipanteAggiunto && appuntamento.getPartecipantiAppuntamento().size() >= appuntamento
 					.getSogliaMinimaPartecipantiPerConferma()) {
 				appuntamento.confermaAppuntamento();
 
 			}
 			this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
-		}
+		
 		return partecipanteAggiunto;
 	}
 
