@@ -65,6 +65,7 @@ public class RegistroAppuntamenti {
 
 	public void salvaListaAppuntamenti(List<Appuntamento> listaAppuntamenti) {
 		this.getListaAppuntamenti().addAll(listaAppuntamenti);
+		appuntamentoRepository.saveAll(listaAppuntamenti);
 
 	}
 
