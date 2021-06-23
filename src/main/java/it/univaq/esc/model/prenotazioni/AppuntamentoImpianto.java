@@ -34,4 +34,8 @@ public class AppuntamentoImpianto extends AppuntamentoSingoliPartecipanti{
 		
 		return nominativiInvitati;
 	}
+	
+	public void aggiungi(UtentePolisportiva invitato) {
+		getInvitati().add(invitato);
+	}
 }

@@ -20,4 +20,8 @@ public class AppuntamentoImpiantoSquadra extends AppuntamentoSquadra{
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Squadra> squadreInvitate = new ArrayList<Squadra>();
+	
+	public void aggiungi(Squadra squadraInvitata) {
+		getSquadreInvitate().add(squadraInvitata);
+	}
 }

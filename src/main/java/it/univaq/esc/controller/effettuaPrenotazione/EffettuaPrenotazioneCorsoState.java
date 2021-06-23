@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import it.univaq.esc.dtoObjects.FormCreaCorso;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
+import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
@@ -155,6 +156,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		appuntamento.setImpiantoPrenotato(getRegistroImpianti().getImpiantoByID(impiantoSelezionato.getIdImpianto()));
 		
 		
+		
 		// Creazione calcolatore che poi dovrà finire altrove
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
 		calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
@@ -171,8 +173,16 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		appuntamento.calcolaCosto();
 
 		for (String emailInvitato : formDatiCorso.getInvitatiCorso()) {
-			appuntamento.aggiungiInvitato(getRegistroUtenti().getUtenteByEmail(emailInvitato));
+			appuntamento.aggiungi(getRegistroUtenti().getUtenteByEmail(emailInvitato));
 		}
+		
+		IstruttoreSelezionato istruttoreSelezionato = null;
+		for(IstruttoreSelezionato istruttore : formDatiCorso.getFormLezione().getIstruttori()) {
+			if(istruttore.getIdSelezione() == orario.getId()) {
+				istruttoreSelezionato = istruttore;
+			}
+		}
+		appuntamento.assegna(getRegistroUtenti().getUtenteByEmail(istruttoreSelezionato.getIstruttore()));
 
 	}
 

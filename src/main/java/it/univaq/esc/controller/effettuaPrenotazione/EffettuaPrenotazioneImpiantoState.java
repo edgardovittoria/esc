@@ -140,6 +140,10 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 				pending = checkbox.isPending();
 			}
 		}
+		
+		for(String invitato : formDati.getSportiviInvitati()) {
+			appuntamento.aggiungi(getRegistroUtenti().getUtenteByEmail(invitato));
+		}
 
 		appuntamento.setPending(pending);
 

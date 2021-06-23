@@ -29,9 +29,6 @@ public class AppuntamentoCorso extends AppuntamentoSingoliPartecipanti {
 	private UtentePolisportiva istruttore;
 	
 	
-	public void aggiungiInvitato(UtentePolisportiva invitato) {
-		getInvitati().add(invitato);
-	}
 	
 	public List<String> getNominativiInvitati(){
 		List<String> nominativiInvitati = new ArrayList<String>();
@@ -42,6 +39,14 @@ public class AppuntamentoCorso extends AppuntamentoSingoliPartecipanti {
 	
 	public String getNominativoIstruttore() {
 		return getIstruttore().getNominativoCompleto();
+	}
+	
+	public void aggiungi(UtentePolisportiva invitato) {
+		getInvitati().add(invitato);
+	}
+	
+	public void assegna(UtentePolisportiva istruttore) {
+		setIstruttore(istruttore);
 	}
 }
 
