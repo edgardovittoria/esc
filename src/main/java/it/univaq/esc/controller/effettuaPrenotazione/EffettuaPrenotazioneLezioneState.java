@@ -122,7 +122,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 
 		appuntamento.calcolaCosto();
 
-		this.aggiungiPartecipanteECreaQuotePartecipazione(descrizioneSpecifica, appuntamento);
+		this.aggiungiPartecipanteECreaQuotePartecipazione(controller.getSportivoPrenotante(), appuntamento);
 
 	}
 
