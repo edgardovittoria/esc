@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.FormCreaCorso;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
+import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
@@ -144,6 +145,16 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
 				.nuovoPrenotabile_salvaPrenotabileInCreazione();
 
+		
+		ImpiantoSelezionato impiantoSelezionato = null;
+		for(ImpiantoSelezionato impianto : formDatiCorso.getFormLezione().getImpianti()) {
+			if(impianto.getIdSelezione() == orario.getId()) {
+				impiantoSelezionato = impianto;
+			}
+		}
+		appuntamento.setImpiantoPrenotato(getRegistroImpianti().getImpiantoByID(impiantoSelezionato.getIdImpianto()));
+		
+		
 		// Creazione calcolatore che poi dovrà finire altrove
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
 		calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());

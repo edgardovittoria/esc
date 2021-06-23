@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.FormPrenotaLezioneDTO;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
+import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.model.Calendario;
@@ -78,7 +79,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 
 			AppuntamentoLezione appuntamento = (AppuntamentoLezione) getElementiPrenotazioneFactory()
 					.getAppuntamento(TipiPrenotazione.LEZIONE.toString());
-			impostaValoriAppuntamento(formDati, controller, appuntamento, orario);
+			impostaValoriAppuntamento(formLezione, controller, appuntamento, orario);
 
 			controller.getPrenotazioneInAtto().aggiungi(appuntamento);
 		}
@@ -90,7 +91,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 
 	}
 
-	public void impostaValoriAppuntamento(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller,
+	public void impostaValoriAppuntamento(FormPrenotaLezioneDTO formDati, EffettuaPrenotazioneHandler controller,
 			AppuntamentoSingoliPartecipanti appuntamento, OrarioAppuntamento orario) {
 
 		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
@@ -102,6 +103,14 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
 		calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
 
+		ImpiantoSelezionato impiantoSelezionato = null;
+		for(ImpiantoSelezionato impianto : formDati.getImpianti()) {
+			if(impianto.getIdSelezione() == orario.getId()) {
+				impiantoSelezionato = impianto;
+			}
+		}
+		appuntamento.setImpiantoPrenotato(getRegistroImpianti().getImpiantoByID(impiantoSelezionato.getIdImpianto()));
+		
 		appuntamento.setDescrizioneEventoPrenotato(descrizioneSpecifica);
 		appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 

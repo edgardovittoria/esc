@@ -14,6 +14,7 @@ import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
 import it.univaq.esc.dtoObjects.FormPrenotaImpiantoSquadra;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
+import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.model.Calendario;
@@ -94,6 +95,14 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
 		calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
 
+		ImpiantoSelezionato impiantoSelezionato = null;
+		for(ImpiantoSelezionato impianto : formDati.getImpianti()) {
+			if(impianto.getIdSelezione() == orario.getId()) {
+				impiantoSelezionato = impianto;
+			}
+		}
+		appuntamento.setImpiantoPrenotato(getRegistroImpianti().getImpiantoByID(impiantoSelezionato.getIdImpianto()));
+		
 		appuntamento.setDescrizioneEventoPrenotato(descrizioneSpecifica);
 		appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 
