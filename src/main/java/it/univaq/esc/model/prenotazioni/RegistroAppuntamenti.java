@@ -323,8 +323,9 @@ public class RegistroAppuntamenti {
 			appuntamento.confermaAppuntamento();
 			appuntamento.getUtentiPartecipanti().forEach((partecipante) -> appuntamento
 					.aggiungiQuotaPartecipazione(this.creaQuotaPartecipazione(appuntamento, partecipante)));
+			aggiornaAppuntamento(appuntamento);
 		}
-		aggiornaAppuntamento(appuntamento);
+		
 	}
 
 	public List<QuotaPartecipazione> creaQuotePartecipazionePerCorso(Appuntamento appuntamento) {
