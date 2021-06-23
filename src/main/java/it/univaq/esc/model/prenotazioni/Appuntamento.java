@@ -45,7 +45,7 @@ public abstract class Appuntamento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Setter(value = AccessLevel.NONE)
+	@Setter(value = AccessLevel.PRIVATE)
 	private Integer idAppuntamento;
 	
 	@ManyToMany()
