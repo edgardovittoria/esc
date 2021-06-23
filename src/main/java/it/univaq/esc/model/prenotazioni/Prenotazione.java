@@ -45,7 +45,6 @@ public class Prenotazione extends Notificabile {
 	private UtentePolisportiva sportivoPrenotante;
 
 	@Column
-	@CreationTimestamp
 	private LocalDateTime oraDataPrenotazione;
 
 	@OneToMany(cascade = CascadeType.ALL)
