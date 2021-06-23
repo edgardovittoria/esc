@@ -98,7 +98,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 			AppuntamentoImpianto appuntamento = (AppuntamentoImpianto) getElementiPrenotazioneFactory()
 					.getAppuntamento(TipiPrenotazione.IMPIANTO.toString());
-			impostaDatiAppuntamento(formImpianto, appuntamento, orario, controller);
+			impostaDatiAppuntamento(formImpianto, appuntamento, orario);
 
 			controller.getPrenotazioneInAtto().aggiungi(appuntamento);
 		}
@@ -113,8 +113,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	
 
 	private void impostaDatiAppuntamento(FormPrenotaImpianto formDati,
-			AppuntamentoImpianto appuntamento, OrarioAppuntamento orario,
-			EffettuaPrenotazioneHandler controller) {
+			AppuntamentoImpianto appuntamento, OrarioAppuntamento orario) {
 		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						TipiPrenotazione.IMPIANTO.toString(),

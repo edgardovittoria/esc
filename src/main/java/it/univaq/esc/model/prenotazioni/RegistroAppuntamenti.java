@@ -261,7 +261,7 @@ public class RegistroAppuntamenti {
 		
 		List<AppuntamentoLezione> listaLezioniIstruttore = new ArrayList<AppuntamentoLezione>();
 		for (AppuntamentoLezione appuntamento : listaLezioniDaFiltrare) {
-			if (((Calendario)istruttore.getProprieta().get("calendarioLezioni")).ha(appuntamento)) {
+			if (appuntamento.isNelCalendarioDi(istruttore)) {
 				listaLezioniIstruttore.add(appuntamento);
 			}
 		}

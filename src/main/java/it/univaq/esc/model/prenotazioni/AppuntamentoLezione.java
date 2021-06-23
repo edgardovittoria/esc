@@ -16,4 +16,8 @@ public class AppuntamentoLezione extends AppuntamentoSingoliPartecipanti{
 	@ManyToOne
 	@JoinColumn
 	private UtentePolisportivaAbstract istruttore;
+	
+	public boolean isNelCalendarioDi(UtentePolisportivaAbstract istruttore) {
+		return istruttore.isEqual(getIstruttore());
+	}
 }
