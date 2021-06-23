@@ -60,6 +60,9 @@ public abstract class Appuntamento {
 	@Column
 	private LocalDateTime dataOraFineAppuntamento;
 
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "prenotazione_id")
+	private Prenotazione prenotazione;
 	
 	
 	@ManyToOne(fetch = FetchType.EAGER)

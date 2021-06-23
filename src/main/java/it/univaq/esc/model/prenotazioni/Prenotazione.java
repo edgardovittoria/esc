@@ -48,8 +48,7 @@ public class Prenotazione extends Notificabile {
 	@CreationTimestamp
 	private LocalDateTime oraDataPrenotazione;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn
+	@OneToMany(mappedBy = "prenotazione")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
@@ -59,6 +58,7 @@ public class Prenotazione extends Notificabile {
 
 	public void aggiungi(Appuntamento appuntamento) {
 		getListaAppuntamenti().add(appuntamento);
+		appuntamento.setPrenotazione(this);
 	}
 
 	public String getTipoPrenotazione() {

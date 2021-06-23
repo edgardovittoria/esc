@@ -333,8 +333,8 @@ public class PopolaDB {
 		 * calendarioRepository.save(calendarioPrenotazione2);
 		 */
 
-		prenotazioneRepository.save(prenotazione1);
-		prenotazioneRepository.save(prenotazione2);
+		appuntamentoRepository.save(appuntamento1);
+		appuntamentoRepository.save(appuntamento2);
 
 	}
 

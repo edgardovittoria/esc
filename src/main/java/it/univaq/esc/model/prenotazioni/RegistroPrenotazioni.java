@@ -35,7 +35,7 @@ public class RegistroPrenotazioni {
 
 	public void aggiungiPrenotazione(Prenotazione prenotazioneDaAggiungere) {
 		getPrenotazioniRegistrate().add(prenotazioneDaAggiungere);
-		this.getPrenotazioneRepository().save(prenotazioneDaAggiungere);
+		
 
 	}
 
