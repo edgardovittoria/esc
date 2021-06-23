@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
@@ -18,22 +17,19 @@ import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
-import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.TipoRuolo;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -230,7 +226,7 @@ public abstract class EffettuaPrenotazioneState {
 	 */
 	protected List<UtentePolisportivaDTO> getSportiviPolisportiva() {
 		List<UtentePolisportivaDTO> listaSportiviDTO = new ArrayList<UtentePolisportivaDTO>();
-		for (UtentePolisportivaAbstract utente : getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO)) {
+		for (UtentePolisportiva utente : getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO)) {
 			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 			listaSportiviDTO.add(sportivoDTO);
 		}
@@ -240,7 +236,7 @@ public abstract class EffettuaPrenotazioneState {
 	
 	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseACalendario(Calendario calendario) {
 		List<UtentePolisportivaDTO> listaSportivi = new ArrayList<UtentePolisportivaDTO>();
-		for(UtentePolisportivaAbstract utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO), calendario)) {
+		for(UtentePolisportiva utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO), calendario)) {
 			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 			listaSportivi.add(sportivoDTO);
 		}
@@ -249,7 +245,7 @@ public abstract class EffettuaPrenotazioneState {
 	
 	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseAOrario(LocalDateTime oraInizio, LocalDateTime oraFine) {
 		List<UtentePolisportivaDTO> listaSportivi = new ArrayList<UtentePolisportivaDTO>();
-		for(UtentePolisportivaAbstract utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO), oraInizio, oraFine)) {
+		for(UtentePolisportiva utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO), oraInizio, oraFine)) {
 			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 			listaSportivi.add(sportivoDTO);
 		}
@@ -265,7 +261,7 @@ public abstract class EffettuaPrenotazioneState {
 	 */
 	protected List<UtentePolisportivaDTO> getUtentiPolisportiva() {
 		List<UtentePolisportivaDTO> listaSportiviDTO = new ArrayList<UtentePolisportivaDTO>();
-		for (UtentePolisportivaAbstract utente : getRegistroUtenti().getListaUtentiPolisportiva()) {
+		for (UtentePolisportiva utente : getRegistroUtenti().getListaUtentiPolisportiva()) {
 			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 			listaSportiviDTO.add(sportivoDTO);
 		}
@@ -288,8 +284,8 @@ public abstract class EffettuaPrenotazioneState {
 		List<UtentePolisportivaDTO> listaIstruttori = new ArrayList<UtentePolisportivaDTO>();
 		Sport sportRichiesto = this.getRegistroSport().getSportByNome(sport);
 
-		List<UtentePolisportivaAbstract> istruttori = this.getRegistroUtenti().getIstruttoriPerSport(sportRichiesto);
-		for (UtentePolisportivaAbstract istruttore : istruttori) {
+		List<UtentePolisportiva> istruttori = this.getRegistroUtenti().getIstruttoriPerSport(sportRichiesto);
+		for (UtentePolisportiva istruttore : istruttori) {
 			UtentePolisportivaDTO istDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(istruttore);
 			listaIstruttori.add(istDTO);
 		}
@@ -364,8 +360,8 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return lista dei soli istruttori della lista data, associati allo sport
 	 *         passato come parametro.
 	 */
-	private List<UtentePolisportivaAbstract> filtraIstruttoriPerSport(String nomeSport,
-			List<UtentePolisportivaAbstract> listaIstruttori) {
+	private List<UtentePolisportiva> filtraIstruttoriPerSport(String nomeSport,
+			List<UtentePolisportiva> listaIstruttori) {
 
 		Sport sportPerCuiFiltrare = this.getRegistroSport().getSportByNome(nomeSport);
 		return this.getRegistroUtenti().filtraIstruttoriPerSport(listaIstruttori, sportPerCuiFiltrare);
@@ -387,7 +383,7 @@ public abstract class EffettuaPrenotazioneState {
 	 *         nell'orario selezionato in fase di prenotazione.
 	 */
 	protected List<UtentePolisportivaDTO> getIstruttoriDTODisponibili(Map<String, Object> dati) {
-		List<UtentePolisportivaAbstract> istruttoriDisponibili = this.getRegistroUtenti()
+		List<UtentePolisportiva> istruttoriDisponibili = this.getRegistroUtenti()
 				.getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE);
 		if (dati.containsKey("orario")) {
 			Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
@@ -408,7 +404,7 @@ public abstract class EffettuaPrenotazioneState {
 			istruttoriDisponibili = this.filtraIstruttoriPerSport((String) dati.get("sport"), istruttoriDisponibili);
 		}
 		List<UtentePolisportivaDTO> listaIstruttoriDTODisponibili = new ArrayList<UtentePolisportivaDTO>();
-		for (UtentePolisportivaAbstract istruttore : istruttoriDisponibili) {
+		for (UtentePolisportiva istruttore : istruttoriDisponibili) {
 
 			UtentePolisportivaDTO istruttoreDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(istruttore);
 			listaIstruttoriDTODisponibili.add(istruttoreDTO);

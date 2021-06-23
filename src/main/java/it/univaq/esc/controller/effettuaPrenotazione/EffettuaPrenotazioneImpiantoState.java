@@ -13,34 +13,26 @@ import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
 import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
-import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.model.Calendario;
-import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
-import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
-import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
-import it.univaq.esc.model.notifiche.Notifica;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
-import it.univaq.esc.model.utenti.Squadra;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
-import it.univaq.esc.utility.BeanUtil;
-import lombok.AllArgsConstructor;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 
 /**
  * Stato del controller EffettuaPrenotazioneHandler, che definisce la specifica
@@ -160,7 +152,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 			calendarioSportivo.aggiungiAppuntamento(app);
 			getRegistroImpianti().aggiornaCalendarioImpianto(app.getImpiantoPrenotato(), calendarioDaUnire);
 			
-			for (UtentePolisportivaAbstract invitato : app.getInvitati()) {
+			for (UtentePolisportiva invitato : app.getInvitati()) {
 
 				NotificaService notifica = getElementiPrenotazioneFactory().getNotifica();
 				notifica.setDestinatario(invitato);
@@ -219,7 +211,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	 *         IMPIANTO, ai quali l'utente può partecipare.
 	 */
 	private List<AppuntamentoDTO> getAppuntamentiImpiantoSottoscrivibiliDaUtente(
-			UtentePolisportivaAbstract utentePerCuiCercareAppuntamentiSottoscrivibili) {
+			UtentePolisportiva utentePerCuiCercareAppuntamentiSottoscrivibili) {
 		List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
 		for (Appuntamento appuntamento : this.getRegistroAppuntamenti()
 				.getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(TipiPrenotazione.IMPIANTO.toString(),

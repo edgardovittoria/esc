@@ -20,7 +20,7 @@ import groovy.lang.Singleton;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.repository.NotificaRepository;
 import it.univaq.esc.utility.BeanUtil;
 import lombok.AccessLevel;
@@ -73,7 +73,7 @@ public class RegistroNotifiche {
 		setListaNotifiche(listaNotifiche);
 	}
 
-	public List<NotificaService> getNotifichePerDestinatario(UtentePolisportivaAbstract destinatario) {
+	public List<NotificaService> getNotifichePerDestinatario(UtentePolisportiva destinatario) {
 		List<NotificaService> notificheDestinatario = new ArrayList<NotificaService>();
 		for (NotificaService notifica : getListaNotifiche()) {
 			if (notifica.getDestinatario().isEqual(destinatario)) {

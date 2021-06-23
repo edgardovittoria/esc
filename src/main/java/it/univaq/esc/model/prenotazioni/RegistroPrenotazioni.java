@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.repository.PrenotazioneRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -41,7 +42,7 @@ public class RegistroPrenotazioni {
 	public List<Prenotazione> getPrenotazioniByEmailSportivo(String email) {
 		List<Prenotazione> prenotazioniSportivo = new ArrayList<Prenotazione>();
 		for (Prenotazione prenotazione : this.getPrenotazioniRegistrate()) {
-			if (((String) prenotazione.getSportivoPrenotante().getProprieta().get("email")).equals(email)) {
+			if (prenotazione.getSportivoPrenotante().isSuaQuesta(email)) {
 				prenotazioniSportivo.add(prenotazione);
 			}
 		}

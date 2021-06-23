@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
+
 import javassist.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -31,19 +32,19 @@ public class MyUserDetailsService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        
-        UtentePolisportivaAbstract utente = getRegistroUtentiPolisportiva().getUtenteByEmail(username);
+        UtentePolisportiva utente = getRegistroUtentiPolisportiva().getUtenteByEmail(username);
         // System.out.println(new User((String)utente.getProprieta().get("email"), 
         // (String)utente.getProprieta().get("password"), 
         // getAuthority(utente)));
-        	return new User((String)utente.getProprieta().get("email"), 
-                    (String)utente.getProprieta().get("password"), 
+        	return new User(utente.getEmail(), 
+                    utente.getPassword(), 
                     getAuthority(utente));     
 
     }
     
-    private List getAuthority(UtentePolisportivaAbstract user) {
+    private List getAuthority(UtentePolisportiva user) {
         Set authorities = new HashSet<>();
-		user.getRuoliUtentePolisportiva().forEach(role -> {
+		user.getRuoli().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
 		});
 		List<SimpleGrantedAuthority> listaRuoli = new ArrayList<SimpleGrantedAuthority>(authorities);

@@ -24,10 +24,9 @@ import it.univaq.esc.dtoObjects.NotificabileDTO;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.utility.BeanUtil;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -84,11 +83,11 @@ public class GestioneNotificheHandler {
 	@GetMapping("/notificheUtente")
 	@CrossOrigin
 	public @ResponseBody List<NotificaDTO> getNotificheUtente(@RequestParam(name = "email") String email) {
-		UtentePolisportivaAbstract utente = getRegistroUtentiPolisportiva().getUtenteByEmail(email);
+		UtentePolisportiva utente = getRegistroUtentiPolisportiva().getUtenteByEmail(email);
 		return getNotificheDTOPerDestinatario(utente);
 	}
 
-	private List<NotificaDTO> getNotificheDTOPerDestinatario(UtentePolisportivaAbstract destinatario) {
+	private List<NotificaDTO> getNotificheDTOPerDestinatario(UtentePolisportiva destinatario) {
 		List<NotificaDTO> notificheDtos = new ArrayList<NotificaDTO>();
 		for (NotificaService notifica : getRegistroNotifiche().getNotifichePerDestinatario(destinatario)) {
 			impostaMapperFactory(notifica.getModalitaNotifica());

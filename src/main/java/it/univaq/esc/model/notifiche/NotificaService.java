@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,11 +50,11 @@ public class NotificaService {
 		return getNotifica().getIdEvento();
 	}
 	
-	public UtentePolisportivaAbstract getMittente() {
+	public UtentePolisportiva getMittente() {
 		return getNotifica().getMittente();
 	}
 	
-	public UtentePolisportivaAbstract getDestinatario() {
+	public UtentePolisportiva getDestinatario() {
 		return getNotifica().getDestinatario();
 	}
 	
@@ -66,11 +66,11 @@ public class NotificaService {
 		return getNotifica().isLetta();
 	}
 	
-	public void setMittente(UtentePolisportivaAbstract mittente) {
+	public void setMittente(UtentePolisportiva mittente) {
 		getNotifica().setMittente(mittente);
 	}
 	
-	public void setDestinatario(UtentePolisportivaAbstract destinatario) {
+	public void setDestinatario(UtentePolisportiva destinatario) {
 		getNotifica().setDestinatario(destinatario);
 	}
 	

@@ -1,6 +1,6 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,18 +29,13 @@ import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
-import it.univaq.esc.factory.ElementiPrenotazioneSingoloUtenteFactory;
-import it.univaq.esc.factory.ElementiPrenotazioneSquadraFactory;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.Calendario;
-import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
-import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
-import it.univaq.esc.model.utenti.TipoRuolo;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.utility.BeanUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -60,7 +55,6 @@ public class EffettuaPrenotazioneHandler {
 	/**
 	 * Factory FactoryStaty utilizzata per ottenere gli stati del controller.
 	 */
-	@Getter(value = AccessLevel.PRIVATE)
 	@Setter(value = AccessLevel.PRIVATE)
 	private ElementiPrenotazioneFactory factoryStati;
 
@@ -204,9 +198,9 @@ public class EffettuaPrenotazioneHandler {
 			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
 
 		this.setIdSquadraPrenotante(idSquadra);
-		UtentePolisportivaAbstract sportivoPrenotante = this.getRegistroUtenti()
+		UtentePolisportiva sportivoPrenotante = this.getRegistroUtenti()
 				.getUtenteByEmail(emailSportivoPrenotante);
-		if (!(boolean) sportivoPrenotante.getProprieta().get("moroso")) {
+		if (!sportivoPrenotante.comeSportivo().isMoroso()) {
 			this.inizializzaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione, modalitaPrenotazione);
 			return this.getStato().getDatiOpzioni(this);
 		} else {
@@ -237,13 +231,13 @@ public class EffettuaPrenotazioneHandler {
 			@RequestParam(name = "email") String emailDirettore,
 			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione,
 			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
-		UtentePolisportivaAbstract direttore = this.getRegistroUtenti().getUtenteByEmail(emailDirettore);
+		UtentePolisportiva direttore = this.getRegistroUtenti().getUtenteByEmail(emailDirettore);
 		this.inizializzaNuovaPrenotazione(direttore, tipoPrenotazione, modalitaPrenotazione);
 		return this.getStato().getDatiOpzioniModalitaDirettore(this);
 	}
 
 	
-	private void inizializzaNuovaPrenotazione(UtentePolisportivaAbstract sportivoPrenotante, String tipoPrenotazione,
+	private void inizializzaNuovaPrenotazione(UtentePolisportiva sportivoPrenotante, String tipoPrenotazione,
 			String modalitaPrenotazione) {
 
 		Integer lastIdPrenotazione = this.getRegistroPrenotazioni().getLastIdPrenotazione();
@@ -298,7 +292,7 @@ public class EffettuaPrenotazioneHandler {
 		for (Appuntamento appuntamento : getPrenotazioneInAtto().getListaAppuntamenti()) {
 			Calendario calendarioAppuntamento = new Calendario();
 			calendarioAppuntamento.aggiungiAppuntamento(appuntamento);
-			UtentePolisportivaAbstract manutentore = getRegistroUtenti().getManutentoreLibero(calendarioAppuntamento);
+			UtentePolisportiva manutentore = getRegistroUtenti().getManutentoreLibero(calendarioAppuntamento);
 			appuntamento.setManutentore(manutentore);
 			getRegistroUtenti().aggiornaCalendarioManutentore(calendarioAppuntamento, manutentore);
 
@@ -401,7 +395,7 @@ public class EffettuaPrenotazioneHandler {
 	 * 
 	 * @return utente prenotante associato alla prenotazione in atto
 	 */
-	public UtentePolisportivaAbstract getSportivoPrenotante() {
+	public UtentePolisportiva getSportivoPrenotante() {
 		return this.getPrenotazioneInAtto().getSportivoPrenotante();
 	}
 

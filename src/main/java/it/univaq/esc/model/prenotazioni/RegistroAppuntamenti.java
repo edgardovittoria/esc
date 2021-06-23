@@ -3,25 +3,20 @@ package it.univaq.esc.model.prenotazioni;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
-import javax.swing.event.InternalFrameAdapter;
-
-import org.codehaus.groovy.runtime.callsite.AbstractCallSite;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
-import it.univaq.esc.model.Calendario;
+
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
-import it.univaq.esc.model.utenti.Istruttore;
 import it.univaq.esc.model.utenti.Squadra;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
+
 import it.univaq.esc.repository.AppuntamentoRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -33,23 +28,23 @@ import lombok.Setter;
 @Getter
 public class RegistroAppuntamenti {
 
-	
 	private AppuntamentoRepository appuntamentoRepository;
 
-
 	private RegistroPrenotazioni registroPrenotazioni;
-	
+
 	// @Setter(value = AccessLevel.PRIVATE)
 	private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
-	public RegistroAppuntamenti(AppuntamentoRepository appuntamentoRepository, RegistroPrenotazioni registroPrenotazioni) {
+	public RegistroAppuntamenti(AppuntamentoRepository appuntamentoRepository,
+			RegistroPrenotazioni registroPrenotazioni) {
 		this.setAppuntamentoRepository(appuntamentoRepository);
 		setRegistroPrenotazioni(registroPrenotazioni);
 		popola();
 	}
 
 	public void popola() {
-		setListaAppuntamenti(getRegistroPrenotazioni().getAppuntamentiAssociatiAdUna(getRegistroPrenotazioni().getPrenotazioniRegistrate()));
+		setListaAppuntamenti(getRegistroPrenotazioni()
+				.getAppuntamentiAssociatiAdUna(getRegistroPrenotazioni().getPrenotazioniRegistrate()));
 		for (Appuntamento appuntamento : this.getListaAppuntamenti()) {
 			CalcolatoreCostoBase calcBase = new CalcolatoreCostoBase();
 			CalcolatoreCostoComposito calcComposito = new CalcolatoreCostoComposito();
@@ -70,13 +65,11 @@ public class RegistroAppuntamenti {
 
 	public void salvaListaAppuntamenti(List<Appuntamento> listaAppuntamenti) {
 		this.getListaAppuntamenti().addAll(listaAppuntamenti);
-		
+
 	}
 
-	
-
 	public List<Appuntamento> getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(String tipoPrenotazione,
-			UtentePolisportivaAbstract utentePerCuiTrovareAppuntamenti) {
+			UtentePolisportiva utentePerCuiTrovareAppuntamenti) {
 		List<Appuntamento> appuntamentiFiltrati = this.filtraAppuntamentiPerDataOra(this.getListaAppuntamenti(),
 				LocalDateTime.now());
 		appuntamentiFiltrati = this.filtraAppuntamentiPerTipoPrenotazione(appuntamentiFiltrati, tipoPrenotazione);
@@ -100,13 +93,14 @@ public class RegistroAppuntamenti {
 		appuntamentiFiltrati = this.filtraAppuntamentiPerModalitaPrenotazione(appuntamentiFiltrati,
 				ModalitaPrenotazione.SQUADRA.toString());
 		appuntamentiFiltrati = this.filtraAppuntamentiPending(appuntamentiFiltrati);
-		appuntamentiFiltrati = this.escludiAppuntamentiPerSquadraPartecipante(appuntamentiFiltrati, squadraPerCuiTrovareAppuntamenti);
-		
+		appuntamentiFiltrati = this.escludiAppuntamentiPerSquadraPartecipante(appuntamentiFiltrati,
+				squadraPerCuiTrovareAppuntamenti);
+
 		return appuntamentiFiltrati;
 	}
 
 //	public List<Appuntamento> getAppuntamentiPerPartecipanteNonCreatore(
-//			UtentePolisportivaAbstract partecipanteNonCreatore) {
+//			UtentePolisportiva partecipanteNonCreatore) {
 //		List<Appuntamento> appuntamenti = this.getListaAppuntamenti();
 //		appuntamenti = this.filtraAppuntamentiPerPartecipante(appuntamenti, partecipanteNonCreatore);
 //		appuntamenti = this.escludiAppuntamentiPerUtenteCreatore(appuntamenti, partecipanteNonCreatore);
@@ -147,7 +141,7 @@ public class RegistroAppuntamenti {
 	}
 
 //	private List<Appuntamento> filtraAppuntamentiPerUtenteCreatore(List<Appuntamento> listaAppuntamentiDaFiltrare,
-//			UtentePolisportivaAbstract utenteCreatore) {
+//			UtentePolisportiva utenteCreatore) {
 //		List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
 //		for (Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
 //			if (((String) appuntamento.creatoDa().getProprieta().get("email"))
@@ -181,7 +175,7 @@ public class RegistroAppuntamenti {
 	}
 
 //	private List<Appuntamento> escludiAppuntamentiPerUtenteCreatore(List<Appuntamento> listaAppuntamentiDaFiltrare,
-//			UtentePolisportivaAbstract utenteCreatore) {
+//			UtentePolisportiva utenteCreatore) {
 //		List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
 //		for (Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
 //			if (!appuntamento.creatoDa().isEqual(utenteCreatore)) {
@@ -192,7 +186,7 @@ public class RegistroAppuntamenti {
 //	}
 
 	private List<Appuntamento> escludiAppuntamentiPerPartecipante(List<Appuntamento> listaAppuntamentiDaFiltrare,
-			UtentePolisportivaAbstract utenteDiCuiVerificarePartecipazione) {
+			UtentePolisportiva utenteDiCuiVerificarePartecipazione) {
 		List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
 		for (Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
 			if (!appuntamento.utenteIsPartecipante(utenteDiCuiVerificarePartecipazione)) {
@@ -217,7 +211,7 @@ public class RegistroAppuntamenti {
 	}
 
 	public List<Appuntamento> filtraAppuntamentiPerPartecipante(List<Appuntamento> listaAppuntamentiDaFiltrare,
-			UtentePolisportivaAbstract utenteDiCuiVerificarePartecipazione) {
+			UtentePolisportiva utenteDiCuiVerificarePartecipazione) {
 		List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
 		for (Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
 			if (appuntamento.utenteIsPartecipante(utenteDiCuiVerificarePartecipazione)) {
@@ -236,17 +230,16 @@ public class RegistroAppuntamenti {
 		return null;
 	}
 
-
-
 	public List<Prenotazione> getPrenotazioniAssociateAListaAppuntamenti(List<Appuntamento> listaAppuntamenti) {
 		Set<Prenotazione> setPrenotazioni = new HashSet<Prenotazione>();
-		listaAppuntamenti.forEach((appuntamento) -> setPrenotazioni.add(getRegistroPrenotazioni().trovaPrenotazioneAssociataA(appuntamento)));
+		listaAppuntamenti.forEach((appuntamento) -> setPrenotazioni
+				.add(getRegistroPrenotazioni().trovaPrenotazioneAssociataA(appuntamento)));
 		List<Prenotazione> prenotazioniList = new ArrayList<Prenotazione>(setPrenotazioni);
-		
+
 		return prenotazioniList;
 	}
 
-	public List<Appuntamento> getAppuntamentiPerPartecipante(UtentePolisportivaAbstract partecipante) {
+	public List<Appuntamento> getAppuntamentiPerPartecipante(UtentePolisportiva partecipante) {
 		List<Appuntamento> appuntamenti = new ArrayList<Appuntamento>();
 		for (Appuntamento appuntamento : getListaAppuntamenti()) {
 			if (appuntamento.utenteIsPartecipante(partecipante)) {
@@ -257,28 +250,28 @@ public class RegistroAppuntamenti {
 	}
 
 	private List<Appuntamento> filtraLezioniPerIstruttore(List<AppuntamentoLezione> listaLezioniDaFiltrare,
-			UtentePolisportivaAbstract istruttore) {
-		
+			UtentePolisportiva istruttore) {
+
 		List<AppuntamentoLezione> listaLezioniIstruttore = new ArrayList<AppuntamentoLezione>();
 		for (AppuntamentoLezione appuntamento : listaLezioniDaFiltrare) {
 			if (appuntamento.isNelCalendarioDi(istruttore)) {
 				listaLezioniIstruttore.add(appuntamento);
 			}
 		}
-		
-		return (List<Appuntamento>)(List<?>)listaLezioniIstruttore;
+
+		return (List<Appuntamento>) (List<?>) listaLezioniIstruttore;
 	}
 
-	public List<Appuntamento> getListaLezioniPerIstruttore(UtentePolisportivaAbstract istruttore) {
+	public List<Appuntamento> getListaLezioniPerIstruttore(UtentePolisportiva istruttore) {
 		List<Appuntamento> listaLezioni = filtraAppuntamentiPerTipoPrenotazione(getListaAppuntamenti(),
 				TipiPrenotazione.LEZIONE.toString());
-		
-		listaLezioni = filtraLezioniPerIstruttore((List<AppuntamentoLezione>)(List<?>)listaLezioni, istruttore);
+
+		listaLezioni = filtraLezioniPerIstruttore((List<AppuntamentoLezione>) (List<?>) listaLezioni, istruttore);
 
 		return listaLezioni;
 	}
 
-	public List<Appuntamento> getListaAppuntamentiManutentore(UtentePolisportivaAbstract manutentore) {
+	public List<Appuntamento> getListaAppuntamentiManutentore(UtentePolisportiva manutentore) {
 		List<Appuntamento> appuntamentiList = new ArrayList<Appuntamento>();
 		for (Appuntamento appuntamento : getListaAppuntamenti()) {
 			if (appuntamento.getManutentore().isEqual(manutentore)) {
@@ -324,28 +317,27 @@ public class RegistroAppuntamenti {
 		return listaAppuntamentiSquadra;
 	}
 
-	
-	
 	public void creaQuotePartecipazionePerAppuntamento(Appuntamento appuntamento) {
-		if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento.getSogliaMinimaPartecipantiPerConferma()) {
+		if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento
+				.getSogliaMinimaPartecipantiPerConferma()) {
 			appuntamento.confermaAppuntamento();
-			appuntamento.getUtentiPartecipanti().forEach((partecipante) -> appuntamento.aggiungiQuotaPartecipazione(
-					this.creaQuotaPartecipazione(appuntamento, partecipante)));
+			appuntamento.getUtentiPartecipanti().forEach((partecipante) -> appuntamento
+					.aggiungiQuotaPartecipazione(this.creaQuotaPartecipazione(appuntamento, partecipante)));
 		}
 		aggiornaAppuntamento(appuntamento);
 	}
-	
-	public List<QuotaPartecipazione> creaQuotePartecipazionePerCorso(Appuntamento appuntamento){
+
+	public List<QuotaPartecipazione> creaQuotePartecipazionePerCorso(Appuntamento appuntamento) {
 		List<QuotaPartecipazione> listaQuote = new ArrayList<QuotaPartecipazione>();
-		if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento.getSogliaMinimaPartecipantiPerConferma()) {
-			appuntamento.getUtentiPartecipanti().forEach((partecipante) -> listaQuote.add(
-					this.creaQuotaPartecipazione(appuntamento, partecipante)));
+		if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento
+				.getSogliaMinimaPartecipantiPerConferma()) {
+			appuntamento.getUtentiPartecipanti().forEach(
+					(partecipante) -> listaQuote.add(this.creaQuotaPartecipazione(appuntamento, partecipante)));
 		}
 		return listaQuote;
 	}
-	
-	private QuotaPartecipazione creaQuotaPartecipazione(Appuntamento appuntamento,
-			UtentePolisportivaAbstract sportivo) {
+
+	private QuotaPartecipazione creaQuotaPartecipazione(Appuntamento appuntamento, UtentePolisportiva sportivo) {
 		boolean quotaGiaPresente = false;
 		for (QuotaPartecipazione quotaPartecipazione : appuntamento.getQuotePartecipazione()) {
 			if (quotaPartecipazione.getSportivoAssociato().isEqual(sportivo)) {

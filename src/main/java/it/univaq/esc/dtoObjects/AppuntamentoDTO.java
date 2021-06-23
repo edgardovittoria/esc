@@ -5,13 +5,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.univaq.esc.factory.ElementiPrenotazioneFactory;
-import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
-import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
-import it.univaq.esc.model.utenti.Squadra;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
-import it.univaq.esc.utility.BeanUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +20,7 @@ public class AppuntamentoDTO {
 	private List<Integer> squadrePartecipanti = new ArrayList<Integer>();
 	private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();
 	private String creatore;
-	private Integer idManutentore;
+	private String manutentore;
 	private String modalitaPrenotazione;
 	private String tipoPrenotazione;
 	private boolean confermata;
@@ -70,7 +63,6 @@ public class AppuntamentoDTO {
 	public void aggiungiInvitato(String emailInvitato) {
 		getInvitati().add(emailInvitato);
 	}
-	
 
 	public void aggiungiSquadraPartecipante(Integer idSquadra) {
 		getSquadrePartecipanti().add(idSquadra);

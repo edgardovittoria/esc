@@ -66,7 +66,7 @@ public class RegistroSquadre {
 	 * @param membro utente di cui riciavare le squadre associate.
 	 * @return lista di squadre di cui l'utente passato come parametro è membro.
 	 */
-	public List<Squadra> getSquadrePerMembro(UtentePolisportivaAbstract membro){
+	public List<Squadra> getSquadrePerMembro(UtentePolisportiva membro){
 		List<Squadra> listaSquadreDiCuiMembro = new ArrayList<Squadra>();
 		for(Squadra squadra : getListaSquadre()) {
 			if(squadra.isMembro(membro)) {

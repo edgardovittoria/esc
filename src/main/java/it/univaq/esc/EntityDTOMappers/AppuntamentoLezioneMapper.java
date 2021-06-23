@@ -24,7 +24,7 @@ public class AppuntamentoLezioneMapper extends AppuntamentoMapper{
 			
 			AppuntamentoLezione appuntamentoLezione = (AppuntamentoLezione) appuntamentoDaConvertire;
 			
-			appuntamentoDTO.setIstruttore((String)appuntamentoLezione.getIstruttore().getProprieta().get("email"));
+			appuntamentoDTO.setIstruttore(appuntamentoLezione.getNominativoIstruttore());
 			
 			
 			return appuntamentoDTO;

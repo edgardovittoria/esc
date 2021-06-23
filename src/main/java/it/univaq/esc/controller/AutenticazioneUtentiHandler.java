@@ -3,7 +3,6 @@ package it.univaq.esc.controller;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.security.AuthenticationRequest;
 import it.univaq.esc.security.AuthenticationResponse;
 import it.univaq.esc.security.JwtUtil;
@@ -83,7 +82,7 @@ public class AutenticazioneUtentiHandler {
 		final UserDetails userDetails = myUserDetailsService
 			.loadUserByUsername(authenticationRequest.getUsername());
 
-		UtentePolisportivaAbstract utente = registroUtentiPolisportiva.getUtenteByEmail(userDetails.getUsername());
+		UtentePolisportiva utente = registroUtentiPolisportiva.getUtenteByEmail(userDetails.getUsername());
 		UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 
 		final String jwt = jwtUtil.generateToken(userDetails);

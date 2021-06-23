@@ -10,48 +10,38 @@ import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
-import it.univaq.esc.model.Calendario;
-import it.univaq.esc.model.Sport;
+
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.utenti.TipoRuolo;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
-import lombok.AccessLevel;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.NoArgsConstructor;
 
 @Component
 @Singleton
 @NoArgsConstructor
-public class UtenteMapper extends EntityDTOMapper{
-	
-	
+public class UtenteMapper extends EntityDTOMapper {
 
-	
-
-	public UtentePolisportivaDTO convertiInUtentePolisportivaDTO(UtentePolisportivaAbstract utenteDaConvertire) {
+	public UtentePolisportivaDTO convertiInUtentePolisportivaDTO(UtentePolisportiva utenteDaConvertire) {
 		UtentePolisportivaDTO utenteDTO = new UtentePolisportivaDTO();
-		
-		utenteDTO.setNome((String)utenteDaConvertire.getProprieta().get("nome"));
-		utenteDTO.setCognome((String) utenteDaConvertire.getProprieta().get("cognome"));
-		utenteDTO.setEmail((String) utenteDaConvertire.getProprieta().get("email"));
-		utenteDTO.setRuoli(utenteDaConvertire.getRuoliUtentePolisportiva());
+
+		utenteDTO.setNome(utenteDaConvertire.getNome());
+		utenteDTO.setCognome(utenteDaConvertire.getCognome());
+		utenteDTO.setEmail(utenteDaConvertire.getEmail());
+		utenteDTO.setRuoli(utenteDaConvertire.getRuoli());
 
 		Map<String, Object> mappaAttributi = new HashMap<String, Object>();
 
 		/*
 		 * Impostiamo gli attributi extra dello sportivo.
 		 */
-		if (utenteDTO.getRuoli().contains(TipoRuolo.SPORTIVO.toString())) {
-			List<String> sportPraticati = new ArrayList<String>();
-			for (Sport sport : (List<Sport>) utenteDaConvertire.getProprieta().get("sportPraticati")) {
-				sportPraticati.add(sport.getNome());
-			}
-			mappaAttributi.put("sportPraticati", sportPraticati);
-			mappaAttributi.put("moroso", (Boolean) utenteDaConvertire.getProprieta().get("moroso"));
-			
+		if (utenteDaConvertire.is(TipoRuolo.SPORTIVO)) {
+			mappaAttributi.put("sportPraticati", utenteDaConvertire.comeSportivo().getSportPraticati());
+			mappaAttributi.put("moroso", utenteDaConvertire.comeSportivo().isMoroso());
+
 			List<AppuntamentoDTO> appuntamentiSportivo = new ArrayList<AppuntamentoDTO>();
-			for (Appuntamento app : ((Calendario) utenteDaConvertire.getProprieta().get("calendarioAppuntamentiSportivo"))
-					.getListaAppuntamenti()) {
-				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione()).convertiInAppuntamentoDTO(app);
+			for (Appuntamento app : utenteDaConvertire.comeSportivo().getListaAppuntamenti()) {
+				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione())
+						.convertiInAppuntamentoDTO(app);
 				appuntamentiSportivo.add(appDTO);
 			}
 			mappaAttributi.put("appuntamentiSportivo", appuntamentiSportivo);
@@ -61,17 +51,13 @@ public class UtenteMapper extends EntityDTOMapper{
 		/*
 		 * Impostiamo gli attributi extra dell'istruttore
 		 */
-		if (utenteDTO.getRuoli().contains(TipoRuolo.ISTRUTTORE.toString())) {
-			List<String> sportInsegnati = new ArrayList<String>();
-			for (Sport sport : (List<Sport>) utenteDaConvertire.getProprieta().get("sportInsegnati")) {
-				sportInsegnati.add(sport.getNome());
-			}
-			mappaAttributi.put("sportInsegnati", sportInsegnati);
+		if (utenteDaConvertire.is(TipoRuolo.ISTRUTTORE)) {
+			mappaAttributi.put("sportInsegnati", utenteDaConvertire.comeIstruttore().getNomiSportInsegnati());
 
 			List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
-			for (Appuntamento app : ((Calendario) utenteDaConvertire.getProprieta().get("calendarioLezioni"))
-					.getListaAppuntamenti()) {
-				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione()).convertiInAppuntamentoDTO(app);
+			for (Appuntamento app : utenteDaConvertire.comeIstruttore().getLezioni()) {
+				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione())
+						.convertiInAppuntamentoDTO(app);
 				listaAppuntamentiDTO.add(appDTO);
 			}
 			mappaAttributi.put("appuntamentiLezioni", listaAppuntamentiDTO);
@@ -80,11 +66,11 @@ public class UtenteMapper extends EntityDTOMapper{
 		/*
 		 * Impostiamo gli attributi extra del manutentore
 		 */
-		if (utenteDTO.getRuoli().contains(TipoRuolo.MANUTENTORE.toString())) {
+		if (utenteDaConvertire.is(TipoRuolo.MANUTENTORE)) {
 			List<AppuntamentoDTO> listaAppuntamentiManutentoreDTO = new ArrayList<AppuntamentoDTO>();
-			for (Appuntamento app : ((Calendario) utenteDaConvertire.getProprieta().get("calendarioManutentore"))
-					.getListaAppuntamenti()) {
-				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione()).convertiInAppuntamentoDTO(app);
+			for (Appuntamento app : utenteDaConvertire.comeManutentore().getListaAppuntamenti()) {
+				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione())
+						.convertiInAppuntamentoDTO(app);
 				listaAppuntamentiManutentoreDTO.add(appDTO);
 			}
 			mappaAttributi.put("appuntamentiManutentore", listaAppuntamentiManutentoreDTO);
@@ -94,7 +80,5 @@ public class UtenteMapper extends EntityDTOMapper{
 
 		return utenteDTO;
 	}
-	
-	
-	
+
 }

@@ -32,7 +32,7 @@ import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,7 +53,7 @@ public abstract class Appuntamento {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@Getter(value = AccessLevel.PRIVATE)
 	@Setter(value = AccessLevel.PRIVATE)
-	private List<UtentePolisportivaAbstract> partecipanti = new ArrayList<UtentePolisportivaAbstract>();
+	private List<UtentePolisportiva> partecipanti = new ArrayList<UtentePolisportiva>();
 	
 	@Column
 	private LocalDateTime dataOraInizioAppuntamento;
@@ -64,7 +64,7 @@ public abstract class Appuntamento {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn()
-	private UtentePolisportivaAbstract manutentore;
+	private UtentePolisportiva manutentore;
 	
 	@Column
 	private boolean confermato = false;
@@ -208,8 +208,8 @@ public abstract class Appuntamento {
 	}
 	
 	
-	public boolean utenteIsPartecipante(UtentePolisportivaAbstract utente) {
-		for (UtentePolisportivaAbstract partecipante : this.getUtentiPartecipanti()) {
+	public boolean utenteIsPartecipante(UtentePolisportiva utente) {
+		for (UtentePolisportiva partecipante : this.getUtentiPartecipanti()) {
 			if (partecipante.isEqual(utente)) {
 				return true;
 			}
@@ -241,9 +241,12 @@ public abstract class Appuntamento {
 	
 	public abstract boolean haComePartecipante(Object sportivoOSquadra);
 	
-	public List<UtentePolisportivaAbstract> getUtentiPartecipanti(){
+	public List<UtentePolisportiva> getUtentiPartecipanti(){
 		return getPartecipanti();
 	};
 	public abstract List<Object>  getPartecipantiAppuntamento();
 	
+	public String getNominativoManutentore() {
+		return getManutentore().getNome() + " " + getManutentore().getCognome();
+	}
 }

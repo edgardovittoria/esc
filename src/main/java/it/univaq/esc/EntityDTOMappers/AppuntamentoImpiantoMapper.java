@@ -6,7 +6,6 @@ import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,9 +24,7 @@ public class AppuntamentoImpiantoMapper extends AppuntamentoMapper {
 		
 		AppuntamentoImpianto appuntamentoImpianto = (AppuntamentoImpianto) appuntamentoDaConvertire;
 		
-		for(UtentePolisportivaAbstract invitato : appuntamentoImpianto.getInvitati()) {
-			appuntamentoDTO.aggiungiInvitato((String)invitato.getProprieta().get("email"));
-		}
+		appuntamentoDTO.setInvitati(appuntamentoImpianto.getNominativiInvitati());
 		
 		
 		return appuntamentoDTO;

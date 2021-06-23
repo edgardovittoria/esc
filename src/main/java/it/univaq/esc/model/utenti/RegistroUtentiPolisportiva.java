@@ -1,306 +1,291 @@
 package it.univaq.esc.model.utenti;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.sun.xml.fastinfoset.util.LocalNameQualifiedNamesMap;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
-import it.univaq.esc.repository.UtentePolisportivaAbstractRepository;
+import it.univaq.esc.repository.UtentePolisportivaRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Component
 @Singleton
-@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE)
+@Getter(value = AccessLevel.PRIVATE)
+@Setter(value = AccessLevel.PRIVATE)
 public class RegistroUtentiPolisportiva {
 
-    private UtentePolisportivaAbstractRepository utentiRepository; 
-    
-    @Getter(value = AccessLevel.PUBLIC)
-    private List<UtentePolisportivaAbstract> listaUtentiPolisportiva = new ArrayList<UtentePolisportivaAbstract>();
-    
-    private RegistroAppuntamenti registroAppuntamenti;
+	private UtentePolisportivaRepository utentiRepository;
 
+	@Getter(value = AccessLevel.PUBLIC)
+	private List<UtentePolisportiva> listaUtentiPolisportiva = new ArrayList<UtentePolisportiva>();
 
-    public RegistroUtentiPolisportiva(UtentePolisportivaAbstractRepository utentePolisportivaAbstractRepository, RegistroAppuntamenti registroAppuntamenti) {
-    	this.setUtentiRepository(utentePolisportivaAbstractRepository);
-    	setRegistroAppuntamenti(registroAppuntamenti);
-    	popola();
-    }
+	private RegistroAppuntamenti registroAppuntamenti;
 
-    /**
-     * Viene invocato subito dopo l'istanziazione del registro utenti, per popolare quest'ultimo 
-     * con tutti gli utenti presenti nel database
-     */
-    public void popola(){
-        this.setListaUtentiPolisportiva(this.utentiRepository.findAll());
-        if(!this.getListaUtentiPolisportiva().isEmpty()){
-        List<Integer> listaindiciDaEliminare = new ArrayList<Integer>();
-        for(UtentePolisportivaAbstract utente : this.getListaUtentiPolisportiva().subList(0, this.getListaUtentiPolisportiva().size() - 1)){
-            int j=0;
-            for(UtentePolisportivaAbstract utenteSuccessivo : this.getListaUtentiPolisportiva().subList(this.getListaUtentiPolisportiva().indexOf(utente)+1, this.getListaUtentiPolisportiva().size())){
-                if(utente.getProprieta().get("email").equals(utenteSuccessivo.getProprieta().get("email"))){
-                    j++;
-                }
-            }
-            if(j>0){
-                listaindiciDaEliminare.add(this.getListaUtentiPolisportiva().indexOf(utente));
-            }
+	public RegistroUtentiPolisportiva(UtentePolisportivaRepository utentePolisportivaAbstractRepository,
+			RegistroAppuntamenti registroAppuntamenti) {
+		this.setUtentiRepository(utentePolisportivaAbstractRepository);
+		setRegistroAppuntamenti(registroAppuntamenti);
+		popola();
+	}
 
-        }
-        List<UtentePolisportivaAbstract> utentiDaEliminare = new ArrayList<UtentePolisportivaAbstract>();
-        for(Integer index : listaindiciDaEliminare){
-            utentiDaEliminare.add(this.getListaUtentiPolisportiva().get(index));
-        }
-        this.getListaUtentiPolisportiva().removeAll(utentiDaEliminare);
-    }
-        /*
-         * Popoliamo il calendario degli sportivi
-         */
-        for(UtentePolisportivaAbstract sportivo : getListaUtentiByRuolo(TipoRuolo.SPORTIVO)){
-        	List<Appuntamento> listaAppuntamenti = getRegistroAppuntamenti().getAppuntamentiPerPartecipante(sportivo);
-        	if(!listaAppuntamenti.isEmpty()) {
-        		Calendario calendario = new Calendario();
-        		calendario.setListaAppuntamenti(listaAppuntamenti);
-        		Map<String, Object> mappaDatiSportivo = new HashMap<String, Object>();
-        		mappaDatiSportivo.put("calendarioAppuntamentiSportivo", calendario);
-        		sportivo.setProprieta(mappaDatiSportivo);
-        	}
-         }
-        
-        /*
-         * Popoliamo il calendario degli istruttori
-         */
-        for(UtentePolisportivaAbstract istruttore : getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE)){
-        	List<Appuntamento> listaLezioni = getRegistroAppuntamenti().getListaLezioniPerIstruttore(istruttore);
-        	if(!listaLezioni.isEmpty()) {
-        		Calendario calendarioIstruttore = new Calendario();
-        		calendarioIstruttore.setListaAppuntamenti(listaLezioni);
-        		Map<String, Object> mappaDatiIstruttore = new HashMap<String, Object>();
-        		mappaDatiIstruttore.put("calendarioLezioni", calendarioIstruttore);
-        		istruttore.setProprieta(mappaDatiIstruttore);
-        	}
-        }
-        
-        /*
-         * Popoliamo il calendario dei manutentori
-         */
-        for(UtentePolisportivaAbstract manutentore : getListaUtentiByRuolo(TipoRuolo.MANUTENTORE)){
-        	List<Appuntamento> listaAppuntamenti = getRegistroAppuntamenti().getListaAppuntamentiManutentore(manutentore);
-        	if(!listaAppuntamenti.isEmpty()) {
-        		Calendario calendarioManutentore = new Calendario();
-        		calendarioManutentore.setListaAppuntamenti(listaAppuntamenti);
-        		Map<String, Object> mappaDatiManutentore = new HashMap<String, Object>();
-        		mappaDatiManutentore.put("calendarioManutentore", calendarioManutentore);
-        		manutentore.setProprieta(mappaDatiManutentore);
-        	}
-        }
-        
-    }
-    
+	/**
+	 * Viene invocato subito dopo l'istanziazione del registro utenti, per popolare
+	 * quest'ultimo con tutti gli utenti presenti nel database
+	 */
+	public void popola() {
+		this.setListaUtentiPolisportiva(this.utentiRepository.findAll());
 
-    /**
-     * Registra l'utente passato nel sistema della polisportiva (registro e database)
-     * @param utente utente da registrare
-     */
-    public void registraUtente(UtentePolisportivaAbstract utente){
-        getListaUtentiPolisportiva().add(utente);
-        utentiRepository.save(utente);
-    }
+		/*
+		 * Popoliamo il calendario degli sportivi
+		 */
+		for (UtentePolisportiva utente : getListaUtentiByRuolo(TipoRuolo.SPORTIVO)) {
+			List<Appuntamento> listaAppuntamenti = getRegistroAppuntamenti().getAppuntamentiPerPartecipante(utente);
+			if (!listaAppuntamenti.isEmpty()) {
+				Calendario calendario = new Calendario();
+				calendario.setListaAppuntamenti(listaAppuntamenti);
+				utente.comeSportivo().segnaInAgendaGliAppuntamentiDel(calendario);
 
-    /**
-     * Restituisce l'utente associato alla mail passata come parametro
-     * @param emailUtente email dell'utente da ricercare
-     * @return l'utente associato alla email passata come parametro, se registrato
-     */
-    public UtentePolisportivaAbstract getUtenteByEmail(String emailUtente){
-        for(UtentePolisportivaAbstract sportivo : getListaUtentiPolisportiva()){
-            if(((String)sportivo.getProprieta().get("email")).equals(emailUtente)){
-                return sportivo;
-            }
-        }
-        return null;
-    }
-
-
-    /**
-     * Ritorna una lista degli utenti che hanno nella polisportiva il ruolo passato come parametro
-     * @param ruolo ruolo che devono avere gli utenti ricercati
-     * @return
-     */
-    public List<UtentePolisportivaAbstract> getListaUtentiByRuolo(TipoRuolo ruolo){
-        List<UtentePolisportivaAbstract> listaUtentiByRuolo = new ArrayList<UtentePolisportivaAbstract>();
-        for(UtentePolisportivaAbstract utente : this.getListaUtentiPolisportiva()){
-            if(utente.getRuoliUtentePolisportiva().contains(ruolo.toString())){
-                listaUtentiByRuolo.add(utente);
-            }
-        }
-        return listaUtentiByRuolo;
-    }
-
-    /**
-     * Elimina utente polisportiva passato come parametro dal registro e dal database.
-     * @param utente utente da eliminare
-     */
-    public void eliminaUtente(UtentePolisportivaAbstract utente){
-        this.getListaUtentiPolisportiva().remove(utente);
-        this.getUtentiRepository().delete(utente);
-    }
-
-
-    /**
-     * Elimina utente polisportiva associato alla email passata come parametro
-     * @param emailUtente email dell'utente da eliminare
-     */
-    public void eliminaUtente(String emailUtente){
-        this.eliminaUtente(this.getUtenteByEmail(emailUtente));
-    }
-
-
-    /**
-     * Restituisce la lista di tutti gli istruttori per un determinato sport
-     * @param sportDiCuiTrovareGliIstruttori Sport di cui trovare gli istruttori
-     * @return lista di tutti gli istruttori associati allo sport passato come parametro
-     */
-    public List<UtentePolisportivaAbstract> getIstruttoriPerSport(Sport sportDiCuiTrovareGliIstruttori){
-        return this.filtraIstruttoriPerSport(this.getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE), sportDiCuiTrovareGliIstruttori);
-    }
-    
-    
-    
-    /**
-     * Restituisce una lista dei soli isitruttori associati ad un determinato sport passato come parametro, a partire da una
-     * lista di istruttori anch'essa passata come parametro.
-     * @param listaIstruttoriDaFiltrare lista degli istruttori da filtrare.
-     * @param sportDiCuiTrovareGliIstruttori spsort in base al quale filtrare gli istruttori.
-     * @return lista dei soli istruttori, appartenenti alla lista passata come parametro, associati allo sport passato come parametro.
-     */
-    public List<UtentePolisportivaAbstract> filtraIstruttoriPerSport(List<UtentePolisportivaAbstract> listaIstruttoriDaFiltrare, Sport sportDiCuiTrovareGliIstruttori){
-    	List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
-    	for(UtentePolisportivaAbstract istruttore : listaIstruttoriDaFiltrare){
-            for(Sport sportInsegnato : (List<Sport>)istruttore.getProprieta().get("sportInsegnati")){
-                if (sportInsegnato.getNome().equals(sportDiCuiTrovareGliIstruttori.getNome())) {
-                    istruttori.add(istruttore);
-                }
-            }
-            
-        }
-        return istruttori;
-    }
-    
-    
-    /**
-     * Filtra una lista di istruttori passata come parametro, sulla base di un calendario passato come parametro.
-     * Restituisce i soli istruttori della lista liberi nelle date del calendario passato come parametro.
-     * @param listaIstruttoriDaFiltrare lista degli istruttori da filtrare.
-     * @param calendarioPerCuiFiltrareGliIstruttori calendario in base al quale filtrare gli istruttori.
-     * @return la lista dei soli istruttori liberi nelle date del calendario passato come parametro.
-     */
-    public  List<UtentePolisportivaAbstract> filtraIstruttorePerCalendario(List<UtentePolisportivaAbstract> listaIstruttoriDaFiltrare, Calendario calendarioPerCuiFiltrareGliIstruttori) {
-    	List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
-		for (UtentePolisportivaAbstract istruttore : listaIstruttoriDaFiltrare) {
-			if (!((Calendario) istruttore.getProprieta().get("calendarioLezioni")).sovrapponeA(calendarioPerCuiFiltrareGliIstruttori)) {
-				istruttori.add(istruttore);
 			}
+		}
+
+		/*
+		 * Popoliamo il calendario degli istruttori
+		 */
+		for (UtentePolisportiva utente : getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE)) {
+			List<Appuntamento> listaLezioni = getRegistroAppuntamenti().getListaLezioniPerIstruttore(utente);
+			if (!listaLezioni.isEmpty()) {
+				Calendario calendarioIstruttore = new Calendario();
+				calendarioIstruttore.setListaAppuntamenti(listaLezioni);
+				utente.comeIstruttore().segnaInAgendaLeLezioniDel(calendarioIstruttore);
+			}
+		}
+
+		/*
+		 * Popoliamo il calendario dei manutentori
+		 */
+		for (UtentePolisportiva utente : getListaUtentiByRuolo(TipoRuolo.MANUTENTORE)) {
+			List<Appuntamento> listaAppuntamenti = getRegistroAppuntamenti().getListaAppuntamentiManutentore(utente);
+			if (!listaAppuntamenti.isEmpty()) {
+				Calendario calendarioManutentore = new Calendario();
+				calendarioManutentore.setListaAppuntamenti(listaAppuntamenti);
+				utente.comeManutentore().segnaInAgendaGliAppuntamentiDel(calendarioManutentore);
+			}
+		}
+
+	}
+
+	/**
+	 * Registra l'utente passato nel sistema della polisportiva (registro e
+	 * database)
+	 * 
+	 * @param utente utente da registrare
+	 */
+	public void registraUtente(UtentePolisportiva utente) {
+		getListaUtentiPolisportiva().add(utente);
+		utentiRepository.save(utente);
+	}
+
+	/**
+	 * Restituisce l'utente associato alla mail passata come parametro
+	 * 
+	 * @param emailUtente email dell'utente da ricercare
+	 * @return l'utente associato alla email passata come parametro, se registrato
+	 */
+	public UtentePolisportiva getUtenteByEmail(String emailUtente) {
+		for (UtentePolisportiva sportivo : getListaUtentiPolisportiva()) {
+			if (sportivo.isSuaQuesta(emailUtente)) {
+				return sportivo;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Ritorna una lista degli utenti che hanno nella polisportiva il ruolo passato
+	 * come parametro
+	 * 
+	 * @param ruolo ruolo che devono avere gli utenti ricercati
+	 * @return
+	 */
+	public List<UtentePolisportiva> getListaUtentiByRuolo(TipoRuolo ruolo) {
+		List<UtentePolisportiva> listaUtentiByRuolo = new ArrayList<UtentePolisportiva>();
+		for (UtentePolisportiva utente : this.getListaUtentiPolisportiva()) {
+			if (utente.is(ruolo)) {
+				listaUtentiByRuolo.add(utente);
+			}
+		}
+		return listaUtentiByRuolo;
+	}
+
+	/**
+	 * Elimina utente polisportiva passato come parametro dal registro e dal
+	 * database.
+	 * 
+	 * @param utente utente da eliminare
+	 */
+	public void eliminaUtente(UtentePolisportiva utente) {
+		this.getListaUtentiPolisportiva().remove(utente);
+		this.getUtentiRepository().delete(utente);
+	}
+
+	/**
+	 * Elimina utente polisportiva associato alla email passata come parametro
+	 * 
+	 * @param emailUtente email dell'utente da eliminare
+	 */
+	public void eliminaUtente(String emailUtente) {
+		this.eliminaUtente(this.getUtenteByEmail(emailUtente));
+	}
+
+	/**
+	 * Restituisce la lista di tutti gli istruttori per un determinato sport
+	 * 
+	 * @param sportDiCuiTrovareGliIstruttori Sport di cui trovare gli istruttori
+	 * @return lista di tutti gli istruttori associati allo sport passato come
+	 *         parametro
+	 */
+	public List<UtentePolisportiva> getIstruttoriPerSport(Sport sportDiCuiTrovareGliIstruttori) {
+		return this.filtraIstruttoriPerSport(this.getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE),
+				sportDiCuiTrovareGliIstruttori);
+	}
+
+	/**
+	 * Restituisce una lista dei soli isitruttori associati ad un determinato sport
+	 * passato come parametro, a partire da una lista di istruttori anch'essa
+	 * passata come parametro.
+	 * 
+	 * @param listaIstruttoriDaFiltrare      lista degli istruttori da filtrare.
+	 * @param sportDiCuiTrovareGliIstruttori spsort in base al quale filtrare gli
+	 *                                       istruttori.
+	 * @return lista dei soli istruttori, appartenenti alla lista passata come
+	 *         parametro, associati allo sport passato come parametro.
+	 */
+	public List<UtentePolisportiva> filtraIstruttoriPerSport(List<UtentePolisportiva> listaIstruttoriDaFiltrare,
+			Sport sportDiCuiTrovareGliIstruttori) {
+		List<UtentePolisportiva> istruttori = new ArrayList<UtentePolisportiva>();
+		for (UtentePolisportiva utente : listaIstruttoriDaFiltrare) {
+
+			if (utente.comeIstruttore().insegna(sportDiCuiTrovareGliIstruttori)) {
+				istruttori.add(utente);
+			}
+
 		}
 		return istruttori;
 	}
-    
-    /**
-     * Filtra una lista di istruttori passata come parametro, sulla base di un intervallo di tempo passato come parametro.
-     * Restituisce i soli istruttori della lista liberi in quel determinato intervallo di tempo.
-     * @param listaIstruttoriDaFiltrare lista degli istruttori da filtrare.
-     * @param oraInizioOrarioPerCuiFiltrare data e ora di inizio dell'intervallo di tempo per cui filtrare.
-     * @param oraFineOrarioPerCuiFiltrare dat e ora di fine dell'intervallo di tempo per cui filtrare.
-     * @return la lista dei soli istruttori della lista di partenza, liberi nell'intervallo di tempo passato come parametro.
-     */
-    public  List<UtentePolisportivaAbstract> filtraIstruttorePerOrario(List<UtentePolisportivaAbstract> listaIstruttoriDaFiltrare, LocalDateTime oraInizioOrarioPerCuiFiltrare, LocalDateTime oraFineOrarioPerCuiFiltrare) {
-    	List<UtentePolisportivaAbstract> istruttori = new ArrayList<UtentePolisportivaAbstract>();
-		for (UtentePolisportivaAbstract istruttore : listaIstruttoriDaFiltrare) {
-			if (!((Calendario) istruttore.getProprieta().get("calendarioLezioni")).sovrapponeA(oraInizioOrarioPerCuiFiltrare, oraFineOrarioPerCuiFiltrare)) {
-				istruttori.add(istruttore);
+
+	/**
+	 * Filtra una lista di istruttori passata come parametro, sulla base di un
+	 * calendario passato come parametro. Restituisce i soli istruttori della lista
+	 * liberi nelle date del calendario passato come parametro.
+	 * 
+	 * @param listaIstruttoriDaFiltrare             lista degli istruttori da
+	 *                                              filtrare.
+	 * @param calendarioPerCuiFiltrareGliIstruttori calendario in base al quale
+	 *                                              filtrare gli istruttori.
+	 * @return la lista dei soli istruttori liberi nelle date del calendario passato
+	 *         come parametro.
+	 */
+	public List<UtentePolisportiva> filtraIstruttorePerCalendario(List<UtentePolisportiva> listaIstruttoriDaFiltrare,
+			Calendario calendarioPerCuiFiltrareGliIstruttori) {
+		List<UtentePolisportiva> istruttori = new ArrayList<UtentePolisportiva>();
+		for (UtentePolisportiva utente : listaIstruttoriDaFiltrare) {
+			if (utente.comeIstruttore().isLiberoNelleDateDel(calendarioPerCuiFiltrareGliIstruttori)) {
+				istruttori.add(utente);
 			}
 		}
 		return istruttori;
 	}
 
-    public void aggiornaCalendarioSportivo(Calendario calendarioDaUnire, UtentePolisportivaAbstract sportivo) {
-    	Calendario calendarioPrecedente = (Calendario)sportivo.getProprieta().get("calendarioAppuntamentiSportivo");
-        calendarioPrecedente.unisciCalendario(calendarioDaUnire);
-        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
-        mappaProprieta.put("calendarioAppuntamentiSportivo", calendarioPrecedente);
-        sportivo.setProprieta(mappaProprieta);
-    }
-    
-    public void aggiornaCalendarioSportivo(Appuntamento nuovoAppuntamento, UtentePolisportivaAbstract sportivo) {
-    	Calendario calendarioPrecedente = (Calendario)sportivo.getProprieta().get("calendarioAppuntamentiSportivo");
-        calendarioPrecedente.aggiungiAppuntamento(nuovoAppuntamento);
-        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
-        mappaProprieta.put("calendarioAppuntamentiSportivo", calendarioPrecedente);
-        sportivo.setProprieta(mappaProprieta);
-    }
+	/**
+	 * Filtra una lista di istruttori passata come parametro, sulla base di un
+	 * intervallo di tempo passato come parametro. Restituisce i soli istruttori
+	 * della lista liberi in quel determinato intervallo di tempo.
+	 * 
+	 * @param listaIstruttoriDaFiltrare     lista degli istruttori da filtrare.
+	 * @param oraInizioOrarioPerCuiFiltrare data e ora di inizio dell'intervallo di
+	 *                                      tempo per cui filtrare.
+	 * @param oraFineOrarioPerCuiFiltrare   dat e ora di fine dell'intervallo di
+	 *                                      tempo per cui filtrare.
+	 * @return la lista dei soli istruttori della lista di partenza, liberi
+	 *         nell'intervallo di tempo passato come parametro.
+	 */
+	public List<UtentePolisportiva> filtraIstruttorePerOrario(List<UtentePolisportiva> listaIstruttoriDaFiltrare,
+			LocalDateTime oraInizioOrarioPerCuiFiltrare, LocalDateTime oraFineOrarioPerCuiFiltrare) {
+		List<UtentePolisportiva> istruttori = new ArrayList<UtentePolisportiva>();
+		for (UtentePolisportiva utente : listaIstruttoriDaFiltrare) {
+			if (utente.comeIstruttore().isLiberoTra(oraInizioOrarioPerCuiFiltrare, oraFineOrarioPerCuiFiltrare)) {
+				istruttori.add(utente);
+			}
+		}
+		return istruttori;
+	}
 
-    public void aggiornaCalendarioIstruttore(Calendario calendarioDaUnire, UtentePolisportivaAbstract istruttore){
-        Calendario calendarioPrecedente = (Calendario)istruttore.getProprieta().get("calendarioLezioni");
-        calendarioPrecedente.unisciCalendario(calendarioDaUnire);
-        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
-        mappaProprieta.put("calendarioLezioni", calendarioPrecedente);
-        istruttore.setProprieta(mappaProprieta);
-    }
-    
-    public void aggiornaCalendarioManutentore(Calendario calendarioDaUnire, UtentePolisportivaAbstract manutentore){
-        Calendario calendarioPrecedente = (Calendario)manutentore.getProprieta().get("calendarioManutentore");
-        calendarioPrecedente.unisciCalendario(calendarioDaUnire);
-        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
-        mappaProprieta.put("calendarioManutentore", calendarioPrecedente);
-        manutentore.setProprieta(mappaProprieta);
-    }
-    
-    public UtentePolisportivaAbstract getManutentoreLibero(Calendario calendarioAppuntamento) {
-    	for(UtentePolisportivaAbstract manutentore : getListaUtentiByRuolo(TipoRuolo.MANUTENTORE)) {
-    		Calendario calendario = (Calendario)manutentore.getProprieta().get("calendarioManutentore");
-    		if(!calendario.sovrapponeA(calendarioAppuntamento)) {
-    			return manutentore;
-    		}
-    	}
-    	return null;
-    }
-    
-    public List<UtentePolisportivaAbstract> filtraUtentiLiberiInBaseACalendarioSportivo(List<UtentePolisportivaAbstract> listaDaFiltrare, Calendario calendario){
-    	List<UtentePolisportivaAbstract> listaFiltrata = new ArrayList<UtentePolisportivaAbstract>();
-    	for(UtentePolisportivaAbstract utente : listaDaFiltrare) {
-    		if(utente.getProprieta().containsKey("calendarioAppuntamentiSportivo") && !((Calendario)utente.getProprieta().get("calendarioAppuntamentiSportivo")).sovrapponeA(calendario)) {
-    			listaFiltrata.add(utente);
-    		}
-    	}
-    	return listaFiltrata;
-    }
-    
-    public List<UtentePolisportivaAbstract> filtraUtentiLiberiInBaseACalendarioSportivo(List<UtentePolisportivaAbstract> listaDaFiltrare, LocalDateTime oraInizio, LocalDateTime oraFine){
-    	List<UtentePolisportivaAbstract> listaFiltrata = new ArrayList<UtentePolisportivaAbstract>();
-    	for(UtentePolisportivaAbstract utente : listaDaFiltrare) {
-    		if(utente.getProprieta().containsKey("calendarioAppuntamentiSportivo") && !((Calendario)utente.getProprieta().get("calendarioAppuntamentiSportivo")).sovrapponeA(oraInizio, oraFine)) {
-    			listaFiltrata.add(utente);
-    		}
-    	}
-    	return listaFiltrata;
-    }
+	public void aggiornaCalendarioSportivo(Calendario nuovoCalendario, UtentePolisportiva utente) {
+		utente.comeSportivo().segnaInAgendaGliAppuntamentiDel(nuovoCalendario);
+
+	}
+
+	public void aggiornaCalendarioSportivo(Appuntamento nuovoAppuntamento, UtentePolisportiva utente) {
+		utente.comeSportivo().segnaInAgendaIl(nuovoAppuntamento);
+	}
+
+	public void aggiornaCalendarioIstruttore(Calendario nuovoCalendarioLezioni, UtentePolisportiva utente) {
+		utente.comeIstruttore().segnaInAgendaLeLezioniDel(nuovoCalendarioLezioni);
+	}
+
+	public void aggiornaCalendarioManutentore(Calendario nuovoCalendario, UtentePolisportiva utente) {
+		utente.comeManutentore().segnaInAgendaGliAppuntamentiDel(nuovoCalendario);
+	}
+
+	public UtentePolisportiva getManutentoreLibero(Calendario calendarioAppuntamento) {
+		for (UtentePolisportiva utente : getListaUtentiByRuolo(TipoRuolo.MANUTENTORE)) {
+
+			if (utente.comeManutentore().isLiberoNegliOrariDel(calendarioAppuntamento)) {
+				return utente;
+			}
+		}
+		return null;
+	}
+
+	public UtentePolisportiva getManutentoreLibero(Appuntamento appuntamento) {
+		for (UtentePolisportiva utente : getListaUtentiByRuolo(TipoRuolo.MANUTENTORE)) {
+
+			if (utente.comeManutentore().isLiberoPer(appuntamento)) {
+				return utente;
+			}
+		}
+		return null;
+	}
+
+	public List<UtentePolisportiva> filtraUtentiLiberiInBaseACalendarioSportivo(
+			List<UtentePolisportiva> listaDaFiltrare, Calendario calendario) {
+		List<UtentePolisportiva> listaFiltrata = new ArrayList<UtentePolisportiva>();
+		for (UtentePolisportiva utente : listaDaFiltrare) {
+			if (utente.is(TipoRuolo.SPORTIVO) && utente.comeSportivo().isLiberoNegliOrariDel(calendario)) {
+				listaFiltrata.add(utente);
+			}
+		}
+		return listaFiltrata;
+	}
+
+	public List<UtentePolisportiva> filtraUtentiLiberiInBaseACalendarioSportivo(
+			List<UtentePolisportiva> listaDaFiltrare, LocalDateTime oraInizio, LocalDateTime oraFine) {
+		List<UtentePolisportiva> listaFiltrata = new ArrayList<UtentePolisportiva>();
+		for (UtentePolisportiva utente : listaDaFiltrare) {
+			if (utente.is(TipoRuolo.SPORTIVO) && utente.comeSportivo().isLiberoTra(oraInizio, oraFine)) {
+				listaFiltrata.add(utente);
+			}
+		}
+		return listaFiltrata;
+	}
 
 }

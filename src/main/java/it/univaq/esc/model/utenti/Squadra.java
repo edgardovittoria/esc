@@ -46,49 +46,49 @@ public class Squadra {
 	@ManyToMany
 	@JoinColumn
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<UtentePolisportivaAbstract> membri = new ArrayList<UtentePolisportivaAbstract>();
+	private List<UtentePolisportiva> membri = new ArrayList<UtentePolisportiva>();
 
 	@ManyToMany
 	@JoinColumn
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<UtentePolisportivaAbstract> amministratori = new ArrayList<UtentePolisportivaAbstract>();
+	private List<UtentePolisportiva> amministratori = new ArrayList<UtentePolisportiva>();
 	
 	@Transient
 	private Calendario calendarioSquadra = new Calendario(); 
 	
 	
 
-	public Integer aggiungiMembro(UtentePolisportivaAbstract nuovoMembro) {
+	public Integer aggiungiMembro(UtentePolisportiva nuovoMembro) {
 		if (!isMembro(nuovoMembro)) {
 			getMembri().add(nuovoMembro);
 		}
 		return getMembri().size();
 	}
 
-	public void aggiungiAmministratore(UtentePolisportivaAbstract nuovoAmministratore) {
+	public void aggiungiAmministratore(UtentePolisportiva nuovoAmministratore) {
 		if (!isAmministratore(nuovoAmministratore)) {
 			getAmministratori().add(nuovoAmministratore);
 		}
 		aggiungiMembro(nuovoAmministratore);
 	}
 
-	public Integer rimuoviMembro(UtentePolisportivaAbstract membroCheRimuove, UtentePolisportivaAbstract membroDaRimuovere) {
+	public Integer rimuoviMembro(UtentePolisportiva membroCheRimuove, UtentePolisportiva membroDaRimuovere) {
 		if(isAmministratore(membroCheRimuove) || membroCheRimuove.isEqual(membroDaRimuovere)) {
 		getMembri().remove(membroDaRimuovere);
 		}
 		return getMembri().size();
 	}
 
-	public void rimuoviAmministratore(UtentePolisportivaAbstract amministratoreCheRimuove,
-			UtentePolisportivaAbstract amministratoreDaRimuovere) {
+	public void rimuoviAmministratore(UtentePolisportiva amministratoreCheRimuove,
+			UtentePolisportiva amministratoreDaRimuovere) {
 		if (isAmministratore(amministratoreCheRimuove) && getAmministratori().size() > 1) {
 			rimuoviMembro(amministratoreCheRimuove, amministratoreDaRimuovere);
 			getAmministratori().remove(amministratoreDaRimuovere);
 		}
 	}
 
-	public boolean isMembro(UtentePolisportivaAbstract nuovoMembro) {
-		for (UtentePolisportivaAbstract membro : getMembri()) {
+	public boolean isMembro(UtentePolisportiva nuovoMembro) {
+		for (UtentePolisportiva membro : getMembri()) {
 			if (membro.isEqual(nuovoMembro)) {
 				return true;
 			}
@@ -96,8 +96,8 @@ public class Squadra {
 		return false;
 	}
 
-	private boolean isAmministratore(UtentePolisportivaAbstract nuovoAmministratore) {
-		for (UtentePolisportivaAbstract amministratore : getAmministratori()) {
+	private boolean isAmministratore(UtentePolisportiva nuovoAmministratore) {
+		for (UtentePolisportiva amministratore : getAmministratori()) {
 			if (amministratore.isEqual(nuovoAmministratore)) {
 				return true;
 			}

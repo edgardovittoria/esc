@@ -12,7 +12,7 @@ import it.univaq.esc.dtoObjects.SquadraDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.utenti.Squadra;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.NoArgsConstructor;
 
 @Component
@@ -32,7 +32,7 @@ public class SquadraMapper extends EntityDTOMapper{
 		squadraDTO.setSport(sportDTO);
 		
 		List<UtentePolisportivaDTO> membriDTO = new ArrayList<UtentePolisportivaDTO>();
-		for(UtentePolisportivaAbstract membro : squadraDaConvertire.getMembri()) {
+		for(UtentePolisportiva membro : squadraDaConvertire.getMembri()) {
 			UtentePolisportivaDTO membroDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(membro);
 			membriDTO.add(membroDTO);
 		}
@@ -40,7 +40,7 @@ public class SquadraMapper extends EntityDTOMapper{
 		
 		
 		List<UtentePolisportivaDTO> amministratoriDTO = new ArrayList<UtentePolisportivaDTO>();
-		for(UtentePolisportivaAbstract amministratore : squadraDaConvertire.getAmministratori()) {
+		for(UtentePolisportiva amministratore : squadraDaConvertire.getAmministratori()) {
 			UtentePolisportivaDTO amministratoreDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(amministratore);
 			amministratoriDTO.add(amministratoreDTO);
 		}

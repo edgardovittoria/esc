@@ -76,7 +76,7 @@ public class Calendario {
      * @return true se il calendario si sovrappone almeno su un appuntamento con
      *         quello da verificare, false altrimenti.
      */
-    private boolean sovrapponeA(Appuntamento appuntamentoDiCuiVerificareSovrapposizione) {
+    public boolean sovrapponeA(Appuntamento appuntamentoDiCuiVerificareSovrapposizione) {
         boolean calendarioSiSovrappone = false;
         if (!this.getListaAppuntamenti().isEmpty()) {
             for (Appuntamento appuntamento : this.getListaAppuntamenti()) {

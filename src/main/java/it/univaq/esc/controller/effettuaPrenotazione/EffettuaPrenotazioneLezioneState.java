@@ -10,12 +10,9 @@ import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.FormPrenotaLezioneDTO;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
-import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
-import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.model.Calendario;
-import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
@@ -23,7 +20,6 @@ import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
-import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoLezione;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
 
@@ -33,7 +29,6 @@ import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 
 /**
  * Stato del controller EffettuaPrenotazioneHandler che gestisce la specifica

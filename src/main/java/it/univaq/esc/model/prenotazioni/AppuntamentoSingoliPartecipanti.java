@@ -22,8 +22,8 @@ import javax.persistence.ManyToMany;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,7 +38,7 @@ public abstract class AppuntamentoSingoliPartecipanti extends Appuntamento {
 
 	@Override
 	public boolean aggiungiPartecipante(Object sportivoPartecipante) {
-		UtentePolisportivaAbstract sportivoDaAggiungereComePartecipante = (UtentePolisportivaAbstract) sportivoPartecipante;
+		UtentePolisportiva sportivoDaAggiungereComePartecipante = (UtentePolisportiva) sportivoPartecipante;
 		if (!this.haComePartecipante(sportivoDaAggiungereComePartecipante) && this.accettaNuoviPartecipantiOltre(getPartecipantiAppuntamento().size())) {
 			this.getUtentiPartecipanti().add(sportivoDaAggiungereComePartecipante);
 			return true;
@@ -57,8 +57,8 @@ public abstract class AppuntamentoSingoliPartecipanti extends Appuntamento {
 
 	@Override
 	public boolean haComePartecipante(Object sportivo) {
-		UtentePolisportivaAbstract partecipante = (UtentePolisportivaAbstract) sportivo;
-		for (UtentePolisportivaAbstract utentePartecipante : this.getUtentiPartecipanti()) {
+		UtentePolisportiva partecipante = (UtentePolisportiva) sportivo;
+		for (UtentePolisportiva utentePartecipante : this.getUtentiPartecipanti()) {
 			if (utentePartecipante.isEqual(partecipante)) {
 				return true;
 			}

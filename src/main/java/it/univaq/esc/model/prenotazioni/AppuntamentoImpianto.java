@@ -11,7 +11,7 @@ import javax.persistence.ManyToMany;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,8 +22,16 @@ public class AppuntamentoImpianto extends AppuntamentoSingoliPartecipanti{
 	
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<UtentePolisportivaAbstract> invitati = new ArrayList<UtentePolisportivaAbstract>();
+	private List<UtentePolisportiva> invitati = new ArrayList<UtentePolisportiva>();
 	
 	@Column
 	private Integer numeroGiocatoriNonIscrittiAssociati = 0;
+	
+	
+	public List<String> getNominativiInvitati(){
+		List<String> nominativiInvitati = new ArrayList<String>();
+		getInvitati().forEach((inviato) -> nominativiInvitati.add(inviato.getNominativoCompleto()));
+		
+		return nominativiInvitati;
+	}
 }

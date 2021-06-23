@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
 
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,10 +32,10 @@ public class Notifica {
 	private Integer idNotifica;
 	@ManyToOne
 	@JoinColumn
-	private UtentePolisportivaAbstract mittente;
+	private UtentePolisportiva mittente;
 	@ManyToOne
 	@JoinColumn
-	private UtentePolisportivaAbstract destinatario;
+	private UtentePolisportiva destinatario;
 	@Column
 	private boolean letta = false;
 	@ManyToOne

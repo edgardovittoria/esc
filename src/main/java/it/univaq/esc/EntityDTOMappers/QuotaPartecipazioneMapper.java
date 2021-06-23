@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.QuotaPartecipazioneDTO;
-import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +22,7 @@ public class QuotaPartecipazioneMapper extends EntityDTOMapper{
 		quotaDTO.setPagata(quotaDaConvertire.isPagata());
 
 		
-		quotaDTO.setSportivo((String)quotaDaConvertire.getSportivoAssociato().getProprieta().get("email"));
+		quotaDTO.setSportivo(quotaDaConvertire.getSportivoAssociato().getNominativoCompleto());
 		
 		return quotaDTO;
 	}

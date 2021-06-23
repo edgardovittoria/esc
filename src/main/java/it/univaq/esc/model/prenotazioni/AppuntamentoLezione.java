@@ -4,7 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,9 +16,14 @@ public class AppuntamentoLezione extends AppuntamentoSingoliPartecipanti{
 
 	@ManyToOne
 	@JoinColumn
-	private UtentePolisportivaAbstract istruttore;
+	private UtentePolisportiva istruttore;
 	
-	public boolean isNelCalendarioDi(UtentePolisportivaAbstract istruttore) {
+	public boolean isNelCalendarioDi(UtentePolisportiva istruttore) {
 		return istruttore.isEqual(getIstruttore());
 	}
+	
+	public String getNominativoIstruttore() {
+		return getIstruttore().getNominativoCompleto();
+	}
+	
 }

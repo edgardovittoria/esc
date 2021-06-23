@@ -15,7 +15,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.utenti.Squadra;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -66,7 +67,7 @@ public abstract class AppuntamentoSquadra extends Appuntamento {
 //		return false;
 //	}
 
-	public void aggiungiUtentePartecipante(UtentePolisportivaAbstract nuovoPartecipante) {
+	public void aggiungiUtentePartecipante(UtentePolisportiva nuovoPartecipante) {
 		if (!utenteIsPartecipante(nuovoPartecipante)) {
 			for (Squadra squadraPartecipante : getSquadrePartecipanti()) {
 				if (squadraPartecipante.isMembro(nuovoPartecipante)) {

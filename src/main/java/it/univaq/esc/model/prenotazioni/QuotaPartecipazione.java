@@ -10,9 +10,11 @@ import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
 
+import it.univaq.esc.model.utenti.UtentePolisportiva;
+
 //import it.univaq.esc.model.prenotazioni.PrenotazioneSpecs;
 
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,10 +35,10 @@ public class QuotaPartecipazione {
     private float costo;
     @ManyToOne()
     @JoinColumn(name = "sportivo_email",nullable = false)
-    private UtentePolisportivaAbstract sportivoAssociato;
+    private UtentePolisportiva sportivoAssociato;
     
 
-    public QuotaPartecipazione(boolean pagata, float costo, UtentePolisportivaAbstract sportivoDaAssociareAllaQuota) {
+    public QuotaPartecipazione(boolean pagata, float costo, UtentePolisportiva sportivoDaAssociareAllaQuota) {
         this.setPagata(pagata);
         this.setCosto(costo);
         this.setSportivoAssociato(sportivoDaAssociareAllaQuota);

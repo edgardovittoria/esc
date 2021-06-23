@@ -3,23 +3,14 @@ package it.univaq.esc.EntityDTOMappers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
-import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.QuotaPartecipazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
-import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
-import it.univaq.esc.factory.ElementiPrenotazioneFactory;
-import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
-import it.univaq.esc.model.utenti.Squadra;
-import it.univaq.esc.model.utenti.UtentePolisportivaAbstract;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
+
 import it.univaq.esc.utility.BeanUtil;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 
 public abstract class AppuntamentoMapper extends EntityDTOMapper {
@@ -38,9 +29,9 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 //				.convertiInPrenotazioneSpecsDTO(appuntamentoDaConvertire.getPrenotazioneSpecsAppuntamento());
 //
 //		appuntamentoDTO.setSpecificaPrenotazione(specificaDTO);
-		for (UtentePolisportivaAbstract partecipante : appuntamentoDaConvertire.getUtentiPartecipanti()) {
+		for (UtentePolisportiva partecipante : appuntamentoDaConvertire.getUtentiPartecipanti()) {
 
-			appuntamentoDTO.aggiungiPartecipante((String) partecipante.getProprieta().get("email"));
+			appuntamentoDTO.aggiungiPartecipante(partecipante.getEmail());
 		}
 		
 		
@@ -57,7 +48,7 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 		//appuntamentoDTO.setCreatore((String) appuntamentoDaConvertire.creatoDa().getProprieta().get("email"));
 
 		if (appuntamentoDaConvertire.getManutentore() != null) {
-			appuntamentoDTO.setIdManutentore(appuntamentoDaConvertire.getManutentore().getId());
+			appuntamentoDTO.setManutentore(appuntamentoDaConvertire.getNominativoManutentore());
 		}
 
 		appuntamentoDTO.setModalitaPrenotazione(appuntamentoDaConvertire.getModalitaPrenotazione());
