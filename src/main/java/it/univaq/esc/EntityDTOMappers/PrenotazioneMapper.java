@@ -51,8 +51,8 @@ public class PrenotazioneMapper extends EntityDTOMapper {
 		prenotazioneDTO.setSportivoPrenotante(getMapperFactory().getUtenteMapper()
 				.convertiInUtentePolisportivaDTO(prenotazione.getSportivoPrenotante()));
 		prenotazioneDTO.setIdPrenotazione(prenotazione.getIdPrenotazione());
-
 		for (Appuntamento app : prenotazione.getListaAppuntamenti()) {
+			impostaMapperFactory(app.getModalitaPrenotazione());
 			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione())
 					.convertiInAppuntamentoDTO(app);
 			prenotazioneDTO.aggiungiAppuntamento(appDTO);

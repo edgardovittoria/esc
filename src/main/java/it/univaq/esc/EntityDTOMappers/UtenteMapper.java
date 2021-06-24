@@ -40,6 +40,7 @@ public class UtenteMapper extends EntityDTOMapper {
 
 			List<AppuntamentoDTO> appuntamentiSportivo = new ArrayList<AppuntamentoDTO>();
 			for (Appuntamento app : utenteDaConvertire.comeSportivo().getListaAppuntamenti()) {
+				impostaMapperFactory(app.getModalitaPrenotazione());
 				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione())
 						.convertiInAppuntamentoDTO(app);
 				appuntamentiSportivo.add(appDTO);
