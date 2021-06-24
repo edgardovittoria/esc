@@ -133,9 +133,17 @@ public class PopolaDB {
 		squadra2.aggiungiAmministratore(sportivoPrenotante);
 		squadra2.aggiungiMembro(sportivo1);
 		squadra2.aggiungiMembro(sportivo3);
+		
+		Squadra squadra3 = new Squadra();
+		squadra2.setNome("Le Strolaghe");
+		squadra2.setSport(calcetto);
+		squadra2.aggiungiAmministratore(sportivoPrenotante);
+		squadra2.aggiungiMembro(sportivo1);
+		squadra2.aggiungiMembro(sportivo2);
 
 		getSquadraRepository().save(squadra1);
 		getSquadraRepository().save(squadra2);
+		getSquadraRepository().save(squadra3);
 
 		List<Sport> sportPraticatiImpianto1 = new ArrayList<Sport>();
 		sportPraticatiImpianto1.add(calcetto);
