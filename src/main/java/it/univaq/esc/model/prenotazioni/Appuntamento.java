@@ -256,4 +256,5 @@ public abstract class Appuntamento {
 	public String getNominativoManutentore() {
 		return getManutentore().getNome() + " " + getManutentore().getCognome();
 	}
+	
 }
