@@ -66,8 +66,6 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 		return appuntamentoDTO;
 	}
 
-	private void impostaMapperFactory(String modalitaPrenotazione) {
-		setMapperFactory(BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class));
-	}
+	
 
 }
