@@ -51,7 +51,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	}
 
 	@Override
-	public Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandler controller) {
+	public Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(EffettuaPrenotazioneHandler controller) {
 		Map<String, Object> mappaValori = new HashMap<String, Object>();
 		mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
 		mappaValori.put("squadreInvitabili", getRegistroSquadre().getListaSquadre());

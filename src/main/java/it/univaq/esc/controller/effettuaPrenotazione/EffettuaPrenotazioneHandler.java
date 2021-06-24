@@ -199,10 +199,10 @@ public class EffettuaPrenotazioneHandler {
 
 		this.setIdSquadraPrenotante(idSquadra);
 		UtentePolisportiva sportivoPrenotante = this.getRegistroUtenti()
-				.getUtenteByEmail(emailSportivoPrenotante);
+				.trovaUtenteInBaseAllaSua(emailSportivoPrenotante);
 		if (!sportivoPrenotante.comeSportivo().isMoroso()) {
 			this.inizializzaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione, modalitaPrenotazione);
-			return this.getStato().getDatiOpzioni(this);
+			return this.getStato().getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(this);
 		} else {
 			/*
 			 * In futuro possiamo ritornare la lista dei debiti dello sportivo.
@@ -231,7 +231,7 @@ public class EffettuaPrenotazioneHandler {
 			@RequestParam(name = "email") String emailDirettore,
 			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione,
 			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
-		UtentePolisportiva direttore = this.getRegistroUtenti().getUtenteByEmail(emailDirettore);
+		UtentePolisportiva direttore = this.getRegistroUtenti().trovaUtenteInBaseAllaSua(emailDirettore);
 		this.inizializzaNuovaPrenotazione(direttore, tipoPrenotazione, modalitaPrenotazione);
 		return this.getStato().getDatiOpzioniModalitaDirettore(this);
 	}

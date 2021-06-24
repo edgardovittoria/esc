@@ -38,16 +38,19 @@ public class RegistroUtentiPolisportiva {
 	}
 
 	/**
-	 * Viene invocato subito dopo l'istanziazione del registro utenti, per popolare
-	 * quest'ultimo con tutti gli utenti presenti nel database
+	 * Viene invocato nel costruttore per popolare
+	 * il registro con tutti gli utenti presenti nel database, popolando anche
+	 * i rispettivi calendari
 	 */
-	public void popola() {
+	private void popola() {
 		this.setListaUtentiPolisportiva(this.utentiRepository.findAll());
-
-		/*
-		 * Popoliamo il calendario degli sportivi
-		 */
-		for (UtentePolisportiva utente : getListaUtentiByRuolo(TipoRuolo.SPORTIVO)) {
+		popolaCalendarioSportivi();
+		popolaCalendarioIstruttori();
+		popolaCalendarioManutentori();
+	}
+	
+	private void popolaCalendarioSportivi() {
+		for (UtentePolisportiva utente : getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO)) {
 			List<Appuntamento> listaAppuntamenti = getRegistroAppuntamenti().getAppuntamentiPerPartecipante(utente);
 			if (!listaAppuntamenti.isEmpty()) {
 				Calendario calendario = new Calendario();
@@ -56,11 +59,10 @@ public class RegistroUtentiPolisportiva {
 
 			}
 		}
-
-		/*
-		 * Popoliamo il calendario degli istruttori
-		 */
-		for (UtentePolisportiva utente : getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE)) {
+	}
+	
+	private void popolaCalendarioIstruttori() {
+		for (UtentePolisportiva utente : getListaDegliUtentiCheHanno(TipoRuolo.ISTRUTTORE)) {
 			List<Appuntamento> listaLezioni = getRegistroAppuntamenti().getListaLezioniPerIstruttore(utente);
 			if (!listaLezioni.isEmpty()) {
 				Calendario calendarioIstruttore = new Calendario();
@@ -68,11 +70,10 @@ public class RegistroUtentiPolisportiva {
 				utente.comeIstruttore().segnaInAgendaLeLezioniDel(calendarioIstruttore);
 			}
 		}
-
-		/*
-		 * Popoliamo il calendario dei manutentori
-		 */
-		for (UtentePolisportiva utente : getListaUtentiByRuolo(TipoRuolo.MANUTENTORE)) {
+	}
+	
+	private void popolaCalendarioManutentori() {
+		for (UtentePolisportiva utente : getListaDegliUtentiCheHanno(TipoRuolo.MANUTENTORE)) {
 			List<Appuntamento> listaAppuntamenti = getRegistroAppuntamenti().getListaAppuntamentiManutentore(utente);
 			if (!listaAppuntamenti.isEmpty()) {
 				Calendario calendarioManutentore = new Calendario();
@@ -80,18 +81,25 @@ public class RegistroUtentiPolisportiva {
 				utente.comeManutentore().segnaInAgendaGliAppuntamentiDel(calendarioManutentore);
 			}
 		}
-
 	}
 
 	/**
-	 * Registra l'utente passato nel sistema della polisportiva (registro e
+	 * Registra un nuovo utente nel sistema della polisportiva (registro e
 	 * database)
 	 * 
 	 * @param utente utente da registrare
 	 */
-	public void registraUtente(UtentePolisportiva utente) {
-		getListaUtentiPolisportiva().add(utente);
-		utentiRepository.save(utente);
+	public void registraNelSistemaIl(UtentePolisportiva nuovoUtente) {
+		registraIl(nuovoUtente);
+		salvaSulDatabaseIl(nuovoUtente);
+	}
+	
+	private void registraIl(UtentePolisportiva nuovoUtente) {
+		getListaUtentiPolisportiva().add(nuovoUtente);
+	}
+	
+	private void salvaSulDatabaseIl(UtentePolisportiva nuovoUtenteRegistrato) {
+		getUtentiRepository().save(nuovoUtenteRegistrato);
 	}
 
 	/**
@@ -100,10 +108,10 @@ public class RegistroUtentiPolisportiva {
 	 * @param emailUtente email dell'utente da ricercare
 	 * @return l'utente associato alla email passata come parametro, se registrato
 	 */
-	public UtentePolisportiva getUtenteByEmail(String emailUtente) {
-		for (UtentePolisportiva sportivo : getListaUtentiPolisportiva()) {
-			if (sportivo.isSuaQuesta(emailUtente)) {
-				return sportivo;
+	public UtentePolisportiva trovaUtenteInBaseAllaSua(String email) {
+		for (UtentePolisportiva utente : getListaUtentiPolisportiva()) {
+			if (utente.isSuaQuesta(email)) {
+				return utente;
 			}
 		}
 		return null;
@@ -116,7 +124,7 @@ public class RegistroUtentiPolisportiva {
 	 * @param ruolo ruolo che devono avere gli utenti ricercati
 	 * @return
 	 */
-	public List<UtentePolisportiva> getListaUtentiByRuolo(TipoRuolo ruolo) {
+	public List<UtentePolisportiva> getListaDegliUtentiCheHanno(TipoRuolo ruolo) {
 		List<UtentePolisportiva> listaUtentiByRuolo = new ArrayList<UtentePolisportiva>();
 		for (UtentePolisportiva utente : this.getListaUtentiPolisportiva()) {
 			if (utente.is(ruolo)) {
@@ -126,24 +134,22 @@ public class RegistroUtentiPolisportiva {
 		return listaUtentiByRuolo;
 	}
 
-	/**
-	 * Elimina utente polisportiva passato come parametro dal registro e dal
-	 * database.
-	 * 
-	 * @param utente utente da eliminare
-	 */
-	public void eliminaUtente(UtentePolisportiva utente) {
-		this.getListaUtentiPolisportiva().remove(utente);
-		this.getUtentiRepository().delete(utente);
+	
+	public void eliminaDalSistemaIl(UtentePolisportiva utenteDaEliminare) {
+		rimuovi(utenteDaEliminare);
+		eliminaDalDatabaseIl(utenteDaEliminare);
 	}
-
-	/**
-	 * Elimina utente polisportiva associato alla email passata come parametro
-	 * 
-	 * @param emailUtente email dell'utente da eliminare
-	 */
-	public void eliminaUtente(String emailUtente) {
-		this.eliminaUtente(this.getUtenteByEmail(emailUtente));
+	
+	private void rimuovi(UtentePolisportiva utenteDaEliminare) {
+		for(UtentePolisportiva utente : getListaUtentiPolisportiva()) {
+			if(utente.isEqual(utenteDaEliminare)) {
+				getListaUtentiPolisportiva().remove(utente);
+			}
+		}
+	}
+	
+	private void eliminaDalDatabaseIl(UtentePolisportiva utenteDaEliminare) {
+		getUtentiRepository().delete(utenteDaEliminare);
 	}
 
 	/**
@@ -153,8 +159,8 @@ public class RegistroUtentiPolisportiva {
 	 * @return lista di tutti gli istruttori associati allo sport passato come
 	 *         parametro
 	 */
-	public List<UtentePolisportiva> getIstruttoriPerSport(Sport sportDiCuiTrovareGliIstruttori) {
-		return this.filtraIstruttoriPerSport(this.getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE),
+	public List<UtentePolisportiva> getListaDegliIstruttoriDello(Sport sportDiCuiTrovareGliIstruttori) {
+		return this.filtraIstruttoriPerSport(this.getListaDegliUtentiCheHanno(TipoRuolo.ISTRUTTORE),
 				sportDiCuiTrovareGliIstruttori);
 	}
 
@@ -247,7 +253,7 @@ public class RegistroUtentiPolisportiva {
 	}
 
 	public UtentePolisportiva getManutentoreLibero(Calendario calendarioAppuntamento) {
-		for (UtentePolisportiva utente : getListaUtentiByRuolo(TipoRuolo.MANUTENTORE)) {
+		for (UtentePolisportiva utente : getListaDegliUtentiCheHanno(TipoRuolo.MANUTENTORE)) {
 
 			if (utente.comeManutentore().isLiberoNegliOrariDel(calendarioAppuntamento)) {
 				return utente;
@@ -257,7 +263,7 @@ public class RegistroUtentiPolisportiva {
 	}
 
 	public UtentePolisportiva getManutentoreLibero(Appuntamento appuntamento) {
-		for (UtentePolisportiva utente : getListaUtentiByRuolo(TipoRuolo.MANUTENTORE)) {
+		for (UtentePolisportiva utente : getListaDegliUtentiCheHanno(TipoRuolo.MANUTENTORE)) {
 
 			if (utente.comeManutentore().isLiberoPer(appuntamento)) {
 				return utente;

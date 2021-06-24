@@ -220,6 +220,10 @@ public abstract class Appuntamento {
 		return false;
 	};
 	
+	public UtentePolisportiva getUtenteCreatoreDellaPrenotazioneRelativa() {
+		return getPrenotazione().getSportivoPrenotante();
+	}
+	
 //	public Integer getNumeroPartecipantiMassimo() {
 //		return this.getPrenotazioneSpecsAppuntamento().getSogliaMassimaPartecipanti();
 //	};

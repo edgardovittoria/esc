@@ -83,7 +83,7 @@ public class GestioneNotificheHandler {
 	@GetMapping("/notificheUtente")
 	@CrossOrigin
 	public @ResponseBody List<NotificaDTO> getNotificheUtente(@RequestParam(name = "email") String email) {
-		UtentePolisportiva utente = getRegistroUtentiPolisportiva().getUtenteByEmail(email);
+		UtentePolisportiva utente = getRegistroUtentiPolisportiva().trovaUtenteInBaseAllaSua(email);
 		return getNotificheDTOPerDestinatario(utente);
 	}
 

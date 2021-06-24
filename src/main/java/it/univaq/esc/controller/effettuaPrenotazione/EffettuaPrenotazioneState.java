@@ -127,7 +127,7 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return mappa con i dati iniziali delle varie opzioni selezionabili in fase
 	 *         di prenotazione.
 	 */
-	public abstract Map<String, Object> getDatiOpzioni(EffettuaPrenotazioneHandler controller);
+	public abstract Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(EffettuaPrenotazioneHandler effettuaPrenotazioneHandler);
 
 	/**
 	 * Definisce l'interfaccia per il metodo che imposta tutti i valori selezionati
@@ -226,7 +226,7 @@ public abstract class EffettuaPrenotazioneState {
 	 */
 	protected List<UtentePolisportivaDTO> getSportiviPolisportiva() {
 		List<UtentePolisportivaDTO> listaSportiviDTO = new ArrayList<UtentePolisportivaDTO>();
-		for (UtentePolisportiva utente : getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO)) {
+		for (UtentePolisportiva utente : getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO)) {
 			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 			listaSportiviDTO.add(sportivoDTO);
 		}
@@ -236,7 +236,7 @@ public abstract class EffettuaPrenotazioneState {
 	
 	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseACalendario(Calendario calendario) {
 		List<UtentePolisportivaDTO> listaSportivi = new ArrayList<UtentePolisportivaDTO>();
-		for(UtentePolisportiva utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO), calendario)) {
+		for(UtentePolisportiva utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO), calendario)) {
 			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 			listaSportivi.add(sportivoDTO);
 		}
@@ -245,7 +245,7 @@ public abstract class EffettuaPrenotazioneState {
 	
 	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseAOrario(LocalDateTime oraInizio, LocalDateTime oraFine) {
 		List<UtentePolisportivaDTO> listaSportivi = new ArrayList<UtentePolisportivaDTO>();
-		for(UtentePolisportiva utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaUtentiByRuolo(TipoRuolo.SPORTIVO), oraInizio, oraFine)) {
+		for(UtentePolisportiva utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO), oraInizio, oraFine)) {
 			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 			listaSportivi.add(sportivoDTO);
 		}
@@ -284,7 +284,7 @@ public abstract class EffettuaPrenotazioneState {
 		List<UtentePolisportivaDTO> listaIstruttori = new ArrayList<UtentePolisportivaDTO>();
 		Sport sportRichiesto = this.getRegistroSport().getSportByNome(sport);
 
-		List<UtentePolisportiva> istruttori = this.getRegistroUtenti().getIstruttoriPerSport(sportRichiesto);
+		List<UtentePolisportiva> istruttori = getRegistroUtenti().getListaDegliIstruttoriDello(sportRichiesto);
 		for (UtentePolisportiva istruttore : istruttori) {
 			UtentePolisportivaDTO istDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(istruttore);
 			listaIstruttori.add(istDTO);
@@ -384,7 +384,7 @@ public abstract class EffettuaPrenotazioneState {
 	 */
 	protected List<UtentePolisportivaDTO> getIstruttoriDTODisponibili(Map<String, Object> dati) {
 		List<UtentePolisportiva> istruttoriDisponibili = this.getRegistroUtenti()
-				.getListaUtentiByRuolo(TipoRuolo.ISTRUTTORE);
+				.getListaDegliUtentiCheHanno(TipoRuolo.ISTRUTTORE);
 		if (dati.containsKey("orario")) {
 			Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
 			istruttoriDisponibili = getRegistroUtenti().filtraIstruttorePerOrario(

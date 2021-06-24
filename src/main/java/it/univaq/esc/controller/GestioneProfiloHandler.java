@@ -64,7 +64,7 @@ public class GestioneProfiloHandler {
 	@CrossOrigin
 	public @ResponseBody UtentePolisportivaDTO getDatiSportivo(@RequestParam(name = "email") String email) {
 		UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper()
-				.convertiInUtentePolisportivaDTO(registroUtentiPolisportiva.getUtenteByEmail(email));
+				.convertiInUtentePolisportivaDTO(registroUtentiPolisportiva.trovaUtenteInBaseAllaSua(email));
 		
 		return sportivoDTO;
 	}
@@ -75,7 +75,7 @@ public class GestioneProfiloHandler {
 	@GetMapping("/squadreSportivo")
 	@CrossOrigin
 	public List<SquadraDTO> getSquadreSportivoMembro(@RequestParam(name = "email") String email){
-		UtentePolisportiva sportivo = getRegistroUtentiPolisportiva().getUtenteByEmail(email);
+		UtentePolisportiva sportivo = getRegistroUtentiPolisportiva().trovaUtenteInBaseAllaSua(email);
 		return getSquadreDiCuiUtenteMembro(sportivo);
 	}
 	

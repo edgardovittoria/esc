@@ -30,9 +30,9 @@ public class MyUserDetailsService implements UserDetailsService{
     private RegistroUtentiPolisportiva registroUtentiPolisportiva;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
        
-        UtentePolisportiva utente = getRegistroUtentiPolisportiva().getUtenteByEmail(username);
+        UtentePolisportiva utente = getRegistroUtentiPolisportiva().trovaUtenteInBaseAllaSua(email);
         // System.out.println(new User((String)utente.getProprieta().get("email"), 
         // (String)utente.getProprieta().get("password"), 
         // getAuthority(utente)));

@@ -82,7 +82,7 @@ public class AutenticazioneUtentiHandler {
 		final UserDetails userDetails = myUserDetailsService
 			.loadUserByUsername(authenticationRequest.getUsername());
 
-		UtentePolisportiva utente = registroUtentiPolisportiva.getUtenteByEmail(userDetails.getUsername());
+		UtentePolisportiva utente = registroUtentiPolisportiva.trovaUtenteInBaseAllaSua(userDetails.getUsername());
 		UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
 
 		final String jwt = jwtUtil.generateToken(userDetails);
