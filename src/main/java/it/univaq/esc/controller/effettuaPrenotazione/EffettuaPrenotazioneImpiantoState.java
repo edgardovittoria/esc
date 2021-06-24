@@ -255,10 +255,13 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 				getRegistroUtenti().aggiornaCalendarioSportivo(appuntamento,
 						getRegistroUtenti().trovaUtenteInBaseAllaSua(emailPartecipante));
 			}
+			
+			getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 			// this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 			AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione())
 					.convertiInAppuntamentoDTO(appuntamento);
 			return appuntamentoDTO;
+			
 		}
 		return null;
 	}
