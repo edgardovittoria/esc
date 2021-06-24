@@ -100,7 +100,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		for (OrarioAppuntamento orario : formDatiCorso.getFormLezione().getOrariSelezionati()) {
 
 			AppuntamentoCorso appuntamentoCorso = (AppuntamentoCorso) getElementiPrenotazioneFactory()
-					.getAppuntamento(TipiPrenotazione.LEZIONE.toString());
+					.getAppuntamento(TipiPrenotazione.CORSO.toString());
 
 			impostaValoriAppuntamento(formDatiCorso, controller, appuntamentoCorso, orario);
 
