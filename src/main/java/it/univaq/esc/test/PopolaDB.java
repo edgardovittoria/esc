@@ -135,11 +135,11 @@ public class PopolaDB {
 		squadra2.aggiungiMembro(sportivo3);
 		
 		Squadra squadra3 = new Squadra();
-		squadra2.setNome("Le Strolaghe");
-		squadra2.setSport(calcetto);
-		squadra2.aggiungiAmministratore(sportivoPrenotante);
-		squadra2.aggiungiMembro(sportivo1);
-		squadra2.aggiungiMembro(sportivo2);
+		squadra3.setNome("Le Strolaghe");
+		squadra3.setSport(calcetto);
+		squadra3.aggiungiAmministratore(sportivoPrenotante);
+		squadra3.aggiungiMembro(sportivo1);
+		squadra3.aggiungiMembro(sportivo2);
 
 		getSquadraRepository().save(squadra1);
 		getSquadraRepository().save(squadra2);
