@@ -123,6 +123,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		
 		return appuntamento;
 	}
+	
 
 	/**
 	 * Metodo che aggiorna eventuali oggetti correlati alla prenotazione in atto,
