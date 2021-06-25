@@ -102,6 +102,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	private void impostaDatiPrenotazionePerSingoloOrarioUsandoLaForm(Prenotazione prenotazioneInAtto, OrarioAppuntamento orario, FormPrenotabile formDati) {
 		AppuntamentoImpianto appuntamentoImpianto = getAppuntamentoPerOrarioImpostatoUsandoForm(orario, formDati);
 		prenotazioneInAtto.aggiungi(appuntamentoImpianto);
+		this.aggiungiPartecipanteECreaQuotePartecipazione(appuntamentoImpianto.getUtenteCreatoreDellaPrenotazioneRelativa(),
+				appuntamentoImpianto);
 
 	}
 
@@ -118,8 +120,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		appuntamento.setCalcolatoreCosto(getElementiPrenotazioneFactory().getCalcolatoreCosto());
 		appuntamento.calcolaCosto();
 
-		this.aggiungiPartecipanteECreaQuotePartecipazione(appuntamento.getUtenteCreatoreDellaPrenotazioneRelativa(),
-				appuntamento);
+		
 		
 		return appuntamento;
 	}
