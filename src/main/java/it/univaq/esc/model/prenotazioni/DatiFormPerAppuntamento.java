@@ -1,0 +1,29 @@
+package it.univaq.esc.model.prenotazioni;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import it.univaq.esc.model.Impianto;
+import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
+import it.univaq.esc.model.utenti.Squadra;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class DatiFormPerAppuntamento {
+	
+	private LocalDateTime orarioInizio;
+	private LocalDateTime orarioFine;
+	private boolean pending = false;
+	private PrenotabileDescrizione descrizioneEvento;
+	private List<UtentePolisportiva> invitati = new ArrayList<UtentePolisportiva>();
+	private List<Squadra> squadreInvitate = new ArrayList<Squadra>();
+	private Impianto impiantoPrenotato;
+	private UtentePolisportiva istruttore;
+	private Integer numeroPartecipantiNonIscritti;
+}

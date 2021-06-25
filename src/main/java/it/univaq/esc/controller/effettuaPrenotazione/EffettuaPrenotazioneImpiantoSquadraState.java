@@ -91,6 +91,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 						TipiPrenotazione.IMPIANTO.toString(),
 						getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
 						formDati.getModalitaPrenotazione());
+		
 		// Creazione calcolatore che poi dovrà finire altrove
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
 		calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());

@@ -244,6 +244,14 @@ public abstract class Appuntamento {
 		return this.getIdAppuntamento() == appuntamento.getIdAppuntamento();
 	}
 	
+	public void impostaDatiAppuntamentoDa(DatiFormPerAppuntamento datiCompilatiInPrenotazione) {
+		setDataOraInizioAppuntamento(datiCompilatiInPrenotazione.getOrarioInizio());
+		setDataOraFineAppuntamento(datiCompilatiInPrenotazione.getOrarioFine());
+		setPending(datiCompilatiInPrenotazione.isPending());
+		setDescrizioneEventoPrenotato(datiCompilatiInPrenotazione.getDescrizioneEvento());
+		setImpiantoPrenotato(datiCompilatiInPrenotazione.getImpiantoPrenotato());
+	}
+	
 	public abstract boolean aggiungiPartecipante(Object sportivoOSquadraPartecipante);
 	
 	public abstract boolean haComePartecipante(Object sportivoOSquadra);

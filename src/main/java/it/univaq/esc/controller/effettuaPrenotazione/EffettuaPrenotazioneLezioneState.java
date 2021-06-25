@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import it.univaq.esc.dtoObjects.FormPrenotaLezioneDTO;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
+import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.model.Calendario;
@@ -30,6 +31,7 @@ import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 
 /**
  * Stato del controller EffettuaPrenotazioneHandler che gestisce la specifica
@@ -92,13 +94,14 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	}
 
 	public void impostaValoriAppuntamento(FormPrenotaLezioneDTO formDati, EffettuaPrenotazioneHandler controller,
-			AppuntamentoSingoliPartecipanti appuntamento, OrarioAppuntamento orario) {
+			AppuntamentoLezione appuntamento, OrarioAppuntamento orario) {
 
 		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						controller.getTipoPrenotazioneInAtto(),
 						getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
 						formDati.getModalitaPrenotazione());
+		
 		// Creazione calcolatore che poi dovrà finire altrove
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
 		calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
@@ -119,6 +122,14 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 
 		appuntamento.setDataOraInizioAppuntamento(dataInizio);
 		appuntamento.setDataOraFineAppuntamento(dataFine);
+		
+		IstruttoreSelezionato istruttoreSelezionato = null;
+		for(IstruttoreSelezionato istruttore : formDati.getIstruttori()) {
+			if(istruttore.getIdSelezione() == orario.getId()) {
+				istruttoreSelezionato = istruttore;
+			}
+		}
+		appuntamento.setIstruttore(getRegistroUtenti().trovaUtenteInBaseAllaSua(istruttoreSelezionato.getIstruttore()));
 
 		appuntamento.calcolaCosto();
 

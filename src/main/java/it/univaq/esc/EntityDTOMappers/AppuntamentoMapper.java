@@ -1,16 +1,19 @@
 package it.univaq.esc.EntityDTOMappers;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
+import it.univaq.esc.dtoObjects.FormPrenotabile;
+import it.univaq.esc.dtoObjects.OrarioAppuntamento;
 import it.univaq.esc.dtoObjects.QuotaPartecipazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.DatiFormPerAppuntamento;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 
-import it.univaq.esc.utility.BeanUtil;
 
 
 public abstract class AppuntamentoMapper extends EntityDTOMapper {
@@ -66,6 +69,17 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 		return appuntamentoDTO;
 	}
 
-	
+	public DatiFormPerAppuntamento getDatiFormPerAppuntamentoUsando(FormPrenotabile formDati, OrarioAppuntamento orario) {
+		DatiFormPerAppuntamento datiFormPerAppuntamento = new DatiFormPerAppuntamento();
+		
+		LocalDateTime dataInizio = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraInizio());
+		LocalDateTime dataFine = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraFine());
+
+		datiFormPerAppuntamento.setOrarioInizio(dataInizio);
+		datiFormPerAppuntamento.setOrarioFine(dataFine);
+		
+		return datiFormPerAppuntamento;
+		
+	}
 
 }

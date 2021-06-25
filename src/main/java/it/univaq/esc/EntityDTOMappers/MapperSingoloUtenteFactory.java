@@ -15,7 +15,7 @@ public class MapperSingoloUtenteFactory extends MapperFactory {
 	public NotificaMapper getNotificaMapper() {
 		NotificaMapper mapper = (NotificaMapper) BeanUtil.getBean("MAPPER_NOTIFICA_SINGOLO_UTENTE",
 				NotificaMapper.class);
-		mapper.setMapperFactory(this);
+		impostaAttributiMapper(mapper);
 		return mapper;
 	}
 
@@ -23,11 +23,17 @@ public class MapperSingoloUtenteFactory extends MapperFactory {
 	public AppuntamentoMapper getAppuntamentoMapper(String tipoPrenotazione) {
 		switch (tipoPrenotazione) {
 		case "IMPIANTO":
-			return new AppuntamentoImpiantoMapper();
+			AppuntamentoImpiantoMapper appuntamentoImpiantoMapper = BeanUtil.getBean(AppuntamentoImpiantoMapper.class);
+			impostaAttributiMapper(appuntamentoImpiantoMapper);
+			return appuntamentoImpiantoMapper;
 		case "LEZIONE":
-			return new AppuntamentoLezioneMapper();
+			AppuntamentoLezioneMapper appuntamentoLezioneMapper = BeanUtil.getBean(AppuntamentoLezioneMapper.class);
+			impostaAttributiMapper(appuntamentoLezioneMapper);
+			return appuntamentoLezioneMapper;
 		case "CORSO":
-			return new AppuntamentoCorsoMapper();
+			AppuntamentoCorsoMapper appuntamentoCorsoMapper = BeanUtil.getBean(AppuntamentoCorsoMapper.class);
+			impostaAttributiMapper(appuntamentoCorsoMapper);
+			return appuntamentoCorsoMapper;
 		default:
 			return null;
 		}

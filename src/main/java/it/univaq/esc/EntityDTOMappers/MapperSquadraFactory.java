@@ -15,7 +15,7 @@ public class MapperSquadraFactory extends MapperFactory {
 	@Override
 	public NotificaMapper getNotificaMapper() {
 		NotificaMapper mapper = BeanUtil.getBean("MAPPER_NOTIFICA_SQUADRA", NotificaMapper.class);
-		mapper.setMapperFactory(this);
+		impostaAttributiMapper(mapper);
 		return mapper;
 	}
 	
@@ -24,7 +24,9 @@ public class MapperSquadraFactory extends MapperFactory {
 	public AppuntamentoMapper getAppuntamentoMapper(String tipoPrenotazione) {
 		switch (tipoPrenotazione) {
 		case "IMPIANTO":
-			return new AppuntamentoImpiantoSquadraMapper();
+			AppuntamentoImpiantoSquadraMapper appuntamentoImpiantoSquadraMapper = BeanUtil.getBean(AppuntamentoImpiantoSquadraMapper.class);
+			impostaAttributiMapper(appuntamentoImpiantoSquadraMapper);
+			return appuntamentoImpiantoSquadraMapper;
 		case "LEZIONE":
 			return null;
 		case "CORSO":

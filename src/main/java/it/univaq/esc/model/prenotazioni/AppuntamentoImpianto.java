@@ -38,4 +38,11 @@ public class AppuntamentoImpianto extends AppuntamentoSingoliPartecipanti{
 	public void aggiungi(UtentePolisportiva invitato) {
 		getInvitati().add(invitato);
 	}
+	
+	@Override
+	public void impostaDatiAppuntamentoDa(DatiFormPerAppuntamento datiCompilatiInPrenotazione) {
+		super.impostaDatiAppuntamentoDa(datiCompilatiInPrenotazione);
+		setNumeroGiocatoriNonIscrittiAssociati(datiCompilatiInPrenotazione.getNumeroPartecipantiNonIscritti());
+		setInvitati(datiCompilatiInPrenotazione.getInvitati());
+	}
 }
