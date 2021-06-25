@@ -318,16 +318,7 @@ public class RegistroAppuntamenti {
 		return listaAppuntamentiSquadra;
 	}
 
-	public void creaQuotePartecipazionePerAppuntamento(Appuntamento appuntamento) {
-		if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento
-				.getSogliaMinimaPartecipantiPerConferma()) {
-			appuntamento.confermaAppuntamento();
-			appuntamento.getUtentiPartecipanti().forEach((partecipante) -> appuntamento
-					.aggiungiQuotaPartecipazione(this.creaQuotaPartecipazione(appuntamento, partecipante)));
-			aggiornaAppuntamento(appuntamento);
-		}
-		
-	}
+
 
 	public List<QuotaPartecipazione> creaQuotePartecipazionePerCorso(Appuntamento appuntamento) {
 		List<QuotaPartecipazione> listaQuote = new ArrayList<QuotaPartecipazione>();

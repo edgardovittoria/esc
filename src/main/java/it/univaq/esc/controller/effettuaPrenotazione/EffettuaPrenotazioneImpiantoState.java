@@ -89,9 +89,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		for (OrarioAppuntamento orario : formImpianto.getOrariSelezionati()) {
 
 			impostaDatiPrenotazionePerSingoloOrarioUsandoLaForm(controller.getPrenotazioneInAtto(), orario, formDati);
-
 		}
-
 		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper()
 				.convertiInPrenotazioneDTO(controller.getPrenotazioneInAtto());
 
@@ -102,8 +100,12 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	private void impostaDatiPrenotazionePerSingoloOrarioUsandoLaForm(Prenotazione prenotazioneInAtto, OrarioAppuntamento orario, FormPrenotabile formDati) {
 		AppuntamentoImpianto appuntamentoImpianto = getAppuntamentoPerOrarioImpostatoUsandoForm(orario, formDati);
 		prenotazioneInAtto.aggiungi(appuntamentoImpianto);
-		this.aggiungiPartecipanteECreaQuotePartecipazione(appuntamentoImpianto.getUtenteCreatoreDellaPrenotazioneRelativa(),
-				appuntamentoImpianto);
+		appuntamentoImpianto.aggiungiPartecipante(prenotazioneInAtto.getSportivoPrenotante());
+		if(appuntamentoImpianto.haNumeroPartecipantiNecessarioPerConferma()) {
+			appuntamentoImpianto.confermaAppuntamento();
+			appuntamentoImpianto.creaQuotePartecipazionePerAppuntamento();
+		}
+		
 
 	}
 
@@ -116,7 +118,6 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 				.getDatiFormPerAppuntamentoUsando(formDati, orario);
 
 		appuntamento.impostaDatiAppuntamentoDa(datiFormPerAppuntamento);
-
 		appuntamento.setCalcolatoreCosto(getElementiPrenotazioneFactory().getCalcolatoreCosto());
 		appuntamento.calcolaCosto();
 
@@ -220,9 +221,11 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		String emailPartecipante = (String) identificativoPartecipante;
 		Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
 		if (appuntamento != null) {
-			boolean partecipanteAggiunto = this.aggiungiPartecipanteECreaQuotePartecipazione(
-					this.getRegistroUtenti().trovaUtenteInBaseAllaSua(emailPartecipante), appuntamento);
-
+			boolean partecipanteAggiunto = appuntamento.aggiungiPartecipante(getRegistroUtenti().trovaUtenteInBaseAllaSua(emailPartecipante));
+			if (appuntamento.haNumeroPartecipantiNecessarioPerConferma()) {
+				appuntamento.confermaAppuntamento();
+				appuntamento.creaQuotePartecipazionePerAppuntamento();
+			}
 			if (partecipanteAggiunto) {
 				getRegistroUtenti().aggiornaCalendarioSportivo(appuntamento,
 						getRegistroUtenti().trovaUtenteInBaseAllaSua(emailPartecipante));

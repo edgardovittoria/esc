@@ -40,21 +40,23 @@ import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public abstract class Appuntamento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Setter(value = AccessLevel.PRIVATE)
 	private Integer idAppuntamento;
-	
+
 	@ManyToMany()
 	@JoinColumn()
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@Getter(value = AccessLevel.PRIVATE)
 	@Setter(value = AccessLevel.PRIVATE)
 	private List<UtentePolisportiva> partecipanti = new ArrayList<UtentePolisportiva>();
-	
+
 	@Column
 	private LocalDateTime dataOraInizioAppuntamento;
 	@Column
@@ -63,41 +65,36 @@ public abstract class Appuntamento {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "prenotazione_id")
 	private Prenotazione prenotazione;
-	
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn()
 	private UtentePolisportiva manutentore;
-	
+
 	@Column
 	private boolean confermato = false;
-	
+
 	@Column
 	private boolean pending = false;
-	
-	
+
 	@ManyToOne
 	@JoinColumn
 	private PrenotabileDescrizione descrizioneEventoPrenotato;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<QuotaPartecipazione> quotePartecipazione = new ArrayList<QuotaPartecipazione>();
-	
+
 	@ManyToOne
 	@JoinColumn
 	private Impianto impiantoPrenotato;
-	
+
 	@Column
 	private float costoAppuntamento;
 
 	@Transient
 	private CalcolatoreCosto calcolatoreCosto;
-	
-	
-	
-	
+
 	public LocalDate getDataAppuntamento() {
 		return this.dataOraFineAppuntamento.toLocalDate();
 	}
@@ -109,17 +106,15 @@ public abstract class Appuntamento {
 	public LocalTime getOraFineAppuntamento() {
 		return this.dataOraFineAppuntamento.toLocalTime();
 	}
-		
-	
-	public Map<String, Float> getMappaCostiAppuntamento(){
+
+	public Map<String, Float> getMappaCostiAppuntamento() {
 		return getDescrizioneEventoPrenotato().getMappaCosti();
 	}
-	
-	
+
 	public String appartieneA() {
 		return getDescrizioneEventoPrenotato().getTipoPrenotazione();
 	}
-	
+
 	/**
 	 * Restituisce l'utente che ha creato la Prenotazione da cui è scaturito questo
 	 * appuntamento.
@@ -129,15 +124,16 @@ public abstract class Appuntamento {
 //	public UtentePolisportivaAbstract creatoDa() {
 //		return this.getPrenotazioneSpecsAppuntamento().getSportivoPrenotante();
 //	}
-	
+
 	/**
 	 * Restituisce la prenotazione principale a cui l'appuntamento fa capo
+	 * 
 	 * @return la prenotazione principale.
 	 */
 //	public Prenotazione getPrenotazionePrincipale() {
 //		return this.getPrenotazioneSpecsAppuntamento().getPrenotazioneAssociata();
 //	}
-	
+
 	/**
 	 * Verifica se l'appuntamento passato come parametro si sovrappone a quello sul
 	 * quale è richiamato.
@@ -177,40 +173,35 @@ public abstract class Appuntamento {
 		}
 		return false;
 	}
-	
+
 	public String getTipoPrenotazione() {
 		return this.getDescrizioneEventoPrenotato().getTipoPrenotazione();
 	}
-	
-	
-	public void confermaAppuntamento() {
-		if (!isConfermato() && getPartecipantiAppuntamento().size() >= getSogliaMinimaPartecipantiPerConferma()) {
-			setConfermato(true);
 
+	public void confermaAppuntamento() {
+		if (!isConfermato()) {
+			setConfermato(true);
 		}
 	}
-	
+
 	public void calcolaCosto() {
 		setCostoAppuntamento(getCalcolatoreCosto().calcolaCosto(this));
 	}
-	
+
 //	public Integer getIdPrenotazione() {
 //		return this.getPrenotazioneSpecsAppuntamento().getIdPrenotazioneAssociata();
 //	}
 
-	
-	
 	public void aggiungiQuotaPartecipazione(QuotaPartecipazione quota) {
 		if (quota != null) {
 			this.getQuotePartecipazione().add(quota);
 		}
 	}
-	
+
 	public String getModalitaPrenotazione() {
 		return getDescrizioneEventoPrenotato().getModalitaPrenotazione();
 	}
-	
-	
+
 	public boolean utenteIsPartecipante(UtentePolisportiva utente) {
 		for (UtentePolisportiva partecipante : this.getUtentiPartecipanti()) {
 			if (partecipante.isEqual(utente)) {
@@ -219,31 +210,31 @@ public abstract class Appuntamento {
 		}
 		return false;
 	};
-	
+
 	public UtentePolisportiva getUtenteCreatoreDellaPrenotazioneRelativa() {
 		return getPrenotazione().getSportivoPrenotante();
 	}
-	
+
 //	public Integer getNumeroPartecipantiMassimo() {
 //		return this.getPrenotazioneSpecsAppuntamento().getSogliaMassimaPartecipanti();
 //	};
-	
+
 	public Sport getSportAssociato() {
 		return getDescrizioneEventoPrenotato().getSportAssociato();
 	}
-	
+
 	public boolean accettaNuoviPartecipantiOltre(Integer numeroPartecipantiAttuali) {
 		return getDescrizioneEventoPrenotato().accettaNuoviPartecipantiOltre(numeroPartecipantiAttuali);
 	}
-	
+
 	public Integer getSogliaMinimaPartecipantiPerConferma() {
 		return getDescrizioneEventoPrenotato().getMinimoNumeroPartecipanti();
 	}
-	
+
 	public boolean isEqual(Appuntamento appuntamento) {
 		return this.getIdAppuntamento() == appuntamento.getIdAppuntamento();
 	}
-	
+
 	public void impostaDatiAppuntamentoDa(DatiFormPerAppuntamento datiCompilatiInPrenotazione) {
 		setDataOraInizioAppuntamento(datiCompilatiInPrenotazione.getOrarioInizio());
 		setDataOraFineAppuntamento(datiCompilatiInPrenotazione.getOrarioFine());
@@ -251,18 +242,48 @@ public abstract class Appuntamento {
 		setDescrizioneEventoPrenotato(datiCompilatiInPrenotazione.getDescrizioneEvento());
 		setImpiantoPrenotato(datiCompilatiInPrenotazione.getImpiantoPrenotato());
 	}
-	
+
 	public abstract boolean aggiungiPartecipante(Object sportivoOSquadraPartecipante);
-	
+
 	public abstract boolean haComePartecipante(Object sportivoOSquadra);
-	
-	public List<UtentePolisportiva> getUtentiPartecipanti(){
+
+	public List<UtentePolisportiva> getUtentiPartecipanti() {
 		return getPartecipanti();
 	};
-	public abstract List<Object>  getPartecipantiAppuntamento();
-	
+
+	public abstract List<Object> getPartecipantiAppuntamento();
+
 	public String getNominativoManutentore() {
 		return getManutentore().getNome() + " " + getManutentore().getCognome();
 	}
-	
+
+	public boolean haNumeroPartecipantiNecessarioPerConferma() {
+		return getPartecipantiAppuntamento().size() >= getSogliaMinimaPartecipantiPerConferma();
+	}
+
+	public void creaQuotePartecipazionePerAppuntamento() {
+		getUtentiPartecipanti()
+				.forEach((partecipante) -> aggiungiQuotaPartecipazione(creaQuotaPartecipazione(partecipante)));
+
+	}
+
+	private QuotaPartecipazione creaQuotaPartecipazione(UtentePolisportiva sportivo) {
+
+		if (!esisteGiaQuotaAssociataAllo(sportivo)) {
+			QuotaPartecipazione quota = new QuotaPartecipazione();
+			quota.impostaDati(sportivo, getCalcolatoreCosto().calcolaQuotaPartecipazione(this));
+			return quota;
+		}
+		return null;
+	}
+
+	private boolean esisteGiaQuotaAssociataAllo(UtentePolisportiva sportivo) {
+		for (QuotaPartecipazione quotaPartecipazione : getQuotePartecipazione()) {
+			if (quotaPartecipazione.getSportivoAssociato().isEqual(sportivo)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

@@ -30,7 +30,7 @@ public class QuotaPartecipazione {
     @Setter(value = AccessLevel.NONE)
     private int idQuotaPartecipazione;
     @Column
-    private boolean pagata;
+    private boolean pagata = false;
     @Column
     private float costo;
     @ManyToOne()
@@ -44,4 +44,9 @@ public class QuotaPartecipazione {
         this.setSportivoAssociato(sportivoDaAssociareAllaQuota);
     }
     
+    
+    public void impostaDati(UtentePolisportiva utenteAssociato, Float importo) {
+    	setSportivoAssociato(utenteAssociato);
+    	setCosto(importo);
+    }
 }

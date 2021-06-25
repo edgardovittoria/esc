@@ -70,6 +70,7 @@ public class RegistroPrenotazioni {
 			return lastID;
 		}
 	}
+	
 
 	public List<Prenotazione> filtraPrenotazioniPerTipo(List<Prenotazione> listaPrenotazioniDaFiltrare,
 			String tipoPrenotazione) {
