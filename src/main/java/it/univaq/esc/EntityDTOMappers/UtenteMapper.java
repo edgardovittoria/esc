@@ -57,6 +57,7 @@ public class UtenteMapper extends EntityDTOMapper {
 
 			List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
 			for (Appuntamento app : utenteDaConvertire.comeIstruttore().getLezioni()) {
+				impostaMapperFactory(app.getModalitaPrenotazione());
 				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione())
 						.convertiInAppuntamentoDTO(app);
 				listaAppuntamentiDTO.add(appDTO);
@@ -70,6 +71,7 @@ public class UtenteMapper extends EntityDTOMapper {
 		if (utenteDaConvertire.is(TipoRuolo.MANUTENTORE)) {
 			List<AppuntamentoDTO> listaAppuntamentiManutentoreDTO = new ArrayList<AppuntamentoDTO>();
 			for (Appuntamento app : utenteDaConvertire.comeManutentore().getListaAppuntamenti()) {
+				impostaMapperFactory(app.getModalitaPrenotazione());
 				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione())
 						.convertiInAppuntamentoDTO(app);
 				listaAppuntamentiManutentoreDTO.add(appDTO);
