@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
-import it.univaq.esc.dtoObjects.FormPrenotaImpiantoSquadra;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
@@ -21,6 +20,7 @@ import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
+import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
@@ -65,13 +65,13 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
 			EffettuaPrenotazioneHandler controller) {
 
-		FormPrenotaImpiantoSquadra formSquadra = (FormPrenotaImpiantoSquadra)formDati;
-		for (OrarioAppuntamento orario : formSquadra.getOrariSelezionati()) {
+		
+		for (OrarioAppuntamento orario : formDati.getOrariSelezionati()) {
 			
 			// ---------------------------------------------------------------------------------------
 
 			AppuntamentoSquadra appuntamento = (AppuntamentoSquadra) getElementiPrenotazioneFactory().getAppuntamento(TipiPrenotazione.IMPIANTO.toString());
-			impostaDatiAppuntamento(formSquadra, appuntamento, orario, controller);
+			impostaDatiAppuntamento(formDati, appuntamento, orario, controller);
 
 			controller.getPrenotazioneInAtto().aggiungi(appuntamento);
 		}
@@ -83,14 +83,14 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	}
 
 
-	private void impostaDatiAppuntamento(FormPrenotaImpiantoSquadra formDati,
+	private void impostaDatiAppuntamento(FormPrenotabile formDati,
 			AppuntamentoSquadra appuntamento, OrarioAppuntamento orario, EffettuaPrenotazioneHandler controller) {
 		
 		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						TipiPrenotazione.IMPIANTO.toString(),
 						getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
-						formDati.getModalitaPrenotazione());
+						ModalitaPrenotazione.SQUADRA.toString());
 		
 		// Creazione calcolatore che poi dovrà finire altrove
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();

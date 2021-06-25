@@ -1,11 +1,7 @@
 package it.univaq.esc.dtoObjects;
 
-
-import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 
 import lombok.Getter;
@@ -14,18 +10,36 @@ import lombok.Setter;
 
 import org.springframework.stereotype.Component;
 
-
 @Component
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipoPrenotazione")
-@JsonSubTypes({
-    @Type(value = FormPrenotaImpianto.class, name = "IMPIANTO"),
-    @Type(value = FormPrenotaLezioneDTO.class, name = "LEZIONE"),
-    @Type(value = FormCreaCorso.class, name = "CORSO"),
-    @Type(value = FormPrenotaImpiantoSquadra.class, name = "IMPIANTO_SQUADRA")
-})
-@Getter @Setter @NoArgsConstructor
-public abstract class FormPrenotabile {
-    
-	private String modalitaPrenotazione; 
+@Getter
+@Setter
+@NoArgsConstructor
+public class FormPrenotabile {
+
 	private String sportSelezionato;
+
+	private List<OrarioAppuntamento> orariSelezionati = new ArrayList<OrarioAppuntamento>();
+
+	private List<ImpiantoSelezionato> impianti = new ArrayList<ImpiantoSelezionato>();
+
+	private List<IstruttoreSelezionato> istruttori = new ArrayList<IstruttoreSelezionato>();
+
+	private List<String> sportiviInvitati;
+
+	private Integer postiLiberi;
+
+	private Integer numeroGiocatoriNonIscritti;
+
+	private List<Integer> squadreInvitate;
+
+	private List<CheckboxPendingSelezionato> checkboxesPending;
+
+	//private Integer idSquadraPrenotante;
+
+	private Integer numeroMinimoPartecipanti;
+
+	private Integer numeroMassimoPartecipanti;
+
+	private Float costoPerPartecipante;
+
 }

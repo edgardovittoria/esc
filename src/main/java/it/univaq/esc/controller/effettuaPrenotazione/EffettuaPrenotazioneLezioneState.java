@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import it.univaq.esc.dtoObjects.FormPrenotaLezioneDTO;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
@@ -18,6 +17,7 @@ import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
+import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
@@ -73,15 +73,15 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 */
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
-		FormPrenotaLezioneDTO formLezione = (FormPrenotaLezioneDTO) formDati;
+		
 
-		for (OrarioAppuntamento orario : formLezione.getOrariSelezionati()) {
+		for (OrarioAppuntamento orario : formDati.getOrariSelezionati()) {
 
 			// ---------------------------------------------------------------------------------------
 
 			AppuntamentoLezione appuntamento = (AppuntamentoLezione) getElementiPrenotazioneFactory()
 					.getAppuntamento(TipiPrenotazione.LEZIONE.toString());
-			impostaValoriAppuntamento(formLezione, controller, appuntamento, orario);
+			impostaValoriAppuntamento(formDati, controller, appuntamento, orario);
 
 			controller.getPrenotazioneInAtto().aggiungi(appuntamento);
 		}
@@ -93,14 +93,14 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 
 	}
 
-	public void impostaValoriAppuntamento(FormPrenotaLezioneDTO formDati, EffettuaPrenotazioneHandler controller,
+	public void impostaValoriAppuntamento(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller,
 			AppuntamentoLezione appuntamento, OrarioAppuntamento orario) {
 
 		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						controller.getTipoPrenotazioneInAtto(),
 						getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
-						formDati.getModalitaPrenotazione());
+						ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 		
 		// Creazione calcolatore che poi dovrà finire altrove
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();

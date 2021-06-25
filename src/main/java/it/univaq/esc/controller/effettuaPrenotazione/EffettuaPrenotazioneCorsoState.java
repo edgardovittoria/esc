@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import it.univaq.esc.dtoObjects.FormCreaCorso;
+
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
@@ -89,7 +89,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
 
-		FormCreaCorso formDatiCorso = (FormCreaCorso) formDati;
+
 
 		/*
 		 * Cicliamo sugli orari impostati in fase di compilazione, per creare e
@@ -97,12 +97,12 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		 * le specifiche così impostate alla lista inizializzata prima. Infine associamo
 		 * gli appuntamenti al controller.
 		 */
-		for (OrarioAppuntamento orario : formDatiCorso.getFormLezione().getOrariSelezionati()) {
+		for (OrarioAppuntamento orario : formDati.getOrariSelezionati()) {
 
 			AppuntamentoCorso appuntamentoCorso = (AppuntamentoCorso) getElementiPrenotazioneFactory()
 					.getAppuntamento(TipiPrenotazione.CORSO.toString());
 
-			impostaValoriAppuntamento(formDatiCorso, controller, appuntamentoCorso, orario);
+			impostaValoriAppuntamento(formDati, controller, appuntamentoCorso, orario);
 
 			controller.getPrenotazioneInAtto().aggiungi(appuntamentoCorso);
 		}
@@ -129,7 +129,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	}
 
-	public void impostaValoriAppuntamento(FormCreaCorso formDatiCorso, EffettuaPrenotazioneHandler controller,
+	public void impostaValoriAppuntamento(FormPrenotabile formDatiCorso, EffettuaPrenotazioneHandler controller,
 			AppuntamentoCorso appuntamento, OrarioAppuntamento orario) {
 
 		/*
@@ -148,7 +148,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 		
 		ImpiantoSelezionato impiantoSelezionato = null;
-		for(ImpiantoSelezionato impianto : formDatiCorso.getFormLezione().getImpianti()) {
+		for(ImpiantoSelezionato impianto : formDatiCorso.getImpianti()) {
 			if(impianto.getIdSelezione() == orario.getId()) {
 				impiantoSelezionato = impianto;
 			}
@@ -172,12 +172,12 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 		appuntamento.calcolaCosto();
 
-		for (String emailInvitato : formDatiCorso.getInvitatiCorso()) {
+		for (String emailInvitato : formDatiCorso.getSportiviInvitati()) {
 			appuntamento.aggiungi(getRegistroUtenti().trovaUtenteInBaseAllaSua(emailInvitato));
 		}
 		
 		IstruttoreSelezionato istruttoreSelezionato = null;
-		for(IstruttoreSelezionato istruttore : formDatiCorso.getFormLezione().getIstruttori()) {
+		for(IstruttoreSelezionato istruttore : formDatiCorso.getIstruttori()) {
 			if(istruttore.getIdSelezione() == orario.getId()) {
 				istruttoreSelezionato = istruttore;
 			}

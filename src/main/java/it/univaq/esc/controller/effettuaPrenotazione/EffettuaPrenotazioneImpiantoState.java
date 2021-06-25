@@ -11,7 +11,6 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
-import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
@@ -85,8 +84,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
 
-		FormPrenotaImpianto formImpianto = (FormPrenotaImpianto) formDati;
-		for (OrarioAppuntamento orario : formImpianto.getOrariSelezionati()) {
+		
+		for (OrarioAppuntamento orario : formDati.getOrariSelezionati()) {
 
 			impostaDatiPrenotazionePerSingoloOrarioUsandoLaForm(controller.getPrenotazioneInAtto(), orario, formDati);
 		}

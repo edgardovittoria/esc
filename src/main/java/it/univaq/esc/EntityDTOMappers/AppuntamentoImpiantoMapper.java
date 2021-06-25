@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
-import it.univaq.esc.dtoObjects.FormPrenotaImpianto;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamento;
@@ -51,22 +50,22 @@ public class AppuntamentoImpiantoMapper extends AppuntamentoMapper {
 		
 		DatiFormPerAppuntamento datiFormPerAppuntamento = super.getDatiFormPerAppuntamentoUsando(formDati, orario);
 
-		FormPrenotaImpianto formPrenotaImpianto = (FormPrenotaImpianto) formDati;
+		
 
 		
 		datiFormPerAppuntamento
 				.setDescrizioneEvento(trovaPrenotabileDescrizioneImpiantoInModalitaSingoloUtenteRelativaA(
-						formPrenotaImpianto.getSportSelezionato()));
+						formDati.getSportSelezionato()));
 		
 		datiFormPerAppuntamento.setPending(trovaNellaListaCheckboxesValorePendingRelativoAOrario(
-				formPrenotaImpianto.getCheckboxesPending(), orario));
+				formDati.getCheckboxesPending(), orario));
 		
 		datiFormPerAppuntamento.setImpiantoPrenotato(
-				trovaNellaListaImpiantiPrenotatiQuelloRelativoAOrario(formPrenotaImpianto.getImpianti(), orario));
+				trovaNellaListaImpiantiPrenotatiQuelloRelativoAOrario(formDati.getImpianti(), orario));
 		
-		datiFormPerAppuntamento.setInvitati(getListaUtentiIinvitatiAPartireDa(formPrenotaImpianto.getSportiviInvitati()));
+		datiFormPerAppuntamento.setInvitati(getListaUtentiIinvitatiAPartireDa(formDati.getSportiviInvitati()));
 		
-		datiFormPerAppuntamento.setNumeroPartecipantiNonIscritti(formPrenotaImpianto.getNumeroGiocatoriNonIscritti());
+		datiFormPerAppuntamento.setNumeroPartecipantiNonIscritti(formDati.getNumeroGiocatoriNonIscritti());
 
 		return datiFormPerAppuntamento;
 	}
