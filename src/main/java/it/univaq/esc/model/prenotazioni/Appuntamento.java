@@ -58,7 +58,7 @@ public abstract class Appuntamento {
 	@JoinColumn(name = "orario_id")
 	private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "prenotazione_id")
 	private Prenotazione prenotazione;
 
