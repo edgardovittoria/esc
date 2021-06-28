@@ -260,7 +260,8 @@ public abstract class EffettuaPrenotazioneState {
 
 	private List<UtentePolisportiva> getListaSportiviLiberiPer(OrarioAppuntamento orarioAppuntamento) {
 		List<UtentePolisportiva> listaSportivi = getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO);
-		listaSportivi = getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(listaSportivi, orarioAppuntamento);
+		listaSportivi = getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(listaSportivi,
+				orarioAppuntamento);
 		return listaSportivi;
 	}
 
@@ -318,11 +319,9 @@ public abstract class EffettuaPrenotazioneState {
 		List<Impianto> listaImpiantiDisponibili = this.getRegistroImpianti().getListaImpiantiPolisportiva();
 		if (datiInseritiInCompilazione.containsKey("orario")) {
 			Map<String, String> orario = (HashMap<String, String>) datiInseritiInCompilazione.get("orario");
-			listaImpiantiDisponibili = this.getRegistroImpianti().filtraImpiantiDisponibiliPerOrario(
-					LocalDateTime.parse(orario.get("oraInizio"),
-							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
-					LocalDateTime.parse(orario.get("oraFine"),
-							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
+			OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
+			orarioAppuntamento.imposta(orario.get("oraInizio"), orario.get("oraFine"));
+			listaImpiantiDisponibili = this.getRegistroImpianti().filtraImpiantiDisponibiliPerOrario(orarioAppuntamento,
 					listaImpiantiDisponibili);
 
 			if (datiInseritiInCompilazione.containsKey("sport")) {

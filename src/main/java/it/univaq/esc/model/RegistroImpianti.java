@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.ImpiantoRepository;
 import lombok.AccessLevel;
@@ -81,12 +82,12 @@ public class RegistroImpianti {
         return null;
     }
     
-    public List<Impianto> filtraImpiantiDisponibiliPerOrario(LocalDateTime oraInizio, LocalDateTime oraFine,
+    public List<Impianto> filtraImpiantiDisponibiliPerOrario(OrarioAppuntamento orarioAppuntamento,
 			List<Impianto> listaImpiantiDaFiltrare){
     	List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
 
 		for (Impianto impianto : listaImpiantiDaFiltrare) {
-			if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(oraInizio, oraFine)) {
+			if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(orarioAppuntamento)) {
 				listaImpiantiDisponibili.add(impianto);
 			}
 		}
