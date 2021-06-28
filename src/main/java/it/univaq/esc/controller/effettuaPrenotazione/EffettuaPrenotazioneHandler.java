@@ -144,6 +144,7 @@ public class EffettuaPrenotazioneHandler {
 				.trovaUtenteInBaseAllaSua(emailSportivoPrenotante);
 		if (!sportivoPrenotante.comeSportivo().isMoroso()) {
 			this.inizializzaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione, modalitaPrenotazione);
+			impostaAttributiControllerDipendentiDa(modalitaPrenotazione, tipoPrenotazione);
 			return this.getStato().getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(this);
 		} else {
 			/*
