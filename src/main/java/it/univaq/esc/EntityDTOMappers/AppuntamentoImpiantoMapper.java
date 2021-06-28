@@ -10,7 +10,7 @@ import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
-import it.univaq.esc.dtoObjects.OrarioAppuntamento;
+import it.univaq.esc.dtoObjects.OrarioAppuntamentoDTO;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
@@ -46,7 +46,7 @@ public class AppuntamentoImpiantoMapper extends AppuntamentoMapper {
 
 	@Override
 	public DatiFormPerAppuntamento getDatiFormPerAppuntamentoUsando(FormPrenotabile formDati,
-			OrarioAppuntamento orario) {
+			OrarioAppuntamentoDTO orario) {
 
 		DatiFormPerAppuntamento datiFormPerAppuntamento = super.getDatiFormPerAppuntamentoUsando(formDati, orario);
 

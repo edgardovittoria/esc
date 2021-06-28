@@ -1,7 +1,9 @@
 package it.univaq.esc.model.utenti;
 
 import java.sql.SQLInvalidAuthorizationSpecException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +14,7 @@ import groovy.lang.Singleton;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.repository.SquadraRepository;
 import lombok.Getter;
@@ -87,10 +90,10 @@ public class RegistroSquadre {
 		
 	}
 	
-	private List<Squadra> filtraSquadreLiberePerOrarioAppuntamento(List<Squadra> listaDaFiltrare, LocalDateTime orarioInizio, LocalDateTime orarioFine){
+	private List<Squadra> filtraSquadreLiberePerOrarioAppuntamento(List<Squadra> listaDaFiltrare, OrarioAppuntamento orarioAppuntamento){
 		List<Squadra> listaFiltrata = new  ArrayList<Squadra>();
 		for(Squadra squadra : listaDaFiltrare) {
-			if(!squadra.getCalendarioSquadra().sovrapponeA(orarioInizio, orarioFine)) {
+			if(!squadra.getCalendarioSquadra().sovrapponeA(orarioAppuntamento)) {
 				listaFiltrata.add(squadra);
 			}
 		}
@@ -102,12 +105,12 @@ public class RegistroSquadre {
 	 * @param calendarioDaConfrontare calendario da confrontare con quello delle squadre
 	 * @return lista di squadre libere nel calendario passato come parametro.
 	 */
-	public List<Squadra> getListaSquadreLiberePerCalendario(Calendario calendarioDaConfrontare){
+	public List<Squadra> getListaSquadreLiberePer(Calendario calendarioDaConfrontare){
 		return filtraSquadreLiberePerCalendario(getListaSquadre(), calendarioDaConfrontare);
 	}
 	
-	public List<Squadra> getListaSquadreLiberePerOrarioAppuntamento(LocalDateTime orarioInizio, LocalDateTime orarioFine){
-		return filtraSquadreLiberePerOrarioAppuntamento(getListaSquadre(), orarioInizio, orarioFine);
+	public List<Squadra> getListaSquadreLiberePer(OrarioAppuntamento orarioAppuntamento){
+		return filtraSquadreLiberePerOrarioAppuntamento(getListaSquadre(), orarioAppuntamento);
 	}
 	
 	public Squadra getSquadraById(Integer idSquadra) {

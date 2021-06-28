@@ -1,6 +1,8 @@
 package it.univaq.esc.model.utenti;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import groovy.lang.Singleton;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.repository.UtentePolisportivaRepository;
 import lombok.AccessLevel;
@@ -225,10 +228,10 @@ public class RegistroUtentiPolisportiva {
 	 *         nell'intervallo di tempo passato come parametro.
 	 */
 	public List<UtentePolisportiva> filtraIstruttorePerOrario(List<UtentePolisportiva> listaIstruttoriDaFiltrare,
-			LocalDateTime oraInizioOrarioPerCuiFiltrare, LocalDateTime oraFineOrarioPerCuiFiltrare) {
+			OrarioAppuntamento orarioAppuntamento) {
 		List<UtentePolisportiva> istruttori = new ArrayList<UtentePolisportiva>();
 		for (UtentePolisportiva utente : listaIstruttoriDaFiltrare) {
-			if (utente.comeIstruttore().isLiberoTra(oraInizioOrarioPerCuiFiltrare, oraFineOrarioPerCuiFiltrare)) {
+			if (utente.comeIstruttore().isLiberoIl(orarioAppuntamento)) {
 				istruttori.add(utente);
 			}
 		}
@@ -284,10 +287,10 @@ public class RegistroUtentiPolisportiva {
 	}
 
 	public List<UtentePolisportiva> filtraUtentiLiberiInBaseACalendarioSportivo(
-			List<UtentePolisportiva> listaDaFiltrare, LocalDateTime oraInizio, LocalDateTime oraFine) {
+			List<UtentePolisportiva> listaDaFiltrare, OrarioAppuntamento orarioAppuntamento) {
 		List<UtentePolisportiva> listaFiltrata = new ArrayList<UtentePolisportiva>();
 		for (UtentePolisportiva utente : listaDaFiltrare) {
-			if (utente.is(TipoRuolo.SPORTIVO) && utente.comeSportivo().isLiberoTra(oraInizio, oraFine)) {
+			if (utente.is(TipoRuolo.SPORTIVO) && utente.comeSportivo().isLiberoIl(orarioAppuntamento)) {
 				listaFiltrata.add(utente);
 			}
 		}

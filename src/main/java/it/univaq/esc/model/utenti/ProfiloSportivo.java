@@ -1,6 +1,8 @@
 package it.univaq.esc.model.utenti;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -74,8 +77,8 @@ public class ProfiloSportivo extends ProfiloUtente {
 		return !getCalendarioAppuntamenti().sovrapponeA(nuovoAppuntamento);
 	}
 	
-	public boolean isLiberoTra(LocalDateTime orarioInizioAppuntamento, LocalDateTime orarioFineAppuntamento) {
-		return !getCalendarioAppuntamenti().sovrapponeA(orarioInizioAppuntamento, orarioFineAppuntamento);
+	public boolean isLiberoIl(OrarioAppuntamento orarioAppuntamento) {
+		return !getCalendarioAppuntamenti().sovrapponeA(orarioAppuntamento);
 	}
 	
 	public List<String> getSportPraticati(){

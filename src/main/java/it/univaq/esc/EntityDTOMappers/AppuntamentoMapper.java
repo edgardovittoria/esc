@@ -8,7 +8,7 @@ import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
-import it.univaq.esc.dtoObjects.OrarioAppuntamento;
+import it.univaq.esc.dtoObjects.OrarioAppuntamentoDTO;
 import it.univaq.esc.dtoObjects.QuotaPartecipazioneDTO;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
@@ -62,7 +62,7 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 	}
 
 	public DatiFormPerAppuntamento getDatiFormPerAppuntamentoUsando(FormPrenotabile formDati,
-			OrarioAppuntamento orario) {
+			OrarioAppuntamentoDTO orario) {
 		DatiFormPerAppuntamento datiFormPerAppuntamento = new DatiFormPerAppuntamento();
 
 		datiFormPerAppuntamento.setDataAppuntamento(orario.getDataPrenotazione());
@@ -78,7 +78,7 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 	}
 
 	private boolean trovaNellaListaCheckboxesValorePendingRelativoAOrario(
-			List<CheckboxPendingSelezionato> listaCheckboxes, OrarioAppuntamento orario) {
+			List<CheckboxPendingSelezionato> listaCheckboxes, OrarioAppuntamentoDTO orario) {
 		for (CheckboxPendingSelezionato checkbox : listaCheckboxes) {
 			if (checkbox.getIdSelezione() == orario.getId()) {
 				return checkbox.isPending();
@@ -88,7 +88,7 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 	}
 
 	private Impianto trovaNellaListaImpiantiPrenotatiQuelloRelativoAOrario(
-			List<ImpiantoSelezionato> listaImpiantiPrenotati, OrarioAppuntamento orario) {
+			List<ImpiantoSelezionato> listaImpiantiPrenotati, OrarioAppuntamentoDTO orario) {
 		ImpiantoSelezionato impiantoSelezionato = null;
 		for (ImpiantoSelezionato impianto : listaImpiantiPrenotati) {
 			if (impianto.getIdSelezione() == orario.getId()) {

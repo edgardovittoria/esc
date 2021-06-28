@@ -12,7 +12,7 @@ import lombok.Setter;
 import net.bytebuddy.asm.Advice.This;
 
 @Getter @Setter @NoArgsConstructor
-public class OrarioAppuntamento {
+public class OrarioAppuntamentoDTO {
     
 
     private Integer id;

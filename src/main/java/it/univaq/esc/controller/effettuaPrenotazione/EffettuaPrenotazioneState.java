@@ -1,6 +1,8 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +24,7 @@ import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.utenti.RegistroSquadre;
@@ -245,10 +248,9 @@ public abstract class EffettuaPrenotazioneState {
 		return listaSportivi;
 	}
 
-	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseAOrario(LocalDateTime oraInizio,
-			LocalDateTime oraFine) {
+	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseA(OrarioAppuntamento orarioAppuntamento) {
 		List<UtentePolisportivaDTO> listaSportivi = new ArrayList<UtentePolisportivaDTO>();
-		for (UtentePolisportiva utente : getListaSportiviLiberiPerOrario(oraInizio, oraFine)) {
+		for (UtentePolisportiva utente : getListaSportiviLiberiPer(orarioAppuntamento)) {
 			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper()
 					.convertiInUtentePolisportivaDTO(utente);
 			listaSportivi.add(sportivoDTO);
@@ -256,11 +258,9 @@ public abstract class EffettuaPrenotazioneState {
 		return listaSportivi;
 	}
 
-	private List<UtentePolisportiva> getListaSportiviLiberiPerOrario(LocalDateTime orarioInizio,
-			LocalDateTime orarioFine) {
+	private List<UtentePolisportiva> getListaSportiviLiberiPer(OrarioAppuntamento orarioAppuntamento) {
 		List<UtentePolisportiva> listaSportivi = getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO);
-		listaSportivi = getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(listaSportivi, orarioInizio,
-				orarioFine);
+		listaSportivi = getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(listaSportivi, orarioAppuntamento);
 		return listaSportivi;
 	}
 
@@ -395,11 +395,10 @@ public abstract class EffettuaPrenotazioneState {
 				.getListaDegliUtentiCheHanno(TipoRuolo.ISTRUTTORE);
 		if (dati.containsKey("orario")) {
 			Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
+			OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
+			orarioAppuntamento.imposta(orario.get("oraInizio"), orario.get("oraFine"));
 			istruttoriDisponibili = getRegistroUtenti().filtraIstruttorePerOrario(istruttoriDisponibili,
-					LocalDateTime.parse(orario.get("oraInizio"),
-							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
-					LocalDateTime.parse(orario.get("oraFine"),
-							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
+					orarioAppuntamento);
 
 			if (dati.containsKey("sport")) {
 				istruttoriDisponibili = this.filtraIstruttoriPerSport((String) dati.get("sport"),

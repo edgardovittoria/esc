@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -109,6 +110,9 @@ public class Calendario {
         return calendarioSiSovrappone;
     }
 
+    public boolean sovrapponeA(OrarioAppuntamento orarioAppuntamento) {
+    	return sovrapponeA(orarioAppuntamento.getDataOrarioAppuntamento(), orarioAppuntamento.getOraInizio(), orarioAppuntamento.getOraFine());
+    }
     
     /**
      * Unisce gli appuntamenti di un calendario passato come parametro a quelli del calendario esistente, 

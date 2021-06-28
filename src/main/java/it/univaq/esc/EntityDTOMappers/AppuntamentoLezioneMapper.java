@@ -8,7 +8,7 @@ import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
-import it.univaq.esc.dtoObjects.OrarioAppuntamento;
+import it.univaq.esc.dtoObjects.OrarioAppuntamentoDTO;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
@@ -41,7 +41,7 @@ public class AppuntamentoLezioneMapper extends AppuntamentoMapper{
 	
 	@Override
 	public DatiFormPerAppuntamento getDatiFormPerAppuntamentoUsando(FormPrenotabile formDati,
-			OrarioAppuntamento orario) {
+			OrarioAppuntamentoDTO orario) {
 		DatiFormPerAppuntamento datiFormPerAppuntamento = super.getDatiFormPerAppuntamentoUsando(formDati, orario);
 		
 		datiFormPerAppuntamento.setDescrizioneEvento(trovaPrenotabileDescrizioneLezioneInModalitaSingoloUtenteRelativaA(formDati.getSportSelezionato()));
@@ -61,7 +61,7 @@ public class AppuntamentoLezioneMapper extends AppuntamentoMapper{
 		return descrizioneEventoPrenotabile;
 	}
 	
-	private UtentePolisportiva getIstruttoreAssociatoAllOrarioDallaListaIstruttori(OrarioAppuntamento orario, List<IstruttoreSelezionato> listaIstruttoriSelezionati) {
+	private UtentePolisportiva getIstruttoreAssociatoAllOrarioDallaListaIstruttori(OrarioAppuntamentoDTO orario, List<IstruttoreSelezionato> listaIstruttoriSelezionati) {
 			IstruttoreSelezionato istruttoreSelezionato = null;
 			for(IstruttoreSelezionato istruttore : listaIstruttoriSelezionati) {
 				if(istruttore.getIdSelezione() == orario.getId()) {

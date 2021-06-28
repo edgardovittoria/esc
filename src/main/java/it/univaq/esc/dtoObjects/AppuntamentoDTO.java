@@ -15,7 +15,7 @@ import lombok.Setter;
 public class AppuntamentoDTO {
 
 	private Integer idAppuntamento;
-	private OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
+	private OrarioAppuntamentoDTO orarioAppuntamento = new OrarioAppuntamentoDTO();
 	private List<String> partecipanti = new ArrayList<String>();
 	private List<Integer> squadrePartecipanti = new ArrayList<Integer>();
 	private List<QuotaPartecipazioneDTO> quotePartecipazione = new ArrayList<QuotaPartecipazioneDTO>();

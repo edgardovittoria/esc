@@ -9,11 +9,10 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
-import it.univaq.esc.dtoObjects.OrarioAppuntamento;
+import it.univaq.esc.dtoObjects.OrarioAppuntamentoDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.Calendario;
@@ -28,7 +27,7 @@ import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoCorso;
-
+import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
@@ -66,7 +65,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(EffettuaPrenotazioneHandler controller) {
+	public Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(
+			EffettuaPrenotazioneHandler controller) {
 		Map<String, Object> mappaCorsiDisponibili = new HashMap<String, Object>();
 		List<Prenotazione> corsiDisponibili = this.getRegistroPrenotazioni().filtraPrenotazioniPerTipo(
 				this.getRegistroPrenotazioni().getPrenotazioniRegistrate(), TipiPrenotazione.CORSO.toString());
@@ -89,15 +89,13 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
 
-
-
 		/*
 		 * Cicliamo sugli orari impostati in fase di compilazione, per creare e
 		 * impostare tante specifiche di LEZIONI con relativi appuntamenti. Aggiungiamo
 		 * le specifiche così impostate alla lista inizializzata prima. Infine associamo
 		 * gli appuntamenti al controller.
 		 */
-		for (OrarioAppuntamento orario : formDati.getOrariSelezionati()) {
+		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
 
 			AppuntamentoCorso appuntamentoCorso = (AppuntamentoCorso) getElementiPrenotazioneFactory()
 					.getAppuntamento(TipiPrenotazione.CORSO.toString());
@@ -130,7 +128,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	public void impostaValoriAppuntamento(FormPrenotabile formDatiCorso, EffettuaPrenotazioneHandler controller,
-			AppuntamentoCorso appuntamento, OrarioAppuntamento orario) {
+			AppuntamentoCorso appuntamento, OrarioAppuntamentoDTO orario) {
 
 		/*
 		 * Creiamo l'oggetto descrizione del corso da passare alla specifiche delle
@@ -146,17 +144,14 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
 				.nuovoPrenotabile_salvaPrenotabileInCreazione();
 
-		
 		ImpiantoSelezionato impiantoSelezionato = null;
-		for(ImpiantoSelezionato impianto : formDatiCorso.getImpianti()) {
-			if(impianto.getIdSelezione() == orario.getId()) {
+		for (ImpiantoSelezionato impianto : formDatiCorso.getImpianti()) {
+			if (impianto.getIdSelezione() == orario.getId()) {
 				impiantoSelezionato = impianto;
 			}
 		}
 		appuntamento.setImpiantoPrenotato(getRegistroImpianti().getImpiantoByID(impiantoSelezionato.getIdImpianto()));
-		
-		
-		
+
 		// Creazione calcolatore che poi dovrà finire altrove
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
 		calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
@@ -164,17 +159,18 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		appuntamento.setDescrizioneEventoPrenotato(descrizioneCorso);
 		appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 
-		appuntamento.getOrarioAppuntamento().imposta(orario.getDataPrenotazione(), orario.getOraInizio(), orario.getOraFine());
+		appuntamento.getOrarioAppuntamento().imposta(orario.getDataPrenotazione(), orario.getOraInizio(),
+				orario.getOraFine());
 
 		appuntamento.calcolaCosto();
 
 		for (String emailInvitato : formDatiCorso.getSportiviInvitati()) {
 			appuntamento.aggiungi(getRegistroUtenti().trovaUtenteInBaseAllaSua(emailInvitato));
 		}
-		
+
 		IstruttoreSelezionato istruttoreSelezionato = null;
-		for(IstruttoreSelezionato istruttore : formDatiCorso.getIstruttori()) {
-			if(istruttore.getIdSelezione() == orario.getId()) {
+		for (IstruttoreSelezionato istruttore : formDatiCorso.getIstruttori()) {
+			if (istruttore.getIdSelezione() == orario.getId()) {
 				istruttoreSelezionato = istruttore;
 			}
 		}
@@ -216,15 +212,16 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
 		Map<String, Object> mappaAggiornata = this.getStatoControllerLezioni().aggiornaOpzioniPrenotazione(dati);
 
-		Map<String, String> orario = (Map<String, String>) dati.get("orario");
-		LocalDateTime oraInizio = LocalDateTime.parse(orario.get("oraInizio"),
-				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
-		LocalDateTime oraFine = LocalDateTime.parse(orario.get("oraFine"),
-				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
-
-		mappaAggiornata.put("sportiviInvitabili", getSportiviLiberiInBaseAOrario(oraInizio, oraFine));
+		mappaAggiornata.put("sportiviInvitabili", trovaSportiviLiberiInBaseA((Map<String, String>) dati.get("orario")));
 
 		return mappaAggiornata;
+	}
+
+	private List<UtentePolisportivaDTO> trovaSportiviLiberiInBaseA(Map<String, String> mappaOrario) {
+		OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
+		orarioAppuntamento.imposta(mappaOrario.get("oraInizio"), mappaOrario.get("oraFine"));
+
+		return getSportiviLiberiInBaseA(orarioAppuntamento);
 	}
 
 	@Override
@@ -272,7 +269,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 				.getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
 		getStatoControllerLezioni().setMapperFactory(getMapperFactory());
 
-		Map<String, Object> mappaDati = this.getStatoControllerLezioni().getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(controller);
+		Map<String, Object> mappaDati = this.getStatoControllerLezioni()
+				.getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(controller);
 		mappaDati.put("sportiviInvitabili", this.getSportiviPolisportiva());
 
 		return mappaDati;

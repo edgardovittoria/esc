@@ -13,8 +13,9 @@ import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
-import it.univaq.esc.dtoObjects.OrarioAppuntamento;
+import it.univaq.esc.dtoObjects.OrarioAppuntamentoDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
+import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
@@ -26,6 +27,7 @@ import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
 import it.univaq.esc.model.prenotazioni.DatiFormPerAppuntamento;
+import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
@@ -84,7 +86,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
 
-		for (OrarioAppuntamento orario : formDati.getOrariSelezionati()) {
+		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
 
 			impostaAppuntamentoRelativoAOrarioNellaPrenotazione(controller.getPrenotazioneInAtto(), orario, formDati);
 		}
@@ -96,7 +98,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	}
 
 	private void impostaAppuntamentoRelativoAOrarioNellaPrenotazione(Prenotazione prenotazioneInAtto,
-			OrarioAppuntamento orario, FormPrenotabile formDati) {
+			OrarioAppuntamentoDTO orario, FormPrenotabile formDati) {
 		AppuntamentoImpianto appuntamentoImpianto = getAppuntamentoPerOrarioImpostatoUsandoForm(orario, formDati);
 		prenotazioneInAtto.aggiungi(appuntamentoImpianto);
 		appuntamentoImpianto.aggiungiPartecipante(prenotazioneInAtto.getSportivoPrenotante());
@@ -105,7 +107,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 	}
 
-	private AppuntamentoImpianto getAppuntamentoPerOrarioImpostatoUsandoForm(OrarioAppuntamento orario,
+	private AppuntamentoImpianto getAppuntamentoPerOrarioImpostatoUsandoForm(OrarioAppuntamentoDTO orario,
 			FormPrenotabile formDati) {
 		AppuntamentoImpianto appuntamento = (AppuntamentoImpianto) getElementiPrenotazioneFactory()
 				.getAppuntamento(TipiPrenotazione.IMPIANTO.toString());
@@ -167,15 +169,17 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
 		Map<String, Object> datiAggiornati = new HashMap<String, Object>();
 		datiAggiornati.put("impiantiDisponibili", this.getImpiantiPrenotabiliInBaseA(dati));
-
-		Map<String, String> orario = (Map<String, String>) dati.get("orario");
-		LocalDateTime oraInizio = getOrarioConvertitoInFormatoAdeguatoAPartireDa(orario.get("oraInizio"));
-		LocalDateTime oraFine = getOrarioConvertitoInFormatoAdeguatoAPartireDa(orario.get("oraFine"));
-
-		datiAggiornati.put("sportiviInvitabili", getSportiviLiberiInBaseAOrario(oraInizio, oraFine));
+		datiAggiornati.put("sportiviInvitabili", trovaSportiviLiberiInBaseA((Map<String, String>) dati.get("orario")));
 
 		return datiAggiornati;
 
+	}
+
+	private List<UtentePolisportivaDTO> trovaSportiviLiberiInBaseA(Map<String, String> mappaOrario) {
+		OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
+		orarioAppuntamento.imposta(mappaOrario.get("oraInizio"), mappaOrario.get("oraFine"));
+
+		return getSportiviLiberiInBaseA(orarioAppuntamento);
 	}
 
 	/**

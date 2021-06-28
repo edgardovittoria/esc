@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
 import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
-import it.univaq.esc.dtoObjects.OrarioAppuntamento;
+import it.univaq.esc.dtoObjects.OrarioAppuntamentoDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.RegistroImpianti;
@@ -72,7 +72,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
 
-		for (OrarioAppuntamento orario : formDati.getOrariSelezionati()) {
+		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
 
 			// ---------------------------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	}
 
 	public void impostaValoriAppuntamento(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller,
-			AppuntamentoLezione appuntamento, OrarioAppuntamento orario) {
+			AppuntamentoLezione appuntamento, OrarioAppuntamentoDTO orario) {
 
 		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(

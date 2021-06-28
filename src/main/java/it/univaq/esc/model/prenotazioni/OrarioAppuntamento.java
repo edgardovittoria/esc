@@ -3,6 +3,7 @@ package it.univaq.esc.model.prenotazioni;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,5 +65,14 @@ public class OrarioAppuntamento {
     public void imposta(LocalDate dataAppuntamento, LocalTime oraInizioAppuntamento, LocalTime oraFineAppuntamento){
         setOrarioInizioAppuntamento(LocalDateTime.of(dataAppuntamento, oraInizioAppuntamento));
         setOrarioFineAppuntamento(LocalDateTime.of(dataAppuntamento, oraFineAppuntamento));
+    }
+    
+    public void imposta(String orarioInizio, String orarioFine) {
+    	LocalDateTime orarioInizioAppuntamento = LocalDateTime.parse(orarioInizio,
+				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
+    	LocalDateTime orarioFineAppuntamento = LocalDateTime.parse(orarioFine,
+				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
+    	setOrarioInizioAppuntamento(orarioInizioAppuntamento);
+    	setOrarioFineAppuntamento(orarioFineAppuntamento);
     }
 }

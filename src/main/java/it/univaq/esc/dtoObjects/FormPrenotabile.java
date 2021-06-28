@@ -18,7 +18,7 @@ public class FormPrenotabile {
 
 	private String sportSelezionato;
 
-	private List<OrarioAppuntamento> orariSelezionati = new ArrayList<OrarioAppuntamento>();
+	private List<OrarioAppuntamentoDTO> orariSelezionati = new ArrayList<OrarioAppuntamentoDTO>();
 
 	private List<ImpiantoSelezionato> impianti = new ArrayList<ImpiantoSelezionato>();
 

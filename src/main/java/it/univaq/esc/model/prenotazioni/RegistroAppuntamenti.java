@@ -113,7 +113,8 @@ public class RegistroAppuntamenti {
 			LocalDateTime dataOra) {
 		List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
 		for (Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
-			if (appuntamento.getDataOraInizioAppuntamento().isAfter(dataOra)) {
+			LocalDateTime dataOraInizio = LocalDateTime.of(appuntamento.getDataAppuntamento(), appuntamento.getOraInizioAppuntamento());
+			if (dataOraInizio.isAfter(dataOra)) {
 				appuntamentiFiltrati.add(appuntamento);
 			}
 		}
@@ -156,7 +157,7 @@ public class RegistroAppuntamenti {
 	public List<Appuntamento> escludiAppuntamentiDiCorsi(List<Appuntamento> listaAppuntamentiDaFiltrare) {
 		List<Appuntamento> appuntamentiNonCorsi = new ArrayList<Appuntamento>();
 		for (Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
-			if (!appuntamento.appartieneA().equals(TipiPrenotazione.CORSO.toString())) {
+			if (!appuntamento.getTipoPrenotazione().equals(TipiPrenotazione.CORSO.toString())) {
 				appuntamentiNonCorsi.add(appuntamento);
 			}
 		}
@@ -167,7 +168,7 @@ public class RegistroAppuntamenti {
 	public List<Appuntamento> filtraAppuntamentiDiCorsi(List<Appuntamento> listaAppuntamentiDaFiltrare) {
 		List<Appuntamento> appuntamentiCorsi = new ArrayList<Appuntamento>();
 		for (Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
-			if (appuntamento.appartieneA().equals(TipiPrenotazione.CORSO.toString())) {
+			if (appuntamento.getTipoPrenotazione().equals(TipiPrenotazione.CORSO.toString())) {
 				appuntamentiCorsi.add(appuntamento);
 			}
 		}
