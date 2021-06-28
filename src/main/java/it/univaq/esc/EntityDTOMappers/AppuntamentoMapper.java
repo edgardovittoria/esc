@@ -1,6 +1,5 @@
 package it.univaq.esc.EntityDTOMappers;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +26,11 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 		appuntamentoDTO.setOraFineAppuntamento(appuntamentoDaConvertire.getOraFineAppuntamento());
 		appuntamentoDTO.setPartecipanti(getListaEmailDegli(appuntamentoDaConvertire.getUtentiPartecipanti()));
 		appuntamentoDTO.setQuotePartecipazione(convertiInDTOLaLista(appuntamentoDaConvertire.getQuotePartecipazione()));
-		appuntamentoDTO.setCreatore(appuntamentoDaConvertire.getUtenteCheHaEffettuatoLaPrenotazioneRelativa().getEmail());
-		appuntamentoDTO.setManutentore(appuntamentoDaConvertire.getNominativoManutentore());
+		appuntamentoDTO
+				.setCreatore(appuntamentoDaConvertire.getUtenteCheHaEffettuatoLaPrenotazioneRelativa().getEmail());
+		if (appuntamentoDaConvertire.getNominativoManutentore() != null) {
+			appuntamentoDTO.setManutentore(appuntamentoDaConvertire.getNominativoManutentore());
+		}
 		appuntamentoDTO.setModalitaPrenotazione(appuntamentoDaConvertire.getModalitaPrenotazione());
 		appuntamentoDTO.setTipoPrenotazione(appuntamentoDaConvertire.getTipoPrenotazione());
 		appuntamentoDTO.setPending(appuntamentoDaConvertire.isPending());
@@ -42,11 +44,11 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 
 		return appuntamentoDTO;
 	}
-	
-	private List<String> getListaEmailDegli(List<UtentePolisportiva> utentiPartecipanti){
+
+	private List<String> getListaEmailDegli(List<UtentePolisportiva> utentiPartecipanti) {
 		List<String> listaEmailPartecipanti = new ArrayList<String>();
 		utentiPartecipanti.forEach((partecipante) -> listaEmailPartecipanti.add(partecipante.getEmail()));
-		
+
 		return listaEmailPartecipanti;
 	}
 
