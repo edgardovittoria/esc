@@ -273,4 +273,11 @@ public abstract class Appuntamento {
 	public void impostaOrario(LocalDate dataAppuntamento, LocalTime oraInizioAppuntamento, LocalTime oraFineAppuntamento){
 		getOrarioAppuntamento().imposta(dataAppuntamento, oraInizioAppuntamento, oraFineAppuntamento);
 	}
+	
+	public boolean haManutentoreAssegnato() {
+		if(getManutentore() != null) {
+			return true;
+		}
+		return false;
+	}
 }
