@@ -23,15 +23,12 @@ import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.prenotazioni.AppuntamentoLezione;
-import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
-
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
-import it.univaq.esc.model.utenti.UtentePolisportiva;
 
 /**
  * Stato del controller EffettuaPrenotazioneHandler che gestisce la specifica
@@ -60,7 +57,8 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 * fase di avvio di una nuova prenotazione, nel caso di una Lezione.
 	 */
 	@Override
-	public Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(EffettuaPrenotazioneHandler controller) {
+	public Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(
+			EffettuaPrenotazioneHandler controller) {
 		Map<String, Object> mappaValori = new HashMap<String, Object>();
 		mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
 
@@ -73,7 +71,6 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 */
 	@Override
 	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
-		
 
 		for (OrarioAppuntamento orario : formDati.getOrariSelezionati()) {
 
@@ -101,31 +98,27 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 						controller.getTipoPrenotazioneInAtto(),
 						getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
 						ModalitaPrenotazione.SINGOLO_UTENTE.toString());
-		
+
 		// Creazione calcolatore che poi dovrà finire altrove
 		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
 		calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
 
 		ImpiantoSelezionato impiantoSelezionato = null;
-		for(ImpiantoSelezionato impianto : formDati.getImpianti()) {
-			if(impianto.getIdSelezione() == orario.getId()) {
+		for (ImpiantoSelezionato impianto : formDati.getImpianti()) {
+			if (impianto.getIdSelezione() == orario.getId()) {
 				impiantoSelezionato = impianto;
 			}
 		}
 		appuntamento.setImpiantoPrenotato(getRegistroImpianti().getImpiantoByID(impiantoSelezionato.getIdImpianto()));
-		
+
 		appuntamento.setDescrizioneEventoPrenotato(descrizioneSpecifica);
 		appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 
-		LocalDateTime dataInizio = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraInizio());
-		LocalDateTime dataFine = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraFine());
+		appuntamento.getOrarioAppuntamento().imposta(orario.getDataPrenotazione(), orario.getOraInizio(), orario.getOraFine());
 
-		appuntamento.setDataOraInizioAppuntamento(dataInizio);
-		appuntamento.setDataOraFineAppuntamento(dataFine);
-		
 		IstruttoreSelezionato istruttoreSelezionato = null;
-		for(IstruttoreSelezionato istruttore : formDati.getIstruttori()) {
-			if(istruttore.getIdSelezione() == orario.getId()) {
+		for (IstruttoreSelezionato istruttore : formDati.getIstruttori()) {
+			if (istruttore.getIdSelezione() == orario.getId()) {
 				istruttoreSelezionato = istruttore;
 			}
 		}

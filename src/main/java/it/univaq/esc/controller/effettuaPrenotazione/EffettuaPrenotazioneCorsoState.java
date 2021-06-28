@@ -164,11 +164,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		appuntamento.setDescrizioneEventoPrenotato(descrizioneCorso);
 		appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 
-		LocalDateTime dataInizio = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraInizio());
-		LocalDateTime dataFine = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraFine());
-
-		appuntamento.setDataOraInizioAppuntamento(dataInizio);
-		appuntamento.setDataOraFineAppuntamento(dataFine);
+		appuntamento.getOrarioAppuntamento().imposta(orario.getDataPrenotazione(), orario.getOraInizio(), orario.getOraFine());
 
 		appuntamento.calcolaCosto();
 

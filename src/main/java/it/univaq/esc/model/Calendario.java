@@ -1,6 +1,8 @@
 package it.univaq.esc.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,12 +97,12 @@ public class Calendario {
      * @param oraFine data e ora finali dell'orario da verificare.
      * @return true in caso di sovrapposizione, false altrimenti.
      */
-    public boolean sovrapponeA(LocalDateTime oraInizio, LocalDateTime oraFine) {
+    public boolean sovrapponeA(LocalDate dataAppuntamento, LocalTime oraInizio, LocalTime oraFine) {
         boolean calendarioSiSovrappone = false;
         if (!this.getListaAppuntamenti().isEmpty()) {
             for (Appuntamento appuntamento : this.getListaAppuntamenti()) {
                 if (!calendarioSiSovrappone) {
-                    calendarioSiSovrappone = appuntamento.sovrapponeA(oraInizio, oraFine);
+                    calendarioSiSovrappone = appuntamento.sovrapponeA(dataAppuntamento, oraInizio, oraFine);
                 }
             }
         }

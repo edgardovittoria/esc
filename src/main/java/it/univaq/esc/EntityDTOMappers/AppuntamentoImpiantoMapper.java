@@ -47,29 +47,18 @@ public class AppuntamentoImpiantoMapper extends AppuntamentoMapper {
 	@Override
 	public DatiFormPerAppuntamento getDatiFormPerAppuntamentoUsando(FormPrenotabile formDati,
 			OrarioAppuntamento orario) {
-		
+
 		DatiFormPerAppuntamento datiFormPerAppuntamento = super.getDatiFormPerAppuntamentoUsando(formDati, orario);
 
-		
+		datiFormPerAppuntamento.setDescrizioneEvento(
+				trovaPrenotabileDescrizioneImpiantoInModalitaSingoloUtenteRelativaA(formDati.getSportSelezionato()));
 
-		
-		datiFormPerAppuntamento
-				.setDescrizioneEvento(trovaPrenotabileDescrizioneImpiantoInModalitaSingoloUtenteRelativaA(
-						formDati.getSportSelezionato()));
-		
-		datiFormPerAppuntamento.setPending(trovaNellaListaCheckboxesValorePendingRelativoAOrario(
-				formDati.getCheckboxesPending(), orario));
-		
-		datiFormPerAppuntamento.setImpiantoPrenotato(
-				trovaNellaListaImpiantiPrenotatiQuelloRelativoAOrario(formDati.getImpianti(), orario));
-		
 		datiFormPerAppuntamento.setInvitati(getListaUtentiIinvitatiAPartireDa(formDati.getSportiviInvitati()));
-		
+
 		datiFormPerAppuntamento.setNumeroPartecipantiNonIscritti(formDati.getNumeroGiocatoriNonIscritti());
 
 		return datiFormPerAppuntamento;
 	}
-	
 
 	private PrenotabileDescrizione trovaPrenotabileDescrizioneImpiantoInModalitaSingoloUtenteRelativaA(
 			String nomeSportSelezionato) {
@@ -80,27 +69,6 @@ public class AppuntamentoImpiantoMapper extends AppuntamentoMapper {
 						ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 
 		return descrizioneEventoPrenotabile;
-	}
-
-	private boolean trovaNellaListaCheckboxesValorePendingRelativoAOrario(
-			List<CheckboxPendingSelezionato> listaCheckboxes, OrarioAppuntamento orario) {
-		for (CheckboxPendingSelezionato checkbox : listaCheckboxes) {
-			if (checkbox.getIdSelezione() == orario.getId()) {
-				return checkbox.isPending();
-			}
-		}
-		return false;
-	}
-
-	private Impianto trovaNellaListaImpiantiPrenotatiQuelloRelativoAOrario(
-			List<ImpiantoSelezionato> listaImpiantiPrenotati, OrarioAppuntamento orario) {
-		ImpiantoSelezionato impiantoSelezionato = null;
-		for (ImpiantoSelezionato impianto : listaImpiantiPrenotati) {
-			if (impianto.getIdSelezione() == orario.getId()) {
-				impiantoSelezionato = impianto;
-			}
-		}
-		return getRegistroImpianti().getImpiantoByID(impiantoSelezionato.getIdImpianto());
 	}
 
 	private List<UtentePolisportiva> getListaUtentiIinvitatiAPartireDa(List<String> listaEmailInvitati) {

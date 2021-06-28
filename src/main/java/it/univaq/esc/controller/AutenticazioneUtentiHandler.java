@@ -47,26 +47,6 @@ public class AutenticazioneUtentiHandler {
 	@Autowired
 	private JwtUtil jwtUtil;
 
-	// @RequestMapping("/login")
-	// @PostMapping
-	// @CrossOrigin
-	// public ResponseEntity<UtentePolisportivaAbstract> login(@RequestBody
-	// Map<String, String> mappaAutenticazione) {
-	// UtentePolisportivaAbstract utente =
-	// this.getRegistroUtentiPolisportiva().getUtenteByEmail(mappaAutenticazione.get("emailUtente"));
-	// if(utente == null &&
-	// utente.getProprieta().get("password").equals(mappaAutenticazione.get("password")))
-	// {
-	// return new ResponseEntity<UtentePolisportivaAbstract>(utente, HttpStatus.OK);
-	// }
-	// else if(utente == null){
-	// return new ResponseEntity<UtentePolisportivaAbstract>(HttpStatus.NOT_FOUND);
-	// }
-	// else {
-	// return new
-	// ResponseEntity<UtentePolisportivaAbstract>(HttpStatus.UNAUTHORIZED);
-	// }
-	// }
 
 	@RequestMapping("/autenticazione")
 	@PostMapping

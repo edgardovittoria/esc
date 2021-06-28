@@ -1,6 +1,7 @@
 package it.univaq.esc.model.prenotazioni;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DatiFormPerAppuntamento {
 	
-	private LocalDateTime orarioInizio;
-	private LocalDateTime orarioFine;
+	private LocalDate dataAppuntamento;
+	private LocalTime oraInizio;
+	private LocalTime oraFine;
 	private boolean pending = false;
 	private PrenotabileDescrizione descrizioneEvento;
 	private List<UtentePolisportiva> invitati = new ArrayList<UtentePolisportiva>();

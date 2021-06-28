@@ -56,15 +56,4 @@ public class AppuntamentoDTO {
 		this.getOrarioAppuntamento().setOraFine(oraFineAppuntamento);
 	}
 
-	public void aggiungiPartecipante(String emailPartecipante) {
-		this.partecipanti.add(emailPartecipante);
-	}
-
-	public void aggiungiInvitato(String emailInvitato) {
-		getInvitati().add(emailInvitato);
-	}
-
-	public void aggiungiSquadraPartecipante(Integer idSquadra) {
-		getSquadrePartecipanti().add(idSquadra);
-	}
 }

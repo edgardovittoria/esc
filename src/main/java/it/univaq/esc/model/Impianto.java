@@ -97,4 +97,13 @@ public class Impianto {
         return this.getCalendarioAppuntamentiImpianto().getListaAppuntamenti();
     }
 
+
+    public void segnaInCalendarioIl(Appuntamento nuovoAppuntamento){
+        getCalendarioAppuntamentiImpianto().aggiungiAppuntamento(nuovoAppuntamento);
+    }
+
+    public void segnaInCalendarioGliAppuntamentiDel(Calendario nuovoCalendario){
+        getCalendarioAppuntamentiImpianto().unisciCalendario(nuovoCalendario);
+    }
+
 }

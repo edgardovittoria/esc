@@ -1,6 +1,5 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
-
 import java.util.HashMap;
 
 import java.util.List;
@@ -11,7 +10,6 @@ import javax.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +37,7 @@ import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.utility.BeanUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -50,16 +49,17 @@ import lombok.Setter;
  */
 @RestController
 @RequestMapping("/effettuaPrenotazione")
+@Getter(value = AccessLevel.PRIVATE)
+@Setter(value = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class EffettuaPrenotazioneHandler {
 
 	/**
 	 * Factory FactoryStaty utilizzata per ottenere gli stati del controller.
 	 */
-	@Setter(value = AccessLevel.PRIVATE)
 	private ElementiPrenotazioneFactory factoryStati;
 
 	@Getter(value = AccessLevel.PRIVATE)
-	@Setter(value = AccessLevel.PRIVATE)
 	private MapperFactory mapperFactory;
 	/**
 	 * Registro degli appuntamenti, utilizzato per le operazioni di gestione della
@@ -82,17 +82,17 @@ public class EffettuaPrenotazioneHandler {
 	@Autowired
 	private RegistroPrenotazioni registroPrenotazioni;
 
-	
 	/**
 	 * Prenotazione in atto gestita dal controller.
 	 */
+	@Getter(value = AccessLevel.PUBLIC)
 	private Prenotazione prenotazioneInAtto;
 
 	/**
 	 * Tipo della prenotazione in atto gestita dal controller.
 	 */
+	@Getter(value = AccessLevel.PUBLIC)
 	private String tipoPrenotazioneInAtto;
-
 
 	/**
 	 * Stato del controller, dipendente dal tipo della prenotazione in atto.
@@ -102,45 +102,9 @@ public class EffettuaPrenotazioneHandler {
 	 */
 	private EffettuaPrenotazioneState stato;
 
-	@Getter()
 	@Setter(value = AccessLevel.PRIVATE)
+	@Getter(value = AccessLevel.PUBLIC)
 	private Integer idSquadraPrenotante;
-
-	/**
-	 * Costruttore del controller EffettuaPrenotazioneHandlerRest
-	 */
-	public EffettuaPrenotazioneHandler() {
-	}
-
-	/**
-	 * Restituisce la factory FactoryStati, utilizzata per ottenere gli stati del
-	 * controller
-	 * 
-	 * @return la factory FactoryStati
-	 */
-	private ElementiPrenotazioneFactory getFactoryStati() {
-		return factoryStati;
-	}
-
-	/**
-	 * Restituisce lo Stato attuale del controller
-	 * 
-	 * @return stato attuale del controller
-	 */
-	private EffettuaPrenotazioneState getStato() {
-		return stato;
-	}
-
-	/**
-	 * Imposta lo stato passato come parametro nel controller
-	 * 
-	 * @param stato stato del controller da impostare
-	 */
-	private void setStato(EffettuaPrenotazioneState stato) {
-		this.stato = stato;
-	}
-
-	
 
 	/**
 	 * Imposta la tipologia della prenotazione in atto, passata come parametro. In
@@ -154,28 +118,6 @@ public class EffettuaPrenotazioneHandler {
 		this.setStato(this.getFactoryStati().getStatoEffettuaPrenotazioneHandler(tipoPrenotazione));
 		getStato().setElementiPrenotazioneFactory(getFactoryStati());
 		getStato().setMapperFactory(getMapperFactory());
-	}
-
-	/**
-	 * Restituisce la tipologia della prenotazione in atto
-	 * 
-	 * @return tipo della prenotazione in atto
-	 */
-	public String getTipoPrenotazioneInAtto() {
-		return this.tipoPrenotazioneInAtto;
-	}
-
-
-	
-
-
-	/**
-	 * Restituisce il registro degli appuntamenti
-	 * 
-	 * @return il registro appuntamenti
-	 */
-	private RegistroAppuntamenti getRegistroAppuntamenti() {
-		return this.registroAppuntamenti;
 	}
 
 	/**
@@ -231,12 +173,13 @@ public class EffettuaPrenotazioneHandler {
 			@RequestParam(name = "email") String emailDirettore,
 			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione,
 			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
+
 		UtentePolisportiva direttore = this.getRegistroUtenti().trovaUtenteInBaseAllaSua(emailDirettore);
 		this.inizializzaNuovaPrenotazione(direttore, tipoPrenotazione, modalitaPrenotazione);
+		impostaAttributiControllerDipendentiDa(modalitaPrenotazione, tipoPrenotazione);
 		return this.getStato().getDatiOpzioniModalitaDirettore(this);
 	}
 
-	
 	private void inizializzaNuovaPrenotazione(UtentePolisportiva sportivoPrenotante, String tipoPrenotazione,
 			String modalitaPrenotazione) {
 
@@ -245,16 +188,19 @@ public class EffettuaPrenotazioneHandler {
 		setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
 		getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
 
-		setFactoryStati(this.creaFactoryStati(modalitaPrenotazione));
-		setMapperFactory(creaMapperFactory(modalitaPrenotazione));
+	}
+
+	private void impostaAttributiControllerDipendentiDa(String modalitaPrenotazione, String tipoPrenotazione) {
+		setFactoryStati(this.chiedeAlContainerLaFactoryStatiRelativaAlla(modalitaPrenotazione));
+		setMapperFactory(chiedeAlContainerLaMapperFactoryiRelativaAlla(modalitaPrenotazione));
 		this.setTipoPrenotazioneInAtto(tipoPrenotazione);
 	}
 
-	private ElementiPrenotazioneFactory creaFactoryStati(String modalitaPrenotazione) {
+	private ElementiPrenotazioneFactory chiedeAlContainerLaFactoryStatiRelativaAlla(String modalitaPrenotazione) {
 		return BeanUtil.getBean("ELEMENTI_PRENOTAZIONE_" + modalitaPrenotazione, ElementiPrenotazioneFactory.class);
 	}
 
-	private MapperFactory creaMapperFactory(String modalitaPrenotazione) {
+	private MapperFactory chiedeAlContainerLaMapperFactoryiRelativaAlla(String modalitaPrenotazione) {
 		return BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class);
 	}
 
@@ -270,7 +216,7 @@ public class EffettuaPrenotazioneHandler {
 	@PostMapping("/riepilogoPrenotazione")
 	@CrossOrigin
 	public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazione(@RequestBody FormPrenotabile formPrenotaImpianto) {
-		
+
 		PrenotazioneDTO prenDTO = this.getStato().impostaDatiPrenotazione(formPrenotaImpianto, this);
 
 		return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.OK);
@@ -289,23 +235,39 @@ public class EffettuaPrenotazioneHandler {
 	@CrossOrigin
 	public ResponseEntity<PrenotazioneDTO> confermaPrenotazione() {
 
-		for (Appuntamento appuntamento : getPrenotazioneInAtto().getListaAppuntamenti()) {
-			Calendario calendarioAppuntamento = new Calendario();
-			calendarioAppuntamento.aggiungiAppuntamento(appuntamento);
-			UtentePolisportiva manutentore = getRegistroUtenti().getManutentoreLibero(calendarioAppuntamento);
-			appuntamento.setManutentore(manutentore);
-			getRegistroUtenti().aggiornaCalendarioManutentore(calendarioAppuntamento, manutentore);
-
-		}
-		this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
-		this.getRegistroAppuntamenti().salvaListaAppuntamenti(getPrenotazioneInAtto().getListaAppuntamenti());
-
+		assegnaManutentoriAgliAppuntamentiDellaPrenotazioneInAtto();
+		aggiornaCalendariDeiManutentoriAssegnati();
+		registraNelSistemaLaPrenotazioneInAtto();
 		this.getStato().aggiornaElementiDopoConfermaPrenotazione(this);
 
 		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper()
 				.convertiInPrenotazioneDTO(getPrenotazioneInAtto());
 
 		return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.CREATED);
+	}
+
+	private void assegnaManutentoriAgliAppuntamentiDellaPrenotazioneInAtto() {
+		for (Appuntamento appuntamento : getPrenotazioneInAtto().getListaAppuntamenti()) {
+			assegnaManutentoreA(appuntamento);
+		}
+
+	}
+
+	private void assegnaManutentoreA(Appuntamento appuntamento) {
+		UtentePolisportiva manutentore = getRegistroUtenti().getManutentoreLibero(appuntamento);
+		appuntamento.setManutentore(manutentore);
+	}
+	
+	private void aggiornaCalendariDeiManutentoriAssegnati() {
+		for (Appuntamento appuntamento : getPrenotazioneInAtto().getListaAppuntamenti()) {
+			appuntamento.siAggiungeAlCalendarioDelProprioManutentore();
+		}
+	}
+
+	private void registraNelSistemaLaPrenotazioneInAtto() {
+		this.getRegistroPrenotazioni().aggiungiPrenotazione(this.getPrenotazioneInAtto());
+		this.getRegistroAppuntamenti().salvaListaAppuntamenti(getPrenotazioneInAtto().getListaAppuntamenti());
+
 	}
 
 	/**
@@ -322,6 +284,11 @@ public class EffettuaPrenotazioneHandler {
 		return this.getStato().aggiornaOpzioniPrenotazione(dati);
 	}
 
+	
+	
+	/*
+	 * TODO Verificare se questo metodo è effettivamente usato, ma meglio sarebbe eliminarlo.
+	 */
 	@GetMapping("/istruttoriDisponibili")
 	@CrossOrigin
 	public @ResponseBody List<UtentePolisportivaDTO> getListaIstruttoriPerSport(
@@ -344,50 +311,10 @@ public class EffettuaPrenotazioneHandler {
 		Object identificativoPartecipante = (Object) mappaDati.get("identificativoPartecipante");
 		String modalitaPrenotazione = (String) mappaDati.get("modalitaPrenotazione");
 		String tipoPrenotazione = (String) mappaDati.get("tipoPrenotazione");
-		
-		setFactoryStati(creaFactoryStati(modalitaPrenotazione));
-		setMapperFactory(creaMapperFactory(modalitaPrenotazione));
-		
-		setTipoPrenotazioneInAtto(tipoPrenotazione);
-		
-		
+
+		impostaAttributiControllerDipendentiDa(modalitaPrenotazione, tipoPrenotazione);
+
 		return this.getStato().aggiungiPartecipanteAEventoEsistente(idEvento, identificativoPartecipante);
-	}
-
-	/**
-	 * Restituisce il registro degli utenti della polisportiva
-	 * 
-	 * @return registro utenti della polisportiva
-	 */
-	private RegistroUtentiPolisportiva getRegistroUtenti() {
-		return this.registroUtenti;
-	}
-
-	/**
-	 * Restituisce il registro delle prenotazioni
-	 * 
-	 * @return registro delle prenotazioni
-	 */
-	private RegistroPrenotazioni getRegistroPrenotazioni() {
-		return this.registroPrenotazioni;
-	}
-
-	/**
-	 * Restituisce la prenotazione in atto, ovvero quella in fase di compilazione
-	 * 
-	 * @return la prenotazione in atto.
-	 */
-	public Prenotazione getPrenotazioneInAtto() {
-		return this.prenotazioneInAtto;
-	}
-
-	/**
-	 * Imposta la prenotazione in atto nel controller
-	 * 
-	 * @param prenotazione in atto da impostare
-	 */
-	private void setPrenotazioneInAtto(Prenotazione prenotazione) {
-		this.prenotazioneInAtto = prenotazione;
 	}
 
 	/**

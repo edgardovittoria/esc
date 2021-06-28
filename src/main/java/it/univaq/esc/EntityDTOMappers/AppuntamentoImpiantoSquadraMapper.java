@@ -1,5 +1,8 @@
 package it.univaq.esc.EntityDTOMappers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
@@ -24,15 +27,22 @@ public class AppuntamentoImpiantoSquadraMapper extends AppuntamentoMapper{
 			
 			AppuntamentoImpiantoSquadra appuntamentoImpiantoSquadra = (AppuntamentoImpiantoSquadra) appuntamentoDaConvertire;
 						
-			for(Squadra squadraInviata : appuntamentoImpiantoSquadra.getSquadreInvitate()) {
-				appuntamentoDTO.aggiungiInvitato(squadraInviata.getNome());
-			}
-			
-			for(Squadra squadraPartecipante : appuntamentoImpiantoSquadra.getSquadrePartecipanti()) {
-				appuntamentoDTO.aggiungiSquadraPartecipante(squadraPartecipante.getIdSquadra());
-			}
-			
+			appuntamentoDTO.setInvitati(getListaNomiSquadreDallaLista(appuntamentoImpiantoSquadra.getSquadreInvitate()));
+			appuntamentoDTO.setSquadrePartecipanti(getIdSquadrePartecipantiDallaLista(appuntamentoImpiantoSquadra.getSquadrePartecipanti()));
 			
 			return appuntamentoDTO;
 		}
+	
+	
+	private List<String> getListaNomiSquadreDallaLista(List<Squadra> squadreInvitate) {
+		List<String> listaNomiSquadreInvitate = new ArrayList<String>();
+		squadreInvitate.forEach((squadra) -> listaNomiSquadreInvitate.add(squadra.getNome()));
+		return listaNomiSquadreInvitate;
+	}
+	
+	private List<Integer> getIdSquadrePartecipantiDallaLista(List<Squadra> squadrePartecipanti){
+		List<Integer> listaIdSquadrePartecipanti = new ArrayList<Integer>();
+		squadrePartecipanti.forEach((squadra) -> listaIdSquadrePartecipanti.add(squadra.getIdSquadra()));
+		return listaIdSquadrePartecipanti;
+	}
 }

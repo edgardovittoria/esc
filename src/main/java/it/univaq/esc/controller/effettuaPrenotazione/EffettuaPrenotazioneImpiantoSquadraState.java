@@ -107,12 +107,8 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		appuntamento.setDescrizioneEventoPrenotato(descrizioneSpecifica);
 		appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 
-		LocalDateTime dataInizio = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraInizio());
-		LocalDateTime dataFine = LocalDateTime.of(orario.getDataPrenotazione(), orario.getOraFine());
-
-		appuntamento.setDataOraInizioAppuntamento(dataInizio);
-		appuntamento.setDataOraFineAppuntamento(dataFine);
-
+		appuntamento.getOrarioAppuntamento().imposta(orario.getDataPrenotazione(), orario.getOraInizio(), orario.getOraFine());
+		
 		boolean pending = false;
 		for (CheckboxPendingSelezionato checkbox : formDati.getCheckboxesPending()) {
 			if (checkbox.getIdSelezione() == orario.getId()) {

@@ -1,6 +1,8 @@
 package it.univaq.esc.test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -284,8 +286,10 @@ public class PopolaDB {
 
 		AppuntamentoImpianto appuntamento1 = (AppuntamentoImpianto) getElementiPrenotazioneFactory()
 				.getAppuntamento(TipiPrenotazione.IMPIANTO.toString());
-		appuntamento1.setDataOraInizioAppuntamento(LocalDateTime.of(2021, 5, 26, 10, 30));
-		appuntamento1.setDataOraFineAppuntamento(LocalDateTime.of(2021, 5, 26, 11, 30));
+				LocalDate dataAppuntamento1 = LocalDate.of(2021, 5, 26);
+				LocalTime oraInizioAppuntamento1 = LocalTime.of(10, 30);
+				LocalTime oraFineAppuntamento1 = LocalTime.of(11, 30);
+		appuntamento1.impostaOrario(dataAppuntamento1, oraInizioAppuntamento1, oraFineAppuntamento1);
 		appuntamento1.setDescrizioneEventoPrenotato(this.listinoPrezziDescrizioniPolisportiva
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						TipiPrenotazione.IMPIANTO.toString(), tennis, ModalitaPrenotazione.SINGOLO_UTENTE.toString()));
@@ -314,8 +318,10 @@ public class PopolaDB {
 
 		AppuntamentoImpianto appuntamento2 = (AppuntamentoImpianto) getElementiPrenotazioneFactory()
 				.getAppuntamento(TipiPrenotazione.IMPIANTO.toString());
-		appuntamento2.setDataOraInizioAppuntamento(LocalDateTime.of(2021, 5, 21, 17, 00));
-		appuntamento2.setDataOraFineAppuntamento(LocalDateTime.of(2021, 5, 21, 19, 00));
+				LocalDate dataAppuntamento2 = LocalDate.of(2021, 5, 21);
+				LocalTime oraInizioAppuntamento2 = LocalTime.of(17, 00);
+				LocalTime oraFineAppuntamento2 = LocalTime.of(19, 00);
+		appuntamento2.impostaOrario(dataAppuntamento2, oraInizioAppuntamento2, oraFineAppuntamento2);
 		appuntamento2.setDescrizioneEventoPrenotato(this.listinoPrezziDescrizioniPolisportiva
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						TipiPrenotazione.IMPIANTO.toString(), tennis, ModalitaPrenotazione.SINGOLO_UTENTE.toString()));

@@ -67,7 +67,7 @@ public class Prenotazione extends Notificabile {
 	}
 
 	public String getNomeSportAssociatoAllaPrenotazione() {
-		return this.getListaAppuntamenti().get(0).getSportAssociato().getNome();
+		return this.getListaAppuntamenti().get(0).getSportEvento().getNome();
 	}
 
 	@Override

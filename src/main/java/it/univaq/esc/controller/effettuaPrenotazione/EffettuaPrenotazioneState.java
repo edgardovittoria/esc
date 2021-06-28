@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
@@ -46,63 +45,57 @@ import lombok.Setter;
  * @author esc
  *
  */
-@Getter(value = AccessLevel.PUBLIC) @Setter(value = AccessLevel.PRIVATE) 
+@Getter(value = AccessLevel.PUBLIC)
+@Setter(value = AccessLevel.PRIVATE)
 public abstract class EffettuaPrenotazioneState {
-	
+
 	/**
-	 * Registro delle notifiche. Utilizzato per invio e gestione generale delle notifiche relative alle prenotazioni.
+	 * Registro delle notifiche. Utilizzato per invio e gestione generale delle
+	 * notifiche relative alle prenotazioni.
 	 */
-	
+
 	private RegistroNotifiche registroNotifiche;
 
 	/**
 	 * Registro degli sport della polisportiva. Utilizzato per la ricerca e la
 	 * visualizzazione degli sport in fase di prenotazione.
 	 */
-	
+
 	private RegistroSport registroSport;
 
 	/**
 	 * Registro degli impianti della polisportiva. Utilizzato per la gestione degli
 	 * impianti selezionati in fase di prenotazione.
 	 */
-	
+
 	private RegistroImpianti registroImpianti;
 
 	/**
 	 * Registro degli utenti della polisportiva. Utilizzato per la gestione di tutti
 	 * gli utenti inerenti la prenotazione che si sta gestendo.
 	 */
-	
+
 	private RegistroUtentiPolisportiva registroUtenti;
 
 	/**
 	 * Registro degli appuntamenti. Utilizzato per la gestione degli appuntamenti
 	 * associati alla prenotazione che si sta gestendo.
 	 */
-	
+
 	private RegistroAppuntamenti registroAppuntamenti;
-	
-	
-	
+
 	private RegistroPrenotazioni registroPrenotazioni;
-	
-	
-	
+
 	private CatalogoPrenotabili catalogoPrenotabili;
 
-
-
 	private RegistroSquadre registroSquadre;
-	
+
 	@Setter(value = AccessLevel.PUBLIC)
 	private ElementiPrenotazioneFactory elementiPrenotazioneFactory;
-	
+
 	@Setter(value = AccessLevel.PUBLIC)
 	private MapperFactory mapperFactory;
-	
-	
-	
+
 	public EffettuaPrenotazioneState(RegistroNotifiche registroNotifiche, RegistroSport registroSport,
 			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtenti,
 			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
@@ -116,7 +109,7 @@ public abstract class EffettuaPrenotazioneState {
 		setRegistroSquadre(registroSquadre);
 		setRegistroUtenti(registroUtenti);
 	}
-	
+
 	/**
 	 * Definisce l'interfaccia per il metodo che restituisce i dati necessari per
 	 * popolare le opzioni di prenotazione, nella fase di avvio di una nuova
@@ -127,7 +120,8 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return mappa con i dati iniziali delle varie opzioni selezionabili in fase
 	 *         di prenotazione.
 	 */
-	public abstract Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(EffettuaPrenotazioneHandler effettuaPrenotazioneHandler);
+	public abstract Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(
+			EffettuaPrenotazioneHandler effettuaPrenotazioneHandler);
 
 	/**
 	 * Definisce l'interfaccia per il metodo che imposta tutti i valori selezionati
@@ -145,7 +139,8 @@ public abstract class EffettuaPrenotazioneState {
 	 * @param controller istanza del controller cui lo stato è associato, per
 	 *                   poterne eventualmente aggiornare i dati.
 	 */
-	public abstract PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller);
+	public abstract PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati,
+			EffettuaPrenotazioneHandler controller);
 
 	/**
 	 * Definisce l'interfaccia del metodo che aggiorna gli oggetti intererssati
@@ -186,13 +181,11 @@ public abstract class EffettuaPrenotazioneState {
 	 */
 	public abstract Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, Object identificativoPartecipante);
 
-	
-	
 	/**
 	 * Definisce l'interfaccia per il metodo che restituisce i dati necessari per
 	 * popolare le opzioni di prenotazione, nella fase di avvio di una nuova
-	 * prenotazione di un evento che può essere creato solo dal Direttore, o che 
-	 * nel caso del Direttore necessita di opzioni differenti.
+	 * prenotazione di un evento che può essere creato solo dal Direttore, o che nel
+	 * caso del Direttore necessita di opzioni differenti.
 	 * 
 	 * @param controller istanza del controller a cui lo stato è associato, in modo
 	 *                   tale da poter aggiornarne i dati all'occorrenza.
@@ -200,7 +193,7 @@ public abstract class EffettuaPrenotazioneState {
 	 *         di prenotazione.
 	 */
 	public abstract Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandler controller);
-	
+
 	/**
 	 * Metodo di utilità, utilizzato in quelli principali, che resituisce la lista
 	 * di tutti gli sport praticabili nella polisportiva, in formato DTO.
@@ -222,55 +215,72 @@ public abstract class EffettuaPrenotazioneState {
 	 * Metodo di utilità. Restituisce tutti gli utenti registrati nel sistema della
 	 * polisportiva che sono SPORTIVI, in formato DTO.
 	 * 
-	 * @return lista di tutti gli utenti registrati nella polisportiva che hanno il ruolo di sportivi in formato DTO.
+	 * @return lista di tutti gli utenti registrati nella polisportiva che hanno il
+	 *         ruolo di sportivi in formato DTO.
 	 */
 	protected List<UtentePolisportivaDTO> getSportiviPolisportiva() {
 		List<UtentePolisportivaDTO> listaSportiviDTO = new ArrayList<UtentePolisportivaDTO>();
 		for (UtentePolisportiva utente : getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO)) {
-			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
+			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper()
+					.convertiInUtentePolisportivaDTO(utente);
 			listaSportiviDTO.add(sportivoDTO);
 		}
 
 		return listaSportiviDTO;
 	}
-	
+
 	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseACalendario(Calendario calendario) {
 		List<UtentePolisportivaDTO> listaSportivi = new ArrayList<UtentePolisportivaDTO>();
-		for(UtentePolisportiva utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO), calendario)) {
-			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
+		for (UtentePolisportiva utente : getListaSportiviLiberiNegliOrariDel(calendario)) {
+			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper()
+					.convertiInUtentePolisportivaDTO(utente);
 			listaSportivi.add(sportivoDTO);
 		}
 		return listaSportivi;
 	}
-	
-	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseAOrario(LocalDateTime oraInizio, LocalDateTime oraFine) {
+
+	private List<UtentePolisportiva> getListaSportiviLiberiNegliOrariDel(Calendario calendario) {
+		List<UtentePolisportiva> listaSportivi = getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO);
+		listaSportivi = getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(listaSportivi, calendario);
+		return listaSportivi;
+	}
+
+	protected List<UtentePolisportivaDTO> getSportiviLiberiInBaseAOrario(LocalDateTime oraInizio,
+			LocalDateTime oraFine) {
 		List<UtentePolisportivaDTO> listaSportivi = new ArrayList<UtentePolisportivaDTO>();
-		for(UtentePolisportiva utente : getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO), oraInizio, oraFine)) {
-			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
+		for (UtentePolisportiva utente : getListaSportiviLiberiPerOrario(oraInizio, oraFine)) {
+			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper()
+					.convertiInUtentePolisportivaDTO(utente);
 			listaSportivi.add(sportivoDTO);
 		}
 		return listaSportivi;
 	}
-	
-	
+
+	private List<UtentePolisportiva> getListaSportiviLiberiPerOrario(LocalDateTime orarioInizio,
+			LocalDateTime orarioFine) {
+		List<UtentePolisportiva> listaSportivi = getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO);
+		listaSportivi = getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(listaSportivi, orarioInizio,
+				orarioFine);
+		return listaSportivi;
+	}
+
 	/**
 	 * Metodo di utilità. Restituisce tutti gli utenti registrati nel sistema della
 	 * polisportiva, in formato DTO
 	 * 
-	 * @return lista di tutti gli utenti registrati nella polisportiva in formato DTO.
+	 * @return lista di tutti gli utenti registrati nella polisportiva in formato
+	 *         DTO.
 	 */
-	protected List<UtentePolisportivaDTO> getUtentiPolisportiva() {
+	protected List<UtentePolisportivaDTO> getTuttiGliUtentiDellaPolisportiva() {
 		List<UtentePolisportivaDTO> listaSportiviDTO = new ArrayList<UtentePolisportivaDTO>();
 		for (UtentePolisportiva utente : getRegistroUtenti().getListaUtentiPolisportiva()) {
-			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(utente);
+			UtentePolisportivaDTO sportivoDTO = getMapperFactory().getUtenteMapper()
+					.convertiInUtentePolisportivaDTO(utente);
 			listaSportiviDTO.add(sportivoDTO);
 		}
 
 		return listaSportiviDTO;
 	}
-
-	
-		
 
 	/**
 	 * Metodo di utilità. Resituisce la lista degli istruttori, in formato DTO,
@@ -286,7 +296,8 @@ public abstract class EffettuaPrenotazioneState {
 
 		List<UtentePolisportiva> istruttori = getRegistroUtenti().getListaDegliIstruttoriDello(sportRichiesto);
 		for (UtentePolisportiva istruttore : istruttori) {
-			UtentePolisportivaDTO istDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(istruttore);
+			UtentePolisportivaDTO istDTO = getMapperFactory().getUtenteMapper()
+					.convertiInUtentePolisportivaDTO(istruttore);
 			listaIstruttori.add(istDTO);
 		}
 
@@ -335,8 +346,6 @@ public abstract class EffettuaPrenotazioneState {
 		return listaImpiantiDTODisponibili;
 	}
 
-	
-
 	/**
 	 * Metodo di utilità. Filtra una lista di impianti passata come parametro, in
 	 * base al fatto che un determinato sport, anch'esso passato come parametro, sia
@@ -348,7 +357,8 @@ public abstract class EffettuaPrenotazioneState {
 	 *         sia praticabile lo sport dato come parametro.
 	 */
 	private List<Impianto> filtraImpiantiPerSport(String nomeSport, List<Impianto> listaImpianti) {
-		return getRegistroImpianti().filtraImpiantiPerSport(getRegistroSport().getSportByNome(nomeSport), listaImpianti);
+		return getRegistroImpianti().filtraImpiantiPerSport(getRegistroSport().getSportByNome(nomeSport),
+				listaImpianti);
 	}
 
 	/**
@@ -368,8 +378,6 @@ public abstract class EffettuaPrenotazioneState {
 
 	}
 
-	
-
 	/**
 	 * Metodo di utilità. Resituisce la lista, in formato DTO, degli istruttori
 	 * della polisportiva, filtrati sulla base dello sport e dell'orario selezionati
@@ -387,13 +395,11 @@ public abstract class EffettuaPrenotazioneState {
 				.getListaDegliUtentiCheHanno(TipoRuolo.ISTRUTTORE);
 		if (dati.containsKey("orario")) {
 			Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
-			istruttoriDisponibili = getRegistroUtenti().filtraIstruttorePerOrario(
-					istruttoriDisponibili,
+			istruttoriDisponibili = getRegistroUtenti().filtraIstruttorePerOrario(istruttoriDisponibili,
 					LocalDateTime.parse(orario.get("oraInizio"),
 							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")),
 					LocalDateTime.parse(orario.get("oraFine"),
-							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"))
-					);
+							DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX")));
 
 			if (dati.containsKey("sport")) {
 				istruttoriDisponibili = this.filtraIstruttoriPerSport((String) dati.get("sport"),
@@ -406,28 +412,30 @@ public abstract class EffettuaPrenotazioneState {
 		List<UtentePolisportivaDTO> listaIstruttoriDTODisponibili = new ArrayList<UtentePolisportivaDTO>();
 		for (UtentePolisportiva istruttore : istruttoriDisponibili) {
 
-			UtentePolisportivaDTO istruttoreDTO = getMapperFactory().getUtenteMapper().convertiInUtentePolisportivaDTO(istruttore);
+			UtentePolisportivaDTO istruttoreDTO = getMapperFactory().getUtenteMapper()
+					.convertiInUtentePolisportivaDTO(istruttore);
 			listaIstruttoriDTODisponibili.add(istruttoreDTO);
 
 		}
 		return listaIstruttoriDTODisponibili;
 	}
 
-	
-
-	
-	
 	protected boolean aggiungiPartecipanteECreaQuotePartecipazione(Object partecipante, Appuntamento appuntamento) {
 		boolean partecipanteAggiunto = false;
-		
-			partecipanteAggiunto = appuntamento.aggiungiPartecipante(partecipante);
-			
-			if (partecipanteAggiunto) {
-				getRegistroAppuntamenti().creaQuotePartecipazionePerAppuntamento(appuntamento);
-			}
-			
+
+		partecipanteAggiunto = appuntamento.aggiungiPartecipante(partecipante);
+
+		if (partecipanteAggiunto) {
+			getRegistroAppuntamenti().creaQuotePartecipazionePerAppuntamento(appuntamento);
+		}
+
 		return partecipanteAggiunto;
 	}
 
-	
+	protected LocalDateTime getOrarioConvertitoInFormatoAdeguatoAPartireDa(String stringaOrario) {
+		LocalDateTime orario = LocalDateTime.parse(stringaOrario,
+				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
+		return orario;
+	}
+
 }
