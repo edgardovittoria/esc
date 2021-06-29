@@ -30,6 +30,7 @@ public class NotificaService {
 	public NotificaService(ElementiPrenotazioneFactory factoryStatiNotifiche) {
 		setFactoryStatiNotifiche(factoryStatiNotifiche);
 		setNotifica(new Notifica());
+		setStatoNotifica();
 		
 	}
 	
