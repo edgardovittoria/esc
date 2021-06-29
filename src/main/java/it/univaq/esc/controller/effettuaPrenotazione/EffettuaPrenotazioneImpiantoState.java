@@ -154,6 +154,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 		for (UtentePolisportiva invitato : nuovoAppuntamento.getInvitati()) {
 			NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
+			notifica.setStatoNotifica(TipiPrenotazione.IMPIANTO.toString());
 			notifica.setDestinatario(invitato);
 			notifica.setEvento(prenotazioneInAtto);
 			notifica.setLetta(false);

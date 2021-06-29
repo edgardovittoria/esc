@@ -200,6 +200,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	private void impostaNelSistemaNotificaPerInvitatoAlCorso(UtentePolisportiva invitato, Prenotazione corso) {
 		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
+		notifica.setStatoNotifica(TipiPrenotazione.CORSO.toString());
 		notifica.setDestinatario(invitato);
 		notifica.setEvento(corso);
 		notifica.setLetta(false);

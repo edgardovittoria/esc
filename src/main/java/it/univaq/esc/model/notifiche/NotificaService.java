@@ -32,7 +32,6 @@ public class NotificaService {
 	public NotificaService(Notifica notifica, ElementiPrenotazioneFactory factoryStatiNotifiche) {
 		setFactoryStatiNotifiche(factoryStatiNotifiche);
 		setNotifica(notifica);
-		setStatoNotifica();
 		
 	}
 	
@@ -76,11 +75,11 @@ public class NotificaService {
 	
 	public void setEvento(Notificabile evento) {
 		getNotifica().setEvento(evento);
-		setStatoNotifica();
+		setStatoNotifica((String)getEvento().getInfo().get("tipoPrenotazione"));
 	}
 	
-	protected void setStatoNotifica() {
-		this.statoNotifica = getFactoryStatiNotifiche().getStatoNotifica((String)getEvento().getInfo().get("tipoPrenotazione"));
+	public void setStatoNotifica(String tipoPrenotazione) {
+		this.statoNotifica = getFactoryStatiNotifiche().getStatoNotifica(tipoPrenotazione);
 				
 	}
 	

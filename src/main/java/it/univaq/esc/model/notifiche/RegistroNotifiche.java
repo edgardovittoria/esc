@@ -33,7 +33,6 @@ import lombok.Setter;
 @Setter(value = AccessLevel.PRIVATE)
 @DependsOn("beanUtil")
 public class RegistroNotifiche {
-	
 
 	@Getter(value = AccessLevel.PRIVATE)
 	private RegistroPrenotazioni registroPrenotazioni;
@@ -49,27 +48,31 @@ public class RegistroNotifiche {
 		popola();
 	}
 
-	
 	private void popola() {
 		List<NotificaService> listaNotifiche = new ArrayList<NotificaService>();
 		for (Notifica notifica : getNotificaRepository().findAll()) {
 			notifica.setEvento((Notificabile) getRegistroPrenotazioni().getPrenotazioneById(notifica.getIdEvento()));
-			
-			if(notifica.getEvento().getInfo().get("modalitaPrenotazione").equals(ModalitaPrenotazione.SINGOLO_UTENTE.toString())) {
-				ElementiPrenotazioneFactory factory = BeanUtil.getBean("ELEMENTI_PRENOTAZIONE_" + ModalitaPrenotazione.SINGOLO_UTENTE.toString(), ElementiPrenotazioneFactory.class);
+
+			if (notifica.getEvento().getInfo().get("modalitaPrenotazione")
+					.equals(ModalitaPrenotazione.SINGOLO_UTENTE.toString())) {
+				ElementiPrenotazioneFactory factory = BeanUtil.getBean(
+						"ELEMENTI_PRENOTAZIONE_" + ModalitaPrenotazione.SINGOLO_UTENTE.toString(),
+						ElementiPrenotazioneFactory.class);
 				NotificaService notificaService = factory.getNotifica(notifica);
-				
+				notificaService.setStatoNotifica((String) notifica.getEvento().getInfo().get("tipoPrenotazione"));
+				listaNotifiche.add(notificaService);
+			} else {
+				ElementiPrenotazioneFactory factory = BeanUtil.getBean(
+						"ELEMENTI_PRENOTAZIONE_" + ModalitaPrenotazione.SQUADRA.toString(),
+						ElementiPrenotazioneFactory.class);
+				NotificaSquadraService notificaService = (NotificaSquadraService) factory.getNotifica(notifica);
+				notificaService.setStatoNotifica((String) notifica.getEvento().getInfo().get("tipoPrenotazione"));
+
 				listaNotifiche.add(notificaService);
 			}
-			else {
-				ElementiPrenotazioneFactory factory = BeanUtil.getBean("ELEMENTI_PRENOTAZIONE_" + ModalitaPrenotazione.SQUADRA.toString(), ElementiPrenotazioneFactory.class);
-				NotificaSquadraService notificaService = (NotificaSquadraService)factory.getNotifica(notifica);
-				
-				listaNotifiche.add(notificaService);
-			}
-		
+
 		}
-		
+
 		setListaNotifiche(listaNotifiche);
 	}
 
@@ -93,16 +96,16 @@ public class RegistroNotifiche {
 		Notifica notifica = notificaDaAggiornare.getNotifica();
 		getNotificaRepository().save(notifica);
 	}
-	
+
 	public NotificaService getNotificaById(Integer idNotifica) {
-		for(NotificaService notifica : getListaNotifiche()) {
-			if(notifica.getIdNotifica() == idNotifica) {
+		for (NotificaService notifica : getListaNotifiche()) {
+			if (notifica.getIdNotifica() == idNotifica) {
 				return notifica;
 			}
 		}
 		return null;
 	}
-	
+
 	public void impostaNotificaComeLetta(NotificaService notifica) {
 		notifica.setLetta(true);
 		aggiornaNotificaSuDatabase(notifica);
