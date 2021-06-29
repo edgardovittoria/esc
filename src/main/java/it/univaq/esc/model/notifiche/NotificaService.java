@@ -102,5 +102,9 @@ public class NotificaService {
 	public String getModalitaNotifica() {
 		return ModalitaPrenotazione.SINGOLO_UTENTE.toString();
 	}
+	
+	public void impostaNotifica(Notifica notifica) {
+		setNotifica(notifica);
+	}
 }
 

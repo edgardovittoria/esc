@@ -45,7 +45,7 @@ public class TestPersistenzaPrenotazioneConAppuntamenti {
 		
 		System.out.println("id appuntamento prima del salvataggio: " + appuntamento.getIdAppuntamento());
 		
-		getRegistroAppuntamenti().salvaAppuntamento(appuntamento);
+		getRegistroAppuntamenti().salva(appuntamento);
 		
 		//Inserire un assert da verificare.
 		

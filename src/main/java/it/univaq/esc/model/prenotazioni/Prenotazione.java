@@ -107,5 +107,7 @@ public class Prenotazione extends Notificabile {
 		}
 		return false;
 	}
+	
+	
 
 }

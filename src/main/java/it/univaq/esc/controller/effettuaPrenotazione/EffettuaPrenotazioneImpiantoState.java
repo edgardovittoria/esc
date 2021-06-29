@@ -229,7 +229,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 						getRegistroUtenti().trovaUtenteInBaseAllaSua(emailPartecipante));
 			}
 
-			getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
+			getRegistroAppuntamenti().aggiorna(appuntamento);
 			// this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 			AppuntamentoDTO appuntamentoDTO = getMapperFactory()
 					.getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);

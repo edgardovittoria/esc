@@ -58,13 +58,13 @@ public class RegistroNotifiche {
 			if(notifica.getEvento().getInfo().get("modalitaPrenotazione").equals(ModalitaPrenotazione.SINGOLO_UTENTE.toString())) {
 				ElementiPrenotazioneFactory factory = BeanUtil.getBean("ELEMENTI_PRENOTAZIONE_" + ModalitaPrenotazione.SINGOLO_UTENTE.toString(), ElementiPrenotazioneFactory.class);
 				NotificaService notificaService = factory.getNotifica();
-				notificaService.impostaParametri(notifica);
+				notificaService.impostaNotifica(notifica);
 				listaNotifiche.add(notificaService);
 			}
 			else {
 				ElementiPrenotazioneFactory factory = BeanUtil.getBean("ELEMENTI_PRENOTAZIONE_" + ModalitaPrenotazione.SQUADRA.toString(), ElementiPrenotazioneFactory.class);
 				NotificaSquadraService notificaService = (NotificaSquadraService)factory.getNotifica();
-				notificaService.impostaParametri(notifica);
+				notificaService.impostaNotifica(notifica);
 				listaNotifiche.add(notificaService);
 			}
 		

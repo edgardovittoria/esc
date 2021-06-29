@@ -26,4 +26,7 @@ public class AppuntamentoLezione extends AppuntamentoSingoliPartecipanti{
 		return getIstruttore().getNominativoCompleto();
 	}
 	
+	public void siAggiungeAlCalendarioDellIstruttoreRelativo() {
+		getIstruttore().comeIstruttore().segnaInAgendaIl(this);
+	}
 }

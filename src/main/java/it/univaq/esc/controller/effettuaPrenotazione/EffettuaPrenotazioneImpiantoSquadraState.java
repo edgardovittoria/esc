@@ -245,7 +245,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 			appuntamento.confermaAppuntamento();
 
 		}
-		this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
+		this.getRegistroAppuntamenti().aggiorna(appuntamento);
 
 		return partecipanteAggiunto;
 	}

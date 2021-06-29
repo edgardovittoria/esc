@@ -48,6 +48,10 @@ public class AppuntamentoCorso extends AppuntamentoSingoliPartecipanti {
 	public void assegna(UtentePolisportiva istruttore) {
 		setIstruttore(istruttore);
 	}
+	
+	public void siAggiungeAlCalendarioDellIstruttoreRelativo() {
+		getIstruttore().comeIstruttore().segnaInAgendaIl(this);
+	}
 }
 
 

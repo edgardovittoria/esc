@@ -41,9 +41,8 @@ public class RegistroUtentiPolisportiva {
 	}
 
 	/**
-	 * Viene invocato nel costruttore per popolare
-	 * il registro con tutti gli utenti presenti nel database, popolando anche
-	 * i rispettivi calendari
+	 * Viene invocato nel costruttore per popolare il registro con tutti gli utenti
+	 * presenti nel database, popolando anche i rispettivi calendari
 	 */
 	private void popola() {
 		this.setListaUtentiPolisportiva(this.utentiRepository.findAll());
@@ -51,7 +50,7 @@ public class RegistroUtentiPolisportiva {
 		popolaCalendarioIstruttori();
 		popolaCalendarioManutentori();
 	}
-	
+
 	private void popolaCalendarioSportivi() {
 		for (UtentePolisportiva utente : getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO)) {
 			List<Appuntamento> listaAppuntamenti = getRegistroAppuntamenti().getAppuntamentiPerPartecipante(utente);
@@ -63,7 +62,7 @@ public class RegistroUtentiPolisportiva {
 			}
 		}
 	}
-	
+
 	private void popolaCalendarioIstruttori() {
 		for (UtentePolisportiva utente : getListaDegliUtentiCheHanno(TipoRuolo.ISTRUTTORE)) {
 			List<Appuntamento> listaLezioni = getRegistroAppuntamenti().getListaLezioniPerIstruttore(utente);
@@ -74,7 +73,7 @@ public class RegistroUtentiPolisportiva {
 			}
 		}
 	}
-	
+
 	private void popolaCalendarioManutentori() {
 		for (UtentePolisportiva utente : getListaDegliUtentiCheHanno(TipoRuolo.MANUTENTORE)) {
 			List<Appuntamento> listaAppuntamenti = getRegistroAppuntamenti().getListaAppuntamentiManutentore(utente);
@@ -87,22 +86,13 @@ public class RegistroUtentiPolisportiva {
 	}
 
 	/**
-	 * Registra un nuovo utente nel sistema della polisportiva (registro e
-	 * database)
+	 * Registra un nuovo utente nel sistema della polisportiva (registro e database)
 	 * 
 	 * @param utente utente da registrare
 	 */
 	public void registraNelSistemaIl(UtentePolisportiva nuovoUtente) {
-		registraIl(nuovoUtente);
-		salvaSulDatabaseIl(nuovoUtente);
-	}
-	
-	private void registraIl(UtentePolisportiva nuovoUtente) {
 		getListaUtentiPolisportiva().add(nuovoUtente);
-	}
-	
-	private void salvaSulDatabaseIl(UtentePolisportiva nuovoUtenteRegistrato) {
-		getUtentiRepository().save(nuovoUtenteRegistrato);
+		getUtentiRepository().save(nuovoUtente);
 	}
 
 	/**
@@ -137,22 +127,17 @@ public class RegistroUtentiPolisportiva {
 		return listaUtentiByRuolo;
 	}
 
-	
 	public void eliminaDalSistemaIl(UtentePolisportiva utenteDaEliminare) {
 		rimuovi(utenteDaEliminare);
-		eliminaDalDatabaseIl(utenteDaEliminare);
+		getUtentiRepository().delete(utenteDaEliminare);
 	}
-	
+
 	private void rimuovi(UtentePolisportiva utenteDaEliminare) {
-		for(UtentePolisportiva utente : getListaUtentiPolisportiva()) {
-			if(utente.isEqual(utenteDaEliminare)) {
+		for (UtentePolisportiva utente : getListaUtentiPolisportiva()) {
+			if (utente.isEqual(utenteDaEliminare)) {
 				getListaUtentiPolisportiva().remove(utente);
 			}
 		}
-	}
-	
-	private void eliminaDalDatabaseIl(UtentePolisportiva utenteDaEliminare) {
-		getUtentiRepository().delete(utenteDaEliminare);
 	}
 
 	/**
@@ -163,8 +148,8 @@ public class RegistroUtentiPolisportiva {
 	 *         parametro
 	 */
 	public List<UtentePolisportiva> getListaDegliIstruttoriDello(Sport sportDiCuiTrovareGliIstruttori) {
-		return this.filtraIstruttoriPerSport(this.getListaDegliUtentiCheHanno(TipoRuolo.ISTRUTTORE),
-				sportDiCuiTrovareGliIstruttori);
+		List<UtentePolisportiva> listaIistruttoriPolisportiva = getListaDegliUtentiCheHanno(TipoRuolo.ISTRUTTORE);
+		return filtraListaIstruttoriPerSportInsegnato(listaIistruttoriPolisportiva, sportDiCuiTrovareGliIstruttori);
 	}
 
 	/**
@@ -178,15 +163,14 @@ public class RegistroUtentiPolisportiva {
 	 * @return lista dei soli istruttori, appartenenti alla lista passata come
 	 *         parametro, associati allo sport passato come parametro.
 	 */
-	public List<UtentePolisportiva> filtraIstruttoriPerSport(List<UtentePolisportiva> listaIstruttoriDaFiltrare,
-			Sport sportDiCuiTrovareGliIstruttori) {
+	public List<UtentePolisportiva> filtraListaIstruttoriPerSportInsegnato(
+			List<UtentePolisportiva> listaIstruttoriDaFiltrare, Sport sportDiCuiTrovareGliIstruttori) {
+
 		List<UtentePolisportiva> istruttori = new ArrayList<UtentePolisportiva>();
 		for (UtentePolisportiva utente : listaIstruttoriDaFiltrare) {
-
 			if (utente.comeIstruttore().insegna(sportDiCuiTrovareGliIstruttori)) {
 				istruttori.add(utente);
 			}
-
 		}
 		return istruttori;
 	}
@@ -231,7 +215,7 @@ public class RegistroUtentiPolisportiva {
 			OrarioAppuntamento orarioAppuntamento) {
 		List<UtentePolisportiva> istruttori = new ArrayList<UtentePolisportiva>();
 		for (UtentePolisportiva utente : listaIstruttoriDaFiltrare) {
-			if (utente.comeIstruttore().isLiberoIl(orarioAppuntamento)) {
+			if (utente.comeIstruttore().isLiberoNel(orarioAppuntamento)) {
 				istruttori.add(utente);
 			}
 		}

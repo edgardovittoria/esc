@@ -183,29 +183,27 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 		for (AppuntamentoCorso app : (List<AppuntamentoCorso>) (List<?>) controller.getPrenotazioneInAtto()
 				.getListaAppuntamenti()) {
-			Calendario calendarioDaUnire = new Calendario();
-			calendarioDaUnire.aggiungiAppuntamento(app);
-			getRegistroImpianti().aggiornaCalendarioImpianto(app.getImpiantoPrenotato(), calendarioDaUnire);
-			getRegistroUtenti().aggiornaCalendarioIstruttore(calendarioDaUnire, app.getIstruttore());
-
+			app.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();
+			app.siAggiungeAlCalendarioDellIstruttoreRelativo();
 		}
-		/*
-		 * Creiamo le notifiche relative agli invitati, impostandole con tutti i dati
-		 * necessari.
-		 */
-		for (UtentePolisportiva invitato : ((AppuntamentoCorso) controller.getPrenotazioneInAtto()
-				.getListaAppuntamenti().get(0)).getInvitati()) {
+		impostaNelSistemaLeNotifichePerTuttiGliInvitatiAl(controller.getPrenotazioneInAtto());
 
-			NotificaService notifica = getElementiPrenotazioneFactory().getNotifica();
-			notifica.setDestinatario(invitato);
-			notifica.setEvento(controller.getPrenotazioneInAtto());
-			notifica.setLetta(false);
-			notifica.setMittente(controller.getSportivoPrenotante());
+	}
 
-			getRegistroNotifiche().salvaNotifica(notifica);
-
+	private void impostaNelSistemaLeNotifichePerTuttiGliInvitatiAl(Prenotazione nuovoCorso) {
+		for (UtentePolisportiva invitato : ((AppuntamentoCorso) nuovoCorso.getListaAppuntamenti().get(0))
+				.getInvitati()) {
+			impostaNelSistemaNotificaPerInvitatoAlCorso(invitato, nuovoCorso);
 		}
+	}
 
+	private void impostaNelSistemaNotificaPerInvitatoAlCorso(UtentePolisportiva invitato, Prenotazione corso) {
+		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica();
+		notifica.setDestinatario(invitato);
+		notifica.setEvento(corso);
+		notifica.setLetta(false);
+		notifica.setMittente(corso.getSportivoPrenotante());
+		getRegistroNotifiche().salvaNotifica(notifica);
 	}
 
 	@Override
@@ -218,16 +216,14 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	private List<UtentePolisportivaDTO> trovaSportiviLiberiInBaseA(Map<String, String> mappaOrario) {
-		OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
-		orarioAppuntamento.imposta(mappaOrario.get("oraInizio"), mappaOrario.get("oraFine"));
-
+		OrarioAppuntamento orarioAppuntamento = creaOrarioAppuntamentoDa(mappaOrario);
 		return getSportiviLiberiInBaseA(orarioAppuntamento);
 	}
 
 	@Override
 	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, Object identificativoPartecipante) {
 		String emailPartecipante = (String) identificativoPartecipante;
-		Prenotazione corsoPrenotazione = this.getRegistroPrenotazioni().getPrenotazioneById(idEvento);
+		Prenotazione corsoPrenotazione = getRegistroPrenotazioni().getPrenotazioneById(idEvento);
 		List<Appuntamento> listaAppuntamentiCorso = corsoPrenotazione.getListaAppuntamenti();
 
 		UtentePolisportiva nuovoPartecipante = getRegistroUtenti().trovaUtenteInBaseAllaSua(emailPartecipante);
@@ -248,19 +244,28 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 			}
 		}
 
-		for (Appuntamento appuntamento : listaAppuntamentiCorso) {
-			getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
-		}
-
-		Calendario calendarioSportivo = new Calendario();
-		for (Appuntamento appuntamento : listaAppuntamentiCorso) {
-			calendarioSportivo.aggiungiAppuntamento(appuntamento);
-		}
-		getRegistroUtenti().aggiornaCalendarioSportivo(calendarioSportivo, nuovoPartecipante);
+		salvaModificheAlla(listaAppuntamentiCorso);
+		aggiornaCalendarioNuovoPartecipanteConGliAppuntamentiDelCorso(nuovoPartecipante, listaAppuntamentiCorso);
 
 		PrenotazioneDTO prenotazioneDTO = getMapperFactory().getPrenotazioneMapper()
 				.convertiCorsoInPrenotazioneDTO(corsoPrenotazione);
 		return prenotazioneDTO;
+	}
+
+	private void salvaModificheAlla(List<Appuntamento> listaAppuntamentiDelCorso) {
+		for (Appuntamento appuntamento : listaAppuntamentiDelCorso) {
+			getRegistroAppuntamenti().aggiorna(appuntamento);
+		}
+	}
+
+	private void aggiornaCalendarioNuovoPartecipanteConGliAppuntamentiDelCorso(UtentePolisportiva nuovoPartecipante,
+			List<Appuntamento> appuntamentiCorso) {
+		Calendario calendarioSportivo = new Calendario();
+		for (Appuntamento appuntamento : appuntamentiCorso) {
+			calendarioSportivo.aggiungiAppuntamento(appuntamento);
+		}
+		nuovoPartecipante.comeSportivo().segnaInAgendaGliAppuntamentiDel(calendarioSportivo);
+
 	}
 
 	@Override

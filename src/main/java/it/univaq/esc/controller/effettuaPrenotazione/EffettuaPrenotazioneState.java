@@ -373,7 +373,7 @@ public abstract class EffettuaPrenotazioneState {
 			List<UtentePolisportiva> listaIstruttori) {
 
 		Sport sportPerCuiFiltrare = this.getRegistroSport().getSportByNome(nomeSport);
-		return this.getRegistroUtenti().filtraIstruttoriPerSport(listaIstruttori, sportPerCuiFiltrare);
+		return this.getRegistroUtenti().filtraListaIstruttoriPerSportInsegnato(listaIstruttori, sportPerCuiFiltrare);
 
 	}
 
@@ -434,6 +434,12 @@ public abstract class EffettuaPrenotazioneState {
 		LocalDateTime orario = LocalDateTime.parse(stringaOrario,
 				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
 		return orario;
+	}
+	
+	protected OrarioAppuntamento creaOrarioAppuntamentoDa(Map<String, String> mappaOrario) {
+		OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
+		orarioAppuntamento.imposta(mappaOrario.get("oraInizio"), mappaOrario.get("oraFine"));
+		return orarioAppuntamento;
 	}
 
 }

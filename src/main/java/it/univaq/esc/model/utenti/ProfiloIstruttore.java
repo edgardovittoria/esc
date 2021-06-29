@@ -80,7 +80,7 @@ public class ProfiloIstruttore extends ProfiloUtente{
 		return !getCalendarioLezioni().sovrapponeA(calendario);
 	}
 	
-	public boolean isLiberoIl(OrarioAppuntamento orarioAppuntamento) {
+	public boolean isLiberoNel(OrarioAppuntamento orarioAppuntamento) {
 		return !getCalendarioLezioni().sovrapponeA(orarioAppuntamento);
 	}
 	

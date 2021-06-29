@@ -54,12 +54,12 @@ public class RegistroAppuntamenti {
 
 	}
 
-	public void salvaAppuntamento(Appuntamento appuntamento) {
+	public void salva(Appuntamento appuntamento) {
 		this.getListaAppuntamenti().add(appuntamento);
 		this.getAppuntamentoRepository().save(appuntamento);
 	}
 
-	public void aggiornaAppuntamento(Appuntamento appuntamento) {
+	public void aggiorna(Appuntamento appuntamento) {
 		this.getAppuntamentoRepository().save(appuntamento);
 	}
 
@@ -325,7 +325,7 @@ public class RegistroAppuntamenti {
 			appuntamento.confermaAppuntamento();
 			appuntamento.getUtentiPartecipanti().forEach((partecipante) -> appuntamento
 					.aggiungiQuotaPartecipazione(this.creaQuotaPartecipazione(appuntamento, partecipante)));
-			aggiornaAppuntamento(appuntamento);
+			aggiorna(appuntamento);
 		}
 		
 	}
