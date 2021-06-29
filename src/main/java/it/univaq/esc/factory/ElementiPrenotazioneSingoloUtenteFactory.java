@@ -8,6 +8,7 @@ import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneCorsoSt
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneImpiantoState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneLezioneState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneState;
+import it.univaq.esc.model.notifiche.Notifica;
 import it.univaq.esc.model.notifiche.NotificaCorsoState;
 import it.univaq.esc.model.notifiche.NotificaImpiantoState;
 import it.univaq.esc.model.notifiche.NotificaService;
@@ -40,8 +41,8 @@ public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazio
 	}
 
 	@Override
-	public NotificaService getNotifica() {
-		return new NotificaService(this);
+	public NotificaService getNotifica(Notifica notifica) {
+		return new NotificaService(notifica, this);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneImpiantoSquadraState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneState;
+import it.univaq.esc.model.notifiche.Notifica;
 import it.univaq.esc.model.notifiche.NotificaImpiantoSquadraState;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.NotificaSquadraService;
@@ -34,10 +35,7 @@ public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFact
 		}
 	}
 
-	@Override
-	public NotificaService getNotifica() {
-		return new NotificaSquadraService(this);
-	}
+
 
 	@Override
 	public NotificaState getStatoNotifica(String tipoPrenotazione) {
@@ -70,6 +68,13 @@ public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFact
 			return null;
 
 		}
+	}
+
+
+
+	@Override
+	public NotificaService getNotifica(Notifica notifica) {
+		return new NotificaSquadraService(notifica, this);
 	}
 
 }

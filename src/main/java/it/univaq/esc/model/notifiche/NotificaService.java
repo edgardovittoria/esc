@@ -27,12 +27,7 @@ public class NotificaService {
 	private NotificaState statoNotifica;
 	
 	
-	public NotificaService(ElementiPrenotazioneFactory factoryStatiNotifiche) {
-		setFactoryStatiNotifiche(factoryStatiNotifiche);
-		setNotifica(new Notifica());
-		setStatoNotifica();
-		
-	}
+
 	
 	public NotificaService(Notifica notifica, ElementiPrenotazioneFactory factoryStatiNotifiche) {
 		setFactoryStatiNotifiche(factoryStatiNotifiche);
@@ -93,19 +88,12 @@ public class NotificaService {
 		return getNotifica().getIdNotifica();
 	}
 	
-	public void impostaParametri(Notifica notifica) {
-		setDestinatario(notifica.getDestinatario());
-		setMittente(notifica.getMittente());
-		setEvento(notifica.getEvento());
-		setLetta(notifica.isLetta());
-	}
+
 	
 	public String getModalitaNotifica() {
 		return ModalitaPrenotazione.SINGOLO_UTENTE.toString();
 	}
 	
-	public void impostaNotifica(Notifica notifica) {
-		setNotifica(notifica);
-	}
+	
 }
 

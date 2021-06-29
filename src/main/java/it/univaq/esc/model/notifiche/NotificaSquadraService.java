@@ -17,15 +17,10 @@ import lombok.Setter;
 @Getter @Setter(value = AccessLevel.PRIVATE)
 public class NotificaSquadraService extends NotificaService{
 
-	public NotificaSquadraService(ElementiPrenotazioneFactory factoryStatiNotifiche) {
-		super(factoryStatiNotifiche);		
-		setNotifica(new NotificaSquadra());
-	}
-	
-	public NotificaSquadraService(NotificaSquadra notifica, ElementiPrenotazioneFactory factoryStatiNotifiche) {
+	public NotificaSquadraService(Notifica notifica, ElementiPrenotazioneFactory factoryStatiNotifiche) {
 		super(notifica, factoryStatiNotifiche);
-		
 	}
+
 	
 	public void setSquadraDelMittente(Squadra squadraDelMittente) {
 		if(getNotifica() instanceof NotificaSquadra)
@@ -51,13 +46,6 @@ public class NotificaSquadraService extends NotificaService{
 		return null;
 	}
 	
-	@Override
-	public void impostaParametri(Notifica notifica) {
-		super.impostaParametri(notifica);
-		NotificaSquadra notificaSquadra = (NotificaSquadra) notifica;
-		setSquadraDelDestinatario(notificaSquadra.getSquadraDelDestinatario());
-		setSquadraDelMittente(notificaSquadra.getSquadraDelMittente());
-	}
 	
 	@Override
 	public String getModalitaNotifica() {

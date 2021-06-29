@@ -32,6 +32,7 @@ import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.model.notifiche.Notifica;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.utenti.RegistroSquadre;
@@ -152,7 +153,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 			AppuntamentoImpianto nuovoAppuntamento, Prenotazione prenotazioneInAtto) {
 
 		for (UtentePolisportiva invitato : nuovoAppuntamento.getInvitati()) {
-			NotificaService notifica = getElementiPrenotazioneFactory().getNotifica();
+			NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
 			notifica.setDestinatario(invitato);
 			notifica.setEvento(prenotazioneInAtto);
 			notifica.setLetta(false);
