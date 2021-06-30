@@ -1,6 +1,5 @@
 package it.univaq.esc.model.notifiche;
 
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

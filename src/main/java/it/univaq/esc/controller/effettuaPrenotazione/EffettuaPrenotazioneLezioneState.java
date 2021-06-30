@@ -1,7 +1,5 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
-import java.time.LocalDateTime;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,7 +112,8 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 		appuntamento.setDescrizioneEventoPrenotato(descrizioneSpecifica);
 		appuntamento.setCalcolatoreCosto(calcolatoreCosto);
 
-		appuntamento.getOrarioAppuntamento().imposta(orario.getDataPrenotazione(), orario.getOraInizio(), orario.getOraFine());
+		appuntamento.getOrarioAppuntamento().imposta(orario.getDataPrenotazione(), orario.getOraInizio(),
+				orario.getOraFine());
 
 		IstruttoreSelezionato istruttoreSelezionato = null;
 		for (IstruttoreSelezionato istruttore : formDati.getIstruttori()) {
@@ -165,13 +164,13 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 */
 	@Override
 	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, Object identificativoPartecipante) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandler controller) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 

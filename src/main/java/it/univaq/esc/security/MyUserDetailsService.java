@@ -5,19 +5,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
-
-import javassist.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,8 +38,8 @@ public class MyUserDetailsService implements UserDetailsService{
 
     }
     
-    private List getAuthority(UtentePolisportiva user) {
-        Set authorities = new HashSet<>();
+    private List<SimpleGrantedAuthority> getAuthority(UtentePolisportiva user) {
+        Set<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
 		user.getRuoli().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
 		});

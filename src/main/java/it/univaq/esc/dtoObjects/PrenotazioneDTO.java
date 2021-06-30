@@ -5,10 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.Prenotazione;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

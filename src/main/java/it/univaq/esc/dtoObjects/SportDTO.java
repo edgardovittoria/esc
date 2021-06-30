@@ -1,6 +1,5 @@
 package it.univaq.esc.dtoObjects;
 
-import it.univaq.esc.model.Sport;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

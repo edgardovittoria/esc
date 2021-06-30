@@ -1,7 +1,5 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +72,6 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 		List<PrenotazioneDTO> listaCorsi = new ArrayList<PrenotazioneDTO>();
 		for (Prenotazione prenotazione : corsiDisponibili) {
-			List<Appuntamento> appuntamentiPrenotazione = prenotazione.getListaAppuntamenti();
 
 			PrenotazioneDTO prenotazioneDTO = getMapperFactory().getPrenotazioneMapper()
 					.convertiCorsoInPrenotazioneDTO(prenotazione);

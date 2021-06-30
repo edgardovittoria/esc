@@ -23,7 +23,6 @@ import it.univaq.esc.security.AuthenticationResponse;
 import it.univaq.esc.security.JwtUtil;
 import it.univaq.esc.security.MyUserDetailsService;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

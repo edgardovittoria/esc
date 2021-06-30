@@ -17,7 +17,6 @@ import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoCorso;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
 import it.univaq.esc.model.prenotazioni.AppuntamentoLezione;
-import it.univaq.esc.model.prenotazioni.AppuntamentoSingoliPartecipanti;
 import it.univaq.esc.utility.BeanUtil;
 
 @Component(value = "ELEMENTI_PRENOTAZIONE_SINGOLO_UTENTE")

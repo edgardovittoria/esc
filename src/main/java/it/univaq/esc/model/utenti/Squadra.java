@@ -1,7 +1,5 @@
 package it.univaq.esc.model.utenti;
 
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +15,6 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-
-import com.sun.xml.fastinfoset.algorithm.IntegerEncodingAlgorithm;
 
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;

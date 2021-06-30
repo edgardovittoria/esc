@@ -1,17 +1,11 @@
 package it.univaq.esc.model.catalogoECosti;
 
-import static org.mockito.Mockito.RETURNS_SMART_NULLS;
-
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.model.Sport;
-import it.univaq.esc.repository.ImpiantoRepository;
 import it.univaq.esc.repository.PrenotabileDescrizioneRepository;
 import lombok.AccessLevel;
 import lombok.Getter;

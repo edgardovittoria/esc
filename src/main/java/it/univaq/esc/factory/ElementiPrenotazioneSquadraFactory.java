@@ -13,7 +13,6 @@ import it.univaq.esc.model.notifiche.NotificaSquadraService;
 import it.univaq.esc.model.notifiche.NotificaState;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpiantoSquadra;
-import it.univaq.esc.model.prenotazioni.AppuntamentoSquadra;
 import it.univaq.esc.utility.BeanUtil;
 
 @Component(value = "ELEMENTI_PRENOTAZIONE_SQUADRA")

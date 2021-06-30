@@ -1,7 +1,5 @@
 package it.univaq.esc.model.notifiche;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 

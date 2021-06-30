@@ -1,8 +1,6 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,10 +10,10 @@ import java.util.Map;
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
-import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
-import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
+import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
+import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.RegistroImpianti;

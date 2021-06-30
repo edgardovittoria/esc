@@ -1,7 +1,5 @@
 package it.univaq.esc.controller.notifiche;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,52 +32,50 @@ import lombok.Setter;
 @RestController
 @RequestMapping("/notifiche")
 @NoArgsConstructor
-@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE)
+@Getter(value = AccessLevel.PRIVATE)
+@Setter(value = AccessLevel.PRIVATE)
 public class GestioneNotificheHandler {
 
 	@Resource(name = "MAPPER_SINGOLO_UTENTE")
 	private MapperFactory mapperFactory;
-	
+
 	@Autowired
 	private FactoryDettagliNotificaStrategy factoryDettagliNotificaStrategy;
-	
+
 	@Autowired
 	private RegistroNotifiche registroNotifiche;
-	
+
 	@Autowired
 	private RegistroUtentiPolisportiva RegistroUtentiPolisportiva;
-	
-	
+
 	@GetMapping("/dettagliNotifica")
 	@CrossOrigin
-	public @ResponseBody NotificabileDTO getDettagliNotifica(@RequestParam(name = "idEvento") Integer idEvento, @RequestParam(name = "tipoEventoNotificabile") String tipoEventoNotificabile) {
-		
+	public @ResponseBody NotificabileDTO getDettagliNotifica(@RequestParam(name = "idEvento") Integer idEvento,
+			@RequestParam(name = "tipoEventoNotificabile") String tipoEventoNotificabile) {
+
 		return factoryDettagliNotificaStrategy.getStrategy(tipoEventoNotificabile).getDettagliNotifica(idEvento);
-		
+
 	}
-	
-	
+
 	@PatchMapping("/impostaNotificaLetta")
 	@CrossOrigin
 	public @ResponseBody NotificaDTO setNotificaLetta(@RequestBody Map<String, Object> mappaDati) {
 		Integer idNotifica = (Integer) mappaDati.get("idNotifica");
 		NotificaService notifica = getRegistroNotifiche().getNotificaById(idNotifica);
-		
+
 		impostaMapperFactory(notifica.getModalitaNotifica());
-		
-		if(notifica != null) {
-			getRegistroNotifiche().impostaNotificaComeLetta(notifica);
-			NotificaDTO notificaDTO = getMapperFactory().getNotificaMapper().convertiInNotificaDTO(notifica);
-								
-			return notificaDTO;
-		}
-		return null;
+
+		getRegistroNotifiche().impostaNotificaComeLetta(notifica);
+		NotificaDTO notificaDTO = getMapperFactory().getNotificaMapper().convertiInNotificaDTO(notifica);
+
+		return notificaDTO;
+
 	}
-	
+
 	private void impostaMapperFactory(String modalitaPrenotazione) {
 		setMapperFactory(BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class));
 	}
-	
+
 	@GetMapping("/notificheUtente")
 	@CrossOrigin
 	public @ResponseBody List<NotificaDTO> getNotificheUtente(@RequestParam(name = "email") String email) {
@@ -98,6 +94,5 @@ public class GestioneNotificheHandler {
 
 		return notificheDtos;
 	}
-	
-	
+
 }

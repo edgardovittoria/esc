@@ -23,7 +23,6 @@ import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
-import it.univaq.esc.utility.BeanUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -90,10 +89,6 @@ public class GestioneProfiloHandler {
 		}
 
 		return listaSquadreDTO;
-	}
-	
-	private void impostaMapperFactory(String modalitaPrenotazione) {
-		setMapperFactory(BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class));
 	}
 
 }
