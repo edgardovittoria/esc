@@ -314,32 +314,38 @@ public abstract class EffettuaPrenotazioneState {
 	 *         e orario.
 	 */
 	protected List<ImpiantoDTO> getImpiantiPrenotabiliInBaseA(Map<String, Object> datiInseritiInCompilazione) {
+		List<Impianto> listaImpiantiDisponibili = trovaImpiantiPrenotabiliInBaseA(datiInseritiInCompilazione);
+		List<ImpiantoDTO> listaImpiantiDisponibiliInFormatoDTO = convertiInDTOLa(listaImpiantiDisponibili);
+		return listaImpiantiDisponibiliInFormatoDTO;
+	}
+
+	private List<Impianto> trovaImpiantiPrenotabiliInBaseA(Map<String, Object> datiInseritiInCompilazione) {
 		List<Impianto> listaImpiantiDisponibili = this.getRegistroImpianti().getListaImpiantiPolisportiva();
 		if (datiInseritiInCompilazione.containsKey("orario")) {
-			Map<String, String> orario = (HashMap<String, String>) datiInseritiInCompilazione.get("orario");
-			OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
-			orarioAppuntamento.imposta(orario.get("oraInizio"), orario.get("oraFine"));
-			listaImpiantiDisponibili = this.getRegistroImpianti().filtraImpiantiDisponibiliPerOrario(orarioAppuntamento,
-					listaImpiantiDisponibili);
-
-			if (datiInseritiInCompilazione.containsKey("sport")) {
-				listaImpiantiDisponibili = this.filtraImpiantiPerSport((String) datiInseritiInCompilazione.get("sport"),
-						listaImpiantiDisponibili);
-
-			}
-		} else if (datiInseritiInCompilazione.containsKey("sport")) {
-			listaImpiantiDisponibili = this.filtraImpiantiPerSport((String) datiInseritiInCompilazione.get("sport"),
+			listaImpiantiDisponibili = filtraListaImpiantiInBaseAMappaOrario(listaImpiantiDisponibili,
+					(Map<String, String>) datiInseritiInCompilazione.get("orario"));
+		}
+		if (datiInseritiInCompilazione.containsKey("sport")) {
+			listaImpiantiDisponibili = filtraImpiantiPerSport((String) datiInseritiInCompilazione.get("sport"),
 					listaImpiantiDisponibili);
 		}
+		return listaImpiantiDisponibili;
+	}
 
+	private List<Impianto> filtraListaImpiantiInBaseAMappaOrario(List<Impianto> listaImpianti,
+			Map<String, String> mappaOrario) {
+		OrarioAppuntamento orarioAppuntamento = creaOrarioAppuntamentoDa(mappaOrario);
+		List<Impianto> listaImpiantiFiltrata = getRegistroImpianti()
+				.filtraImpiantiDisponibiliPerOrario(orarioAppuntamento, listaImpianti);
+		return listaImpiantiFiltrata;
+	}
+
+	private List<ImpiantoDTO> convertiInDTOLa(List<Impianto> listaImpianti) {
 		List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
-		for (Impianto impianto : listaImpiantiDisponibili) {
-
+		for (Impianto impianto : listaImpianti) {
 			ImpiantoDTO impiantoDTO = getMapperFactory().getImpiantoMapper().convertiInImpiantoDTO(impianto);
 			listaImpiantiDTODisponibili.add(impiantoDTO);
-
 		}
-
 		return listaImpiantiDTODisponibili;
 	}
 
@@ -433,7 +439,7 @@ public abstract class EffettuaPrenotazioneState {
 				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
 		return orario;
 	}
-	
+
 	protected OrarioAppuntamento creaOrarioAppuntamentoDa(Map<String, String> mappaOrario) {
 		OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
 		orarioAppuntamento.imposta(mappaOrario.get("oraInizio"), mappaOrario.get("oraFine"));
