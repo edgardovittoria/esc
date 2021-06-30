@@ -393,33 +393,43 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return lista dei soli istruttori associati allo sport scelto, liberi
 	 *         nell'orario selezionato in fase di prenotazione.
 	 */
-	protected List<UtentePolisportivaDTO> getIstruttoriDTODisponibili(Map<String, Object> dati) {
-		List<UtentePolisportiva> istruttoriDisponibili = this.getRegistroUtenti()
+	protected List<UtentePolisportivaDTO> getIstruttoriDTODisponibili(Map<String, Object> datiCompilati) {
+
+		List<UtentePolisportiva> istruttoriDisponibili = trovaIstruttoriDisponibiliInBaseAllaMappaDei(datiCompilati);
+		List<UtentePolisportivaDTO> istruttoriDisponibiliInFormatoDTO = convertiInDTOGli(istruttoriDisponibili);
+		return istruttoriDisponibiliInFormatoDTO;
+	}
+
+	private List<UtentePolisportiva> trovaIstruttoriDisponibiliInBaseAllaMappaDei(Map<String, Object> datiCompilati) {
+		List<UtentePolisportiva> istruttoriDisponibili = getRegistroUtenti()
 				.getListaDegliUtentiCheHanno(TipoRuolo.ISTRUTTORE);
-		if (dati.containsKey("orario")) {
-			Map<String, String> orario = (HashMap<String, String>) dati.get("orario");
-			OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
-			orarioAppuntamento.imposta(orario.get("oraInizio"), orario.get("oraFine"));
-			istruttoriDisponibili = getRegistroUtenti().filtraIstruttorePerOrario(istruttoriDisponibili,
-					orarioAppuntamento);
-
-			if (dati.containsKey("sport")) {
-				istruttoriDisponibili = this.filtraIstruttoriPerSport((String) dati.get("sport"),
-						istruttoriDisponibili);
-
-			}
-		} else if (dati.containsKey("sport")) {
-			istruttoriDisponibili = this.filtraIstruttoriPerSport((String) dati.get("sport"), istruttoriDisponibili);
+		if (datiCompilati.containsKey("orario")) {
+			istruttoriDisponibili = filtraListaIstruttoriInBaseAMappaOrario(istruttoriDisponibili,
+					(Map<String, String>) datiCompilati.get("orario"));
 		}
-		List<UtentePolisportivaDTO> listaIstruttoriDTODisponibili = new ArrayList<UtentePolisportivaDTO>();
-		for (UtentePolisportiva istruttore : istruttoriDisponibili) {
+		if (datiCompilati.containsKey("sport")) {
+			istruttoriDisponibili = filtraIstruttoriPerSport((String) datiCompilati.get("sport"),
+					istruttoriDisponibili);
+		}
+		return istruttoriDisponibili;
+	}
 
+	private List<UtentePolisportiva> filtraListaIstruttoriInBaseAMappaOrario(List<UtentePolisportiva> listaIstruttori,
+			Map<String, String> mappaOrario) {
+		OrarioAppuntamento orarioAppuntamento = creaOrarioAppuntamentoDa(mappaOrario);
+		List<UtentePolisportiva> listaIstruttoriFiltrataPerOrario = getRegistroUtenti()
+				.filtraIstruttorePerOrario(listaIstruttori, orarioAppuntamento);
+		return listaIstruttoriFiltrataPerOrario;
+	}
+
+	private List<UtentePolisportivaDTO> convertiInDTOGli(List<UtentePolisportiva> utentiPolisportiva){
+		List<UtentePolisportivaDTO> listaUtentiPolisportivaDTO = new ArrayList<UtentePolisportivaDTO>();
+		for (UtentePolisportiva utente : utentiPolisportiva){
 			UtentePolisportivaDTO istruttoreDTO = getMapperFactory().getUtenteMapper()
-					.convertiInUtentePolisportivaDTO(istruttore);
-			listaIstruttoriDTODisponibili.add(istruttoreDTO);
-
+					.convertiInUtentePolisportivaDTO(utente);
+			listaUtentiPolisportivaDTO.add(istruttoreDTO);
 		}
-		return listaIstruttoriDTODisponibili;
+		return listaUtentiPolisportivaDTO;
 	}
 
 	protected boolean aggiungiPartecipanteECreaQuotePartecipazione(Object partecipante, Appuntamento appuntamento) {
