@@ -50,7 +50,6 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtentiPolisportiva,
 			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
 			CatalogoPrenotabili catalogoPrenotabili, RegistroSquadre registroSquadre) {
-
 		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti,
 				registroPrenotazioni, catalogoPrenotabili, registroSquadre);
 	}
@@ -78,14 +77,11 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	 */
 	@Override
 	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
-
 		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
-
 			impostaAppuntamentoRelativoAOrarioNellaPrenotazione(controller.getPrenotazioneInAtto(), orario, formDati);
 		}
 		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper()
 				.convertiInPrenotazioneDTO(controller.getPrenotazioneInAtto());
-
 		return prenDTO;
 
 	}
