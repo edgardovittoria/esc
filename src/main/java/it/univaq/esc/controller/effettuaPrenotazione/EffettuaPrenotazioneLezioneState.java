@@ -58,7 +58,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	public Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(
 			EffettuaPrenotazioneHandler controller) {
 		Map<String, Object> mappaValori = new HashMap<String, Object>();
-		mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
+		mappaValori.put("sportPraticabili", this.getSportPraticabiliNellaPolisportivaInFormatoDTO());
 
 		return mappaValori;
 	}
@@ -68,7 +68,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 * nella controparte software lato server.
 	 */
 	@Override
-	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
+	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
 
 		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
 
@@ -134,7 +134,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 * sta gestendo, u na volta che questa è stata confermata.
 	 */
 	@Override
-	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandler controller) {
+	public void aggiornaElementiLegatiAllaPrenotazioneConfermata(EffettuaPrenotazioneHandler controller) {
 		for (AppuntamentoLezione app : (List<AppuntamentoLezione>) (List<?>) controller.getPrenotazioneInAtto()
 				.getListaAppuntamenti()) {
 			app.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();
@@ -149,9 +149,9 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 * della prenotazione di una Lezione.
 	 */
 	@Override
-	public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
+	public Map<String, Object> getDatiOpzioniPrenotazioneAggiornatiInBaseAllaMappa(Map<String, Object> dati) {
 		Map<String, Object> mappaDatiAggiornati = new HashMap<String, Object>();
-		mappaDatiAggiornati.put("impiantiDisponibili", this.getImpiantiPrenotabiliInBaseA(dati));
+		mappaDatiAggiornati.put("impiantiDisponibili", this.getListaDTOImpiantiPrenotabiliInBaseAMappa(dati));
 		mappaDatiAggiornati.put("istruttoriDisponibili", this.getIstruttoriDTODisponibili(dati));
 		return mappaDatiAggiornati;
 	}
@@ -166,7 +166,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	}
 
 	@Override
-	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandler controller) {
+	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(EffettuaPrenotazioneHandler controller) {
 
 		return null;
 	}

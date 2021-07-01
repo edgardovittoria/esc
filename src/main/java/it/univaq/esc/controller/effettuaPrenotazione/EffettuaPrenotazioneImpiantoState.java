@@ -63,8 +63,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	public Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(
 			EffettuaPrenotazioneHandler controller) {
 		Map<String, Object> mappaValori = new HashMap<String, Object>();
-		mappaValori.put("sportPraticabili", this.getSportPraticabiliPolisportiva());
-		mappaValori.put("sportiviInvitabili", this.getSportiviPolisportiva());
+		mappaValori.put("sportPraticabili", this.getSportPraticabiliNellaPolisportivaInFormatoDTO());
+		mappaValori.put("sportiviInvitabili", this.getSportiviPolisportivaInFormatoDTO());
 		mappaValori.put("appuntamentiSottoscrivibili",
 				this.getAppuntamentiImpiantoSottoscrivibiliDaUtente(controller.getSportivoPrenotante()));
 
@@ -77,7 +77,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	 * fase di riepilogo della prenotazione Impianto.
 	 */
 	@Override
-	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
+	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
 
 		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
 
@@ -130,7 +130,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	 * prenotazione in atto.
 	 */
 	@Override
-	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandler controller) {
+	public void aggiornaElementiLegatiAllaPrenotazioneConfermata(EffettuaPrenotazioneHandler controller) {
 		for (AppuntamentoImpianto app : (List<AppuntamentoImpianto>) (List<?>) controller.getPrenotazioneInAtto()
 				.getListaAppuntamenti()) {
 			app.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();
@@ -160,9 +160,9 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	 * quelle già impostate. Invocato in fase di compilazione della prenotazione.
 	 */
 	@Override
-	public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
+	public Map<String, Object> getDatiOpzioniPrenotazioneAggiornatiInBaseAllaMappa(Map<String, Object> dati) {
 		Map<String, Object> datiAggiornati = new HashMap<String, Object>();
-		datiAggiornati.put("impiantiDisponibili", this.getImpiantiPrenotabiliInBaseA(dati));
+		datiAggiornati.put("impiantiDisponibili", this.getListaDTOImpiantiPrenotabiliInBaseAMappa(dati));
 		datiAggiornati.put("sportiviInvitabili", trovaSportiviLiberiInBaseA((Map<String, String>) dati.get("orario")));
 
 		return datiAggiornati;
@@ -173,7 +173,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
 		orarioAppuntamento.imposta(mappaOrario.get("oraInizio"), mappaOrario.get("oraFine"));
 
-		return getSportiviLiberiInBaseA(orarioAppuntamento);
+		return getSportiviDTOLiberiNell(orarioAppuntamento);
 	}
 
 	/**
@@ -232,7 +232,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	}
 
 	@Override
-	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandler controller) {
+	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(EffettuaPrenotazioneHandler controller) {
 
 		return null;
 	}

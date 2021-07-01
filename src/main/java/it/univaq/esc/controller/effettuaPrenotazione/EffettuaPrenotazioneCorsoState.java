@@ -85,7 +85,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public PrenotazioneDTO impostaDatiPrenotazione(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
+	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
 
 		/*
 		 * Cicliamo sugli orari impostati in fase di compilazione, per creare e
@@ -177,7 +177,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandler controller) {
+	public void aggiornaElementiLegatiAllaPrenotazioneConfermata(EffettuaPrenotazioneHandler controller) {
 
 		for (AppuntamentoCorso app : (List<AppuntamentoCorso>) (List<?>) controller.getPrenotazioneInAtto()
 				.getListaAppuntamenti()) {
@@ -206,8 +206,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public Map<String, Object> aggiornaOpzioniPrenotazione(Map<String, Object> dati) {
-		Map<String, Object> mappaAggiornata = this.getStatoControllerLezioni().aggiornaOpzioniPrenotazione(dati);
+	public Map<String, Object> getDatiOpzioniPrenotazioneAggiornatiInBaseAllaMappa(Map<String, Object> dati) {
+		Map<String, Object> mappaAggiornata = this.getStatoControllerLezioni().getDatiOpzioniPrenotazioneAggiornatiInBaseAllaMappa(dati);
 
 		mappaAggiornata.put("sportiviInvitabili", trovaSportiviLiberiInBaseA((Map<String, String>) dati.get("orario")));
 
@@ -216,7 +216,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	private List<UtentePolisportivaDTO> trovaSportiviLiberiInBaseA(Map<String, String> mappaOrario) {
 		OrarioAppuntamento orarioAppuntamento = creaOrarioAppuntamentoDa(mappaOrario);
-		return getSportiviLiberiInBaseA(orarioAppuntamento);
+		return getSportiviDTOLiberiNell(orarioAppuntamento);
 	}
 
 	@Override
@@ -268,14 +268,14 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandler controller) {
+	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(EffettuaPrenotazioneHandler controller) {
 		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState) getElementiPrenotazioneFactory()
 				.getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
 		getStatoControllerLezioni().setMapperFactory(getMapperFactory());
 
 		Map<String, Object> mappaDati = this.getStatoControllerLezioni()
 				.getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(controller);
-		mappaDati.put("sportiviInvitabili", this.getSportiviPolisportiva());
+		mappaDati.put("sportiviInvitabili", this.getSportiviPolisportivaInFormatoDTO());
 
 		return mappaDati;
 	}

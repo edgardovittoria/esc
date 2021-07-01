@@ -177,7 +177,7 @@ public class EffettuaPrenotazioneHandler {
 		UtentePolisportiva direttore = this.getRegistroUtenti().trovaUtenteInBaseAllaSua(emailDirettore);
 		this.inizializzaNuovaPrenotazione(direttore, tipoPrenotazione, modalitaPrenotazione);
 		impostaAttributiControllerDipendentiDa(modalitaPrenotazione, tipoPrenotazione);
-		return this.getStato().getDatiOpzioniModalitaDirettore(this);
+		return this.getStato().getDatiOpzioniPerPrenotazioneInModalitaDirettore(this);
 	}
 
 	private void inizializzaNuovaPrenotazione(UtentePolisportiva sportivoPrenotante, String tipoPrenotazione,
@@ -217,7 +217,7 @@ public class EffettuaPrenotazioneHandler {
 	@CrossOrigin
 	public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazione(@RequestBody FormPrenotabile formPrenotaImpianto) {
 
-		PrenotazioneDTO prenDTO = this.getStato().impostaDatiPrenotazione(formPrenotaImpianto, this);
+		PrenotazioneDTO prenDTO = this.getStato().impostaPrenotazioneConDatiDellaFormPerRiepilogo(formPrenotaImpianto, this);
 
 		return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.OK);
 
@@ -238,7 +238,7 @@ public class EffettuaPrenotazioneHandler {
 		assegnaManutentoriAgliAppuntamentiDellaPrenotazioneInAtto();
 		aggiornaCalendariDeiManutentoriAssegnati();
 		registraNelSistemaLaPrenotazioneInAtto();
-		this.getStato().aggiornaElementiDopoConfermaPrenotazione(this);
+		this.getStato().aggiornaElementiLegatiAllaPrenotazioneConfermata(this);
 
 		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper()
 				.convertiInPrenotazioneDTO(getPrenotazioneInAtto());
@@ -281,7 +281,7 @@ public class EffettuaPrenotazioneHandler {
 	@PostMapping("/aggiornaDatiOpzioni")
 	@CrossOrigin
 	public @ResponseBody Map<String, Object> getDatiOpzioniAggiornati(@RequestBody HashMap<String, Object> dati) {
-		return this.getStato().aggiornaOpzioniPrenotazione(dati);
+		return this.getStato().getDatiOpzioniPrenotazioneAggiornatiInBaseAllaMappa(dati);
 	}
 
 	
@@ -293,7 +293,7 @@ public class EffettuaPrenotazioneHandler {
 	@CrossOrigin
 	public @ResponseBody List<UtentePolisportivaDTO> getListaIstruttoriPerSport(
 			@RequestParam(name = "sport") String sport) {
-		return this.getStato().getIstruttoriPerSport(sport);
+		return this.getStato().getListaDTODegliIstruttoriCheInsegnanoLo(sport);
 	}
 
 	/**
