@@ -36,6 +36,10 @@ public class ProfiloManutentore extends ProfiloUtente{
 		getCalendarioManutentore().unisciCalendario(nuovoCalendarioManutenzioni);
 	}
 	
+	public void segnaInAgendaLaLista(List<Appuntamento> appuntamentiManutentore) {
+		appuntamentiManutentore.forEach((appuntamento) -> getCalendarioManutentore().aggiungiAppuntamento(appuntamento));
+	}
+	
 	public void segnaInAgendaIl(Appuntamento nuovoAppuntamentoManutentore) {
 		getCalendarioManutentore().aggiungiAppuntamento(nuovoAppuntamentoManutentore);
 	}

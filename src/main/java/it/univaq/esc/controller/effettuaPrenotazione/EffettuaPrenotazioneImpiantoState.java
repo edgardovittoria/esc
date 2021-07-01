@@ -208,23 +208,21 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	 * esistente associato ad una prenotazione di tipo IMPIANTO.
 	 */
 	@Override
-	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, Object identificativoPartecipante) {
-		String emailPartecipante = (String) identificativoPartecipante;
+	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, Object emailPartecipante) {
+		UtentePolisportiva nuovoPartecipante = getRegistroUtenti().trovaUtenteInBaseAllaSua((String) emailPartecipante);
 		Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
+
 		if (appuntamento != null) {
-			boolean partecipanteAggiunto = appuntamento
-					.aggiungiPartecipante(getRegistroUtenti().trovaUtenteInBaseAllaSua(emailPartecipante));
+			boolean partecipanteAggiunto = appuntamento.aggiungiPartecipante(nuovoPartecipante);
 			if (appuntamento.haNumeroPartecipantiNecessarioPerConferma()) {
 				appuntamento.confermaAppuntamento();
 				appuntamento.creaQuotePartecipazionePerAppuntamento();
 			}
 			if (partecipanteAggiunto) {
-				getRegistroUtenti().aggiornaCalendarioSportivo(appuntamento,
-						getRegistroUtenti().trovaUtenteInBaseAllaSua(emailPartecipante));
+				nuovoPartecipante.comeSportivo().segnaInAgendaIl(appuntamento);
 			}
 
 			getRegistroAppuntamenti().aggiorna(appuntamento);
-			// this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 			AppuntamentoDTO appuntamentoDTO = getMapperFactory()
 					.getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);
 			return appuntamentoDTO;
@@ -235,7 +233,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 	@Override
 	public Map<String, Object> getDatiOpzioniModalitaDirettore(EffettuaPrenotazioneHandler controller) {
-		
+
 		return null;
 	}
 

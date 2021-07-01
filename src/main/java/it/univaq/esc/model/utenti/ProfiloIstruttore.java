@@ -60,6 +60,10 @@ public class ProfiloIstruttore extends ProfiloUtente{
 		getCalendarioLezioni().unisciCalendario(nuovoCalendarioLezioni);
 	}
 	
+	public void segnaInAgendaLaLista(List<Appuntamento> lezioni) {
+		lezioni.forEach((lezione) -> getCalendarioLezioni().aggiungiAppuntamento(lezione));
+	}
+	
 	public void segnaInAgendaIl(Appuntamento nuovoAppuntamentoLezione) {
 		getCalendarioLezioni().aggiungiAppuntamento(nuovoAppuntamentoLezione);
 	}

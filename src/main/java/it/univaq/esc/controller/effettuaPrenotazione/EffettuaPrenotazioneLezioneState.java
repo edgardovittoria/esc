@@ -137,12 +137,9 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	public void aggiornaElementiDopoConfermaPrenotazione(EffettuaPrenotazioneHandler controller) {
 		for (AppuntamentoLezione app : (List<AppuntamentoLezione>) (List<?>) controller.getPrenotazioneInAtto()
 				.getListaAppuntamenti()) {
-			Calendario calendarioDaUnire = new Calendario();
-			calendarioDaUnire.aggiungiAppuntamento(app);
-			getRegistroImpianti().aggiornaCalendarioImpianto(app.getImpiantoPrenotato(), calendarioDaUnire);
-			getRegistroUtenti().aggiornaCalendarioIstruttore(calendarioDaUnire, app.getIstruttore());
-
-			getRegistroUtenti().aggiornaCalendarioSportivo(calendarioDaUnire, controller.getSportivoPrenotante());
+			app.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();
+			app.siAggiungeAlCalendarioDellIstruttoreRelativo();
+			controller.getSportivoPrenotante().comeSportivo().segnaInAgendaIl(app);
 		}
 
 	}

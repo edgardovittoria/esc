@@ -254,7 +254,7 @@ public class EffettuaPrenotazioneHandler {
 	}
 
 	private void assegnaManutentoreA(Appuntamento appuntamento) {
-		UtentePolisportiva manutentore = getRegistroUtenti().getManutentoreLibero(appuntamento);
+		UtentePolisportiva manutentore = getRegistroUtenti().getManutentoreLiberoNellOrarioDi(appuntamento);
 		appuntamento.setManutentore(manutentore);
 	}
 	

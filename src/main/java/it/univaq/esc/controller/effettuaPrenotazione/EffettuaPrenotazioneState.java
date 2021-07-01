@@ -242,7 +242,7 @@ public abstract class EffettuaPrenotazioneState {
 
 	private List<UtentePolisportiva> getListaSportiviLiberiNegliOrariDel(Calendario calendario) {
 		List<UtentePolisportiva> listaSportivi = getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO);
-		listaSportivi = getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(listaSportivi, calendario);
+		listaSportivi = getRegistroUtenti().trovaNellaListaGliSportiviLiberiNelleDateDelCalendario(listaSportivi, calendario);
 		return listaSportivi;
 	}
 
@@ -258,7 +258,7 @@ public abstract class EffettuaPrenotazioneState {
 
 	private List<UtentePolisportiva> getListaSportiviLiberiPer(OrarioAppuntamento orarioAppuntamento) {
 		List<UtentePolisportiva> listaSportivi = getRegistroUtenti().getListaDegliUtentiCheHanno(TipoRuolo.SPORTIVO);
-		listaSportivi = getRegistroUtenti().filtraUtentiLiberiInBaseACalendarioSportivo(listaSportivi,
+		listaSportivi = getRegistroUtenti().trovaNellaListaGliSportiviLiberiNellOrario(listaSportivi,
 				orarioAppuntamento);
 		return listaSportivi;
 	}
@@ -418,7 +418,7 @@ public abstract class EffettuaPrenotazioneState {
 			Map<String, String> mappaOrario) {
 		OrarioAppuntamento orarioAppuntamento = creaOrarioAppuntamentoDa(mappaOrario);
 		List<UtentePolisportiva> listaIstruttoriFiltrataPerOrario = getRegistroUtenti()
-				.filtraIstruttorePerOrario(listaIstruttori, orarioAppuntamento);
+				.trovaNellaListaIstruttoriQuelliLiberiNellOrario(listaIstruttori, orarioAppuntamento);
 		return listaIstruttoriFiltrataPerOrario;
 	}
 
