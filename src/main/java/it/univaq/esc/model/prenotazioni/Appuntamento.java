@@ -29,6 +29,7 @@ import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
+import it.univaq.esc.model.notifiche.Notificabile;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -40,7 +41,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class Appuntamento {
+public abstract class Appuntamento{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -108,26 +109,6 @@ public abstract class Appuntamento {
 	}
 
 
-
-	/**
-	 * Restituisce l'utente che ha creato la Prenotazione da cui è scaturito questo
-	 * appuntamento.
-	 * 
-	 * @return Utente che ha creato la prenotazione per questo appuntamento.
-	 */
-	// public UtentePolisportivaAbstract creatoDa() {
-	// return this.getPrenotazioneSpecsAppuntamento().getSportivoPrenotante();
-	// }
-
-	/**
-	 * Restituisce la prenotazione principale a cui l'appuntamento fa capo
-	 * 
-	 * @return la prenotazione principale.
-	 */
-	// public Prenotazione getPrenotazionePrincipale() {
-	// return this.getPrenotazioneSpecsAppuntamento().getPrenotazioneAssociata();
-	// }
-
 	/**
 	 * Verifica se l'appuntamento passato come parametro si sovrappone a quello sul
 	 * quale è richiamato.
@@ -164,9 +145,6 @@ public abstract class Appuntamento {
 		setCostoAppuntamento(getCalcolatoreCosto().calcolaCosto(this));
 	}
 
-	// public Integer getIdPrenotazione() {
-	// return this.getPrenotazioneSpecsAppuntamento().getIdPrenotazioneAssociata();
-	// }
 
 	public void aggiungiQuotaPartecipazione(QuotaPartecipazione quota) {
 		if (quota != null) {
@@ -280,4 +258,6 @@ public abstract class Appuntamento {
 		}
 		return false;
 	}
+	
+	
 }

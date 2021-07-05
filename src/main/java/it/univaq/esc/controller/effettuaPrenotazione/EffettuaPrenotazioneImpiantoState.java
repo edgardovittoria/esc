@@ -1,5 +1,6 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
+import java.time.temporal.UnsupportedTemporalTypeException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,14 +77,14 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	 * fase di riepilogo della prenotazione Impianto.
 	 */
 	@Override
-	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
+	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati,
+			EffettuaPrenotazioneHandler controller) {
 		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
 			impostaAppuntamentoRelativoAOrarioNellaPrenotazione(controller.getPrenotazioneInAtto(), orario, formDati);
 		}
 		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper()
 				.convertiInPrenotazioneDTO(controller.getPrenotazioneInAtto());
 		return prenDTO;
-
 	}
 
 	private void impostaAppuntamentoRelativoAOrarioNellaPrenotazione(Prenotazione prenotazioneInAtto,
@@ -91,9 +92,6 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		AppuntamentoImpianto appuntamentoImpianto = getAppuntamentoPerOrarioImpostatoUsandoForm(orario, formDati);
 		prenotazioneInAtto.aggiungi(appuntamentoImpianto);
 		appuntamentoImpianto.aggiungiPartecipante(prenotazioneInAtto.getSportivoPrenotante());
-		confermaAppuntamentoConCreazioneQuoteParteciapzioneSeRaggiuntoNumeroPartecipantiNecessario(
-				appuntamentoImpianto);
-
 	}
 
 	private AppuntamentoImpianto getAppuntamentoPerOrarioImpostatoUsandoForm(OrarioAppuntamentoDTO orario,
@@ -112,13 +110,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		return appuntamento;
 	}
 
-	private void confermaAppuntamentoConCreazioneQuoteParteciapzioneSeRaggiuntoNumeroPartecipantiNecessario(
-			AppuntamentoImpianto appuntamento) {
-		if (appuntamento.haNumeroPartecipantiNecessarioPerConferma()) {
-			appuntamento.confermaAppuntamento();
-			appuntamento.creaQuotePartecipazionePerAppuntamento();
-		}
-	}
+	
 
 	/**
 	 * Metodo che aggiorna eventuali oggetti correlati alla prenotazione in atto,
@@ -127,28 +119,47 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	 */
 	@Override
 	public void aggiornaElementiLegatiAllaPrenotazioneConfermata(EffettuaPrenotazioneHandler controller) {
-		for (AppuntamentoImpianto app : (List<AppuntamentoImpianto>) (List<?>) controller.getPrenotazioneInAtto()
-				.getListaAppuntamenti()) {
-			app.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();
-			app.siAggiungeAlCalendarioDelloSportivoCheHaEffettuatoLaPrenotazioneRelativa();
-			impostaNotifichePerGliUtentiInvitatiAllAppuntamentoDellaPrenotazioneInAtto(app,
-					controller.getPrenotazioneInAtto());
+		List<AppuntamentoImpianto> appuntamentiPrenotazioneInAtto = (List<AppuntamentoImpianto>) (List<?>) controller
+				.getPrenotazioneInAtto().getListaAppuntamenti();
+		for (AppuntamentoImpianto nuovoAppuntamento : appuntamentiPrenotazioneInAtto) {
+			confermaAppuntamentoConCreazioneQuotePartecipazioneSeRaggiuntoNumeroPartecipantiNecessario(nuovoAppuntamento);
+			aggiornaCalendariImpiantoEUtentePrenotanteConIl(nuovoAppuntamento);
 		}
-
+		impostaNotifichePerGliUtentiInvitatiAllaPrenotazioneInAtto(appuntamentiPrenotazioneInAtto.get(0).getInvitati(),
+				controller.getPrenotazioneInAtto());
+	}
+	
+	private void confermaAppuntamentoConCreazioneQuotePartecipazioneSeRaggiuntoNumeroPartecipantiNecessario(
+			AppuntamentoImpianto appuntamento) {
+		if (appuntamento.haNumeroPartecipantiNecessarioPerConferma()) {
+			appuntamento.confermaAppuntamento();
+			appuntamento.creaQuotePartecipazionePerAppuntamento();
+		}
 	}
 
-	private void impostaNotifichePerGliUtentiInvitatiAllAppuntamentoDellaPrenotazioneInAtto(
-			AppuntamentoImpianto nuovoAppuntamento, Prenotazione prenotazioneInAtto) {
+	private void aggiornaCalendariImpiantoEUtentePrenotanteConIl(AppuntamentoImpianto nuovoAppuntamento) {
+		nuovoAppuntamento.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();
+		nuovoAppuntamento.siAggiungeAlCalendarioDelloSportivoCheHaEffettuatoLaPrenotazioneRelativa();
+	}
 
-		for (UtentePolisportiva invitato : nuovoAppuntamento.getInvitati()) {
-			NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
-			notifica.setStatoNotifica(TipiPrenotazione.IMPIANTO.toString());
-			notifica.setDestinatario(invitato);
-			notifica.setEvento(prenotazioneInAtto);
-			notifica.setLetta(false);
-			notifica.setMittente(prenotazioneInAtto.getSportivoPrenotante());
+	private void impostaNotifichePerGliUtentiInvitatiAllaPrenotazioneInAtto(List<UtentePolisportiva> invitati,
+			Prenotazione prenotazioneInAtto) {
+		for (UtentePolisportiva invitato : invitati) {
+			NotificaService notifica = creaNotificaPerSingoloInvitatoAllAppuntamentoDellaPrenotazioneInAtto(invitato,
+					prenotazioneInAtto);
 			getRegistroNotifiche().salvaNotifica(notifica);
 		}
+	}
+
+	private NotificaService creaNotificaPerSingoloInvitatoAllAppuntamentoDellaPrenotazioneInAtto(
+			UtentePolisportiva invitato, Prenotazione prenotazioneInAtto) {
+		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
+		notifica.setStatoNotifica(TipiPrenotazione.IMPIANTO.toString());
+		notifica.setDestinatario(invitato);
+		notifica.setEvento(prenotazioneInAtto);
+		notifica.setLetta(false);
+		notifica.setMittente(prenotazioneInAtto.getSportivoPrenotante());
+		return notifica;
 	}
 
 	/**
@@ -160,7 +171,6 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		Map<String, Object> datiAggiornati = new HashMap<String, Object>();
 		datiAggiornati.put("impiantiDisponibili", this.getListaDTOImpiantiPrenotabiliInBaseAMappa(dati));
 		datiAggiornati.put("sportiviInvitabili", trovaSportiviLiberiInBaseA((Map<String, String>) dati.get("orario")));
-
 		return datiAggiornati;
 
 	}
@@ -168,7 +178,6 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	private List<UtentePolisportivaDTO> trovaSportiviLiberiInBaseA(Map<String, String> mappaOrario) {
 		OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
 		orarioAppuntamento.imposta(mappaOrario.get("oraInizio"), mappaOrario.get("oraFine"));
-
 		return getSportiviDTOLiberiNell(orarioAppuntamento);
 	}
 
@@ -228,7 +237,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	}
 
 	@Override
-	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(EffettuaPrenotazioneHandler controller) {
+	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(
+			EffettuaPrenotazioneHandler controller) {
 
 		return null;
 	}

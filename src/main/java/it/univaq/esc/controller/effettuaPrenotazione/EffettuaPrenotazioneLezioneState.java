@@ -20,13 +20,18 @@ import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
+import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
 import it.univaq.esc.model.prenotazioni.AppuntamentoLezione;
+import it.univaq.esc.model.prenotazioni.DatiFormPerAppuntamento;
+import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
+import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 
 /**
  * Stato del controller EffettuaPrenotazioneHandler che gestisce la specifica
@@ -68,66 +73,38 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 * nella controparte software lato server.
 	 */
 	@Override
-	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
-
+	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati,
+			EffettuaPrenotazioneHandler controller) {
 		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
-
-			// ---------------------------------------------------------------------------------------
-
-			AppuntamentoLezione appuntamento = (AppuntamentoLezione) getElementiPrenotazioneFactory()
-					.getAppuntamento(TipiPrenotazione.LEZIONE.toString());
-			impostaValoriAppuntamento(formDati, controller, appuntamento, orario);
-
-			controller.getPrenotazioneInAtto().aggiungi(appuntamento);
+			impostaAppuntamentoRelativoAOrarioNellaPrenotazione(controller.getPrenotazioneInAtto(), orario, formDati);
 		}
-
 		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper()
 				.convertiInPrenotazioneDTO(controller.getPrenotazioneInAtto());
-
 		return prenDTO;
-
 	}
 
-	public void impostaValoriAppuntamento(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller,
-			AppuntamentoLezione appuntamento, OrarioAppuntamentoDTO orario) {
+	private void impostaAppuntamentoRelativoAOrarioNellaPrenotazione(Prenotazione prenotazioneInAtto,
+			OrarioAppuntamentoDTO orario, FormPrenotabile formDati) {
+		AppuntamentoLezione appuntamentoLezione = getAppuntamentoPerOrarioImpostatoUsandoForm(orario, formDati);
+		prenotazioneInAtto.aggiungi(appuntamentoLezione);
+		appuntamentoLezione.aggiungiPartecipante(prenotazioneInAtto.getSportivoPrenotante());
+	}
 
-		PrenotabileDescrizione descrizioneSpecifica = getCatalogoPrenotabili()
-				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
-						controller.getTipoPrenotazioneInAtto(),
-						getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
-						ModalitaPrenotazione.SINGOLO_UTENTE.toString());
-
-		// Creazione calcolatore che poi dovrà finire altrove
-		CalcolatoreCosto calcolatoreCosto = new CalcolatoreCostoComposito();
-		calcolatoreCosto.aggiungiStrategiaCosto(new CalcolatoreCostoBase());
-
-		ImpiantoSelezionato impiantoSelezionato = null;
-		for (ImpiantoSelezionato impianto : formDati.getImpianti()) {
-			if (impianto.getIdSelezione() == orario.getId()) {
-				impiantoSelezionato = impianto;
-			}
-		}
-		appuntamento.setImpiantoPrenotato(getRegistroImpianti().getImpiantoByID(impiantoSelezionato.getIdImpianto()));
-
-		appuntamento.setDescrizioneEventoPrenotato(descrizioneSpecifica);
-		appuntamento.setCalcolatoreCosto(calcolatoreCosto);
-
-		appuntamento.getOrarioAppuntamento().imposta(orario.getDataPrenotazione(), orario.getOraInizio(),
-				orario.getOraFine());
-
-		IstruttoreSelezionato istruttoreSelezionato = null;
-		for (IstruttoreSelezionato istruttore : formDati.getIstruttori()) {
-			if (istruttore.getIdSelezione() == orario.getId()) {
-				istruttoreSelezionato = istruttore;
-			}
-		}
-		appuntamento.setIstruttore(getRegistroUtenti().trovaUtenteInBaseAllaSua(istruttoreSelezionato.getIstruttore()));
-
+	private AppuntamentoLezione getAppuntamentoPerOrarioImpostatoUsandoForm(OrarioAppuntamentoDTO orario,
+			FormPrenotabile formDati) {
+		AppuntamentoLezione appuntamento = (AppuntamentoLezione) getElementiPrenotazioneFactory()
+				.getAppuntamento(TipiPrenotazione.LEZIONE.toString());
+		DatiFormPerAppuntamento datiFormPerAppuntamento = getMapperFactory()
+				.getAppuntamentoMapper(TipiPrenotazione.LEZIONE.toString())
+				.getDatiFormPerAppuntamentoUsando(formDati, orario);
+		appuntamento.impostaDatiAppuntamentoDa(datiFormPerAppuntamento);
+		appuntamento.setCalcolatoreCosto(getElementiPrenotazioneFactory().getCalcolatoreCosto());
 		appuntamento.calcolaCosto();
-
-		this.aggiungiPartecipanteECreaQuotePartecipazione(controller.getSportivoPrenotante(), appuntamento);
-
+		return appuntamento;
 	}
+	
+	
+	
 
 	/**
 	 * Metodo che aggiorna eventuali oggetti correlati con la prenotazione che si
@@ -135,15 +112,32 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	 */
 	@Override
 	public void aggiornaElementiLegatiAllaPrenotazioneConfermata(EffettuaPrenotazioneHandler controller) {
-		for (AppuntamentoLezione app : (List<AppuntamentoLezione>) (List<?>) controller.getPrenotazioneInAtto()
-				.getListaAppuntamenti()) {
-			app.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();
-			app.siAggiungeAlCalendarioDellIstruttoreRelativo();
-			controller.getSportivoPrenotante().comeSportivo().segnaInAgendaIl(app);
+		List<AppuntamentoLezione> listaAppuntamentiLezioni = (List<AppuntamentoLezione>) (List<?>) controller.getPrenotazioneInAtto().getListaAppuntamenti();
+		for (AppuntamentoLezione nuovoAppuntamentoLezione : listaAppuntamentiLezioni) {
+			confermaAppuntamentoConCreazioneQuotePartecipazioneSeRaggiuntoNumeroPartecipantiNecessario(nuovoAppuntamentoLezione);
+			aggiornaCalendariImpiantoIstruttoreSportivoPrenotanteConIl(nuovoAppuntamentoLezione);
+			impostaNotificaPerIstruttoreAssociatoAdAppuntamento(nuovoAppuntamentoLezione.getIstruttore(), nuovoAppuntamentoLezione);
 		}
 
 	}
-
+	
+	private void confermaAppuntamentoConCreazioneQuotePartecipazioneSeRaggiuntoNumeroPartecipantiNecessario(
+			AppuntamentoLezione appuntamento) {
+		if (appuntamento.haNumeroPartecipantiNecessarioPerConferma()) {
+			appuntamento.confermaAppuntamento();
+			appuntamento.creaQuotePartecipazionePerAppuntamento();
+		}
+	}
+	
+	private void aggiornaCalendariImpiantoIstruttoreSportivoPrenotanteConIl(AppuntamentoLezione nuovoAppuntamentoLezione) {
+		nuovoAppuntamentoLezione.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();
+		nuovoAppuntamentoLezione.siAggiungeAlCalendarioDellIstruttoreRelativo();
+		nuovoAppuntamentoLezione.siAggiungeAlCalendarioDelloSportivoCheHaEffettuatoLaPrenotazioneRelativa();
+	}
+	
+	private void impostaNotificaPerIstruttoreAssociatoAdAppuntamento(UtentePolisportiva istruttore, AppuntamentoLezione appuntamentoLezione) {
+		
+	}
 	/**
 	 * Metodo che aggiorna i dati per popolare le opzioni di prenotazione, nel caso
 	 * della prenotazione di una Lezione.
@@ -166,7 +160,8 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	}
 
 	@Override
-	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(EffettuaPrenotazioneHandler controller) {
+	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(
+			EffettuaPrenotazioneHandler controller) {
 
 		return null;
 	}
