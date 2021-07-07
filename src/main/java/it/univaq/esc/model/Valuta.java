@@ -1,6 +1,7 @@
 package it.univaq.esc.model;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
@@ -18,7 +19,7 @@ import lombok.Setter;
 public class Valuta {
 
 	@Id
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private Valute valuta;
 	
 	public void imposta(Valute valuta) {
