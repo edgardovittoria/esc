@@ -70,8 +70,7 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 		datiFormPerAppuntamento.setDataAppuntamento(orario.getDataPrenotazione());
 		datiFormPerAppuntamento.setOraInizio(orario.getOraInizio());
 		datiFormPerAppuntamento.setOraFine(orario.getOraFine());
-		datiFormPerAppuntamento.setPending(
-				trovaNellaListaCheckboxesValorePendingRelativoAOrario(formDati.getCheckboxesPending(), orario));
+		
 		datiFormPerAppuntamento.setImpiantoPrenotato(
 				trovaNellaListaImpiantiPrenotatiQuelloRelativoAOrario(formDati.getImpianti(), orario));
 
@@ -79,7 +78,7 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 
 	}
 
-	private boolean trovaNellaListaCheckboxesValorePendingRelativoAOrario(
+	protected boolean trovaNellaListaCheckboxesValorePendingRelativoAOrario(
 			List<CheckboxPendingSelezionato> listaCheckboxes, OrarioAppuntamentoDTO orario) {
 		for (CheckboxPendingSelezionato checkbox : listaCheckboxes) {
 			if (checkbox.getIdSelezione() == orario.getId()) {

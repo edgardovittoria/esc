@@ -52,6 +52,8 @@ public class AppuntamentoImpiantoMapper extends AppuntamentoMapper {
 
 		datiFormPerAppuntamento.setInvitati(getListaUtentiIinvitatiAPartireDa(formDati.getSportiviInvitati()));
 
+		datiFormPerAppuntamento.setPending(
+				trovaNellaListaCheckboxesValorePendingRelativoAOrario(formDati.getCheckboxesPending(), orario));
 		datiFormPerAppuntamento.setNumeroPartecipantiNonIscritti(formDati.getNumeroGiocatoriNonIscritti());
 
 		return datiFormPerAppuntamento;

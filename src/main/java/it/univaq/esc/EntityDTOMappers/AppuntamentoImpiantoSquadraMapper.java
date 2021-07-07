@@ -45,4 +45,5 @@ public class AppuntamentoImpiantoSquadraMapper extends AppuntamentoMapper{
 		squadrePartecipanti.forEach((squadra) -> listaIdSquadrePartecipanti.add(squadra.getIdSquadra()));
 		return listaIdSquadrePartecipanti;
 	}
+	
 }
