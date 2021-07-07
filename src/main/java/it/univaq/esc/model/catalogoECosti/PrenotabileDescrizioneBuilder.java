@@ -55,6 +55,12 @@ public class PrenotabileDescrizioneBuilder {
 		return this;
 	}
     
+    public PrenotabileDescrizioneBuilder impostaDescrizione(String descrizioneEvento) {
+    	getPrenotabileDescrizione().setDescrizione(descrizioneEvento);
+    	
+    	return this;
+    }
+    
     
     public PrenotabileDescrizioneBuilder impostaCostoOrario(Costo costoDaImpostare){
         CostoPrenotabile costoOrario = new CostoPrenotabile();

@@ -33,6 +33,7 @@ public class PrenotazioneMapper extends EntityDTOMapper {
 				.getDescrizioneEventoPrenotato().getMassimoNumeroPartecipanti());
 		infoGeneraliCorso.put("costoPerPartecipante",
 				corsoPrenotazione.getListaAppuntamenti().get(0).getCostoAppuntamento().getAmmontare());
+		infoGeneraliCorso.put("nomeEvento", corsoPrenotazione.getNomeEvento());
 //		List<UtentePolisportivaAbstract> invitati = ((PrenotazioneCorsoSpecs)corsoPrenotazione.getListaSpecifichePrenotazione().get(0)).getInvitati();
 //		List<UtentePolisportivaDTO> invitatiDTO = new ArrayList<UtentePolisportivaDTO>();
 //		for(UtentePolisportivaAbstract invitato : invitati) {

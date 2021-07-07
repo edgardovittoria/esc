@@ -76,6 +76,11 @@ public class CatalogoPrenotabili {
 
         return this;
     }
+    
+    public CatalogoPrenotabili nuovoPrenotabile_impostaDescrizione(String descrizioneEvento) {
+    	getPrenotabileDescrizioneBuilder().impostaDescrizione(descrizioneEvento);
+    	return this;
+    }
 
     public CatalogoPrenotabili nuovoPrenotabile_impostaCostoPavimentazione(Costo costo, String tipoPavimentazione){
         this.getPrenotabileDescrizioneBuilder().impostaCostoPavimentazione(costo, tipoPavimentazione);
@@ -83,12 +88,24 @@ public class CatalogoPrenotabili {
         return this;
     }
 
-    public PrenotabileDescrizione nuovoPrenotabile_salvaPrenotabileInCreazione(){
-       return this.aggiungiPrenotabileACatalogo(this.getPrenotabileDescrizioneRepository().save(this.getPrenotabileDescrizioneBuilder().build()));
+    public PrenotabileDescrizione nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo(){
+       return this.aggiungiPrenotabileACatalogo(this.getPrenotabileDescrizioneBuilder().build());
 
     }
 
+    public void salvaPrenotabileDescrizioneSulDatabase(PrenotabileDescrizione prenotabileDescrizione) {
+    	getPrenotabileDescrizioneRepository().save(prenotabileDescrizione);
+    }
 
+    public PrenotabileDescrizione trovaPrenotabileDescrizioneDalla(String descrizione) {
+    	for(PrenotabileDescrizione desc : getCatalogoPrenotabili()) {
+    		if(desc.getDescrizione().equals(descrizione)) {
+    			return desc;
+    		}
+    	}
+    	return null;
+    }
+    
     public PrenotabileDescrizione getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(String tipoPrenotazione, Sport sport, String modalitaPrenotazione){
         for(PrenotabileDescrizione desc : this.getCatalogoPrenotabili()){
             if(desc.getSportAssociato().getNome().equals(sport.getNome()) && desc.getTipoPrenotazione().equals(tipoPrenotazione) && desc.getModalitaPrenotazione().equals(modalitaPrenotazione)){

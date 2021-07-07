@@ -47,23 +47,15 @@ public class AppuntamentoCorsoMapper extends AppuntamentoMapper {
 			OrarioAppuntamentoDTO orario) {
 		DatiFormPerAppuntamento datiFormPerAppuntamento = super.getDatiFormPerAppuntamentoUsando(formDati, orario);
 
-		datiFormPerAppuntamento.setDescrizioneEvento(creaPrenotabileDescrizioneCorso(formDati));
+		datiFormPerAppuntamento.setDescrizioneEvento(trovaPrenotabileDescrizioneCorsoDal(formDati.getNomeEvento()));
 		datiFormPerAppuntamento
 				.setIstruttore(getIstruttoreAssociatoAllOrarioDallaListaIstruttori(orario, formDati.getIstruttori()));
 		datiFormPerAppuntamento.setInvitati(trovaInvitatiCorsoAPartireDalla(formDati.getSportiviInvitati()));
 		return datiFormPerAppuntamento;
 	}
 
-	private PrenotabileDescrizione creaPrenotabileDescrizioneCorso(FormPrenotabile formDati) {
-		PrenotabileDescrizione descrizioneCorso = getCatalogoPrenotabili()
-				.nuovoPrenotabile_avviaCreazione(this.getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
-						TipiPrenotazione.CORSO.toString(), formDati.getNumeroMinimoPartecipanti(),
-						formDati.getNumeroMassimoPartecipanti())
-				.nuovoPrenotabile_impostaCostoUnaTantum(
-						new Costo(formDati.getCostoPerPartecipante(), new Valuta(Valute.EUR)))
-				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
-				.nuovoPrenotabile_salvaPrenotabileInCreazione();
-
+	private PrenotabileDescrizione trovaPrenotabileDescrizioneCorsoDal(String nomeEvento) {
+		PrenotabileDescrizione descrizioneCorso = getCatalogoPrenotabili().trovaPrenotabileDescrizioneDalla(nomeEvento);
 		return descrizioneCorso;
 	}
 

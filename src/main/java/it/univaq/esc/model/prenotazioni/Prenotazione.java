@@ -68,6 +68,11 @@ public class Prenotazione extends Notificabile {
 	public String getNomeSportAssociatoAllaPrenotazione() {
 		return this.getListaAppuntamenti().get(0).getSportEvento().getNome();
 	}
+	
+	public String getNomeEvento() {
+		Appuntamento appuntamento = getListaAppuntamenti().get(0);
+		return appuntamento.getNomeEvento();
+	}
 
 	@Override
 	public Map<String, Object> getInfo() {

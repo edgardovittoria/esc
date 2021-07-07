@@ -29,9 +29,7 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class PrenotabileDescrizione {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter(value = AccessLevel.NONE)
-    private Integer id;
+    private String descrizione;
     @Column
     private String tipoPrenotazione;
     @Column
@@ -68,6 +66,10 @@ public class PrenotabileDescrizione {
     		return true;
     	}
     	return false;
+    }
+    
+    public String getNomeEvento() {
+    	return getDescrizione();
     }
     
 }

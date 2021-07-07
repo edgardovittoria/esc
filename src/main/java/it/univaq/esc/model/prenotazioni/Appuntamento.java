@@ -109,6 +109,10 @@ public abstract class Appuntamento{
 	public Map<String, Costo> getMappaCostiAppuntamento() {
 		return getDescrizioneEventoPrenotato().getMappaCosti();
 	}
+	
+	public String getNomeEvento() {
+		return getDescrizioneEventoPrenotato().getNomeEvento();
+	}
 
 
 	/**

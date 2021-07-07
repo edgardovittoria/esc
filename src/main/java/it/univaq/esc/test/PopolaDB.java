@@ -21,6 +21,7 @@ import it.univaq.esc.model.Valuta;
 import it.univaq.esc.model.Valute;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
+import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
@@ -194,7 +195,7 @@ public class PopolaDB {
 		Valuta valutaEuro = new Valuta(Valute.EUR);
 		valutaRepository.save(valutaEuro);
 		
-		this.listinoPrezziDescrizioniPolisportiva
+		 PrenotabileDescrizione desc1 = listinoPrezziDescrizioniPolisportiva
 				.nuovoPrenotabile_avviaCreazione(tennis, TipiPrenotazione.IMPIANTO.toString(),
 						tennis.getNumeroGiocatoriPerIncontro(), tennis.getNumeroGiocatoriPerIncontro())
 				.nuovoPrenotabile_impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -204,9 +205,12 @@ public class PopolaDB {
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("20"), valutaEuro),
 						Pavimentazione.SINTETICO.toString())
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
-				.nuovoPrenotabile_salvaPrenotabileInCreazione();
+				.nuovoPrenotabile_impostaDescrizione("desc1")
+				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+		
+		getListinoPrezziDescrizioniPolisportiva().salvaPrenotabileDescrizioneSulDatabase(desc1);
 
-		this.listinoPrezziDescrizioniPolisportiva
+		PrenotabileDescrizione desc2 = this.listinoPrezziDescrizioniPolisportiva
 				.nuovoPrenotabile_avviaCreazione(calcetto, TipiPrenotazione.IMPIANTO.toString(),
 						calcetto.getNumeroGiocatoriPerIncontro(), calcetto.getNumeroGiocatoriPerIncontro())
 				.nuovoPrenotabile_impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -214,9 +218,12 @@ public class PopolaDB {
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("20"), valutaEuro),
 						Pavimentazione.SINTETICO.toString())
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
-				.nuovoPrenotabile_salvaPrenotabileInCreazione();
+				.nuovoPrenotabile_impostaDescrizione("desc2")
+				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+		
+		getListinoPrezziDescrizioniPolisportiva().salvaPrenotabileDescrizioneSulDatabase(desc2);
 
-		this.listinoPrezziDescrizioniPolisportiva
+		PrenotabileDescrizione desc3 = this.listinoPrezziDescrizioniPolisportiva
 				.nuovoPrenotabile_avviaCreazione(pallavolo, TipiPrenotazione.IMPIANTO.toString(),
 						pallavolo.getNumeroGiocatoriPerIncontro(), pallavolo.getNumeroGiocatoriPerIncontro())
 				.nuovoPrenotabile_impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -224,9 +231,12 @@ public class PopolaDB {
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("30"), valutaEuro),
 						Pavimentazione.SINTETICO.toString())
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
-				.nuovoPrenotabile_salvaPrenotabileInCreazione();
+				.nuovoPrenotabile_impostaDescrizione("desc3")
+				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+		
+		getListinoPrezziDescrizioniPolisportiva().salvaPrenotabileDescrizioneSulDatabase(desc3);
 
-		this.listinoPrezziDescrizioniPolisportiva
+		PrenotabileDescrizione desc4 = this.listinoPrezziDescrizioniPolisportiva
 				.nuovoPrenotabile_avviaCreazione(tennis, TipiPrenotazione.IMPIANTO.toString(),
 						tennis.getNumeroGiocatoriPerIncontro(), tennis.getNumeroGiocatoriPerIncontro())
 				.nuovoPrenotabile_impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -236,9 +246,12 @@ public class PopolaDB {
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("20"), valutaEuro),
 						Pavimentazione.SINTETICO.toString())
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSquadra()
-				.nuovoPrenotabile_salvaPrenotabileInCreazione();
+				.nuovoPrenotabile_impostaDescrizione("desc4")
+				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+		
+		getListinoPrezziDescrizioniPolisportiva().salvaPrenotabileDescrizioneSulDatabase(desc4);
 
-		this.listinoPrezziDescrizioniPolisportiva
+		PrenotabileDescrizione desc5 = this.listinoPrezziDescrizioniPolisportiva
 				.nuovoPrenotabile_avviaCreazione(calcetto, TipiPrenotazione.IMPIANTO.toString(),
 						calcetto.getNumeroGiocatoriPerIncontro(), calcetto.getNumeroGiocatoriPerIncontro())
 				.nuovoPrenotabile_impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -246,9 +259,14 @@ public class PopolaDB {
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("20"), valutaEuro),
 						Pavimentazione.SINTETICO.toString())
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSquadra()
-				.nuovoPrenotabile_salvaPrenotabileInCreazione();
+				.nuovoPrenotabile_impostaDescrizione("desc5")
+				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+		
+		getListinoPrezziDescrizioniPolisportiva().salvaPrenotabileDescrizioneSulDatabase(desc5);
+		
+		
 
-		this.listinoPrezziDescrizioniPolisportiva
+		PrenotabileDescrizione desc6 = this.listinoPrezziDescrizioniPolisportiva
 				.nuovoPrenotabile_avviaCreazione(pallavolo, TipiPrenotazione.IMPIANTO.toString(),
 						pallavolo.getNumeroGiocatoriPerIncontro(), pallavolo.getNumeroGiocatoriPerIncontro())
 				.nuovoPrenotabile_impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -256,9 +274,12 @@ public class PopolaDB {
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("30"), valutaEuro),
 						Pavimentazione.SINTETICO.toString())
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSquadra()
-				.nuovoPrenotabile_salvaPrenotabileInCreazione();
+				.nuovoPrenotabile_impostaDescrizione("desc6")
+				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+		
+		getListinoPrezziDescrizioniPolisportiva().salvaPrenotabileDescrizioneSulDatabase(desc6);
 
-		this.listinoPrezziDescrizioniPolisportiva
+		PrenotabileDescrizione desc7 = this.listinoPrezziDescrizioniPolisportiva
 				.nuovoPrenotabile_avviaCreazione(tennis, TipiPrenotazione.LEZIONE.toString(), 1, 1)
 				.nuovoPrenotabile_impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("10"), valutaEuro), Pavimentazione.CEMENTO.toString())
@@ -267,25 +288,34 @@ public class PopolaDB {
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("20"), valutaEuro),
 						Pavimentazione.SINTETICO.toString())
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
-				.nuovoPrenotabile_salvaPrenotabileInCreazione();
+				.nuovoPrenotabile_impostaDescrizione("desc7")
+				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+		 
+		 getListinoPrezziDescrizioniPolisportiva().salvaPrenotabileDescrizioneSulDatabase(desc7);
 
-		this.listinoPrezziDescrizioniPolisportiva
+		PrenotabileDescrizione desc8 = this.listinoPrezziDescrizioniPolisportiva
 				.nuovoPrenotabile_avviaCreazione(calcetto, TipiPrenotazione.LEZIONE.toString(), 1, 5)
 				.nuovoPrenotabile_impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("10"), valutaEuro), Pavimentazione.CEMENTO.toString())
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("20"), valutaEuro),
 						Pavimentazione.SINTETICO.toString())
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
-				.nuovoPrenotabile_salvaPrenotabileInCreazione();
+				.nuovoPrenotabile_impostaDescrizione("desc8")
+				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+		
+		 getListinoPrezziDescrizioniPolisportiva().salvaPrenotabileDescrizioneSulDatabase(desc8);
 
-		this.listinoPrezziDescrizioniPolisportiva
+		PrenotabileDescrizione desc9 = this.listinoPrezziDescrizioniPolisportiva
 				.nuovoPrenotabile_avviaCreazione(pallavolo, TipiPrenotazione.LEZIONE.toString(), 1, 6)
 				.nuovoPrenotabile_impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("20"), valutaEuro), Pavimentazione.CEMENTO.toString())
 				.nuovoPrenotabile_impostaCostoPavimentazione(new Costo(Float.parseFloat("30"), valutaEuro),
 						Pavimentazione.SINTETICO.toString())
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
-				.nuovoPrenotabile_salvaPrenotabileInCreazione();
+				.nuovoPrenotabile_impostaDescrizione("desc9")
+				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+		
+		 getListinoPrezziDescrizioniPolisportiva().salvaPrenotabileDescrizioneSulDatabase(desc9);
 
 		AppuntamentoImpianto appuntamento1 = (AppuntamentoImpianto) getElementiPrenotazioneFactory()
 				.getAppuntamento(TipiPrenotazione.IMPIANTO.toString());

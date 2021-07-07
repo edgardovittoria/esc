@@ -51,6 +51,8 @@ import lombok.Setter;
 @Setter(value = AccessLevel.PRIVATE)
 
 public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
+	
+	private PrenotabileDescrizione prenotabileDescrizioneCorso;
 
 	/**
 	 * Stato
@@ -96,13 +98,9 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	@Override
 	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
-
-		/*
-		 * Cicliamo sugli orari impostati in fase di compilazione, per creare e
-		 * impostare tante specifiche di LEZIONI con relativi appuntamenti. Aggiungiamo
-		 * le specifiche così impostate alla lista inizializzata prima. Infine associamo
-		 * gli appuntamenti al controller.
-		 */
+		
+		setPrenotabileDescrizioneCorso(creaPrenotabileDescrizioneCorso(formDati));
+		
 		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
 			impostaAppuntamentoCorsoRelativoAOrarioNellaPrenotazione(controller.getPrenotazioneInAtto(), orario, formDati);
 		}
@@ -111,6 +109,20 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 		return prenDTO;
 
+	}
+	
+	private PrenotabileDescrizione creaPrenotabileDescrizioneCorso(FormPrenotabile formDati) {
+		PrenotabileDescrizione descrizioneCorso = getCatalogoPrenotabili()
+				.nuovoPrenotabile_avviaCreazione(this.getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
+						TipiPrenotazione.CORSO.toString(), formDati.getNumeroMinimoPartecipanti(),
+						formDati.getNumeroMassimoPartecipanti())
+				.nuovoPrenotabile_impostaCostoUnaTantum(
+						new Costo(formDati.getCostoPerPartecipante(), new Valuta(Valute.EUR)))
+				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
+				.nuovoPrenotabile_impostaDescrizione(formDati.getNomeEvento())
+				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+		
+		return descrizioneCorso;
 	}
 	
 	private void impostaAppuntamentoCorsoRelativoAOrarioNellaPrenotazione(Prenotazione prenotazioneInAtto,
@@ -136,6 +148,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	@Override
 	public void aggiornaElementiLegatiAllaPrenotazioneConfermata(EffettuaPrenotazioneHandler controller) {
 
+		getCatalogoPrenotabili().salvaPrenotabileDescrizioneSulDatabase(getPrenotabileDescrizioneCorso());
 		for (AppuntamentoCorso app : (List<AppuntamentoCorso>) (List<?>) controller.getPrenotazioneInAtto()
 				.getListaAppuntamenti()) {
 			app.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();

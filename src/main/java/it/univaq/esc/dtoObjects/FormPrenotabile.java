@@ -41,5 +41,7 @@ public class FormPrenotabile {
 	private Integer numeroMassimoPartecipanti;
 
 	private Float costoPerPartecipante;
+	
+	private String nomeEvento;
 
 }
