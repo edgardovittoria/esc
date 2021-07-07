@@ -129,7 +129,6 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 			OrarioAppuntamentoDTO orario, FormPrenotabile formDati) {
 		AppuntamentoCorso appuntamentoLezione = getAppuntamentoPerOrarioImpostatoUsandoForm(orario, formDati);
 		prenotazioneInAtto.aggiungi(appuntamentoLezione);
-		appuntamentoLezione.aggiungiPartecipante(prenotazioneInAtto.getSportivoPrenotante());
 	}
 	
 	private AppuntamentoCorso getAppuntamentoPerOrarioImpostatoUsandoForm(OrarioAppuntamentoDTO orario,
