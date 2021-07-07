@@ -52,6 +52,13 @@ public class AppuntamentoCorso extends AppuntamentoSingoliPartecipanti {
 	public void siAggiungeAlCalendarioDellIstruttoreRelativo() {
 		getIstruttore().comeIstruttore().segnaInAgendaIl(this);
 	}
+	
+	@Override
+	public void impostaDatiAppuntamentoDa(DatiFormPerAppuntamento datiCompilatiInPrenotazione) {
+		super.impostaDatiAppuntamentoDa(datiCompilatiInPrenotazione);
+		setInvitati(datiCompilatiInPrenotazione.getInvitati());
+		setIstruttore(datiCompilatiInPrenotazione.getIstruttore());
+	}
 }
 
 
