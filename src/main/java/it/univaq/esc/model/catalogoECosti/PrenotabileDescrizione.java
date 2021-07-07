@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Sport;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -54,8 +55,8 @@ public class PrenotabileDescrizione {
     }
   
 
-    public Map<String, Float> getMappaCosti(){
-        Map<String, Float> mappaCosti = new HashMap<String, Float>();
+    public Map<String, Costo> getMappaCosti(){
+        Map<String, Costo> mappaCosti = new HashMap<String, Costo>();
         for(CostoPrenotabile costo : this.getListaCosti()){
             mappaCosti.putAll(costo.getMappaCosto());
         }

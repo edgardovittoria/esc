@@ -3,6 +3,7 @@ package it.univaq.esc.model.catalogoECosti;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
@@ -12,7 +13,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
+import org.springframework.cache.interceptor.CacheOperationSource;
+
+import it.univaq.esc.model.Costo;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,8 +34,9 @@ public class CostoPrenotabile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(value = AccessLevel.NONE)
     private Integer idCosto;
-    @Column
-    private Float costo;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private Costo costo = new Costo();
     @Column
     private String tipoCosto;
 
@@ -40,8 +47,8 @@ public class CostoPrenotabile {
         return null;
     }
 
-    public Map<String, Float> getMappaCosto(){
-        Map<String, Float> mappaCosto = new HashMap<String, Float>();
+    public Map<String, Costo> getMappaCosto(){
+        Map<String, Costo> mappaCosto = new HashMap<String, Costo>();
         mappaCosto.put(this.getTipoCosto(), this.getCosto());
 
         return mappaCosto;

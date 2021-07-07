@@ -18,7 +18,7 @@ public class QuotaPartecipazioneMapper extends EntityDTOMapper{
 	public QuotaPartecipazioneDTO convertiInQuotaPartecipazioneDTO(QuotaPartecipazione quotaDaConvertire) {
 		QuotaPartecipazioneDTO quotaDTO = new QuotaPartecipazioneDTO();
 
-		quotaDTO.setCosto(quotaDaConvertire.getCosto());
+		quotaDTO.setCosto(quotaDaConvertire.getCosto().getAmmontare());
 		quotaDTO.setPagata(quotaDaConvertire.isPagata());
 
 		

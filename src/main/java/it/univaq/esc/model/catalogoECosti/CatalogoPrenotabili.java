@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
+import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.repository.PrenotabileDescrizioneRepository;
 import lombok.AccessLevel;
@@ -64,19 +65,19 @@ public class CatalogoPrenotabili {
 		return this;
 	}
 
-    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoOrario(Float costo){
+    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoOrario(Costo costo){
         this.getPrenotabileDescrizioneBuilder().impostaCostoOrario(costo);
 
         return this;
     }
 
-    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoUnaTantum(Float costo){
+    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoUnaTantum(Costo costo){
         this.getPrenotabileDescrizioneBuilder().impostaCostoUnaTantum(costo);
 
         return this;
     }
 
-    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoPavimentazione(Float costo, String tipoPavimentazione){
+    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoPavimentazione(Costo costo, String tipoPavimentazione){
         this.getPrenotabileDescrizioneBuilder().impostaCostoPavimentazione(costo, tipoPavimentazione);
 
         return this;

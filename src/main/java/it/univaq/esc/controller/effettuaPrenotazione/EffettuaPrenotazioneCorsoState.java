@@ -14,8 +14,11 @@ import it.univaq.esc.dtoObjects.OrarioAppuntamentoDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.model.Calendario;
+import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
+import it.univaq.esc.model.Valuta;
+import it.univaq.esc.model.Valute;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
@@ -138,7 +141,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 						this.getRegistroSport().getSportByNome(formDatiCorso.getSportSelezionato()),
 						controller.getTipoPrenotazioneInAtto(), formDatiCorso.getNumeroMinimoPartecipanti(),
 						formDatiCorso.getNumeroMassimoPartecipanti())
-				.nuovoPrenotabile_impostaCostoUnaTantum(formDatiCorso.getCostoPerPartecipante())
+				.nuovoPrenotabile_impostaCostoUnaTantum(new Costo(formDatiCorso.getCostoPerPartecipante(), new Valuta(Valute.EUR)))
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
 				.nuovoPrenotabile_salvaPrenotabileInCreazione();
 

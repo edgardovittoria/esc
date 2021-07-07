@@ -1,11 +1,13 @@
 package it.univaq.esc.model.catalogoECosti;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Sport;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,7 +56,7 @@ public class PrenotabileDescrizioneBuilder {
 	}
     
     
-    public PrenotabileDescrizioneBuilder impostaCostoOrario(Float costoDaImpostare){
+    public PrenotabileDescrizioneBuilder impostaCostoOrario(Costo costoDaImpostare){
         CostoPrenotabile costoOrario = new CostoPrenotabile();
         costoOrario.setCosto(costoDaImpostare);
         costoOrario.setTipoCosto(TipoCostoPrenotabile.COSTO_ORARIO.toString());
@@ -63,7 +65,7 @@ public class PrenotabileDescrizioneBuilder {
         return this;
     }
 
-    public PrenotabileDescrizioneBuilder impostaCostoUnaTantum(Float costoDaImpostare){
+    public PrenotabileDescrizioneBuilder impostaCostoUnaTantum(Costo costoDaImpostare){
         CostoPrenotabile costoUnaTantum = new CostoPrenotabile();
         costoUnaTantum.setCosto(costoDaImpostare);
         costoUnaTantum.setTipoCosto(TipoCostoPrenotabile.COSTO_UNA_TANTUM.toString());
@@ -72,7 +74,7 @@ public class PrenotabileDescrizioneBuilder {
         return this;
     }
 
-    public PrenotabileDescrizioneBuilder impostaCostoPavimentazione(Float costoDaImpostare, String tipoPavimentazione){
+    public PrenotabileDescrizioneBuilder impostaCostoPavimentazione(Costo costoDaImpostare, String tipoPavimentazione){
         CostoPrenotabile costoPavimentazione = new CostoPrenotabilePavimentazione();
         costoPavimentazione.setCosto(costoDaImpostare);
         costoPavimentazione.setTipoCosto(TipoCostoPrenotabile.COSTO_PAVIMENTAZIONE.toString());

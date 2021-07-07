@@ -7,6 +7,7 @@ import java.util.Map;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
+import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.catalogoECosti.TipoCostoPrenotabile;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
@@ -17,21 +18,22 @@ public class CalcolatoreCostoBase extends CalcolatoreCosto{
     
 
     @Override
-    public float calcolaCosto(Appuntamento appuntamento) {
+    public Costo calcolaCosto(Appuntamento appuntamento) {
         LocalTime oraInizio = appuntamento.getOraInizioAppuntamento();
         LocalTime oraFine = appuntamento.getOraFineAppuntamento();
         Long minutiDurataAppuntamento = MINUTES.between(oraInizio, oraFine);
         Impianto impiantoAppuntamento = appuntamento.getImpiantoPrenotato();
         String pavimentazione = impiantoAppuntamento.getTipoPavimentazione().toString();
-        Map<String, Float> mappaCosti = appuntamento.getMappaCostiAppuntamento();
-        Float costo;
+        Map<String, Costo> mappaCosti = appuntamento.getMappaCostiAppuntamento();
+        Costo costo = new Costo();
         if(mappaCosti.containsKey(TipoCostoPrenotabile.COSTO_ORARIO.toString())){
-            Float costoOrario = mappaCosti.get(TipoCostoPrenotabile.COSTO_ORARIO.toString());
-            Float costoPavimentazione = mappaCosti.get(pavimentazione);
-            costo = ((costoOrario + (costoOrario*costoPavimentazione/100))/60)*minutiDurataAppuntamento;
+            Costo costoOrario = mappaCosti.get(TipoCostoPrenotabile.COSTO_ORARIO.toString());
+            Costo costoPavimentazione = mappaCosti.get(pavimentazione);           
+            costo = ((costoOrario.sommaIl((costoOrario.moltiplicaPer(costoPavimentazione)).dividiPer(100))).dividiPer(60)).moltiplicaPer(minutiDurataAppuntamento);
+//            costo = ((costoOrario + (costoOrario*costoPavimentazione/100))/60)*minutiDurataAppuntamento;
         }
         else{
-            Float costoUnaTantum = mappaCosti.get(TipoCostoPrenotabile.COSTO_UNA_TANTUM.toString());
+            Costo costoUnaTantum = mappaCosti.get(TipoCostoPrenotabile.COSTO_UNA_TANTUM.toString());
             costo = costoUnaTantum;
         }
 

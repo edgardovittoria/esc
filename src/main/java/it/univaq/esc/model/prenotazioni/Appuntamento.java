@@ -25,6 +25,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
@@ -86,8 +87,9 @@ public abstract class Appuntamento{
 	@JoinColumn
 	private Impianto impiantoPrenotato;
 
-	@Column
-	private float costoAppuntamento;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn
+	private Costo costoAppuntamento;
 
 	@Transient
 	private CalcolatoreCosto calcolatoreCosto;
@@ -104,7 +106,7 @@ public abstract class Appuntamento{
 		return getOrarioAppuntamento().getOraFine();
 	}
 
-	public Map<String, Float> getMappaCostiAppuntamento() {
+	public Map<String, Costo> getMappaCostiAppuntamento() {
 		return getDescrizioneEventoPrenotato().getMappaCosti();
 	}
 

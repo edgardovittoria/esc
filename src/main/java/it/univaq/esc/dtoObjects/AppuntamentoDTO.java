@@ -25,7 +25,7 @@ public class AppuntamentoDTO {
 	private String tipoPrenotazione;
 	private boolean confermata;
 	private boolean pending;
-	private Float costo;
+	private String costo;
 	private SportDTO sportAssociato;
 	private List<String> invitati = new ArrayList<String>();
 	private Integer idImpiantoPrenotato;

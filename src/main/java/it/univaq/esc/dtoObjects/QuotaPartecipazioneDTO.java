@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class QuotaPartecipazioneDTO {
 
-    private float costo;
+    private String costo;
 
     private String sportivo;
 

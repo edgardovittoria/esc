@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import it.univaq.esc.model.Costo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,8 +34,8 @@ public class CostoPrenotabilePavimentazione extends CostoPrenotabile{
     }
 
     @Override
-    public Map<String, Float> getMappaCosto(){
-        Map<String, Float> mappaCosto = new HashMap<String, Float>();
+    public Map<String, Costo> getMappaCosto(){
+        Map<String, Costo> mappaCosto = new HashMap<String, Costo>();
         mappaCosto.put(this.getTipoPavimentazione(), this.getCosto());
 
         return mappaCosto;

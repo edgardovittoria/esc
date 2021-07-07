@@ -3,6 +3,9 @@ package it.univaq.esc.model.catalogoECosti.calcolatori;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.univaq.esc.model.Costo;
+import it.univaq.esc.model.Valuta;
+import it.univaq.esc.model.Valute;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,10 +25,11 @@ public class CalcolatoreCostoComposito extends CalcolatoreCosto{
         this.getStrategieCosto().add(calcolatoreCosto);
     }
     @Override
-    public float calcolaCosto(Appuntamento appuntamento) {
-        float costo = 2000;
+    public Costo calcolaCosto(Appuntamento appuntamento) {
+    	Valuta valuta = new Valuta(Valute.EUR);
+        Costo costo = new Costo(Float.parseFloat("2000"), valuta);
         for(CalcolatoreCosto strategia : this.getStrategieCosto()){
-            if(strategia.calcolaCosto(appuntamento)<costo){
+            if(strategia.calcolaCosto(appuntamento).isMinoreDi(costo)){
                 costo = strategia.calcolaCosto(appuntamento);
             }
         }
