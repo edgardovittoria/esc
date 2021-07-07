@@ -148,7 +148,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	@Override
 	public void aggiornaElementiLegatiAllaPrenotazioneConfermata(EffettuaPrenotazioneHandler controller) {
 
-		getCatalogoPrenotabili().salvaPrenotabileDescrizioneSulDatabase(getPrenotabileDescrizioneCorso());
+		//getCatalogoPrenotabili().salvaPrenotabileDescrizioneSulDatabase(getPrenotabileDescrizioneCorso());
 		for (AppuntamentoCorso app : (List<AppuntamentoCorso>) (List<?>) controller.getPrenotazioneInAtto()
 				.getListaAppuntamenti()) {
 			app.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();
