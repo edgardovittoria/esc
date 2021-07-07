@@ -36,13 +36,9 @@ public class AppuntamentoCorsoMapper extends AppuntamentoMapper {
 	@Override
 	public AppuntamentoDTO convertiInAppuntamentoDTO(Appuntamento appuntamentoDaConvertire) {
 		AppuntamentoDTO appuntamentoDTO = super.convertiInAppuntamentoDTO(appuntamentoDaConvertire);
-
 		AppuntamentoCorso appuntamentoCorso = (AppuntamentoCorso) appuntamentoDaConvertire;
-
 		appuntamentoDTO.setInvitati(appuntamentoCorso.getNominativiInvitati());
-
 		appuntamentoDTO.setIstruttore(appuntamentoCorso.getNominativoIstruttore());
-
 		return appuntamentoDTO;
 	}
 
