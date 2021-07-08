@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Setter(value = AccessLevel.PRIVATE) @Getter(value = AccessLevel.PROTECTED) @NoArgsConstructor
+@Setter(value = AccessLevel.PRIVATE) @Getter(value = AccessLevel.PUBLIC) @NoArgsConstructor
 public abstract class Notificabile {
 	@Id
 	private Integer idNotificabile;

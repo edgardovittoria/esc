@@ -72,11 +72,10 @@ public class NotificaService {
 	
 	public void setEvento(Notificabile evento) {
 		getNotifica().setEvento(evento);
-		setStatoNotifica((String)getEvento().getInfo().get("tipoPrenotazione"));
 	}
 	
-	public void setStatoNotifica(String tipoPrenotazione) {
-		this.statoNotifica = getFactoryStatiNotifiche().getStatoNotifica(tipoPrenotazione);
+	public void setStatoNotifica(String tipo) {
+		this.statoNotifica = getFactoryStatiNotifiche().getStatoNotifica(tipo);
 				
 	}
 	

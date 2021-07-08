@@ -20,7 +20,7 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 	public AppuntamentoDTO convertiInAppuntamentoDTO(Appuntamento appuntamentoDaConvertire) {
 		AppuntamentoDTO appuntamentoDTO = new AppuntamentoDTO();
 
-		appuntamentoDTO.setIdAppuntamento(appuntamentoDaConvertire.getIdAppuntamento());
+		appuntamentoDTO.setIdAppuntamento(appuntamentoDaConvertire.getIdNotificabile());
 		appuntamentoDTO.setDataAppuntamento(appuntamentoDaConvertire.getDataAppuntamento());
 		appuntamentoDTO.setOraInizioAppuntamento(appuntamentoDaConvertire.getOraInizioAppuntamento());
 		appuntamentoDTO.setOraFineAppuntamento(appuntamentoDaConvertire.getOraFineAppuntamento());

@@ -225,7 +225,7 @@ public class RegistroAppuntamenti {
 
 	public Appuntamento getAppuntamentoById(Integer idAppuntamento) {
 		for (Appuntamento appuntamento : this.getListaAppuntamenti()) {
-			if (appuntamento.getIdAppuntamento() == idAppuntamento) {
+			if (appuntamento.getIdNotificabile() == idAppuntamento) {
 				return appuntamento;
 			}
 		}

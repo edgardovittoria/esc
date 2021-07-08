@@ -79,7 +79,7 @@ public class Prenotazione extends Notificabile {
 		Map<String, Object> infoPrenotazionMap = new HashMap<String, Object>();
 		infoPrenotazionMap.put("tipoPrenotazione", this.getTipoPrenotazione());
 		infoPrenotazionMap.put("sportNome", this.getNomeSportAssociatoAllaPrenotazione());
-		infoPrenotazionMap.put("identificativo", this.getIdPrenotazione());
+		//infoPrenotazionMap.put("identificativo", this.getIdPrenotazione());
 		infoPrenotazionMap.put("numeroIncontri", getNumeroIncontri());
 		infoPrenotazionMap.put("modalitaPrenotazione", getModalitaPrenotazione());
 

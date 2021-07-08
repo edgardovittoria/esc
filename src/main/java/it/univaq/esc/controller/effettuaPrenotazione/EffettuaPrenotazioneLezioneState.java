@@ -28,6 +28,8 @@ import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.model.notifiche.Notifica;
+import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
@@ -116,7 +118,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 		for (AppuntamentoLezione nuovoAppuntamentoLezione : listaAppuntamentiLezioni) {
 			confermaAppuntamentoConCreazioneQuotePartecipazioneSeRaggiuntoNumeroPartecipantiNecessario(nuovoAppuntamentoLezione);
 			aggiornaCalendariImpiantoIstruttoreSportivoPrenotanteConIl(nuovoAppuntamentoLezione);
-			impostaNotificaPerIstruttoreAssociatoAdAppuntamento(nuovoAppuntamentoLezione.getIstruttore(), nuovoAppuntamentoLezione);
+			impostaNotificaPerIstruttoreAssociatoAdAppuntamento(nuovoAppuntamentoLezione.getIstruttore(), nuovoAppuntamentoLezione, controller.getSportivoPrenotante());
 		}
 
 	}
@@ -135,8 +137,14 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 		nuovoAppuntamentoLezione.siAggiungeAlCalendarioDelloSportivoCheHaEffettuatoLaPrenotazioneRelativa();
 	}
 	
-	private void impostaNotificaPerIstruttoreAssociatoAdAppuntamento(UtentePolisportiva istruttore, AppuntamentoLezione appuntamentoLezione) {
-		
+	private void impostaNotificaPerIstruttoreAssociatoAdAppuntamento(UtentePolisportiva istruttore, AppuntamentoLezione appuntamentoLezione, UtentePolisportiva sportivoPrenotante) {
+		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
+		notifica.setStatoNotifica("ISTRUTTORE");
+		notifica.setDestinatario(istruttore);
+		notifica.setEvento(appuntamentoLezione);
+		notifica.setLetta(false);
+		notifica.setMittente(sportivoPrenotante);
+		getRegistroNotifiche().salvaNotifica(notifica);
 	}
 	/**
 	 * Metodo che aggiorna i dati per popolare le opzioni di prenotazione, nel caso

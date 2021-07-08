@@ -3,6 +3,7 @@ package it.univaq.esc.model.prenotazioni;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.TipoEventoNotificabile;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.notifiche.Notificabile;
@@ -42,12 +44,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class Appuntamento{
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Setter(value = AccessLevel.PRIVATE)
-	private Integer idAppuntamento;
+public abstract class Appuntamento extends Notificabile{
 
 	@ManyToMany()
 	@JoinColumn()
@@ -184,7 +181,7 @@ public abstract class Appuntamento{
 	}
 
 	public boolean isEqual(Appuntamento appuntamento) {
-		return this.getIdAppuntamento() == appuntamento.getIdAppuntamento();
+		return this.getIdNotificabile() == appuntamento.getIdNotificabile();
 	}
 
 	public void impostaDatiAppuntamentoDa(DatiFormPerAppuntamento datiCompilatiInPrenotazione) {
@@ -263,6 +260,21 @@ public abstract class Appuntamento{
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public Map<String, Object> getInfo() {
+		Map<String, Object> mappaDati = new HashMap<String, Object>();
+		mappaDati.put("sport", getSportEvento());
+		mappaDati.put("tipoPrenotazione", getTipoPrenotazione());
+		
+		return mappaDati;
+	}
+	
+	@Override
+	public String getTipoEventoNotificabile() {
+		
+		return TipoEventoNotificabile.APPUNTAMENTO.toString();
 	}
 	
 	

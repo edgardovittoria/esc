@@ -11,6 +11,7 @@ import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneState;
 import it.univaq.esc.model.notifiche.Notifica;
 import it.univaq.esc.model.notifiche.NotificaCorsoState;
 import it.univaq.esc.model.notifiche.NotificaImpiantoState;
+import it.univaq.esc.model.notifiche.NotificaIstruttoreState;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.NotificaState;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
@@ -22,8 +23,7 @@ import it.univaq.esc.utility.BeanUtil;
 @Component(value = "ELEMENTI_PRENOTAZIONE_SINGOLO_UTENTE")
 @Singleton
 @DependsOn("beanUtil")
-public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazioneFactory{
-	
+public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazioneFactory {
 
 	@Override
 	public EffettuaPrenotazioneState getStatoEffettuaPrenotazioneHandler(String tipoPrenotazione) {
@@ -53,14 +53,13 @@ public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazio
 			return null;
 		case "CORSO":
 			return BeanUtil.getBean(NotificaCorsoState.class);
+		case "ISTRUTTORE":
+			return BeanUtil.getBean(NotificaIstruttoreState.class);
 		default:
 			return null;
 		}
 
-		
 	}
-
-	
 
 	@Override
 	public Appuntamento getAppuntamento(String tipoPrenotazione) {
