@@ -51,9 +51,7 @@ public class Prenotazione extends Notificabile {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Appuntamento> listaAppuntamenti = new ArrayList<Appuntamento>();
 
-	public Prenotazione(Integer lastIdPrenotazione) {
-		super(lastIdPrenotazione);
-	}
+	
 
 	public void aggiungi(Appuntamento appuntamento) {
 		getListaAppuntamenti().add(appuntamento);

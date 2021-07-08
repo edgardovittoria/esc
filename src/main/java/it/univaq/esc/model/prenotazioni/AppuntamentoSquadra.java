@@ -15,14 +15,17 @@ import org.hibernate.annotations.LazyCollectionOption;
 import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
+@NoArgsConstructor
 public abstract class AppuntamentoSquadra extends Appuntamento {
 
+	
 	@ManyToMany()
 	@JoinColumn()
 	@LazyCollection(LazyCollectionOption.FALSE)

@@ -44,7 +44,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class Appuntamento extends Notificabile{
+public abstract class Appuntamento extends Notificabile {
 
 	@ManyToMany()
 	@JoinColumn()
@@ -91,6 +91,8 @@ public abstract class Appuntamento extends Notificabile{
 	@Transient
 	private CalcolatoreCosto calcolatoreCosto;
 
+	
+
 	public LocalDate getDataAppuntamento() {
 		return getOrarioAppuntamento().getDataOrarioAppuntamento();
 	}
@@ -106,11 +108,10 @@ public abstract class Appuntamento extends Notificabile{
 	public Map<String, Costo> getMappaCostiAppuntamento() {
 		return getDescrizioneEventoPrenotato().getMappaCosti();
 	}
-	
+
 	public String getNomeEvento() {
 		return getDescrizioneEventoPrenotato().getNomeEvento();
 	}
-
 
 	/**
 	 * Verifica se l'appuntamento passato come parametro si sovrappone a quello sul
@@ -129,8 +130,7 @@ public abstract class Appuntamento extends Notificabile{
 
 	}
 
-
-	public boolean sovrapponeA(LocalDate dataAppuntamento, LocalTime oraInizio, LocalTime oraFine){
+	public boolean sovrapponeA(LocalDate dataAppuntamento, LocalTime oraInizio, LocalTime oraFine) {
 		return getOrarioAppuntamento().sovrapponeA(dataAppuntamento, oraInizio, oraFine);
 	}
 
@@ -147,7 +147,6 @@ public abstract class Appuntamento extends Notificabile{
 	public void calcolaCosto() {
 		setCostoAppuntamento(getCalcolatoreCosto().calcolaCosto(this));
 	}
-
 
 	public void aggiungiQuotaPartecipazione(QuotaPartecipazione quota) {
 		if (quota != null) {
@@ -185,8 +184,8 @@ public abstract class Appuntamento extends Notificabile{
 	}
 
 	public void impostaDatiAppuntamentoDa(DatiFormPerAppuntamento datiCompilatiInPrenotazione) {
-		impostaOrario(datiCompilatiInPrenotazione.getDataAppuntamento(),
-				datiCompilatiInPrenotazione.getOraInizio(), datiCompilatiInPrenotazione.getOraFine());
+		impostaOrario(datiCompilatiInPrenotazione.getDataAppuntamento(), datiCompilatiInPrenotazione.getOraInizio(),
+				datiCompilatiInPrenotazione.getOraFine());
 		setPending(datiCompilatiInPrenotazione.isPending());
 		setDescrizioneEventoPrenotato(datiCompilatiInPrenotazione.getDescrizioneEvento());
 		setImpiantoPrenotato(datiCompilatiInPrenotazione.getImpiantoPrenotato());
@@ -251,31 +250,31 @@ public abstract class Appuntamento extends Notificabile{
 		getUtenteCheHaEffettuatoLaPrenotazioneRelativa().comeSportivo().segnaInAgendaIl(this);
 	}
 
-	public void impostaOrario(LocalDate dataAppuntamento, LocalTime oraInizioAppuntamento, LocalTime oraFineAppuntamento){
+	public void impostaOrario(LocalDate dataAppuntamento, LocalTime oraInizioAppuntamento,
+			LocalTime oraFineAppuntamento) {
 		getOrarioAppuntamento().imposta(dataAppuntamento, oraInizioAppuntamento, oraFineAppuntamento);
 	}
-	
+
 	public boolean haManutentoreAssegnato() {
-		if(getManutentore() != null) {
+		if (getManutentore() != null) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
 	public Map<String, Object> getInfo() {
 		Map<String, Object> mappaDati = new HashMap<String, Object>();
 		mappaDati.put("sport", getSportEvento());
 		mappaDati.put("tipoPrenotazione", getTipoPrenotazione());
-		
+
 		return mappaDati;
 	}
-	
+
 	@Override
 	public String getTipoEventoNotificabile() {
-		
+
 		return TipoEventoNotificabile.APPUNTAMENTO.toString();
 	}
-	
-	
+
 }

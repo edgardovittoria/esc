@@ -330,7 +330,7 @@ public class PopolaDB {
 		appuntamento1.setImpiantoPrenotato(impianto1);
 		appuntamento1.setManutentore(sportivo2);
 
-		Prenotazione prenotazione1 = new Prenotazione(0);
+		Prenotazione prenotazione1 = new Prenotazione();
 		prenotazione1.setSportivoPrenotante(sportivo1);
 		prenotazione1.aggiungi(appuntamento1);
 
@@ -371,7 +371,7 @@ public class PopolaDB {
 
 		impianto3.setCalendarioAppuntamentiImpianto(calendarioSpecs2);
 
-		Prenotazione prenotazione2 = new Prenotazione(1);
+		Prenotazione prenotazione2 = new Prenotazione();
 		prenotazione2.setSportivoPrenotante(sportivo2);
 		prenotazione2.aggiungi(appuntamento2);
 

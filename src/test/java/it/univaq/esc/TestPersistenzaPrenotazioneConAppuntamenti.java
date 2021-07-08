@@ -35,11 +35,11 @@ public class TestPersistenzaPrenotazioneConAppuntamenti {
 	
 	@Test
 	public void test() {
-		Prenotazione prenotazione = new Prenotazione(5);
+		Prenotazione prenotazione = new Prenotazione();
 		Appuntamento appuntamento = new AppuntamentoImpianto();
 		prenotazione.aggiungi(appuntamento);
 		
-		System.out.println("id appuntamento prima del salvataggio: " + appuntamento.getIdAppuntamento());
+		System.out.println("id appuntamento prima del salvataggio: " + appuntamento.getIdNotificabile());
 		
 		getRegistroAppuntamenti().salva(appuntamento);
 		

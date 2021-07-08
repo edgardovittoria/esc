@@ -3,6 +3,8 @@ package it.univaq.esc.model.notifiche;
 import java.util.Map;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -16,11 +18,9 @@ import lombok.Setter;
 @Setter(value = AccessLevel.PRIVATE) @Getter(value = AccessLevel.PUBLIC) @NoArgsConstructor
 public abstract class Notificabile {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idNotificabile;
 	
-	public Notificabile(Integer lastIdNotificabile) {
-		setIdNotificabile(lastIdNotificabile + 1);
-	}
 
 	public abstract Map<String, Object> getInfo();
 	public abstract String getTipoEventoNotificabile();

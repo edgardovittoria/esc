@@ -13,13 +13,18 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import it.univaq.esc.model.utenti.UtentePolisportiva;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor
 public abstract class AppuntamentoSingoliPartecipanti extends Appuntamento {
 
 	
 	
+
+	
+
 
 	@Override
 	public boolean aggiungiPartecipante(Object sportivoPartecipante) {

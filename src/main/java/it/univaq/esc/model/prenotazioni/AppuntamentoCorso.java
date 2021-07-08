@@ -17,9 +17,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter
+@NoArgsConstructor
 public class AppuntamentoCorso extends AppuntamentoSingoliPartecipanti {
 	
+	
+
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<UtentePolisportiva> invitati = new ArrayList<UtentePolisportiva>();

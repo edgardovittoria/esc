@@ -185,9 +185,9 @@ public class EffettuaPrenotazioneHandler {
 	private void inizializzaNuovaPrenotazione(UtentePolisportiva sportivoPrenotante, String tipoPrenotazione,
 			String modalitaPrenotazione) {
 
-		Integer lastIdPrenotazione = this.getRegistroPrenotazioni().getLastIdPrenotazione();
+		//Integer lastIdPrenotazione = this.getRegistroPrenotazioni().getLastIdPrenotazione();
 
-		setPrenotazioneInAtto(new Prenotazione(lastIdPrenotazione));
+		setPrenotazioneInAtto(new Prenotazione());
 		getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
 
 	}
