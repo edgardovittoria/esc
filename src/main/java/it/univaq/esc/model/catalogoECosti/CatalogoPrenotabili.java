@@ -45,11 +45,13 @@ public class CatalogoPrenotabili {
     }
     
     public void eliminaPrenotabileDescrizione(PrenotabileDescrizione prenotabileDescrizione) {
+    	Integer indiceDaCancellare = 0;
     	for(PrenotabileDescrizione prenDescrizione : getCatalogoPrenotabili()) {
     		if (prenDescrizione.isEqual(prenotabileDescrizione)) {
-				getCatalogoPrenotabili().remove(prenotabileDescrizione);
+				indiceDaCancellare = getCatalogoPrenotabili().indexOf(prenDescrizione);
 			}
     	}
+    	getCatalogoPrenotabili().remove(indiceDaCancellare);
     	getPrenotabileDescrizioneRepository().delete(prenotabileDescrizione);
     }
 
