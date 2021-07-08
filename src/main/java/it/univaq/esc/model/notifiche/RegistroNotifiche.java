@@ -25,15 +25,15 @@ import lombok.Setter;
 public class RegistroNotifiche {
 
 	@Getter(value = AccessLevel.PRIVATE)
-	private RegistroPrenotazioni registroPrenotazioni;
+	private RegistroNotificabili registroNotificabili;
 
 	@Getter(value = AccessLevel.PRIVATE)
 	private NotificaRepository notificaRepository;
 
 	private List<NotificaService> listaNotifiche = new ArrayList<NotificaService>();
 
-	public RegistroNotifiche(RegistroPrenotazioni registroPrenotazioni, NotificaRepository notificaRepository) {
-		setRegistroPrenotazioni(registroPrenotazioni);
+	public RegistroNotifiche(RegistroNotificabili registroNotificabili, NotificaRepository notificaRepository) {
+		setRegistroNotificabili(registroNotificabili);
 		setNotificaRepository(notificaRepository);
 		popola();
 	}
@@ -41,7 +41,7 @@ public class RegistroNotifiche {
 	private void popola() {
 		List<NotificaService> listaNotifiche = new ArrayList<NotificaService>();
 		for (Notifica notifica : getNotificaRepository().findAll()) {
-			notifica.setEvento((Notificabile) getRegistroPrenotazioni().getPrenotazioneById(notifica.getIdEvento()));
+			notifica.setEvento((Notificabile) getRegistroNotificabili().trovaNotificabileDaId(notifica.getIdEvento()));
 
 			if (notifica.getEvento().getInfo().get("modalitaPrenotazione")
 					.equals(ModalitaPrenotazione.SINGOLO_UTENTE.toString())) {
