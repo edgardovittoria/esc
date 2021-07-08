@@ -74,7 +74,7 @@ public abstract class Appuntamento{
 	@Column
 	private boolean pending = false;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn
 	private PrenotabileDescrizione descrizioneEventoPrenotato;
 

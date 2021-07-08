@@ -121,6 +121,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
 				.nuovoPrenotabile_impostaDescrizione(formDati.getNomeEvento())
 				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+		getCatalogoPrenotabili().salvaPrenotabileDescrizioneSulDatabase(descrizioneCorso);
 		
 		return descrizioneCorso;
 	}
