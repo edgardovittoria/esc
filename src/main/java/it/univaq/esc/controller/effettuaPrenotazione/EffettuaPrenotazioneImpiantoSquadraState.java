@@ -28,6 +28,7 @@ import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.notifiche.NotificaSquadra;
 import it.univaq.esc.model.notifiche.NotificaSquadraService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
+import it.univaq.esc.model.notifiche.TipoNotifica;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoSquadra;
 import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
@@ -151,7 +152,8 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 			for (UtentePolisportiva amministratore : invitato.getAmministratori()) {
 				NotificaSquadraService notifica = (NotificaSquadraService) getElementiPrenotazioneFactory()
 						.getNotifica(new NotificaSquadra());
-				notifica.setStatoNotifica(TipiPrenotazione.IMPIANTO.toString());
+				notifica.setTipoNotifica(TipoNotifica.INVITO_IMPIANTO);
+				notifica.setStatoNotifica(TipoNotifica.INVITO_IMPIANTO.toString());
 				notifica.setDestinatario(amministratore);
 				notifica.setEvento(controller.getPrenotazioneInAtto());
 				notifica.setLetta(false);

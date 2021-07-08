@@ -27,6 +27,7 @@ import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.notifiche.Notifica;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
+import it.univaq.esc.model.notifiche.TipoNotifica;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoCorso;
 import it.univaq.esc.model.prenotazioni.AppuntamentoLezione;
@@ -159,7 +160,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	
 	private void impostaNotificaPerIstruttoreAssociatoAdAppuntamento(UtentePolisportiva istruttore, AppuntamentoCorso appuntamentoCorso, UtentePolisportiva sportivoPrenotante) {
 		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
-		notifica.setStatoNotifica("ISTRUTTORE");
+		notifica.setTipoNotifica(TipoNotifica.ISTRUTTORE_LEZIONE);
+		notifica.setStatoNotifica(TipoNotifica.ISTRUTTORE_LEZIONE.toString());
 		notifica.setDestinatario(istruttore);
 		notifica.setEvento(appuntamentoCorso);
 		notifica.setLetta(false);

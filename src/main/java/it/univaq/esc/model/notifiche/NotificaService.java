@@ -32,6 +32,10 @@ public class NotificaService {
 		
 	}
 	
+	public void setTipoNotifica(TipoNotifica tipo) {
+		getNotifica().setTipoNotifica(tipo);
+	}
+	
 	
 	
 	public String getMessaggio() {

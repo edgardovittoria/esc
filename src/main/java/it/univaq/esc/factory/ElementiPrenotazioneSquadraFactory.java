@@ -39,11 +39,11 @@ public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFact
 	@Override
 	public NotificaState getStatoNotifica(String tipoPrenotazione) {
 		switch (tipoPrenotazione) {
-		case "IMPIANTO":
+		case "INVITO_IMPIANTO":
 			return BeanUtil.getBean(NotificaImpiantoSquadraState.class);
-		case "LEZIONE":
+		case "INVITO_CORSO":
 			return null;
-		case "CORSO":
+		case "ISTRUTTORE_LEZIONE":
 			return null;
 		default:
 			return null;

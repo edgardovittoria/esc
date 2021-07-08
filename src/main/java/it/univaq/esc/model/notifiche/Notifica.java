@@ -3,6 +3,8 @@ package it.univaq.esc.model.notifiche;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,6 +43,9 @@ public class Notifica {
 	@ManyToOne
 	@JoinColumn
 	private Notificabile evento;
+	
+	@Enumerated(EnumType.STRING)
+	private TipoNotifica tipoNotifica;
 
 	public Integer getIdEvento() {
 		return (Integer)getEvento().getInfo().get("identificativo");

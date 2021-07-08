@@ -20,6 +20,7 @@ import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.notifiche.Notifica;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
+import it.univaq.esc.model.notifiche.TipoNotifica;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
 import it.univaq.esc.model.prenotazioni.DatiFormPerAppuntamento;
@@ -154,7 +155,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	private NotificaService creaNotificaPerSingoloInvitatoAllAppuntamentoDellaPrenotazioneInAtto(
 			UtentePolisportiva invitato, Prenotazione prenotazioneInAtto) {
 		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
-		notifica.setStatoNotifica(TipiPrenotazione.IMPIANTO.toString());
+		notifica.setTipoNotifica(TipoNotifica.INVITO_IMPIANTO);
+		notifica.setStatoNotifica(TipoNotifica.INVITO_IMPIANTO.toString());
 		notifica.setDestinatario(invitato);
 		notifica.setEvento(prenotazioneInAtto);
 		notifica.setLetta(false);
