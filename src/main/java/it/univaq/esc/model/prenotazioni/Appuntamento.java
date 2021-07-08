@@ -268,6 +268,7 @@ public abstract class Appuntamento extends Notificabile {
 		mappaDati.put("sport", getSportEvento());
 		mappaDati.put("tipoPrenotazione", getTipoPrenotazione());
 		mappaDati.put("modalitaPrenotazione", getModalitaPrenotazione());
+		mappaDati.put("identificativo", getIdNotificabile());
 
 		return mappaDati;
 	}
