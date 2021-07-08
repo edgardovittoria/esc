@@ -330,8 +330,8 @@ public class EffettuaPrenotazioneHandler {
 
 	@DeleteMapping("/annullaCreazioneCorso")
 	@CrossOrigin
-	public @ResponseStatus HttpStatus eliminaDescrizioneCorsoInCreazione() {
+	public ResponseEntity eliminaDescrizioneCorsoInCreazione() {
 		((EffettuaPrenotazioneCorsoState)getStato()).eliminaDescrizioneCorsoDaCatalogoEDatabase();
-		return HttpStatus.NO_CONTENT;
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }
