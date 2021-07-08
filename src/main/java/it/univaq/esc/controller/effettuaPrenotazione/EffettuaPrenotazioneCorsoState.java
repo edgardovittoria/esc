@@ -147,15 +147,24 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	@Override
 	public void aggiornaElementiLegatiAllaPrenotazioneConfermata(EffettuaPrenotazioneHandler controller) {
-
-		//getCatalogoPrenotabili().salvaPrenotabileDescrizioneSulDatabase(getPrenotabileDescrizioneCorso());
 		for (AppuntamentoCorso app : (List<AppuntamentoCorso>) (List<?>) controller.getPrenotazioneInAtto()
 				.getListaAppuntamenti()) {
 			app.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();
 			app.siAggiungeAlCalendarioDellIstruttoreRelativo();
+			impostaNotificaPerIstruttoreAssociatoAdAppuntamento(app.getIstruttore(), app, controller.getSportivoPrenotante());
 		}
 		impostaNelSistemaLeNotifichePerTuttiGliInvitatiAl(controller.getPrenotazioneInAtto());
 
+	}
+	
+	private void impostaNotificaPerIstruttoreAssociatoAdAppuntamento(UtentePolisportiva istruttore, AppuntamentoCorso appuntamentoCorso, UtentePolisportiva sportivoPrenotante) {
+		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
+		notifica.setStatoNotifica("ISTRUTTORE");
+		notifica.setDestinatario(istruttore);
+		notifica.setEvento(appuntamentoCorso);
+		notifica.setLetta(false);
+		notifica.setMittente(sportivoPrenotante);
+		getRegistroNotifiche().salvaNotifica(notifica);
 	}
 
 	private void impostaNelSistemaLeNotifichePerTuttiGliInvitatiAl(Prenotazione nuovoCorso) {
@@ -164,6 +173,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 			impostaNelSistemaNotificaPerInvitatoAlCorso(invitato, nuovoCorso);
 		}
 	}
+	
+	
 
 	private void impostaNelSistemaNotificaPerInvitatoAlCorso(UtentePolisportiva invitato, Prenotazione corso) {
 		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
