@@ -43,6 +43,15 @@ public class CatalogoPrenotabili {
     private void popola(){
         this.setCatalogoPrenotabili(this.getPrenotabileDescrizioneRepository().findAll());
     }
+    
+    public void eliminaPrenotabileDescrizione(PrenotabileDescrizione prenotabileDescrizione) {
+    	for(PrenotabileDescrizione prenDescrizione : getCatalogoPrenotabili()) {
+    		if (prenDescrizione.isEqual(prenotabileDescrizione)) {
+				getCatalogoPrenotabili().remove(prenotabileDescrizione);
+			}
+    	}
+    	getPrenotabileDescrizioneRepository().delete(prenotabileDescrizione);
+    }
 
     public CatalogoPrenotabili nuovoPrenotabile_avviaCreazione(Sport sport, String tipoPrenotazione, Integer sogliaMinimaPartecipanti, Integer sogliaMassimaPartecipanti){
         this.getPrenotabileDescrizioneBuilder().creaNuovaDescrizione()

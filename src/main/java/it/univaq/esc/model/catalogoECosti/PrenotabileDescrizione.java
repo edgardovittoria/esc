@@ -72,4 +72,10 @@ public class PrenotabileDescrizione {
     	return getDescrizione();
     }
     
+    public boolean isEqual(PrenotabileDescrizione prenotabileDescrizione) {
+    	if(getDescrizione().equals(prenotabileDescrizione.getDescrizione())) {
+    		return true;
+    	}
+    	return false;
+    }
 }

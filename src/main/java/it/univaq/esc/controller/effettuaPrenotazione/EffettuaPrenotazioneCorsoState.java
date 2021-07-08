@@ -259,4 +259,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		return partecipanteAggiunto;
 	}
 
+	public void eliminaDescrizioneCorsoDaCatalogoEDatabase() {
+		getCatalogoPrenotabili().eliminaPrenotabileDescrizione(getPrenotabileDescrizioneCorso());
+	}
 }
+
