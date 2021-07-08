@@ -267,6 +267,7 @@ public abstract class Appuntamento extends Notificabile {
 		Map<String, Object> mappaDati = new HashMap<String, Object>();
 		mappaDati.put("sport", getSportEvento());
 		mappaDati.put("tipoPrenotazione", getTipoPrenotazione());
+		mappaDati.put("modalitaPrenotazione", getModalitaPrenotazione());
 
 		return mappaDati;
 	}
