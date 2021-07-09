@@ -23,6 +23,7 @@ public class NotificaMapper extends EntityDTOMapper{
 		notificaDTO.setIdEvento((Integer)notificaDaConvertire.getEvento().getInfo().get("identificativo"));
 		notificaDTO.setTipoEventoNotificabile(notificaDaConvertire.getEvento().getTipoEventoNotificabile());
 		notificaDTO.setLetta(notificaDaConvertire.isLetta());
+		notificaDTO.setTipoNotifica(notificaDaConvertire.getTipoNotifica());
 		
 		return notificaDTO;
 		

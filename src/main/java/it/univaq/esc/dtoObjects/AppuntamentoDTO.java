@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AppuntamentoDTO {
+public class AppuntamentoDTO extends NotificabileDTO{
 
 	private Integer idAppuntamento;
 	private OrarioAppuntamentoDTO orarioAppuntamento = new OrarioAppuntamentoDTO();

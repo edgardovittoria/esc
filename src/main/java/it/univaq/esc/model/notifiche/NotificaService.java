@@ -88,6 +88,9 @@ public class NotificaService {
 	}
 	
 
+	public String getTipoNotifica() {
+		return getNotifica().getTipoNotifica().toString();
+	}
 	
 	public String getModalitaNotifica() {
 		return ModalitaPrenotazione.SINGOLO_UTENTE.toString();

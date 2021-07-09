@@ -41,6 +41,8 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 		appuntamentoDTO.setIdImpiantoPrenotato(appuntamentoDaConvertire.getImpiantoPrenotato().getIdImpianto());
 		appuntamentoDTO.setPavimentazioneImpianto(
 				appuntamentoDaConvertire.getImpiantoPrenotato().getTipoPavimentazione().toString());
+		
+		appuntamentoDTO.setTipoEventoNotificabile(appuntamentoDaConvertire.getTipoEventoNotificabile());
 
 		return appuntamentoDTO;
 	}
