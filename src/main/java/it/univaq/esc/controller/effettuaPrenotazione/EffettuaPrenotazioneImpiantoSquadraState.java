@@ -139,7 +139,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	private NotificaSquadraService creaNotificaPerSingoloAmministratoreSquadraInvitataAllAppuntamentoDellaPrenotazioneInAtto(
 			UtentePolisportiva amministratore, Squadra squadraInvitata, Prenotazione prenotazioneInAtto) {
 		PrenotazioneSquadra prenotazioneSquadraInAtto = (PrenotazioneSquadra) prenotazioneInAtto;
-		NotificaSquadraService notifica = (NotificaSquadraService)getElementiPrenotazioneFactory().getNotifica(new Notifica());
+		NotificaSquadraService notifica = (NotificaSquadraService)getElementiPrenotazioneFactory().getNotifica(new NotificaSquadra());
 		notifica.setTipoNotifica(TipoNotifica.INVITO_IMPIANTO);
 		notifica.setStatoNotifica(TipoNotifica.INVITO_IMPIANTO.toString());
 		notifica.setDestinatario(amministratore);
