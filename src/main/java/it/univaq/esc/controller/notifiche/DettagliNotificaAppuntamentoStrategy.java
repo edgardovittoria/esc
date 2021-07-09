@@ -38,7 +38,7 @@ public class DettagliNotificaAppuntamentoStrategy extends DettagliNotificaStrate
 	}
 	
 	static {
-		FactoryDettagliNotificaStrategy.registra(TipoEventoNotificabile.APPUNTAMENTO.toString(), DettagliNotificaPrenotazioneStrategy.class);
+		FactoryDettagliNotificaStrategy.registra(TipoEventoNotificabile.APPUNTAMENTO.toString(), DettagliNotificaAppuntamentoStrategy.class);
 	}
 
 }
