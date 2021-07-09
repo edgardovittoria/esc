@@ -150,7 +150,7 @@ public class EffettuaPrenotazioneHandler {
 				.trovaUtenteInBaseAllaSua(emailSportivoPrenotante);
 		if (!sportivoPrenotante.comeSportivo().isMoroso()) {
 			impostaAttributiControllerDipendentiDa(modalitaPrenotazione, tipoPrenotazione);
-			this.inizializzaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione, idSquadra);
+			this.inizializzaNuovaPrenotazione(sportivoPrenotante, modalitaPrenotazione, idSquadra);
 			return this.getStato().getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(this);
 		} else {
 			/*
@@ -183,15 +183,15 @@ public class EffettuaPrenotazioneHandler {
 
 		UtentePolisportiva direttore = this.getRegistroUtenti().trovaUtenteInBaseAllaSua(emailDirettore);
 		impostaAttributiControllerDipendentiDa(modalitaPrenotazione, tipoPrenotazione);
-		this.inizializzaNuovaPrenotazione(direttore, tipoPrenotazione, null);
+		this.inizializzaNuovaPrenotazione(direttore, modalitaPrenotazione, null);
 
 		return this.getStato().getDatiOpzioniPerPrenotazioneInModalitaDirettore(this);
 	}
 
-	private void inizializzaNuovaPrenotazione(UtentePolisportiva sportivoPrenotante, String tipoPrenotazione, Integer idSquadraPrenotante) {
+	private void inizializzaNuovaPrenotazione(UtentePolisportiva sportivoPrenotante, String modalitaPrenotazione, Integer idSquadraPrenotante) {
 		setPrenotazioneInAtto(getFactoryStati().getPrenotazione());
 		getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
-		if(getPrenotazioneInAtto().getModalitaPrenotazione().equals(ModalitaPrenotazione.SQUADRA.toString())) {
+		if(modalitaPrenotazione.equals(ModalitaPrenotazione.SQUADRA.toString())) {
 			PrenotazioneSquadra prenotazioneSquadraInAtto = (PrenotazioneSquadra) getPrenotazioneInAtto();
 			prenotazioneSquadraInAtto.setSquadraPrenotante(getRegistroSquadre().getSquadraById(idSquadraPrenotante));
 		}
