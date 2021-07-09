@@ -22,6 +22,11 @@ import lombok.Setter;
 public class DettagliNotificaAppuntamentoStrategy extends DettagliNotificaStrategy{
 	
 	private RegistroAppuntamenti registroAppuntamenti;
+	
+	public DettagliNotificaAppuntamentoStrategy(RegistroAppuntamenti registroAppuntamenti) {
+		setRegistroAppuntamenti(registroAppuntamenti);
+		setMapperFactory(getMapperFactory());
+	}
 
 	@Override
 	public NotificabileDTO getDettagliNotifica(Integer idEvento) {
