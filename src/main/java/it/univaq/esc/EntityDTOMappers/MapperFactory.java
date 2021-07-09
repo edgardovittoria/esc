@@ -5,6 +5,7 @@ import org.springframework.context.annotation.DependsOn;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
+import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.utility.BeanUtil;
 
@@ -72,6 +73,7 @@ public abstract class MapperFactory {
 		mapper.setRegistroImpianti(BeanUtil.getBean(RegistroImpianti.class));
 		mapper.setCatalogoPrenotabili(BeanUtil.getBean(CatalogoPrenotabili.class));
 		mapper.setRegistroSport(BeanUtil.getBean(RegistroSport.class));
+		mapper.setRegistroSquadre(BeanUtil.getBean(RegistroSquadre.class));
 	}
 
 }

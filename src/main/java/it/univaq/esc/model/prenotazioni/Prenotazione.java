@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
@@ -32,6 +34,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "prenotazioni")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPrenotazione")
 @Getter

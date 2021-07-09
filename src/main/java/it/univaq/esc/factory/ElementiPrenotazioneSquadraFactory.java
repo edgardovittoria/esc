@@ -13,6 +13,8 @@ import it.univaq.esc.model.notifiche.NotificaSquadraService;
 import it.univaq.esc.model.notifiche.NotificaState;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpiantoSquadra;
+import it.univaq.esc.model.prenotazioni.Prenotazione;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSquadra;
 import it.univaq.esc.utility.BeanUtil;
 
 @Component(value = "ELEMENTI_PRENOTAZIONE_SQUADRA")
@@ -74,6 +76,13 @@ public class ElementiPrenotazioneSquadraFactory extends ElementiPrenotazioneFact
 	@Override
 	public NotificaService getNotifica(Notifica notifica) {
 		return new NotificaSquadraService(notifica, this);
+	}
+
+
+
+	@Override
+	public Prenotazione getPrenotazione() {
+		return new PrenotazioneSquadra();
 	}
 
 }

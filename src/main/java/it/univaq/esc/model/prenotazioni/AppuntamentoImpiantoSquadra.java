@@ -27,4 +27,15 @@ public class AppuntamentoImpiantoSquadra extends AppuntamentoSquadra{
 	public void aggiungi(Squadra squadraInvitata) {
 		getSquadreInvitate().add(squadraInvitata);
 	}
+	
+	@Override
+	public void impostaDatiAppuntamentoDa(DatiFormPerAppuntamento datiCompilatiInPrenotazione) {
+		super.impostaDatiAppuntamentoDa(datiCompilatiInPrenotazione);
+		setSquadreInvitate(datiCompilatiInPrenotazione.getSquadreInvitate());
+	}
+	
+	public void siAggiungeAlCalendarioDellaSquadraPrenotante() {
+		PrenotazioneSquadra prenotazioneSquadraAssociata = (PrenotazioneSquadra) getPrenotazione();
+		prenotazioneSquadraAssociata.getSquadraPrenotante().segnaInCalendarioIl(this);
+	}
 }

@@ -18,6 +18,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -111,6 +112,10 @@ public class Squadra {
 			return true;
 		}
 		return false;
+	}
+	
+	public void segnaInCalendarioIl(Appuntamento nuovoAppuntamento) {
+		getCalendarioSquadra().aggiungiAppuntamento(nuovoAppuntamento);
 	}
 	
 }

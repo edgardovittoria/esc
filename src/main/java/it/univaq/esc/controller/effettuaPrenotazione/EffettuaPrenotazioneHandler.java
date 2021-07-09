@@ -29,10 +29,13 @@ import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
+import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSquadra;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
+import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.utility.BeanUtil;
@@ -82,6 +85,10 @@ public class EffettuaPrenotazioneHandler {
 	 */
 	@Autowired
 	private RegistroPrenotazioni registroPrenotazioni;
+	
+	@Autowired
+	private RegistroSquadre registroSquadre;
+	
 
 	/**
 	 * Prenotazione in atto gestita dal controller.
@@ -103,9 +110,7 @@ public class EffettuaPrenotazioneHandler {
 	 */
 	private EffettuaPrenotazioneState stato;
 
-	@Setter(value = AccessLevel.PRIVATE)
-	@Getter(value = AccessLevel.PUBLIC)
-	private Integer idSquadraPrenotante;
+	
 
 	/**
 	 * Imposta la tipologia della prenotazione in atto, passata come parametro. In
@@ -140,12 +145,12 @@ public class EffettuaPrenotazioneHandler {
 			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione,
 			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
 
-		this.setIdSquadraPrenotante(idSquadra);
+		
 		UtentePolisportiva sportivoPrenotante = this.getRegistroUtenti()
 				.trovaUtenteInBaseAllaSua(emailSportivoPrenotante);
 		if (!sportivoPrenotante.comeSportivo().isMoroso()) {
-			this.inizializzaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione, modalitaPrenotazione);
 			impostaAttributiControllerDipendentiDa(modalitaPrenotazione, tipoPrenotazione);
+			this.inizializzaNuovaPrenotazione(sportivoPrenotante, tipoPrenotazione, idSquadra);
 			return this.getStato().getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(this);
 		} else {
 			/*
@@ -177,19 +182,19 @@ public class EffettuaPrenotazioneHandler {
 			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
 
 		UtentePolisportiva direttore = this.getRegistroUtenti().trovaUtenteInBaseAllaSua(emailDirettore);
-		this.inizializzaNuovaPrenotazione(direttore, tipoPrenotazione, modalitaPrenotazione);
 		impostaAttributiControllerDipendentiDa(modalitaPrenotazione, tipoPrenotazione);
+		this.inizializzaNuovaPrenotazione(direttore, tipoPrenotazione, null);
+
 		return this.getStato().getDatiOpzioniPerPrenotazioneInModalitaDirettore(this);
 	}
 
-	private void inizializzaNuovaPrenotazione(UtentePolisportiva sportivoPrenotante, String tipoPrenotazione,
-			String modalitaPrenotazione) {
-
-		//Integer lastIdPrenotazione = this.getRegistroPrenotazioni().getLastIdPrenotazione();
-
-		setPrenotazioneInAtto(new Prenotazione());
+	private void inizializzaNuovaPrenotazione(UtentePolisportiva sportivoPrenotante, String tipoPrenotazione, Integer idSquadraPrenotante) {
+		setPrenotazioneInAtto(getFactoryStati().getPrenotazione());
 		getPrenotazioneInAtto().setSportivoPrenotante(sportivoPrenotante);
-
+		if(getPrenotazioneInAtto().getModalitaPrenotazione().equals(ModalitaPrenotazione.SQUADRA.toString())) {
+			PrenotazioneSquadra prenotazioneSquadraInAtto = (PrenotazioneSquadra) getPrenotazioneInAtto();
+			prenotazioneSquadraInAtto.setSquadraPrenotante(getRegistroSquadre().getSquadraById(idSquadraPrenotante));
+		}
 	}
 
 	private void impostaAttributiControllerDipendentiDa(String modalitaPrenotazione, String tipoPrenotazione) {
@@ -219,7 +224,8 @@ public class EffettuaPrenotazioneHandler {
 	@CrossOrigin
 	public ResponseEntity<PrenotazioneDTO> getRiepilogoPrenotazione(@RequestBody FormPrenotabile formPrenotaImpianto) {
 
-		PrenotazioneDTO prenDTO = this.getStato().impostaPrenotazioneConDatiDellaFormPerRiepilogo(formPrenotaImpianto, this);
+		PrenotazioneDTO prenDTO = this.getStato().impostaPrenotazioneConDatiDellaFormPerRiepilogo(formPrenotaImpianto,
+				this);
 
 		return new ResponseEntity<PrenotazioneDTO>(prenDTO, HttpStatus.OK);
 
@@ -259,7 +265,7 @@ public class EffettuaPrenotazioneHandler {
 		UtentePolisportiva manutentore = getRegistroUtenti().getManutentoreLiberoNellOrarioDi(appuntamento);
 		appuntamento.setManutentore(manutentore);
 	}
-	
+
 	private void aggiornaCalendariDeiManutentoriAssegnati() {
 		for (Appuntamento appuntamento : getPrenotazioneInAtto().getListaAppuntamenti()) {
 			appuntamento.siAggiungeAlCalendarioDelProprioManutentore();
@@ -286,10 +292,9 @@ public class EffettuaPrenotazioneHandler {
 		return this.getStato().getDatiOpzioniPrenotazioneAggiornatiInBaseAllaMappa(dati);
 	}
 
-	
-	
 	/*
-	 * TODO Verificare se questo metodo è effettivamente usato, ma meglio sarebbe eliminarlo.
+	 * TODO Verificare se questo metodo è effettivamente usato, ma meglio sarebbe
+	 * eliminarlo.
 	 */
 	@GetMapping("/istruttoriDisponibili")
 	@CrossOrigin
@@ -331,7 +336,7 @@ public class EffettuaPrenotazioneHandler {
 	@DeleteMapping("/annullaCreazioneCorso")
 	@CrossOrigin
 	public ResponseEntity eliminaDescrizioneCorsoInCreazione() {
-		((EffettuaPrenotazioneCorsoState)getStato()).eliminaDescrizioneCorsoDaCatalogoEDatabase();
+		((EffettuaPrenotazioneCorsoState) getStato()).eliminaDescrizioneCorsoDaCatalogoEDatabase();
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

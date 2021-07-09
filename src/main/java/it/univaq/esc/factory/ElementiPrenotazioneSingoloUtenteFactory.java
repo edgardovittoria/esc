@@ -18,6 +18,7 @@ import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoCorso;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
 import it.univaq.esc.model.prenotazioni.AppuntamentoLezione;
+import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.utility.BeanUtil;
 
 @Component(value = "ELEMENTI_PRENOTAZIONE_SINGOLO_UTENTE")
@@ -74,6 +75,11 @@ public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazio
 			return new AppuntamentoCorso();
 
 		}
+	}
+
+	@Override
+	public Prenotazione getPrenotazione() {
+		return new Prenotazione();
 	}
 
 }
