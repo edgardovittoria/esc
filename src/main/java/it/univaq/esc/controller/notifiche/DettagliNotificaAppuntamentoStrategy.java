@@ -1,18 +1,13 @@
 package it.univaq.esc.controller.notifiche;
 
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Component;
-
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.NotificabileDTO;
-import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.model.TipoEventoNotificabile;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
-import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

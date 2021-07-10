@@ -32,7 +32,6 @@ import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.TipoEventoNotificabile;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
-import it.univaq.esc.model.notifiche.Notificabile;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;

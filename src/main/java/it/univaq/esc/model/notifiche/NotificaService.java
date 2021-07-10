@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
+import it.univaq.esc.model.prenotazioni.Notificabile;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;

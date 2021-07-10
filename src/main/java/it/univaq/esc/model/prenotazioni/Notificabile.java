@@ -1,4 +1,4 @@
-package it.univaq.esc.model.notifiche;
+package it.univaq.esc.model.prenotazioni;
 
 import java.util.Map;
 

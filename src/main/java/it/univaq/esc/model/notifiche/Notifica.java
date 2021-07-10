@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
 
+import it.univaq.esc.model.prenotazioni.Notificabile;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;

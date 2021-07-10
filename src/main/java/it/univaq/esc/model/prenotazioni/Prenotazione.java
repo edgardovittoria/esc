@@ -26,7 +26,6 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.TipoEventoNotificabile;
-import it.univaq.esc.model.notifiche.Notificabile;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 
 import lombok.Getter;
