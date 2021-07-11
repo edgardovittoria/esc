@@ -152,41 +152,18 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 				.getListaAppuntamenti()) {
 			app.siAggiungeAlCalendarioDelRelativoImpiantoPrenotato();
 			app.siAggiungeAlCalendarioDellIstruttoreRelativo();
-			impostaNotificaPerIstruttoreAssociatoAdAppuntamento(app.getIstruttore(), app, controller.getSportivoPrenotante());
+			getRegistroNotifiche().impostaNotificaPerIstruttoreAssociatoANuovaLezione(app.getIstruttore(), app);
 		}
 		impostaNelSistemaLeNotifichePerTuttiGliInvitatiAl(controller.getPrenotazioneInAtto());
 
 	}
 	
-	private void impostaNotificaPerIstruttoreAssociatoAdAppuntamento(UtentePolisportiva istruttore, AppuntamentoCorso appuntamentoCorso, UtentePolisportiva sportivoPrenotante) {
-		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
-		notifica.setTipoNotifica(TipoNotifica.ISTRUTTORE_LEZIONE);
-		notifica.setStatoNotifica(TipoNotifica.ISTRUTTORE_LEZIONE.toString());
-		notifica.setDestinatario(istruttore);
-		notifica.setEvento(appuntamentoCorso);
-		notifica.setLetta(false);
-		notifica.setMittente(sportivoPrenotante);
-		getRegistroNotifiche().salvaNotifica(notifica);
-	}
 
 	private void impostaNelSistemaLeNotifichePerTuttiGliInvitatiAl(Prenotazione nuovoCorso) {
 		for (UtentePolisportiva invitato : ((AppuntamentoCorso) nuovoCorso.getListaAppuntamenti().get(0))
 				.getInvitati()) {
-			impostaNelSistemaNotificaPerInvitatoAlCorso(invitato, nuovoCorso);
+			getRegistroNotifiche().impostaNotificaPerUtenteInvitatoAPrenotazioneImpianto(invitato, nuovoCorso);
 		}
-	}
-	
-	
-
-	private void impostaNelSistemaNotificaPerInvitatoAlCorso(UtentePolisportiva invitato, Prenotazione corso) {
-		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
-		notifica.setTipoNotifica(TipoNotifica.INVITO_CORSO);
-		notifica.setStatoNotifica(TipoNotifica.INVITO_CORSO.toString());
-		notifica.setDestinatario(invitato);
-		notifica.setEvento(corso);
-		notifica.setLetta(false);
-		notifica.setMittente(corso.getSportivoPrenotante());
-		getRegistroNotifiche().salvaNotifica(notifica);
 	}
 
 	@Override

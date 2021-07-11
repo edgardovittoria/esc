@@ -9,7 +9,11 @@ import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
+import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.Prenotazione;
+import it.univaq.esc.model.prenotazioni.PrenotazioneSquadra;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
+import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.repository.NotificaRepository;
 import it.univaq.esc.utility.BeanUtil;
@@ -39,31 +43,36 @@ public class RegistroNotifiche {
 		for (Notifica notifica : getNotificaRepository().findAll()) {
 			if (notifica.getEvento().getInfo().get("modalitaPrenotazione")
 					.equals(ModalitaPrenotazione.SINGOLO_UTENTE.toString())) {
-				ElementiPrenotazioneFactory factory = BeanUtil.getBean(
-						"ELEMENTI_PRENOTAZIONE_" + ModalitaPrenotazione.SINGOLO_UTENTE.toString(),
-						ElementiPrenotazioneFactory.class);
-				NotificaService notificaService = factory.getNotifica(notifica);
+				NotificaService notificaService = getElementiPrenotazioneFactorySingoloUtente().getNotifica(notifica);
 				notificaService.setStatoNotifica(notifica.getTipoNotifica().toString());
 				listaNotifiche.add(notificaService);
 			} else {
-				ElementiPrenotazioneFactory factory = BeanUtil.getBean(
-						"ELEMENTI_PRENOTAZIONE_" + ModalitaPrenotazione.SQUADRA.toString(),
-						ElementiPrenotazioneFactory.class);
-				NotificaSquadraService notificaService = (NotificaSquadraService) factory.getNotifica(notifica);
+				NotificaSquadraService notificaService = (NotificaSquadraService) getElementiPrenotazioneFactorySquadra()
+						.getNotifica(notifica);
 				notificaService.setStatoNotifica(notifica.getTipoNotifica().toString());
-
 				listaNotifiche.add(notificaService);
 			}
-
 		}
-
 		setListaNotifiche(listaNotifiche);
+	}
+
+	private ElementiPrenotazioneFactory getElementiPrenotazioneFactorySingoloUtente() {
+		ElementiPrenotazioneFactory elementiPrenotazioneFactory = BeanUtil.getBean(
+				"ELEMENTI_PRENOTAZIONE_" + ModalitaPrenotazione.SINGOLO_UTENTE.toString(),
+				ElementiPrenotazioneFactory.class);
+		return elementiPrenotazioneFactory;
+	}
+
+	private ElementiPrenotazioneFactory getElementiPrenotazioneFactorySquadra() {
+		ElementiPrenotazioneFactory elementiPrenotazioneFactory = BeanUtil.getBean(
+				"ELEMENTI_PRENOTAZIONE_" + ModalitaPrenotazione.SQUADRA.toString(), ElementiPrenotazioneFactory.class);
+		return elementiPrenotazioneFactory;
 	}
 
 	public List<NotificaService> getNotifichePerDestinatario(UtentePolisportiva destinatario) {
 		List<NotificaService> notificheDestinatario = new ArrayList<NotificaService>();
 		for (NotificaService notifica : getListaNotifiche()) {
-			if (notifica.getDestinatario().isEqual(destinatario)) {
+			if (notifica.isIndirizzataA(destinatario)) {
 				notificheDestinatario.add(notifica);
 			}
 		}
@@ -83,15 +92,45 @@ public class RegistroNotifiche {
 
 	public NotificaService getNotificaById(Integer idNotifica) {
 		for (NotificaService notifica : getListaNotifiche()) {
-			if (notifica.getIdNotifica() == idNotifica) {
+			if (notifica.isSuoQuesto(idNotifica)) {
 				return notifica;
 			}
 		}
 		return null;
 	}
 
-	public void impostaNotificaComeLetta(NotificaService notifica) {
-		notifica.setLetta(true);
-		aggiornaNotificaSuDatabase(notifica);
+	public void impostaNotificaPerUtenteInvitatoAPrenotazioneImpianto(UtentePolisportiva utenteInvitato,
+			Prenotazione prenotazione) {
+		NotificaService notifica = getElementiPrenotazioneFactorySingoloUtente().getNotifica(new Notifica());
+		notifica.impostaDatiNotifica(TipoNotifica.INVITO_IMPIANTO, prenotazione.getSportivoPrenotante(), utenteInvitato,
+				prenotazione);
+		salvaNotifica(notifica);
+	}
+
+	public void impostaNotificaPerIstruttoreAssociatoANuovaLezione(UtentePolisportiva istruttore,
+			Appuntamento appuntamentoLezione) {
+		NotificaService notifica = getElementiPrenotazioneFactorySingoloUtente().getNotifica(new Notifica());
+		notifica.impostaDatiNotifica(TipoNotifica.ISTRUTTORE_LEZIONE,
+				appuntamentoLezione.getUtenteCheHaEffettuatoLaPrenotazioneRelativa(), istruttore, appuntamentoLezione);
+		salvaNotifica(notifica);
+	}
+
+	public void impostaNotificaPerUtenteInvitatoAPrenotazioneCorso(UtentePolisportiva utenteInvitato,
+			Prenotazione prenotazione) {
+		NotificaService notifica = getElementiPrenotazioneFactorySingoloUtente().getNotifica(new Notifica());
+		notifica.impostaDatiNotifica(TipoNotifica.INVITO_CORSO, prenotazione.getSportivoPrenotante(), utenteInvitato,
+				prenotazione);
+		salvaNotifica(notifica);
+	}
+
+	public void impostaNotificaPerAmministratoreSquadraInvitataAPrenotazioneImpianto(UtentePolisportiva amministratore,
+			Squadra squadraInvitata, Prenotazione prenotazione) {
+		PrenotazioneSquadra prenotazioneSquadraInAtto = (PrenotazioneSquadra) prenotazione;
+		NotificaSquadraService notifica = (NotificaSquadraService) getElementiPrenotazioneFactorySquadra()
+				.getNotifica(new NotificaSquadra());
+		notifica.impostaDatiNotificaSquadra(TipoNotifica.INVITO_IMPIANTO,
+				prenotazioneSquadraInAtto.getSportivoPrenotante(), amministratore, prenotazioneSquadraInAtto,
+				prenotazioneSquadraInAtto.getSquadraPrenotante(), squadraInvitata);
+		salvaNotifica(notifica);
 	}
 }

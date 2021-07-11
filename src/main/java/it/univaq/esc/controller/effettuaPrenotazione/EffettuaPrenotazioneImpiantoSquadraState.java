@@ -131,26 +131,9 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	
 	private void impostaNotifichePerGliAmministratoriSquadraInvitataAllAppuntamentoDellaPrenotazioneInAtto(List<UtentePolisportiva> amministratoriSquadra,  Squadra squadraInvitata, Prenotazione prenotazioneInAtto) {
 		for (UtentePolisportiva amministratore : amministratoriSquadra) {
-			NotificaSquadraService notifica = creaNotificaPerSingoloAmministratoreSquadraInvitataAllAppuntamentoDellaPrenotazioneInAtto(amministratore, squadraInvitata, prenotazioneInAtto);
-			getRegistroNotifiche().salvaNotifica(notifica);
+			getRegistroNotifiche().impostaNotificaPerAmministratoreSquadraInvitataAPrenotazioneImpianto(amministratore, squadraInvitata, prenotazioneInAtto);
 		}
 	}
-	
-	private NotificaSquadraService creaNotificaPerSingoloAmministratoreSquadraInvitataAllAppuntamentoDellaPrenotazioneInAtto(
-			UtentePolisportiva amministratore, Squadra squadraInvitata, Prenotazione prenotazioneInAtto) {
-		PrenotazioneSquadra prenotazioneSquadraInAtto = (PrenotazioneSquadra) prenotazioneInAtto;
-		NotificaSquadraService notifica = (NotificaSquadraService)getElementiPrenotazioneFactory().getNotifica(new NotificaSquadra());
-		notifica.setTipoNotifica(TipoNotifica.INVITO_IMPIANTO);
-		notifica.setStatoNotifica(TipoNotifica.INVITO_IMPIANTO.toString());
-		notifica.setDestinatario(amministratore);
-		notifica.setEvento(prenotazioneInAtto);
-		notifica.setLetta(false);
-		notifica.setMittente(prenotazioneInAtto.getSportivoPrenotante());
-		notifica.setSquadraDelDestinatario(squadraInvitata);
-		notifica.setSquadraDelMittente(prenotazioneSquadraInAtto.getSquadraPrenotante());
-		return notifica;
-	}
-	
 	
 
 	@Override
@@ -195,7 +178,6 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 				getRegistroSquadre().aggiornaCalendarioSquadra(squadraPartecipante, appuntamento);
 			}
 
-			// this.getRegistroAppuntamenti().aggiornaAppuntamento(appuntamento);
 			AppuntamentoDTO appuntamentoDTO = getMapperFactory()
 					.getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);
 			return appuntamentoDTO;

@@ -48,8 +48,4 @@ public class Notifica {
 	@Enumerated(EnumType.STRING)
 	private TipoNotifica tipoNotifica;
 
-	public Integer getIdEvento() {
-		return (Integer)getEvento().getInfo().get("identificativo");
-	}
-
 }

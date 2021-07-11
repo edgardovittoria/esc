@@ -146,23 +146,10 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	private void impostaNotifichePerGliUtentiInvitatiAllaPrenotazioneInAtto(List<UtentePolisportiva> invitati,
 			Prenotazione prenotazioneInAtto) {
 		for (UtentePolisportiva invitato : invitati) {
-			NotificaService notifica = creaNotificaPerSingoloInvitatoAllAppuntamentoDellaPrenotazioneInAtto(invitato,
-					prenotazioneInAtto);
-			getRegistroNotifiche().salvaNotifica(notifica);
+			getRegistroNotifiche().impostaNotificaPerUtenteInvitatoAPrenotazioneImpianto(invitato, prenotazioneInAtto);
 		}
 	}
 
-	private NotificaService creaNotificaPerSingoloInvitatoAllAppuntamentoDellaPrenotazioneInAtto(
-			UtentePolisportiva invitato, Prenotazione prenotazioneInAtto) {
-		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
-		notifica.setTipoNotifica(TipoNotifica.INVITO_IMPIANTO);
-		notifica.setStatoNotifica(TipoNotifica.INVITO_IMPIANTO.toString());
-		notifica.setDestinatario(invitato);
-		notifica.setEvento(prenotazioneInAtto);
-		notifica.setLetta(false);
-		notifica.setMittente(prenotazioneInAtto.getSportivoPrenotante());
-		return notifica;
-	}
 
 	/**
 	 * Metodo che aggiorna i dati delle opzioni di prenotazione, sulla base di
@@ -174,7 +161,6 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 		datiAggiornati.put("impiantiDisponibili", this.getListaDTOImpiantiPrenotabiliInBaseAMappa(dati));
 		datiAggiornati.put("sportiviInvitabili", trovaSportiviLiberiInBaseA((Map<String, String>) dati.get("orario")));
 		return datiAggiornati;
-
 	}
 
 	private List<UtentePolisportivaDTO> trovaSportiviLiberiInBaseA(Map<String, String> mappaOrario) {

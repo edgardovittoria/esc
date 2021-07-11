@@ -12,10 +12,10 @@ public class NotificaIstruttoreState extends NotificaState{
 	@Override
 	public String getMessaggioNotifica(NotificaService notificaDiCuiCostruireIlMessaggio) {
 		String messaggio = "";
-		Sport sport = (Sport)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("sport");
-		String tipoPrenotazione = (String)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("tipoPrenotazione");
+		String sport = notificaDiCuiCostruireIlMessaggio.getNomeSportEvento();
+		String tipoPrenotazione = notificaDiCuiCostruireIlMessaggio.getTipoPrenotazioneEvento();
 		
-		messaggio = "Sei stato assegnato come istruttore ad un appuntamento di tipo " + tipoPrenotazione + " di " + sport.getNome();
+		messaggio = "Sei stato assegnato come istruttore ad un appuntamento di tipo " + tipoPrenotazione + " di " + sport;
 		return messaggio;
 	}
 

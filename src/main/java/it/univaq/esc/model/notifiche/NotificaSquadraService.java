@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
+import it.univaq.esc.model.prenotazioni.Notificabile;
 import it.univaq.esc.model.utenti.Squadra;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,17 +19,6 @@ public class NotificaSquadraService extends NotificaService{
 
 	public NotificaSquadraService(Notifica notifica, ElementiPrenotazioneFactory factoryStatiNotifiche) {
 		super(notifica, factoryStatiNotifiche);
-	}
-
-	
-	public void setSquadraDelMittente(Squadra squadraDelMittente) {
-		if(getNotifica() instanceof NotificaSquadra)
-		((NotificaSquadra)getNotifica()).setSquadraDelMittente(squadraDelMittente);
-	}
-	
-	public void setSquadraDelDestinatario(Squadra squadraDelDestinatario) {
-		if(getNotifica() instanceof NotificaSquadra)
-		((NotificaSquadra)getNotifica()).setSquadraDelDestinatario(squadraDelDestinatario);
 	}
 	
 	public Squadra getSquadraDelMittente() {
@@ -42,6 +33,23 @@ public class NotificaSquadraService extends NotificaService{
 		return ((NotificaSquadra)getNotifica()).getSquadraDelDestinatario();
 		}
 		return null;
+	}
+	
+	public void impostaDatiNotificaSquadra(TipoNotifica tipoNotifica, UtentePolisportiva mittente,
+			UtentePolisportiva destinatario, Notificabile evento, Squadra squadraDelMittente, Squadra squadraDelDestinatario) {
+		super.impostaDatiNotifica(tipoNotifica, mittente, destinatario, evento);
+		setSquadraDelMittente(squadraDelMittente);
+		setSquadraDelDestinatario(squadraDelDestinatario);
+	}
+	
+	private void setSquadraDelMittente(Squadra squadraDelMittente) {
+		if(getNotifica() instanceof NotificaSquadra)
+		((NotificaSquadra)getNotifica()).setSquadraDelMittente(squadraDelMittente);
+	}
+	
+	private void setSquadraDelDestinatario(Squadra squadraDelDestinatario) {
+		if(getNotifica() instanceof NotificaSquadra)
+		((NotificaSquadra)getNotifica()).setSquadraDelDestinatario(squadraDelDestinatario);
 	}
 	
 	

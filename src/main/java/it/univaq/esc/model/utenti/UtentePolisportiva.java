@@ -45,39 +45,7 @@ public class UtentePolisportiva implements Serializable{
 			setAnagraficaUtente(anagraficaUtente);
 		}
 
-//		@Override
-//		public void setProprieta(Map<String, Object> mappaProprieta) {
-//			for (String chiave : mappaProprieta.keySet()) {
-//				switch (chiave) {
-//				case "nome":
-//					this.setNome((String) mappaProprieta.get(chiave));
-//					break;
-//				case "cognome":
-//					this.setCognome((String) mappaProprieta.get(chiave));
-//					break;
-//				case "email":
-//					this.setEmail((String) mappaProprieta.get(chiave));
-//					break;
-//				case "password":
-//					this.setPassword((String) mappaProprieta.get(chiave));
-//					break;
-//				default:
-//					break;
-//				}
-//			}
-	//
-//		}
 
-//		@Override
-//		public Map<String, Object> getProprieta() {
-//			Map<String, Object> mappaProprieta = new HashMap<String, Object>();
-//			mappaProprieta.put("nome", this.getNome());
-//			mappaProprieta.put("cognome", this.getCognome());
-//			mappaProprieta.put("email", this.getEmail());
-//			mappaProprieta.put("password", this.getPassword());
-	//
-//			return mappaProprieta;
-//		}
 
 		
 		public List<String> getRuoli() {
@@ -125,7 +93,6 @@ public class UtentePolisportiva implements Serializable{
 			return null;
 		}
 		
-		//commento
 		public boolean is(TipoRuolo ruolo) {
 			for(ProfiloUtente profiloUtente : getProfiliAssociati()) {
 				if(profiloUtente.isProfilo(ruolo)) {

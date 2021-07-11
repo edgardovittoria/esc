@@ -13,90 +13,106 @@ import lombok.Setter;
 
 @Service()
 @Scope("prototype")
-@Getter @Setter(value = AccessLevel.PROTECTED)
+@Getter
+@Setter(value = AccessLevel.PROTECTED)
 public class NotificaService {
 
-
 	private Notifica notifica;
-	
+
 	@Getter(value = AccessLevel.PRIVATE)
 	private ElementiPrenotazioneFactory factoryStatiNotifiche;
-	
-	private NotificaState statoNotifica;
-	
-	
 
-	
+	private NotificaState statoNotifica;
+
 	public NotificaService(Notifica notifica, ElementiPrenotazioneFactory factoryStatiNotifiche) {
 		setFactoryStatiNotifiche(factoryStatiNotifiche);
 		setNotifica(notifica);
-		
+
 	}
 	
-	public void setTipoNotifica(TipoNotifica tipo) {
-		getNotifica().setTipoNotifica(tipo);
+	public void impostaDatiNotifica(TipoNotifica tipoNotifica, UtentePolisportiva mittente, UtentePolisportiva destinatario, Notificabile evento) {
+		getNotifica().setTipoNotifica(tipoNotifica);
+		setStatoNotifica(tipoNotifica.toString());
+		getNotifica().setDestinatario(destinatario);
+		getNotifica().setEvento(evento);
+		getNotifica().setLetta(false);
+		getNotifica().setMittente(mittente);
 	}
+
 	
-	
-	
+
 	public String getMessaggio() {
 		return getStatoNotifica().getMessaggioNotifica(this);
 	}
-	
+
 	public Integer getIdEvento() {
-		return getNotifica().getIdEvento();
+		return (Integer) getNotifica().getEvento().getInfo().get("identificativo");
 	}
-	
-	public UtentePolisportiva getMittente() {
-		return getNotifica().getMittente();
+
+	public String getNominativoCompletoMittente() {
+		UtentePolisportiva mittente = getNotifica().getMittente();
+		return mittente.getNominativoCompleto();
 	}
-	
-	public UtentePolisportiva getDestinatario() {
-		return getNotifica().getDestinatario();
+
+	public boolean isIndirizzataA(UtentePolisportiva utente) {
+		UtentePolisportiva destinatario = getNotifica().getDestinatario();
+		return destinatario.isEqual(utente);
 	}
-	
-	public Notificabile getEvento() {
+
+	public String getTipoPrenotazioneEvento() {
+		String tipoPrenotazioneEvento = (String) getEvento().getInfo().get("tipoPrenotazione");
+		return tipoPrenotazioneEvento;
+	}
+
+	private Notificabile getEvento() {
 		return getNotifica().getEvento();
 	}
-	
+
+	public String getTipoEventoNotificabile() {
+		return getEvento().getTipoEventoNotificabile();
+	}
+
+	public String getNomeSportEvento() {
+		String sportNome = (String) getEvento().getInfo().get("sportNome");
+		return sportNome;
+	}
+
+	public Integer getNumeroIncontriEvento() {
+		if (getEvento().getInfo().containsKey("numeroIncontri")) {
+			return (Integer) getEvento().getInfo().get("numeroIncontri");
+		}
+		return null;
+	}
+
 	public boolean isLetta() {
 		return getNotifica().isLetta();
 	}
 	
-	public void setMittente(UtentePolisportiva mittente) {
-		getNotifica().setMittente(mittente);
+	public void impostaComeLetta() {
+		getNotifica().setLetta(true);
 	}
-	
-	public void setDestinatario(UtentePolisportiva destinatario) {
-		getNotifica().setDestinatario(destinatario);
-	}
-	
-	public void setLetta(boolean isLetta) {
-		getNotifica().setLetta(isLetta);
-	}
-	
-	public void setEvento(Notificabile evento) {
-		getNotifica().setEvento(evento);
-	}
+
 	
 	public void setStatoNotifica(String tipo) {
 		this.statoNotifica = getFactoryStatiNotifiche().getStatoNotifica(tipo);
-				
 	}
-	
+
 	public Integer getIdNotifica() {
 		return getNotifica().getIdNotifica();
 	}
 	
+	
+	public boolean isSuoQuesto(Integer identificativo) {
+		return getIdNotifica() == identificativo;
+	}
 
 	public String getTipoNotifica() {
-		return getNotifica().getTipoNotifica().toString();
+		TipoNotifica tipoNotifica = getNotifica().getTipoNotifica();
+		return tipoNotifica.toString();
 	}
-	
+
 	public String getModalitaNotifica() {
 		return ModalitaPrenotazione.SINGOLO_UTENTE.toString();
 	}
-	
-	
-}
 
+}

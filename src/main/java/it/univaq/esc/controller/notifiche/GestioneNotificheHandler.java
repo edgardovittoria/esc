@@ -65,9 +65,9 @@ public class GestioneNotificheHandler {
 
 		impostaMapperFactory(notifica.getModalitaNotifica());
 
-		getRegistroNotifiche().impostaNotificaComeLetta(notifica);
+		notifica.impostaComeLetta();
+		getRegistroNotifiche().aggiornaNotificaSuDatabase(notifica);
 		NotificaDTO notificaDTO = getMapperFactory().getNotificaMapper().convertiInNotificaDTO(notifica);
-
 		return notificaDTO;
 
 	}

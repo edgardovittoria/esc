@@ -12,8 +12,8 @@ public class NotificaImpiantoSquadraState extends NotificaState{
 	public String getMessaggioNotifica(NotificaService notificaDiCuiCostruireIlMessaggio) {
 		NotificaSquadraService notificaSquadraService = (NotificaSquadraService) notificaDiCuiCostruireIlMessaggio;
 		String messaggio = "";
-		Integer numeroIncontri = (Integer)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("numeroIncontri");
-		String sport = (String)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("sportNome");
+		Integer numeroIncontri = notificaDiCuiCostruireIlMessaggio.getNumeroIncontriEvento();
+		String sport = notificaDiCuiCostruireIlMessaggio.getNomeSportEvento();
 		String nomeSquadraDestinatario = notificaSquadraService.getSquadraDelDestinatario().getNome();
 		
 		if(numeroIncontri > 1) {

@@ -16,8 +16,8 @@ public class NotificaImpiantoState extends NotificaState{
 	@Override
 	public String getMessaggioNotifica(NotificaService notificaDiCuiCostruireIlMessaggio) {
 		String messaggio = "";
-		Integer numeroIncontri = (Integer)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("numeroIncontri");
-		String sport = (String)notificaDiCuiCostruireIlMessaggio.getEvento().getInfo().get("sportNome");
+		Integer numeroIncontri = notificaDiCuiCostruireIlMessaggio.getNumeroIncontriEvento();
+		String sport = notificaDiCuiCostruireIlMessaggio.getNomeSportEvento();
 		if(numeroIncontri > 1) {
 			messaggio = "Sei stato invitato a partecipare a una serie di " + numeroIncontri + " incontri di " + sport + ".";
 		}
