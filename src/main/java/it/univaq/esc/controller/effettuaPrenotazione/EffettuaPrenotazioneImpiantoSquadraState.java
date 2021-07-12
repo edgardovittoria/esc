@@ -71,6 +71,18 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 
 		return mappaValori;
 	}
+	
+	private List<AppuntamentoDTO> getAppuntamentiImpiantoSottoscrivibiliDaSquadra(
+			Squadra squadraPerCuiCercareAppuntamentiSottoscrivibili) {
+		List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
+		for (Appuntamento appuntamento : this.getRegistroAppuntamenti().getAppuntamentiSottoscrivibiliSquadraPerTipo(
+				TipiPrenotazione.IMPIANTO.toString(), squadraPerCuiCercareAppuntamentiSottoscrivibili)) {
+			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione())
+					.convertiInAppuntamentoDTO(appuntamento);
+			listaAppuntamentiDTO.add(appDTO);
+		}
+		return listaAppuntamentiDTO;
+	}
 
 	@Override
 	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
@@ -161,60 +173,43 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 		Sport sportSquadra = getRegistroSport().getSportByNome((String) mappaDatiCompilati.get("sport"));
 
 		List<Squadra> listaSquadreInvitabili = getRegistroSquadre().getListaSquadreLiberePer(orarioAppuntamento);
-		listaSquadreInvitabili = getRegistroSquadre().filtraSquadrePerSport(sportSquadra, listaSquadreInvitabili);
+		listaSquadreInvitabili = getRegistroSquadre().filtraListaSquadrePerSport(sportSquadra, listaSquadreInvitabili);
 		return listaSquadreInvitabili;
 	}
 
 	@Override
 	public Object aggiungiPartecipanteAEventoEsistente(Integer idEvento, Object identificativoPartecipante) {
-		Integer idSquadra = (Integer) identificativoPartecipante;
-		Squadra squadraPartecipante = getRegistroSquadre().getSquadraById(idSquadra);
-		Appuntamento appuntamento = this.getRegistroAppuntamenti().getAppuntamentoById(idEvento);
+		Squadra squadraPartecipante = ricavaSquadraDall(identificativoPartecipante);
+		AppuntamentoSquadra appuntamento = ricavaAppuntamentoSquadraDall(idEvento);
 		if (appuntamento != null) {
-			boolean partecipanteAggiunto = this.aggiungiPartecipanteECreaQuotePartecipazione(squadraPartecipante,
-					appuntamento);
-
+			boolean partecipanteAggiunto = appuntamento.aggiungiPartecipante(squadraPartecipante);
+			appuntamento.confermaSeRaggiuntoNumeroNecessarioDiPartecipanti();
+			getRegistroAppuntamenti().aggiorna(appuntamento);
 			if (partecipanteAggiunto) {
-				getRegistroSquadre().aggiornaCalendarioSquadra(squadraPartecipante, appuntamento);
+				appuntamento.siAggiungeAlCalendarioDella(squadraPartecipante);
 			}
-
 			AppuntamentoDTO appuntamentoDTO = getMapperFactory()
 					.getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);
 			return appuntamentoDTO;
 		}
 		return null;
 	}
+	
+	private Squadra ricavaSquadraDall(Object identificativoSquadra) {
+		Integer idSquadra = (Integer) identificativoSquadra;
+		Squadra squadra = getRegistroSquadre().getSquadraById(idSquadra);
+		return squadra;
+	}
+	
+	private AppuntamentoSquadra ricavaAppuntamentoSquadraDall(Integer idAppuntamento) {
+		Appuntamento appuntamento = getRegistroAppuntamenti().getAppuntamentoById(idAppuntamento);
+		AppuntamentoSquadra appuntamentoSquadra = (AppuntamentoSquadra) appuntamento;
+		return appuntamentoSquadra;
+	}
 
 	@Override
 	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(EffettuaPrenotazioneHandler controller) {
-		
-		return null;
-	}
-
-	private List<AppuntamentoDTO> getAppuntamentiImpiantoSottoscrivibiliDaSquadra(
-			Squadra squadraPerCuiCercareAppuntamentiSottoscrivibili) {
-		List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
-		for (Appuntamento appuntamento : this.getRegistroAppuntamenti().getAppuntamentiSottoscrivibiliSquadraPerTipo(
-				TipiPrenotazione.IMPIANTO.toString(), squadraPerCuiCercareAppuntamentiSottoscrivibili)) {
-			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione())
-					.convertiInAppuntamentoDTO(appuntamento);
-			listaAppuntamentiDTO.add(appDTO);
-		}
-		return listaAppuntamentiDTO;
-	}
-
-	@Override
-	protected boolean aggiungiPartecipanteECreaQuotePartecipazione(Object squadra, Appuntamento appuntamento) {
-		boolean partecipanteAggiunto = appuntamento.aggiungiPartecipante(squadra);
-
-		if (partecipanteAggiunto && appuntamento.getPartecipantiAppuntamento().size() >= appuntamento
-				.getSogliaMinimaPartecipantiPerConferma()) {
-			appuntamento.confermaAppuntamento();
-
-		}
-		this.getRegistroAppuntamenti().aggiorna(appuntamento);
-
-		return partecipanteAggiunto;
+		return new HashMap<String, Object>();
 	}
 
 }

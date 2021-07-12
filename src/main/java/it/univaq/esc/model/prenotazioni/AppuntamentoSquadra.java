@@ -89,5 +89,9 @@ public abstract class AppuntamentoSquadra extends Appuntamento {
 	public void aggiungi(Squadra squadraAgliInvitati) {
 		getSquadreInvitate().add(squadraAgliInvitati);
 	}
+	
+	public void siAggiungeAlCalendarioDella(Squadra squadraPartecipante) {
+		squadraPartecipante.segnaInCalendarioIl(this);
+	}
 
 }

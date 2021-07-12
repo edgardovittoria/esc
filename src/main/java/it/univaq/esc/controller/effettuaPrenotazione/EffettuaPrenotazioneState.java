@@ -50,45 +50,13 @@ import lombok.Setter;
 @Setter(value = AccessLevel.PRIVATE)
 public abstract class EffettuaPrenotazioneState {
 
-	/**
-	 * Registro delle notifiche. Utilizzato per invio e gestione generale delle
-	 * notifiche relative alle prenotazioni.
-	 */
-
 	private RegistroNotifiche registroNotifiche;
-
-	/**
-	 * Registro degli sport della polisportiva. Utilizzato per la ricerca e la
-	 * visualizzazione degli sport in fase di prenotazione.
-	 */
-
 	private RegistroSport registroSport;
-
-	/**
-	 * Registro degli impianti della polisportiva. Utilizzato per la gestione degli
-	 * impianti selezionati in fase di prenotazione.
-	 */
-
 	private RegistroImpianti registroImpianti;
-
-	/**
-	 * Registro degli utenti della polisportiva. Utilizzato per la gestione di tutti
-	 * gli utenti inerenti la prenotazione che si sta gestendo.
-	 */
-
 	private RegistroUtentiPolisportiva registroUtenti;
-
-	/**
-	 * Registro degli appuntamenti. Utilizzato per la gestione degli appuntamenti
-	 * associati alla prenotazione che si sta gestendo.
-	 */
-
 	private RegistroAppuntamenti registroAppuntamenti;
-
 	private RegistroPrenotazioni registroPrenotazioni;
-
 	private CatalogoPrenotabili catalogoPrenotabili;
-
 	private RegistroSquadre registroSquadre;
 
 	@Setter(value = AccessLevel.PUBLIC)
@@ -197,7 +165,7 @@ public abstract class EffettuaPrenotazioneState {
 	 */
 	public abstract Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(
 			EffettuaPrenotazioneHandler controller);
-
+	
 	/**
 	 * Metodo di utilità, utilizzato in quelli principali, che resituisce la lista
 	 * di tutti gli sport praticabili nella polisportiva, in formato DTO.
@@ -311,7 +279,7 @@ public abstract class EffettuaPrenotazioneState {
 	}
 
 	private List<Impianto> trovaImpiantiPrenotabiliInBaseAMappa(Map<String, Object> datiInseritiInCompilazione) {
-		List<Impianto> listaImpiantiDisponibili = this.getRegistroImpianti().getListaImpiantiPolisportiva();
+		List<Impianto> listaImpiantiDisponibili = getRegistroImpianti().getListaImpiantiPolisportiva();
 		if (datiInseritiInCompilazione.containsKey("orario")) {
 			listaImpiantiDisponibili = filtraListaImpiantiInBaseAMappaOrario(listaImpiantiDisponibili,
 					(Map<String, String>) datiInseritiInCompilazione.get("orario"));
@@ -391,15 +359,6 @@ public abstract class EffettuaPrenotazioneState {
 		Sport sportPerCuiFiltrare = this.getRegistroSport().getSportByNome(nomeSport);
 		return this.getRegistroUtenti().filtraListaIstruttoriPerSportInsegnato(listaIstruttori, sportPerCuiFiltrare);
 
-	}
-
-	protected boolean aggiungiPartecipanteECreaQuotePartecipazione(Object partecipante, Appuntamento appuntamento) {
-		boolean partecipanteAggiunto = false;
-		partecipanteAggiunto = appuntamento.aggiungiPartecipante(partecipante);
-		if (partecipanteAggiunto) {
-			getRegistroAppuntamenti().creaQuotePartecipazionePerAppuntamento(appuntamento);
-		}
-		return partecipanteAggiunto;
 	}
 
 	protected OrarioAppuntamento creaOrarioAppuntamentoDa(Map<String, String> mappaOrario) {

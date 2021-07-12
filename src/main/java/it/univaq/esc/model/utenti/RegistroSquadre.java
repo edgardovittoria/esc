@@ -117,7 +117,7 @@ public class RegistroSquadre {
 		return null;
 	}
 	
-	public List<Squadra> filtraSquadrePerSport(Sport sport, List<Squadra> squadreDaFiltrare) {
+	public List<Squadra> filtraListaSquadrePerSport(Sport sport, List<Squadra> squadreDaFiltrare) {
 		List<Squadra> listaSquadre = new ArrayList<Squadra>();
 		for(Squadra squadra : squadreDaFiltrare) {
 			if(squadra.getSport().getNome().equals(sport.getNome())) {
@@ -126,15 +126,5 @@ public class RegistroSquadre {
 		}
 		return listaSquadre;
 		
-	}
-	
-	public void aggiornaCalendarioSquadra(Squadra squadra, Calendario calendario) {
-		Calendario calendarioAttuale = squadra.getCalendarioSquadra();
-		calendarioAttuale.unisciCalendario(calendario);
-		squadra.setCalendarioSquadra(calendarioAttuale);
-	}
-	
-	public void aggiornaCalendarioSquadra(Squadra squadra, Appuntamento nuovoAppuntamento) {
-		squadra.getCalendarioSquadra().aggiungiAppuntamento(nuovoAppuntamento);
 	}
 }

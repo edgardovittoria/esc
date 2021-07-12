@@ -213,6 +213,14 @@ public abstract class Appuntamento extends Notificabile {
 				.forEach((partecipante) -> aggiungiQuotaPartecipazione(creaQuotaPartecipazione(partecipante)));
 
 	}
+	
+	public boolean confermaSeRaggiuntoNumeroNecessarioDiPartecipanti() {
+		if(haNumeroPartecipantiNecessarioPerConferma()) {
+			confermaAppuntamento();
+			return true;
+		}
+		return false;
+	}
 
 	private QuotaPartecipazione creaQuotaPartecipazione(UtentePolisportiva sportivo) {
 

@@ -241,7 +241,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		return mappaDati;
 	}
 
-	@Override
+
 	protected boolean aggiungiPartecipanteECreaQuotePartecipazione(Object utente, Appuntamento appuntamento) {
 		boolean partecipanteAggiunto = appuntamento.aggiungiPartecipante(utente);
 
