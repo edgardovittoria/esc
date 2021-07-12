@@ -62,6 +62,13 @@ public class AppuntamentoCorso extends AppuntamentoSingoliPartecipanti {
 		setInvitati(datiCompilatiInPrenotazione.getInvitati());
 		setIstruttore(datiCompilatiInPrenotazione.getIstruttore());
 	}
+	
+	public void assegnaStesseQuotePartecipazioneAgliAltriAppuntamentiDelCorso() {
+		List<Appuntamento> appuntamentiCorso = getPrenotazione().getListaAppuntamenti();
+		for(Appuntamento appuntamento : appuntamentiCorso) {
+			appuntamento.assegna(getQuotePartecipazione());
+		}
+	}
 }
 
 

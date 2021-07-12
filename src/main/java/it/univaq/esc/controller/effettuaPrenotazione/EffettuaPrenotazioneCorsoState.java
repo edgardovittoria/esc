@@ -52,7 +52,7 @@ import lombok.Setter;
 @Setter(value = AccessLevel.PRIVATE)
 
 public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
-	
+
 	private PrenotabileDescrizione prenotabileDescrizioneCorso;
 
 	/**
@@ -78,16 +78,15 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		mappaCorsiDisponibili.put("corsiDisponibili", trovaCorsiDisponibili());
 		return mappaCorsiDisponibili;
 	}
-	
-	
-	private List<PrenotazioneDTO> trovaCorsiDisponibili(){
+
+	private List<PrenotazioneDTO> trovaCorsiDisponibili() {
 		List<Prenotazione> corsiDisponibili = getRegistroPrenotazioni().filtraPrenotazioniPerTipo(
 				getRegistroPrenotazioni().getPrenotazioniRegistrate(), TipiPrenotazione.CORSO.toString());
 		List<PrenotazioneDTO> listaCorsiDisponibiliInFormatoDTO = convertiInDTOLaLista(corsiDisponibili);
 		return listaCorsiDisponibiliInFormatoDTO;
 	}
-	
-	private List<PrenotazioneDTO> convertiInDTOLaLista(List<Prenotazione> corsi){
+
+	private List<PrenotazioneDTO> convertiInDTOLaLista(List<Prenotazione> corsi) {
 		List<PrenotazioneDTO> listaCorsi = new ArrayList<PrenotazioneDTO>();
 		for (Prenotazione prenotazione : corsi) {
 			PrenotazioneDTO prenotazioneDTO = getMapperFactory().getPrenotazioneMapper()
@@ -98,12 +97,14 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati, EffettuaPrenotazioneHandler controller) {
-		
+	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati,
+			EffettuaPrenotazioneHandler controller) {
+
 		setPrenotabileDescrizioneCorso(creaPrenotabileDescrizioneCorso(formDati));
-		
+
 		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
-			impostaAppuntamentoCorsoRelativoAOrarioNellaPrenotazione(controller.getPrenotazioneInAtto(), orario, formDati);
+			impostaAppuntamentoCorsoRelativoAOrarioNellaPrenotazione(controller.getPrenotazioneInAtto(), orario,
+					formDati);
 		}
 		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper()
 				.convertiCorsoInPrenotazioneDTO(controller.getPrenotazioneInAtto());
@@ -111,7 +112,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		return prenDTO;
 
 	}
-	
+
 	private PrenotabileDescrizione creaPrenotabileDescrizioneCorso(FormPrenotabile formDati) {
 		PrenotabileDescrizione descrizioneCorso = getCatalogoPrenotabili()
 				.nuovoPrenotabile_avviaCreazione(this.getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
@@ -123,16 +124,16 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 				.nuovoPrenotabile_impostaDescrizione(formDati.getNomeEvento())
 				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
 		getCatalogoPrenotabili().salvaPrenotabileDescrizioneSulDatabase(descrizioneCorso);
-		
+
 		return descrizioneCorso;
 	}
-	
+
 	private void impostaAppuntamentoCorsoRelativoAOrarioNellaPrenotazione(Prenotazione prenotazioneInAtto,
 			OrarioAppuntamentoDTO orario, FormPrenotabile formDati) {
 		AppuntamentoCorso appuntamentoLezione = getAppuntamentoPerOrarioImpostatoUsandoForm(orario, formDati);
 		prenotazioneInAtto.aggiungi(appuntamentoLezione);
 	}
-	
+
 	private AppuntamentoCorso getAppuntamentoPerOrarioImpostatoUsandoForm(OrarioAppuntamentoDTO orario,
 			FormPrenotabile formDati) {
 		AppuntamentoCorso appuntamento = (AppuntamentoCorso) getElementiPrenotazioneFactory()
@@ -157,7 +158,6 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		impostaNelSistemaLeNotifichePerTuttiGliInvitatiAl(controller.getPrenotazioneInAtto());
 
 	}
-	
 
 	private void impostaNelSistemaLeNotifichePerTuttiGliInvitatiAl(Prenotazione nuovoCorso) {
 		for (UtentePolisportiva invitato : ((AppuntamentoCorso) nuovoCorso.getListaAppuntamenti().get(0))
@@ -168,7 +168,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	@Override
 	public Map<String, Object> getDatiOpzioniPrenotazioneAggiornatiInBaseAllaMappa(Map<String, Object> dati) {
-		Map<String, Object> mappaAggiornata = this.getStatoControllerLezioni().getDatiOpzioniPrenotazioneAggiornatiInBaseAllaMappa(dati);
+		Map<String, Object> mappaAggiornata = this.getStatoControllerLezioni()
+				.getDatiOpzioniPrenotazioneAggiornatiInBaseAllaMappa(dati);
 
 		mappaAggiornata.put("sportiviInvitabili", trovaSportiviLiberiInBaseA((Map<String, String>) dati.get("orario")));
 
@@ -185,31 +186,29 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		String emailPartecipante = (String) identificativoPartecipante;
 		Prenotazione corsoPrenotazione = getRegistroPrenotazioni().getPrenotazioneById(idEvento);
 		List<Appuntamento> listaAppuntamentiCorso = corsoPrenotazione.getListaAppuntamenti();
-
 		UtentePolisportiva nuovoPartecipante = getRegistroUtenti().trovaUtenteInBaseAllaSua(emailPartecipante);
-		boolean partecipanteAggiunto = false;
+		boolean isPartecipanteAggiunto = false;
 		for (Appuntamento appuntamento : listaAppuntamentiCorso) {
-			partecipanteAggiunto = this.aggiungiPartecipanteECreaQuotePartecipazione(nuovoPartecipante, appuntamento);
+			isPartecipanteAggiunto = appuntamento.aggiungiPartecipante(nuovoPartecipante);
 		}
-		Appuntamento appuntamentoPerCreazioneQuota = listaAppuntamentiCorso.get(0);
-
-		List<QuotaPartecipazione> quotePartecipazione = getRegistroAppuntamenti()
-				.creaQuotePartecipazionePerCorso(appuntamentoPerCreazioneQuota);
-
-		if (partecipanteAggiunto && appuntamentoPerCreazioneQuota.isConfermato()) {
-			for (Appuntamento appuntamento : listaAppuntamentiCorso) {
-				for (QuotaPartecipazione quota : quotePartecipazione) {
-					appuntamento.aggiungiQuotaPartecipazione(quota);
-				}
-			}
-		}
-
+		confermaAppuntamentiConCreazioneQuotePartecipazioneSeRaggiuntoNumeroMinimoPartecipanti(listaAppuntamentiCorso,
+				isPartecipanteAggiunto);
 		salvaModificheAlla(listaAppuntamentiCorso);
 		aggiornaCalendarioNuovoPartecipanteConGliAppuntamentiDelCorso(nuovoPartecipante, listaAppuntamentiCorso);
 
 		PrenotazioneDTO prenotazioneDTO = getMapperFactory().getPrenotazioneMapper()
 				.convertiCorsoInPrenotazioneDTO(corsoPrenotazione);
 		return prenotazioneDTO;
+	}
+
+	private void confermaAppuntamentiConCreazioneQuotePartecipazioneSeRaggiuntoNumeroMinimoPartecipanti(
+			List<Appuntamento> listaAppuntamentiCorso, boolean isNuovoPartecipanteAggiunto) {
+		AppuntamentoCorso appuntamentoPerCreazioneQuota = (AppuntamentoCorso) listaAppuntamentiCorso.get(0);
+		if (isNuovoPartecipanteAggiunto && appuntamentoPerCreazioneQuota.haNumeroPartecipantiNecessarioPerConferma()) {
+			listaAppuntamentiCorso.forEach((appuntamento) -> appuntamento.confermaAppuntamento());
+			appuntamentoPerCreazioneQuota.creaQuotePartecipazionePerAppuntamento();
+			appuntamentoPerCreazioneQuota.assegnaStesseQuotePartecipazioneAgliAltriAppuntamentiDelCorso();
+		}
 	}
 
 	private void salvaModificheAlla(List<Appuntamento> listaAppuntamentiDelCorso) {
@@ -229,7 +228,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	@Override
-	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(EffettuaPrenotazioneHandler controller) {
+	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(
+			EffettuaPrenotazioneHandler controller) {
 		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState) getElementiPrenotazioneFactory()
 				.getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
 		getStatoControllerLezioni().setMapperFactory(getMapperFactory());
@@ -241,17 +241,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		return mappaDati;
 	}
 
-
-	protected boolean aggiungiPartecipanteECreaQuotePartecipazione(Object utente, Appuntamento appuntamento) {
-		boolean partecipanteAggiunto = appuntamento.aggiungiPartecipante(utente);
-
-		appuntamento.confermaAppuntamento();
-
-		return partecipanteAggiunto;
-	}
-
 	public void eliminaDescrizioneCorsoDaCatalogoEDatabase() {
 		getCatalogoPrenotabili().eliminaPrenotabileDescrizione(getPrenotabileDescrizioneCorso());
 	}
 }
-

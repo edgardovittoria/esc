@@ -147,12 +147,16 @@ public abstract class Appuntamento extends Notificabile {
 		setCostoAppuntamento(getCalcolatoreCosto().calcolaCosto(this));
 	}
 
-	public void aggiungiQuotaPartecipazione(QuotaPartecipazione quota) {
-		if (quota != null) {
+	public void assegna(QuotaPartecipazione quota) {
+		if (quota != null && !esisteGiaQuotaAssociataAllo(quota.getSportivoAssociato())) {
 			this.getQuotePartecipazione().add(quota);
 		}
 	}
 
+	public void assegna(List<QuotaPartecipazione> listaQuote) {
+		listaQuote.forEach((quota) -> assegna(quota));
+	}
+	
 	public String getModalitaPrenotazione() {
 		return getDescrizioneEventoPrenotato().getModalitaPrenotazione();
 	}
@@ -210,7 +214,7 @@ public abstract class Appuntamento extends Notificabile {
 
 	public void creaQuotePartecipazionePerAppuntamento() {
 		getUtentiPartecipanti()
-				.forEach((partecipante) -> aggiungiQuotaPartecipazione(creaQuotaPartecipazione(partecipante)));
+				.forEach((partecipante) -> assegna(creaQuotaPartecipazione(partecipante)));
 
 	}
 	
