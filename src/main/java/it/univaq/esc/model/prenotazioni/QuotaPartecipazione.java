@@ -24,12 +24,11 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "quotePartecipazione")
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter
 public class QuotaPartecipazione {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter(value = AccessLevel.NONE)
+    @Setter(value = AccessLevel.PRIVATE)
     private int idQuotaPartecipazione;
     @Column
     private boolean pagata = false;
@@ -41,10 +40,15 @@ public class QuotaPartecipazione {
     private UtentePolisportiva sportivoAssociato;
     
 
-    public QuotaPartecipazione(boolean pagata, Costo costo, UtentePolisportiva sportivoDaAssociareAllaQuota) {
+    public QuotaPartecipazione(Integer lastIdQuote) {
+    	setIdQuotaPartecipazione(lastIdQuote+1);
+    }
+    
+    public QuotaPartecipazione(Integer lastIdQuote ,boolean pagata, Costo costo, UtentePolisportiva sportivoDaAssociareAllaQuota) {
         this.setPagata(pagata);
         this.setCosto(costo);
         this.setSportivoAssociato(sportivoDaAssociareAllaQuota);
+        setIdQuotaPartecipazione(lastIdQuote+1);
     }
     
     

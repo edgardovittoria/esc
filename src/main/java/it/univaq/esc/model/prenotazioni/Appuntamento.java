@@ -211,10 +211,11 @@ public abstract class Appuntamento extends Notificabile {
 		return getPartecipantiAppuntamento().size() >= getSogliaMinimaPartecipantiPerConferma();
 	}
 
-	public void creaQuotePartecipazionePerAppuntamento() {
-		getUtentiPartecipanti()
-				.forEach((partecipante) -> assegna(creaQuotaPartecipazione(partecipante)));
-
+	public void creaQuotePartecipazionePerAppuntamento(Integer ultimoIdQuote) {
+		for(UtentePolisportiva partecipante : getUtentiPartecipanti()) {
+			assegna(creaQuotaPartecipazione(partecipante, ultimoIdQuote));
+			ultimoIdQuote+=1;
+		}
 	}
 	
 	public boolean confermaSeRaggiuntoNumeroNecessarioDiPartecipanti() {
@@ -225,10 +226,10 @@ public abstract class Appuntamento extends Notificabile {
 		return false;
 	}
 
-	private QuotaPartecipazione creaQuotaPartecipazione(UtentePolisportiva sportivo) {
+	private QuotaPartecipazione creaQuotaPartecipazione(UtentePolisportiva sportivo, Integer ultimoIdQuote) {
 
 		if (!esisteGiaQuotaAssociataAllo(sportivo)) {
-			QuotaPartecipazione quota = new QuotaPartecipazione();
+			QuotaPartecipazione quota = new QuotaPartecipazione(ultimoIdQuote);
 			quota.impostaDati(sportivo, getCalcolatoreCosto().calcolaQuotaPartecipazione(this));
 			return quota;
 		}

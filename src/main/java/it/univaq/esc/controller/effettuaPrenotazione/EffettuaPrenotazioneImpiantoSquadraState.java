@@ -41,6 +41,7 @@ import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSquadra;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
+import it.univaq.esc.model.prenotazioni.RegistroQuotePartecipazione;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
@@ -54,9 +55,9 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	public EffettuaPrenotazioneImpiantoSquadraState(RegistroNotifiche registroNotifiche, RegistroSport registroSport,
 			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtenti,
 			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
-			CatalogoPrenotabili catalogoPrenotabili, RegistroSquadre registroSquadre) {
+			CatalogoPrenotabili catalogoPrenotabili, RegistroSquadre registroSquadre, RegistroQuotePartecipazione registroQuotePartecipazione) {
 		super(registroNotifiche, registroSport, registroImpianti, registroUtenti, registroAppuntamenti,
-				registroPrenotazioni, catalogoPrenotabili, registroSquadre);
+				registroPrenotazioni, catalogoPrenotabili, registroSquadre, registroQuotePartecipazione);
 
 	}
 

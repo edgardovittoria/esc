@@ -37,6 +37,7 @@ import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
+import it.univaq.esc.model.prenotazioni.RegistroQuotePartecipazione;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
@@ -64,10 +65,10 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtentiPolisportiva,
 			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
 			CatalogoPrenotabili catalogoPrenotabili, EffettuaPrenotazioneLezioneState effettuaPrenotazioneLezioneState,
-			RegistroSquadre registroSquadre) {
+			RegistroSquadre registroSquadre, RegistroQuotePartecipazione registroQuotePartecipazione) {
 
 		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti,
-				registroPrenotazioni, catalogoPrenotabili, registroSquadre);
+				registroPrenotazioni, catalogoPrenotabili, registroSquadre, registroQuotePartecipazione);
 
 	}
 
@@ -206,7 +207,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		AppuntamentoCorso appuntamentoPerCreazioneQuota = (AppuntamentoCorso) listaAppuntamentiCorso.get(0);
 		if (isNuovoPartecipanteAggiunto && appuntamentoPerCreazioneQuota.haNumeroPartecipantiNecessarioPerConferma()) {
 			listaAppuntamentiCorso.forEach((appuntamento) -> appuntamento.confermaAppuntamento());
-			appuntamentoPerCreazioneQuota.creaQuotePartecipazionePerAppuntamento();
+			appuntamentoPerCreazioneQuota.creaQuotePartecipazionePerAppuntamento(getRegistroQuotePartecipazione().getUltimoIdQuote());
 			appuntamentoPerCreazioneQuota.assegnaStesseQuotePartecipazioneAgliAltriAppuntamentiDelCorso();
 		}
 	}

@@ -319,40 +319,5 @@ public class RegistroAppuntamenti {
 		return listaAppuntamentiSquadra;
 	}
 
-//	public void creaQuotePartecipazionePerAppuntamento(Appuntamento appuntamento) {
-//		if (appuntamento.getPartecipantiAppuntamento().size() >= appuntamento
-//				.getSogliaMinimaPartecipantiPerConferma()) {
-//			appuntamento.confermaAppuntamento();
-//			appuntamento.getUtentiPartecipanti().forEach((partecipante) -> appuntamento
-//					.assegna(this.creaQuotaPartecipazione(appuntamento, partecipante)));
-//			aggiorna(appuntamento);
-//		}
-//		
-//	}
 
-//	public List<QuotaPartecipazione> creaQuotePartecipazionePerCorso(Appuntamento appuntamento) {
-//		List<QuotaPartecipazione> listaQuote = new ArrayList<QuotaPartecipazione>();
-//		if (appuntamento.haNumeroPartecipantiNecessarioPerConferma()) {
-//			appuntamento.getUtentiPartecipanti().forEach(
-//					(partecipante) -> listaQuote.add(this.creaQuotaPartecipazione(appuntamento, partecipante)));
-//		}
-//		return listaQuote;
-//	}
-//
-//	private QuotaPartecipazione creaQuotaPartecipazione(Appuntamento appuntamento, UtentePolisportiva sportivo) {
-//		boolean quotaGiaPresente = false;
-//		for (QuotaPartecipazione quotaPartecipazione : appuntamento.getQuotePartecipazione()) {
-//			if (quotaPartecipazione.getSportivoAssociato().isEqual(sportivo)) {
-//				quotaGiaPresente = true;
-//			}
-//		}
-//		if (!quotaGiaPresente) {
-//			QuotaPartecipazione quota = new QuotaPartecipazione();
-//			quota.setCosto(appuntamento.getCalcolatoreCosto().calcolaQuotaPartecipazione(appuntamento));
-//			quota.setSportivoAssociato(sportivo);
-//			quota.setPagata(false);
-//			return quota;
-//		}
-//		return null;
-//	}
 }

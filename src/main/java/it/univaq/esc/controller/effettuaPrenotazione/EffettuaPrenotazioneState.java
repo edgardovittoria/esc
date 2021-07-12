@@ -25,6 +25,7 @@ import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
+import it.univaq.esc.model.prenotazioni.RegistroQuotePartecipazione;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.TipoRuolo;
@@ -58,6 +59,7 @@ public abstract class EffettuaPrenotazioneState {
 	private RegistroPrenotazioni registroPrenotazioni;
 	private CatalogoPrenotabili catalogoPrenotabili;
 	private RegistroSquadre registroSquadre;
+	private RegistroQuotePartecipazione registroQuotePartecipazione;
 
 	@Setter(value = AccessLevel.PUBLIC)
 	private ElementiPrenotazioneFactory elementiPrenotazioneFactory;
@@ -68,7 +70,7 @@ public abstract class EffettuaPrenotazioneState {
 	public EffettuaPrenotazioneState(RegistroNotifiche registroNotifiche, RegistroSport registroSport,
 			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtenti,
 			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
-			CatalogoPrenotabili catalogoPrenotabili, RegistroSquadre registroSquadre) {
+			CatalogoPrenotabili catalogoPrenotabili, RegistroSquadre registroSquadre, RegistroQuotePartecipazione registroQuotePartecipazione) {
 		setRegistroAppuntamenti(registroAppuntamenti);
 		setRegistroImpianti(registroImpianti);
 		setCatalogoPrenotabili(catalogoPrenotabili);
@@ -77,6 +79,7 @@ public abstract class EffettuaPrenotazioneState {
 		setRegistroSport(registroSport);
 		setRegistroSquadre(registroSquadre);
 		setRegistroUtenti(registroUtenti);
+		setRegistroQuotePartecipazione(registroQuotePartecipazione);
 	}
 
 	/**

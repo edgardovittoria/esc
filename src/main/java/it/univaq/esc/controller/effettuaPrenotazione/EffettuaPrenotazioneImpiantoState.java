@@ -28,6 +28,7 @@ import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
+import it.univaq.esc.model.prenotazioni.RegistroQuotePartecipazione;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
@@ -51,9 +52,9 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	public EffettuaPrenotazioneImpiantoState(RegistroNotifiche registroNotifiche, RegistroSport registroSport,
 			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtentiPolisportiva,
 			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
-			CatalogoPrenotabili catalogoPrenotabili, RegistroSquadre registroSquadre) {
+			CatalogoPrenotabili catalogoPrenotabili, RegistroSquadre registroSquadre, RegistroQuotePartecipazione registroQuotePartecipazione) {
 		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti,
-				registroPrenotazioni, catalogoPrenotabili, registroSquadre);
+				registroPrenotazioni, catalogoPrenotabili, registroSquadre, registroQuotePartecipazione);
 	}
 
 	/**
@@ -134,7 +135,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 			AppuntamentoImpianto appuntamento) {
 		if (appuntamento.haNumeroPartecipantiNecessarioPerConferma()) {
 			appuntamento.confermaAppuntamento();
-			appuntamento.creaQuotePartecipazionePerAppuntamento();
+			appuntamento.creaQuotePartecipazionePerAppuntamento(getRegistroQuotePartecipazione().getUltimoIdQuote());
 		}
 	}
 
@@ -209,7 +210,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 			boolean partecipanteAggiunto = appuntamento.aggiungiPartecipante(nuovoPartecipante);
 			if (appuntamento.haNumeroPartecipantiNecessarioPerConferma()) {
 				appuntamento.confermaAppuntamento();
-				appuntamento.creaQuotePartecipazionePerAppuntamento();
+				appuntamento.creaQuotePartecipazionePerAppuntamento(getRegistroQuotePartecipazione().getUltimoIdQuote());
 			}
 			if (partecipanteAggiunto) {
 				nuovoPartecipante.comeSportivo().segnaInAgendaIl(appuntamento);
