@@ -74,8 +74,7 @@ public abstract class Appuntamento extends Notificabile {
 	@JoinColumn
 	private PrenotabileDescrizione descrizioneEventoPrenotato;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(nullable = false)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<QuotaPartecipazione> quotePartecipazione = new ArrayList<QuotaPartecipazione>();
 
