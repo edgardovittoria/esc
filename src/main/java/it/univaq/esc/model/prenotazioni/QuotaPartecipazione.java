@@ -24,7 +24,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "quotePartecipazione")
-@Getter @Setter
+@Getter @Setter @NoArgsConstructor
 public class QuotaPartecipazione {
     
     @Id
