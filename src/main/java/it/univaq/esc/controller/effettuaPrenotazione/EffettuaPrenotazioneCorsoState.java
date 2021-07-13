@@ -115,15 +115,17 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	}
 
 	private PrenotabileDescrizione creaPrenotabileDescrizioneCorso(FormPrenotabile formDati) {
-		PrenotabileDescrizione descrizioneCorso = getCatalogoPrenotabili()
-				.nuovoPrenotabile_avviaCreazione(this.getRegistroSport().getSportByNome(formDati.getSportSelezionato()),
-						TipiPrenotazione.CORSO.toString(), formDati.getNumeroMinimoPartecipanti(),
-						formDati.getNumeroMassimoPartecipanti())
-				.nuovoPrenotabile_impostaCostoUnaTantum(
+		PrenotabileDescrizione descrizioneCorso = getCatalogoPrenotabili().avviaCreazioneNuovoPrenotabile()
+				.impostaSport(getRegistroSport().getSportByNome(formDati.getSportSelezionato()))
+				.impostaTipoPrenotazione(TipiPrenotazione.CORSO.toString())
+				.impostaSogliaMassimaPartecipanti(formDati.getNumeroMassimoPartecipanti())
+				.impostaSogliaMinimaPartecipanti(formDati.getNumeroMinimoPartecipanti())
+				.impostaCostoUnaTantum(
 						new Costo(formDati.getCostoPerPartecipante(), new Valuta(Valute.EUR)))
-				.nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente()
-				.nuovoPrenotabile_impostaDescrizione(formDati.getNomeEvento())
-				.nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo();
+				.impostaModalitaPrenotazioneComeSingoloUtente()
+				.impostaDescrizione(formDati.getNomeEvento())
+				.build();
+		getCatalogoPrenotabili().aggiungiPrenotabileACatalogo(descrizioneCorso);
 		getCatalogoPrenotabili().salvaPrenotabileDescrizioneSulDatabase(descrizioneCorso);
 
 		return descrizioneCorso;

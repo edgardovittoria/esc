@@ -55,54 +55,10 @@ public class CatalogoPrenotabili {
     	getPrenotabileDescrizioneRepository().delete(prenotabileDescrizione);
     }
 
-    public CatalogoPrenotabili nuovoPrenotabile_avviaCreazione(Sport sport, String tipoPrenotazione, Integer sogliaMinimaPartecipanti, Integer sogliaMassimaPartecipanti){
-        this.getPrenotabileDescrizioneBuilder().creaNuovaDescrizione()
-        	.impostaSport(sport)
-        	.impostaTipoPrenotazione(tipoPrenotazione)
-        	.impostaSogliaMinimaPartecipanti(sogliaMinimaPartecipanti)
-        	.impostaSogliaMassimaPartecipanti(sogliaMassimaPartecipanti);
-
-        return this;
+    public PrenotabileDescrizioneBuilder avviaCreazioneNuovoPrenotabile() {
+    	 return getPrenotabileDescrizioneBuilder().creaNuovaDescrizione();
     }
     
-    public CatalogoPrenotabili nuovoPrenotabile_impostaModalitaPrenotazioneComeSingoloUtente() {
-    	this.getPrenotabileDescrizioneBuilder().impostaModalitaPrenotazioneComeSingoloUtente();
-    	return this;
-    }
-    
-    
-    public CatalogoPrenotabili nuovoPrenotabile_impostaModalitaPrenotazioneComeSquadra() {
-		this.getPrenotabileDescrizioneBuilder().impostaModalitaPrenotazioneComeSquadra();
-		return this;
-	}
-
-    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoOrario(Costo costo){
-        this.getPrenotabileDescrizioneBuilder().impostaCostoOrario(costo);
-
-        return this;
-    }
-
-    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoUnaTantum(Costo costo){
-        this.getPrenotabileDescrizioneBuilder().impostaCostoUnaTantum(costo);
-
-        return this;
-    }
-    
-    public CatalogoPrenotabili nuovoPrenotabile_impostaDescrizione(String descrizioneEvento) {
-    	getPrenotabileDescrizioneBuilder().impostaDescrizione(descrizioneEvento);
-    	return this;
-    }
-
-    public CatalogoPrenotabili nuovoPrenotabile_impostaCostoPavimentazione(Costo costo, String tipoPavimentazione){
-        this.getPrenotabileDescrizioneBuilder().impostaCostoPavimentazione(costo, tipoPavimentazione);
-
-        return this;
-    }
-
-    public PrenotabileDescrizione nuovoPrenotabile_salvaPrenotabileInCreazioneNelCatalogo(){
-       return this.aggiungiPrenotabileACatalogo(this.getPrenotabileDescrizioneBuilder().build());
-
-    }
 
     public void salvaPrenotabileDescrizioneSulDatabase(PrenotabileDescrizione prenotabileDescrizione) {
     	getPrenotabileDescrizioneRepository().save(prenotabileDescrizione);
