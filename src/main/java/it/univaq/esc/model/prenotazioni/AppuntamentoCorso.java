@@ -69,6 +69,13 @@ public class AppuntamentoCorso extends AppuntamentoSingoliPartecipanti {
 			appuntamento.assegna(getQuotePartecipazione());
 		}
 	}
+	
+	public boolean haComeIstruttore(UtentePolisportiva istruttore) {
+		if(getIstruttore().isEqual(istruttore)) {
+			return true;
+		}
+		return false;
+	}
 }
 
 

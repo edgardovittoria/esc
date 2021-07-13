@@ -251,27 +251,49 @@ public class RegistroAppuntamenti {
 		return appuntamenti;
 	}
 
+	public List<Appuntamento> getListaLezioniPerIstruttore(UtentePolisportiva istruttore) {
+		List<Appuntamento> listaLezioni = new ArrayList<Appuntamento>();
+		listaLezioni.addAll(getAppuntamentiLezionePer(istruttore));
+		listaLezioni.addAll(getAppuntamentiCorsoPer(istruttore));
+		return listaLezioni;
+	}
+	
+	private List<Appuntamento> getAppuntamentiLezionePer(UtentePolisportiva istruttore){
+		List<Appuntamento> listaLezioni = filtraAppuntamentiPerTipoPrenotazione(getListaAppuntamenti(),
+				TipiPrenotazione.LEZIONE.toString());
+		listaLezioni = filtraLezioniPerIstruttore((List<AppuntamentoLezione>) (List<?>) listaLezioni, istruttore);
+		return listaLezioni;
+	}
+	
 	private List<Appuntamento> filtraLezioniPerIstruttore(List<AppuntamentoLezione> listaLezioniDaFiltrare,
 			UtentePolisportiva istruttore) {
-
 		List<AppuntamentoLezione> listaLezioniIstruttore = new ArrayList<AppuntamentoLezione>();
 		for (AppuntamentoLezione appuntamento : listaLezioniDaFiltrare) {
-			if (appuntamento.isNelCalendarioDi(istruttore)) {
+			if (appuntamento.haComeIstruttore(istruttore)) {
 				listaLezioniIstruttore.add(appuntamento);
 			}
 		}
-
+		return (List<Appuntamento>) (List<?>) listaLezioniIstruttore;
+	}
+	
+	private List<Appuntamento> getAppuntamentiCorsoPer(UtentePolisportiva istruttore){
+		List<Appuntamento> listaLezioni = filtraAppuntamentiPerTipoPrenotazione(getListaAppuntamenti(),
+				TipiPrenotazione.CORSO.toString());
+		listaLezioni = filtraLezioniCorsoPerIstruttore((List<AppuntamentoCorso>) (List<?>) listaLezioni, istruttore);
+		return listaLezioni;
+	}
+	
+	private List<Appuntamento> filtraLezioniCorsoPerIstruttore(List<AppuntamentoCorso> listaLezioniDaFiltrare,
+			UtentePolisportiva istruttore) {
+		List<AppuntamentoCorso> listaLezioniIstruttore = new ArrayList<AppuntamentoCorso>();
+		for (AppuntamentoCorso appuntamento : listaLezioniDaFiltrare) {
+			if (appuntamento.haComeIstruttore(istruttore)) {
+				listaLezioniIstruttore.add(appuntamento);
+			}
+		}
 		return (List<Appuntamento>) (List<?>) listaLezioniIstruttore;
 	}
 
-	public List<Appuntamento> getListaLezioniPerIstruttore(UtentePolisportiva istruttore) {
-		List<Appuntamento> listaLezioni = filtraAppuntamentiPerTipoPrenotazione(getListaAppuntamenti(),
-				TipiPrenotazione.LEZIONE.toString());
-
-		listaLezioni = filtraLezioniPerIstruttore((List<AppuntamentoLezione>) (List<?>) listaLezioni, istruttore);
-
-		return listaLezioni;
-	}
 
 	public List<Appuntamento> getListaAppuntamentiManutentore(UtentePolisportiva manutentore) {
 		List<Appuntamento> appuntamentiList = new ArrayList<Appuntamento>();

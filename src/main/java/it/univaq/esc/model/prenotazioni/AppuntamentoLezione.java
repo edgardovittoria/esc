@@ -38,4 +38,11 @@ public class AppuntamentoLezione extends AppuntamentoSingoliPartecipanti{
 		super.impostaDatiAppuntamentoDa(datiCompilatiInPrenotazione);
 		setIstruttore(datiCompilatiInPrenotazione.getIstruttore());
 	}
+	
+	public boolean haComeIstruttore(UtentePolisportiva istruttore) {
+		if(getIstruttore().isEqual(istruttore)) {
+			return true;
+		}
+		return false;
+	}
 }
