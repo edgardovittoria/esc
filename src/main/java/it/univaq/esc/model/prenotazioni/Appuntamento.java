@@ -29,6 +29,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.StrutturaPolisportiva;
 import it.univaq.esc.model.TipoEventoNotificabile;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
@@ -80,7 +81,7 @@ public abstract class Appuntamento extends Notificabile {
 
 	@ManyToOne
 	@JoinColumn
-	private Impianto impiantoPrenotato;
+	private StrutturaPolisportiva strutturaPrenotata;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn
@@ -190,7 +191,7 @@ public abstract class Appuntamento extends Notificabile {
 				datiCompilatiInPrenotazione.getOraFine());
 		setPending(datiCompilatiInPrenotazione.isPending());
 		setDescrizioneEventoPrenotato(datiCompilatiInPrenotazione.getDescrizioneEvento());
-		setImpiantoPrenotato(datiCompilatiInPrenotazione.getImpiantoPrenotato());
+		setStrutturaPrenotata(datiCompilatiInPrenotazione.getImpiantoPrenotato());
 	}
 
 	public abstract boolean aggiungiPartecipante(Object sportivoOSquadraPartecipante);
@@ -254,7 +255,7 @@ public abstract class Appuntamento extends Notificabile {
 	}
 
 	public void siAggiungeAlCalendarioDelRelativoImpiantoPrenotato() {
-		getImpiantoPrenotato().segnaInCalendarioIl(this);
+		getStrutturaPrenotata().segnaInCalendarioIl(this);
 	}
 
 	public void siAggiungeAlCalendarioDelloSportivoCheHaEffettuatoLaPrenotazioneRelativa() {

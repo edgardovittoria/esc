@@ -31,14 +31,8 @@ import lombok.Setter;
 @Table(name = "impianti")
 @Getter @Setter @NoArgsConstructor
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idImpianto")
-public class Impianto {
+public class Impianto extends StrutturaPolisportiva{
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter(value = AccessLevel.NONE)
-    private int idImpianto;
-    @Column
-    private int costo;
     @Column
     private boolean indoor;
     @ManyToMany(cascade = CascadeType.ALL)
@@ -46,11 +40,7 @@ public class Impianto {
                 joinColumns = {@JoinColumn(name="id_impianto")},
                 inverseJoinColumns = {@JoinColumn(name="id_specifica_associata")})
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<ImpiantoSpecs> specificheImpianto;
-
-    @Transient
-    private Calendario calendarioAppuntamentiImpianto = new Calendario();
-    
+    private List<ImpiantoSpecs> specificheImpianto;    
 
     /**
      * Costruttore della classe Impianto che prende in input una lista di specifiche di impianto.
@@ -86,24 +76,6 @@ public class Impianto {
             sportPraticabili.add(impiantoSpecs.getSportPraticabile());
         }
         return sportPraticabili;
-    }
-
- 
-    /**
-     * Restituisce la lista degli appuntamenti presenti nel calendario dell'impianto.
-     * @return lista di tutti gli appuntamenti del calendario dell'impianto.
-     */
-    public List<Appuntamento> getListaAppuntamenti(){
-        return this.getCalendarioAppuntamentiImpianto().getListaAppuntamenti();
-    }
-
-
-    public void segnaInCalendarioIl(Appuntamento nuovoAppuntamento){
-        getCalendarioAppuntamentiImpianto().aggiungiAppuntamento(nuovoAppuntamento);
-    }
-
-    public void segnaInCalendarioGliAppuntamentiDel(Calendario nuovoCalendario){
-        getCalendarioAppuntamentiImpianto().unisciCalendario(nuovoCalendario);
     }
 
 }

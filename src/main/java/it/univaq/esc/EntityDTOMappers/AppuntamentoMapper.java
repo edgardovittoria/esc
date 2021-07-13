@@ -38,10 +38,11 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 		appuntamentoDTO.setCosto(appuntamentoDaConvertire.getCostoAppuntamento().getAmmontare());
 		appuntamentoDTO.setSportAssociato(
 				getMapperFactory().getSportMapper().convertiInSportDTO(appuntamentoDaConvertire.getSportEvento()));
-		appuntamentoDTO.setIdImpiantoPrenotato(appuntamentoDaConvertire.getImpiantoPrenotato().getIdImpianto());
+		appuntamentoDTO.setIdImpiantoPrenotato(appuntamentoDaConvertire.getStrutturaPrenotata().getIdStrutturaPolisportiva());
+		if(appuntamentoDaConvertire.getStrutturaPrenotata() instanceof Impianto) {
 		appuntamentoDTO.setPavimentazioneImpianto(
-				appuntamentoDaConvertire.getImpiantoPrenotato().getTipoPavimentazione().toString());
-		
+				((Impianto)appuntamentoDaConvertire.getStrutturaPrenotata()).getTipoPavimentazione().toString());
+		}
 		appuntamentoDTO.setTipoEventoNotificabile(appuntamentoDaConvertire.getTipoEventoNotificabile());
 
 		return appuntamentoDTO;

@@ -70,7 +70,7 @@ public class CreaAppuntamentiPrenotazioniDB {
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						TipiPrenotazione.IMPIANTO.toString(), tennis, ModalitaPrenotazione.SINGOLO_UTENTE.toString()));
 		appuntamento1.setPending(true);
-		appuntamento1.setImpiantoPrenotato(impianto1);
+		appuntamento1.setStrutturaPrenotata(impianto1);
 		appuntamento1.setManutentore(sportivo2);
 
 		Prenotazione prenotazione1 = new Prenotazione();
@@ -86,7 +86,7 @@ public class CreaAppuntamentiPrenotazioniDB {
 		Calendario calendarioSpecs1 = new Calendario();
 		calendarioSpecs1.aggiungiAppuntamento(appuntamento1);
 		// prenotazione1.setCalendarioSpecifica(calendarioSpecs1, prenotazioneSpecs);
-		impianto1.setCalendarioAppuntamentiImpianto(calendarioSpecs1);
+		impianto1.segnaInCalendarioGliAppuntamentiDel(calendarioSpecs1);
 		// prenotazione1.impostaCalendarioPrenotazioneDaSpecifiche();
 
 		// Prenotazione dell'impianto3 in una data diversa dalla data scelta dallo
@@ -102,7 +102,7 @@ public class CreaAppuntamentiPrenotazioniDB {
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						TipiPrenotazione.IMPIANTO.toString(), tennis, ModalitaPrenotazione.SINGOLO_UTENTE.toString()));
 		appuntamento2.setPending(true);
-		appuntamento2.setImpiantoPrenotato(impianto3);
+		appuntamento2.setStrutturaPrenotata(impianto3);
 		appuntamento2.setManutentore(sportivo2);
 
 		appuntamento2.setCalcolatoreCosto(calcolatoreCosto);
@@ -112,7 +112,7 @@ public class CreaAppuntamentiPrenotazioniDB {
 		Calendario calendarioSpecs2 = new Calendario();
 		calendarioSpecs2.aggiungiAppuntamento(appuntamento2);
 
-		impianto3.setCalendarioAppuntamentiImpianto(calendarioSpecs2);
+		impianto3.segnaInCalendarioGliAppuntamentiDel(calendarioSpecs2);
 
 		Prenotazione prenotazione2 = new Prenotazione();
 		prenotazione2.setSportivoPrenotante(sportivo2);

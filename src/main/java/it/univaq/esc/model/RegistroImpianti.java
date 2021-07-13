@@ -42,19 +42,14 @@ public class RegistroImpianti {
         for(Impianto impianto : this.getListaImpiantiPolisportiva()){
             List<Appuntamento> appuntamentiImpianto = new ArrayList<Appuntamento>();
             for(Appuntamento appuntamento : getAppuntamentoRepository().findAll()){
-                if(impianto.getIdImpianto() == appuntamento.getImpiantoPrenotato().getIdImpianto()){
+                if(impianto.isEqual(appuntamento.getStrutturaPrenotata())){
                     appuntamentiImpianto.add(appuntamento);
                 }
             }
-            impianto.getCalendarioAppuntamentiImpianto().setListaAppuntamenti(appuntamentiImpianto);
+            impianto.segnaInCalendarioLaListaDi(appuntamentiImpianto);
         }
         
     }
-
-    public void aggiornaCalendarioImpianto(Impianto impianto, Calendario calendarioDaUnire){
-        impianto.getCalendarioAppuntamentiImpianto().unisciCalendario(calendarioDaUnire);
-    }
-
 
 
     public void aggiungiImpianto(Impianto impiantoDaAggiungere) {
@@ -71,7 +66,7 @@ public class RegistroImpianti {
 
     public Impianto getImpiantoByID(Integer idImpianto){
         for(Impianto impianto : this.getListaImpiantiPolisportiva()){
-            if(impianto.getIdImpianto() == idImpianto){
+            if(impianto.isSuoQuesto(idImpianto)){
                 return impianto;
             }
         }
@@ -83,7 +78,7 @@ public class RegistroImpianti {
     	List<Impianto> listaImpiantiDisponibili = new ArrayList<Impianto>();
 
 		for (Impianto impianto : listaImpiantiDaFiltrare) {
-			if (!impianto.getCalendarioAppuntamentiImpianto().sovrapponeA(orarioAppuntamento)) {
+			if (impianto.isStrutturaLiberaNell(orarioAppuntamento)) {
 				listaImpiantiDisponibili.add(impianto);
 			}
 		}

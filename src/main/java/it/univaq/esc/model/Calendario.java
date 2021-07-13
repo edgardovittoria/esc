@@ -31,6 +31,10 @@ public class Calendario {
             this.getListaAppuntamenti().add(appuntamentoDaAggiungere);
         }
     }
+    
+    public void aggiungiListaDi(List<Appuntamento> nuoviAppuntamenti) {
+    	nuoviAppuntamenti.forEach((appuntamento) -> aggiungiAppuntamento(appuntamento));
+    }
 
     /**
      * Crea un appuntamento con i dati passati come parametri, dopodiché lo aggiunge al calendario se non si sovrappone
@@ -123,6 +127,7 @@ public class Calendario {
             this.getListaAppuntamenti().addAll(calendarioDaUnire.getListaAppuntamenti());
         }
     }
+   
     
     public boolean ha(Appuntamento appuntamento) {
     	for(Appuntamento appuntamentoCalendario : getListaAppuntamenti()) {
