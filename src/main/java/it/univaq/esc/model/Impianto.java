@@ -1,7 +1,9 @@
 package it.univaq.esc.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,7 +32,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "impianti")
 @Getter @Setter @NoArgsConstructor
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idImpianto")
 public class Impianto extends StrutturaPolisportiva{
     
     @Column
@@ -68,5 +69,27 @@ public class Impianto extends StrutturaPolisportiva{
         }
         return sportPraticabili;
     }
+
+
+
+	@Override
+	public Map<String, Object> getInfo() {
+		Map<String, Object> mappInfo = new HashMap<String, Object>();
+		mappInfo.put("sportPraticabili", getNomiSportPraticabili());
+		mappInfo.put("pavimentazione", getTipoPavimentazione().toString());
+		return mappInfo;
+	}
+	
+	private List<String> getNomiSportPraticabili(){
+		List<String> nomiSport = new ArrayList<String>();
+		for(Sport sport : getSportPraticabili()) {
+			nomiSport.add(sport.getNome());
+		}
+		return nomiSport;
+	}
+
+
+
+	
 
 }

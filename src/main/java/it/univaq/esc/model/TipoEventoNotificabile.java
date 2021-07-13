@@ -2,5 +2,5 @@ package it.univaq.esc.model;
 
 public enum TipoEventoNotificabile {
 
-	PRENOTAZIONE, APPUNTAMENTO
+	PRENOTAZIONE, APPUNTAMENTO, CREAZIONE_STRUTTURA
 }

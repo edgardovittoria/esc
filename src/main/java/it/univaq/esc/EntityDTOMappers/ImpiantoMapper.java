@@ -20,7 +20,7 @@ public class ImpiantoMapper extends EntityDTOMapper{
 
 	public ImpiantoDTO convertiInImpiantoDTO(Impianto impiantoDaConvertire) {
 		ImpiantoDTO impiantoDTO = new ImpiantoDTO();
-        impiantoDTO.setIdImpianto(impiantoDaConvertire.getIdStrutturaPolisportiva());
+        impiantoDTO.setIdImpianto(impiantoDaConvertire.getIdNotificabile());
         impiantoDTO.setIndoor(impiantoDaConvertire.isIndoor());
         impiantoDTO.setPavimentazione(impiantoDaConvertire.getTipoPavimentazione().toString());
         for(Sport sport : impiantoDaConvertire.getSportPraticabili()){

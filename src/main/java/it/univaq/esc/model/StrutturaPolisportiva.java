@@ -11,6 +11,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
 
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.Notificabile;
 import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,12 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class StrutturaPolisportiva {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Setter(value = AccessLevel.NONE)
-	private Integer idStrutturaPolisportiva;
+public abstract class StrutturaPolisportiva extends Notificabile{
 
 	@Transient
 	private Calendario calendarioAppuntamentiStruttura = new Calendario();
@@ -49,14 +45,19 @@ public class StrutturaPolisportiva {
 	}
 	
 	public boolean isEqual(StrutturaPolisportiva strutturaPolisportiva) {
-		return (getIdStrutturaPolisportiva() == strutturaPolisportiva.getIdStrutturaPolisportiva());
+		return (getIdNotificabile() == strutturaPolisportiva.getIdNotificabile());
 	}
 	
 	public boolean isSuoQuesto(Integer idStruttura) {
-		return getIdStrutturaPolisportiva()==idStruttura;
+		return getIdNotificabile()==idStruttura;
 	}
 	
 	public boolean isStrutturaLiberaNell(OrarioAppuntamento orario) {
 		return !getCalendarioAppuntamentiStruttura().sovrapponeA(orario);
+	}
+	
+	@Override
+	public String getTipoEventoNotificabile() {
+		return TipoEventoNotificabile.CREAZIONE_STRUTTURA.toString();
 	}
 }
