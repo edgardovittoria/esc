@@ -42,10 +42,6 @@ public class Impianto extends StrutturaPolisportiva{
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<ImpiantoSpecs> specificheImpianto;    
 
-    /**
-     * Costruttore della classe Impianto che prende in input una lista di specifiche di impianto.
-     * @param caratteristicheImpianto lista delle specifiche di impianto da associare all'impianto creato.
-     */
     public Impianto(List<ImpiantoSpecs> caratteristicheImpianto) {
        
         this.setSpecificheImpianto(caratteristicheImpianto);
@@ -65,11 +61,6 @@ public class Impianto extends StrutturaPolisportiva{
       }
 
     
-    /**
-     * Restituisce la lista degli sport praticabili nell'impianto, ispezionando la lista delle specifiche 
-     * di impianto associata.
-     * @return la lista degli sport praticabili nell'impianto.
-     */
     public List<Sport> getSportPraticabili(){
         List<Sport> sportPraticabili = new ArrayList<Sport>();
         for(ImpiantoSpecs impiantoSpecs : this.getSpecificheImpianto()){

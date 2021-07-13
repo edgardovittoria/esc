@@ -33,9 +33,6 @@ public class RegistroImpianti {
     	this.setImpiantoRepository(impiantoRepository);
     	popola();
     }
-
-    
-
     
     private void popola(){
         this.setListaImpiantiPolisportiva(getImpiantoRepository().findAll());

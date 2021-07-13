@@ -85,12 +85,7 @@ public class CreaAppuntamentiPrenotazioniDB {
 		appuntamento1.calcolaCosto();
 		Calendario calendarioSpecs1 = new Calendario();
 		calendarioSpecs1.aggiungiAppuntamento(appuntamento1);
-		// prenotazione1.setCalendarioSpecifica(calendarioSpecs1, prenotazioneSpecs);
 		impianto1.segnaInCalendarioGliAppuntamentiDel(calendarioSpecs1);
-		// prenotazione1.impostaCalendarioPrenotazioneDaSpecifiche();
-
-		// Prenotazione dell'impianto3 in una data diversa dalla data scelta dallo
-		// sportivo che sta effettuando la prenotazione;
 
 		AppuntamentoImpianto appuntamento2 = (AppuntamentoImpianto) elementiPrenotazioneFactory
 				.getAppuntamento(TipiPrenotazione.IMPIANTO.toString());
@@ -118,10 +113,6 @@ public class CreaAppuntamentiPrenotazioniDB {
 		prenotazione2.setSportivoPrenotante(sportivo2);
 		prenotazione2.aggiungi(appuntamento2);
 
-		/*
-		 * calendarioRepository.save(calendarioPrenotazione);
-		 * calendarioRepository.save(calendarioPrenotazione2);
-		 */
 
 		appuntamentoRepository.save(appuntamento1);
 		appuntamentoRepository.save(appuntamento2);
