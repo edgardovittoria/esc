@@ -1,5 +1,9 @@
 package it.univaq.esc.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.security.RolesAllowed;
 
 import org.springframework.http.HttpStatus;
@@ -17,7 +21,9 @@ import it.univaq.esc.dtoObjects.FormCreazioneStruttura;
 import it.univaq.esc.dtoObjects.ImpiantoDTO;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.Impianto;
+import it.univaq.esc.model.Pavimentazione;
 import it.univaq.esc.model.RegistroImpianti;
+import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.StrutturaPolisportiva;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.notifiche.Notifica;
@@ -46,12 +52,14 @@ public class PromuoviPolisportivaHandler {
 	private ElementiPrenotazioneFactory elementiPrenotazioneFactory;
 	private RegistroNotifiche registroNotifiche;
 	private RegistroUtentiPolisportiva registroUtentiPolisportiva;
+	private RegistroSport registroSport;
 
-	public PromuoviPolisportivaHandler(RegistroImpianti registroImpianti, RegistroNotifiche registroNotifiche, RegistroUtentiPolisportiva registroUtentiPolisportiva) {
+	public PromuoviPolisportivaHandler(RegistroImpianti registroImpianti, RegistroNotifiche registroNotifiche, RegistroUtentiPolisportiva registroUtentiPolisportiva, RegistroSport registroSport) {
 		impostaAttributiControllerDipendentiDa(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 		setRegistroImpianti(registroImpianti);
 		setRegistroNotifiche(registroNotifiche);
 		setRegistroUtentiPolisportiva(registroUtentiPolisportiva);
+		setRegistroSport(registroSport);
 	}
 	
 	private void impostaAttributiControllerDipendentiDa(String modalitaPrenotazione) {
@@ -65,6 +73,17 @@ public class PromuoviPolisportivaHandler {
 
 	private MapperFactory chiedeAlContainerLaMapperFactoryiRelativaAlla(String modalitaPrenotazione) {
 		return BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class);
+	}
+	
+	@RolesAllowed("ROLE_DIRETTORE")
+	@GetMapping("/avviaCreazioneImpianto")
+	@CrossOrigin
+	public Map<String, List<String>> avviaCreazioneNuovoImpianto() {
+		Map<String, List<String>> mappaNomiSportEPavimentazioni = new HashMap<String, List<String>>();
+		mappaNomiSportEPavimentazioni.put("pavimentazioniDisponibili", Pavimentazione.getListaPavimentazioniComeStringhe());
+		mappaNomiSportEPavimentazioni.put("sportPraticabili", getRegistroSport().getListaNomiSportPraticabiliNellaPolisportiva());
+		return mappaNomiSportEPavimentazioni;
+		
 	}
 	
 	@RolesAllowed("ROLE_DIRETTORE")

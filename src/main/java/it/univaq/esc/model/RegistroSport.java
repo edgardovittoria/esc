@@ -77,5 +77,13 @@ public class RegistroSport {
 		}
 		return null;
 	}
+	
+	public List<String> getListaNomiSportPraticabiliNellaPolisportiva(){
+		List<String> nomiSport = new ArrayList<String>();
+		for(Sport sport : listaSportPolisportiva) {
+			nomiSport.add(sport.getNome());
+		}
+		return nomiSport;
+	}
 
 }
