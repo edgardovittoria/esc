@@ -16,6 +16,4 @@ public class ImpiantoDTO {
     private List<SportDTO> sportPraticabili = new ArrayList<SportDTO>();
     private List<AppuntamentoDTO> appuntamenti = new ArrayList<AppuntamentoDTO>();
 
-       
-    
 }

@@ -30,4 +30,8 @@ public class Sport {
     	}
     	return false;
     }
+    
+    public boolean isSuoQuesto(String nome) {
+    	return getNome().equals(nome);
+    }
 }

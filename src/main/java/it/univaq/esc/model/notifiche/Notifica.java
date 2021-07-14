@@ -47,5 +47,8 @@ public class Notifica {
 	
 	@Enumerated(EnumType.STRING)
 	private TipoNotifica tipoNotifica;
+	
+	@Column
+	private String messaggio;
 
 }

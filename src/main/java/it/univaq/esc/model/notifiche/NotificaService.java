@@ -37,12 +37,17 @@ public class NotificaService {
 		getNotifica().setEvento(evento);
 		getNotifica().setLetta(false);
 		getNotifica().setMittente(mittente);
+		getNotifica().setMessaggio(costruisciMessaggio());
 	}
 
 	
 
-	public String getMessaggio() {
+	private String costruisciMessaggio() {
 		return getStatoNotifica().getMessaggioNotifica(this);
+	}
+	
+	public void modificaMessaggio(String nuovoMessaggio) {
+		getNotifica().setMessaggio(nuovoMessaggio);
 	}
 
 	public Integer getIdEvento() {
@@ -64,7 +69,7 @@ public class NotificaService {
 		return tipoPrenotazioneEvento;
 	}
 
-	private Notificabile getEvento() {
+	public Notificabile getEvento() {
 		return getNotifica().getEvento();
 	}
 

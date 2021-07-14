@@ -10,6 +10,7 @@ import groovy.lang.Singleton;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
+import it.univaq.esc.model.prenotazioni.Notificabile;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSquadra;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
@@ -132,5 +133,11 @@ public class RegistroNotifiche {
 				prenotazioneSquadraInAtto.getSportivoPrenotante(), amministratore, prenotazioneSquadraInAtto,
 				prenotazioneSquadraInAtto.getSquadraPrenotante(), squadraInvitata);
 		salvaNotifica(notifica);
+	}
+	
+	public String getMessaggioNotificaPerCreazione(Notificabile nuovaStruttura) {
+		NotificaService notifica = getElementiPrenotazioneFactorySingoloUtente().getNotifica(new Notifica());
+		notifica.impostaDatiNotifica(TipoNotifica.CREAZIONE_STRUTTURA, null, null, nuovaStruttura);
+		return notifica.getNotifica().getMessaggio();
 	}
 }

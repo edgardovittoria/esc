@@ -38,5 +38,19 @@ public class ImpiantoSpecs {
         this.sportPraticabile = sportPraticabileNellImpianto;
     }
 
+    public boolean isEqual(ImpiantoSpecs specificaDaVerificare) {
+    	if(getIdSpecificaImpianto()==specificaDaVerificare.getIdSpecificaImpianto()) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public boolean haQuesta(String pavimentazione) {
+    	return getTipoPavimentazione().toString().equals(pavimentazione);
+    }
+    
+    public boolean haQuesto(String sport) {
+    	return getSportPraticabile().isSuoQuesto(sport);
+    }
    
 }

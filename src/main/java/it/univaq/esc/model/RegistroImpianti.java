@@ -10,50 +10,72 @@ import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import it.univaq.esc.repository.ImpiantoRepository;
+import it.univaq.esc.repository.ImpiantoSpecsRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 @Component
 @Singleton
-@Getter @Setter
+@Getter @Setter(value = AccessLevel.PRIVATE)
 public class RegistroImpianti {
 
-    @Setter(value = AccessLevel.PRIVATE)
+    
     private ImpiantoRepository impiantoRepository;
-
-    @Setter(value = AccessLevel.PRIVATE)
+    private ImpiantoSpecsRepository impiantoSpecsRepository;
     private AppuntamentoRepository appuntamentoRepository;
-
-    @Setter(value = AccessLevel.PRIVATE)
     private List<Impianto> listaImpiantiPolisportiva = new ArrayList<Impianto>();
+    private List<ImpiantoSpecs> listaSpecificheImpianto = new ArrayList<ImpiantoSpecs>();
 
-    public RegistroImpianti(ImpiantoRepository impiantoRepository, AppuntamentoRepository appuntamentoRepository) {
+    public RegistroImpianti(ImpiantoRepository impiantoRepository, AppuntamentoRepository appuntamentoRepository, ImpiantoSpecsRepository impiantoSpecsRepository) {
     	this.setAppuntamentoRepository(appuntamentoRepository);
     	this.setImpiantoRepository(impiantoRepository);
+    	setImpiantoSpecsRepository(impiantoSpecsRepository);
     	popola();
     }
     
     private void popola(){
+    	setListaSpecificheImpianto(impiantoSpecsRepository.findAll());
         this.setListaImpiantiPolisportiva(getImpiantoRepository().findAll());
         for(Impianto impianto : this.getListaImpiantiPolisportiva()){
-            List<Appuntamento> appuntamentiImpianto = new ArrayList<Appuntamento>();
-            for(Appuntamento appuntamento : getAppuntamentoRepository().findAll()){
-                if(impianto.isEqual(appuntamento.getStrutturaPrenotata())){
-                    appuntamentiImpianto.add(appuntamento);
-                }
-            }
-            impianto.segnaInCalendarioLaListaDi(appuntamentiImpianto);
+        	reimpostaSpecificheDell(impianto);
+        	popolaCalendarioDell(impianto);
         }
-        
+                
     }
 
+    private void reimpostaSpecificheDell(Impianto impianto) {
+    	List<ImpiantoSpecs> specifiche = new ArrayList<ImpiantoSpecs>();
+    	for(ImpiantoSpecs impiantoSpecs : impianto.getSpecificheImpianto()) {
+    		specifiche.add(trovaSpecificaImpiantoNellaListaDiTutteLeSpecifiche(impiantoSpecs));
+    	}
+    	impianto.setSpecificheImpianto(specifiche);
+    }
+    
+    private ImpiantoSpecs trovaSpecificaImpiantoNellaListaDiTutteLeSpecifiche(ImpiantoSpecs specificaImpianto) {
+    	for(ImpiantoSpecs impiantoSpecs : listaSpecificheImpianto) {
+    		if(impiantoSpecs.isEqual(specificaImpianto)) {
+    			return impiantoSpecs;
+    		}
+    	}
+    	return null;
+    }
+    
+    private void popolaCalendarioDell(Impianto impianto) {
+    	List<Appuntamento> appuntamentiImpianto = new ArrayList<Appuntamento>();
+        for(Appuntamento appuntamento : getAppuntamentoRepository().findAll()){
+            if(impianto.isEqual(appuntamento.getStrutturaPrenotata())){
+                appuntamentiImpianto.add(appuntamento);
+            }
+        }
+        impianto.segnaInCalendarioLaListaDi(appuntamentiImpianto);
+    }
 
     public void aggiungiImpianto(Impianto impiantoDaAggiungere) {
         getListaImpiantiPolisportiva().add(impiantoDaAggiungere);
         getImpiantoRepository().save(impiantoDaAggiungere);
     }
-
+    
    
 
     public void rimuoviImpianto(Impianto impiantoDaRimuovere){
@@ -95,5 +117,14 @@ public class RegistroImpianti {
 		}
 		return impianti;
 	}
+    
+    public ImpiantoSpecs trovaSpecificaDa(String pavimentazione, String sport) {
+    	for(ImpiantoSpecs impiantoSpecs : listaSpecificheImpianto) {
+    		if(impiantoSpecs.haQuesta(pavimentazione) && impiantoSpecs.haQuesto(sport)) {
+    			return impiantoSpecs;
+    		}
+    	}
+    	return null;
+    }
     
 }
