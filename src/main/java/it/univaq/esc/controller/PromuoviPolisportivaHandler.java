@@ -97,7 +97,7 @@ public class PromuoviPolisportivaHandler {
 	}
 	
 	@RolesAllowed("ROLE_DIRETTORE")
-	@PostMapping("/confermaCreazioneStruttura")
+	@PostMapping("/confermaCreazioneImpianto")
 	@CrossOrigin
 	public ResponseEntity confermaCreazioneStruttura() {
 		getRegistroImpianti().aggiungiImpianto((Impianto) nuovaStruttura);
