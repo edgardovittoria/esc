@@ -36,7 +36,7 @@ public class Impianto extends StrutturaPolisportiva{
     
     @Column
     private boolean indoor;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(name = "specifiche_associate_impianti",
                 joinColumns = {@JoinColumn(name="id_impianto")},
                 inverseJoinColumns = {@JoinColumn(name="id_specifica_associata")})

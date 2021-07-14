@@ -13,6 +13,7 @@ import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.Pavimentazione;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.repository.ImpiantoRepository;
+import it.univaq.esc.repository.ImpiantoSpecsRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,7 @@ public class CreaImpiantiDB {
 
 	private CreaSportsDB creaSportsDB;
 	private ImpiantoRepository impiantoRepository;
+	private ImpiantoSpecsRepository impiantoSpecsRepository;
 	private Map<String, Impianto> mappaImpianti = new HashMap<String, Impianto>();
 	
 	public CreaImpiantiDB(CreaSportsDB creaSportsDB, ImpiantoRepository impiantoRepository) {
@@ -52,9 +54,9 @@ public class CreaImpiantiDB {
 		ImpiantoSpecs specificaImpianto3 = new ImpiantoSpecs(Pavimentazione.CEMENTO, creaSportsDB.getSportConNome("pallavolo"));
 		ImpiantoSpecs specificaImpianto32 = new ImpiantoSpecs(Pavimentazione.CEMENTO, creaSportsDB.getSportConNome("tennis"));
 
-		// impiantoSpecsRepository.save(specificaImpianto1);
-		// impiantoSpecsRepository.save(specificaImpianto2);
-		// impiantoSpecsRepository.save(specificaImpianto3);
+		 impiantoSpecsRepository.save(specificaImpianto1);
+		 impiantoSpecsRepository.save(specificaImpianto2);
+		 impiantoSpecsRepository.save(specificaImpianto3);
 
 		List<ImpiantoSpecs> specificheImpianto1 = new ArrayList<ImpiantoSpecs>();
 		specificheImpianto1.add(specificaImpianto1);
