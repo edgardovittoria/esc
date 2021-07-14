@@ -17,4 +17,17 @@ public enum Pavimentazione {
 		listaPavimentazioni.add(CEMENTO.toString());
 		return listaPavimentazioni;
 	}
+	
+	public static Pavimentazione trovaPavimentazioneDa(String tipoPavimentazione) {
+		switch (tipoPavimentazione) {
+		case "SINTETICO":
+			return Pavimentazione.SINTETICO;
+		case "TERRA_BATTUTA":
+			return Pavimentazione.TERRA_BATTUTA;
+		case "CEMENTO":
+			return Pavimentazione.CEMENTO;
+		default:
+			return Pavimentazione.CEMENTO;
+		}
+	}
 }

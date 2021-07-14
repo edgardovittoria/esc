@@ -46,16 +46,16 @@ public class ImpiantoMapper extends EntityDTOMapper{
 	public Impianto convertiDTOInImpianto(ImpiantoDTO impiantoDTODaConvertire) {
 		Impianto impianto = new Impianto();
 		impianto.setIndoor(impiantoDTODaConvertire.isIndoor());
-		impianto.setSpecificheImpianto(trovaSpecificheImpiantoDa(impiantoDTODaConvertire.getPavimentazione(), impiantoDTODaConvertire.getSportPraticabili()));
+		impianto.setSpecificheImpianto(ottieniSpecificheImpiantoDa(impiantoDTODaConvertire.getPavimentazione(), impiantoDTODaConvertire.getSportPraticabili()));
 		//TODO impostare gli appuntamenti del calendario impianto.
 		return impianto;
 	}
 	
-	private List<ImpiantoSpecs> trovaSpecificheImpiantoDa(String pavimentazione, List<SportDTO> sportDTO){
+	private List<ImpiantoSpecs> ottieniSpecificheImpiantoDa(String pavimentazione, List<SportDTO> sportDTO){
 		List<ImpiantoSpecs> specifiche = new ArrayList<ImpiantoSpecs>();
 		List<String> nomiSport = getNomiSportDellaLista(sportDTO);
 		for(String sport : nomiSport) {
-			specifiche.add(getRegistroImpianti().trovaSpecificaDa(pavimentazione, sport));
+			specifiche.add(getRegistroImpianti().ottienSpecificaImpiantoDa(pavimentazione, sport));
 		}
 		return specifiche;
 	}

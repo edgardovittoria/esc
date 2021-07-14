@@ -3,6 +3,8 @@ package it.univaq.esc.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.AssertFalse;
+
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
@@ -26,11 +28,13 @@ public class RegistroImpianti {
     private AppuntamentoRepository appuntamentoRepository;
     private List<Impianto> listaImpiantiPolisportiva = new ArrayList<Impianto>();
     private List<ImpiantoSpecs> listaSpecificheImpianto = new ArrayList<ImpiantoSpecs>();
+    private RegistroSport registroSport;
 
-    public RegistroImpianti(ImpiantoRepository impiantoRepository, AppuntamentoRepository appuntamentoRepository, ImpiantoSpecsRepository impiantoSpecsRepository) {
+    public RegistroImpianti(ImpiantoRepository impiantoRepository, AppuntamentoRepository appuntamentoRepository, ImpiantoSpecsRepository impiantoSpecsRepository, RegistroSport registroSport) {
     	this.setAppuntamentoRepository(appuntamentoRepository);
     	this.setImpiantoRepository(impiantoRepository);
     	setImpiantoSpecsRepository(impiantoSpecsRepository);
+    	setRegistroSport(registroSport);
     	popola();
     }
     
@@ -73,10 +77,30 @@ public class RegistroImpianti {
 
     public void aggiungiImpianto(Impianto impiantoDaAggiungere) {
         getListaImpiantiPolisportiva().add(impiantoDaAggiungere);
+        registraNellaPolisportivaEventualiNuoveSpecificheRelativeAll(impiantoDaAggiungere);       
         getImpiantoRepository().save(impiantoDaAggiungere);
     }
     
-   
+    private void registraNellaPolisportivaEventualiNuoveSpecificheRelativeAll(Impianto nuovoImpianto) {
+    	for(ImpiantoSpecs specifica : nuovoImpianto.getSpecificheImpianto()) {
+        	if(!esisteNelSistemaLa(specifica)) {
+        		aggiungiNellaPolisportivaLa(specifica);
+        	}
+        }
+    }
+    
+    private void aggiungiNellaPolisportivaLa(ImpiantoSpecs nuovaSpecificaImianto) {
+    	listaSpecificheImpianto.add(nuovaSpecificaImianto);
+		impiantoSpecsRepository.save(nuovaSpecificaImianto);
+    }
+    
+   public boolean esisteNelSistemaLa(ImpiantoSpecs specificaImpianto) {
+	   ImpiantoSpecs specifica = trovaSpecificaImpiantoNellaListaDiTutteLeSpecifiche(specificaImpianto);
+	   if(specifica == null) {
+		   return false;
+	   }
+	   return true;
+   }
 
     public void rimuoviImpianto(Impianto impiantoDaRimuovere){
         getListaImpiantiPolisportiva().remove(impiantoDaRimuovere);
@@ -118,13 +142,41 @@ public class RegistroImpianti {
 		return impianti;
 	}
     
-    public ImpiantoSpecs trovaSpecificaDa(String pavimentazione, String sport) {
+    public ImpiantoSpecs ottienSpecificaImpiantoDa(String pavimentazione, String sport) {
+    	if(esisteSpecificaImpiantoCon(pavimentazione, sport)) {
+    		ImpiantoSpecs specifica = trovaSpecificaImpiantoDa(pavimentazione, sport);
+    		return specifica;
+    	}
+    	else {
+    		ImpiantoSpecs nuovaSpecifica = creaSpecificaImpiantoDa(pavimentazione, sport);
+    		return nuovaSpecifica;
+    	}
+    	
+    }
+    
+    
+    private boolean esisteSpecificaImpiantoCon(String pavimentazione, String nomeSport) {
+    	ImpiantoSpecs specifica = trovaSpecificaImpiantoDa(pavimentazione, nomeSport);
+    	if(specifica == null) {
+    		return false;
+    	}
+    	return true;
+    }
+    
+    private ImpiantoSpecs trovaSpecificaImpiantoDa(String pavimentazione, String sport) {
     	for(ImpiantoSpecs impiantoSpecs : listaSpecificheImpianto) {
     		if(impiantoSpecs.haQuesta(pavimentazione) && impiantoSpecs.haQuesto(sport)) {
     			return impiantoSpecs;
     		}
     	}
     	return null;
+    }
+    
+    private ImpiantoSpecs creaSpecificaImpiantoDa(String tipoPavimentazione, String nomeSport) {
+    	ImpiantoSpecs nuovaSpecifica = new ImpiantoSpecs();
+    	nuovaSpecifica.setSportPraticabile(getRegistroSport().getSportByNome(nomeSport));
+    	nuovaSpecifica.setTipoPavimentazione(Pavimentazione.trovaPavimentazioneDa(tipoPavimentazione));
+    	return nuovaSpecifica;
     }
     
 }
