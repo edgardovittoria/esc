@@ -42,7 +42,7 @@ public class RegistroNotifiche {
 	private void popola() {
 		List<NotificaService> listaNotifiche = new ArrayList<NotificaService>();
 		for (Notifica notifica : getNotificaRepository().findAll()) {
-			if (notifica.getEvento().getInfo().get("modalitaPrenotazione")
+			if (!notifica.getEvento().getInfo().containsKey("modalitaPrenotazione")  || notifica.getEvento().getInfo().get("modalitaPrenotazione")
 					.equals(ModalitaPrenotazione.SINGOLO_UTENTE.toString())) {
 				NotificaService notificaService = getElementiPrenotazioneFactorySingoloUtente().getNotifica(notifica);
 				notificaService.setStatoNotifica(notifica.getTipoNotifica().toString());
