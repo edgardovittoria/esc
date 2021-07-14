@@ -1,5 +1,9 @@
 package it.univaq.esc.EntityDTOMappers;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
@@ -21,4 +25,13 @@ public class SportMapper extends EntityDTOMapper{
     
         return sportDTO;
 	}
+	
+	public List<SportDTO> convertiInDTOLaLista(List<Sport> sports){
+		List<SportDTO> sportsDTO = new ArrayList<SportDTO>();
+		for(Sport sport : sports) {
+			sportsDTO.add(convertiInSportDTO(sport));
+		}
+		return sportsDTO;
+	}
+		
 }

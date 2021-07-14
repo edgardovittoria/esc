@@ -77,13 +77,14 @@ public class PromuoviPolisportivaHandler {
 	@RolesAllowed("ROLE_DIRETTORE")
 	@GetMapping("/avviaCreazioneImpianto")
 	@CrossOrigin
-	public Map<String, List<String>> avviaCreazioneNuovoImpianto() {
-		Map<String, List<String>> mappaNomiSportEPavimentazioni = new HashMap<String, List<String>>();
+	public Map<String, Object> avviaCreazioneNuovoImpianto() {
+		Map<String, Object> mappaNomiSportEPavimentazioni = new HashMap<String, Object>();
 		mappaNomiSportEPavimentazioni.put("pavimentazioniDisponibili", Pavimentazione.getListaPavimentazioniComeStringhe());
-		mappaNomiSportEPavimentazioni.put("sportPraticabili", getRegistroSport().getListaNomiSportPraticabiliNellaPolisportiva());
+		mappaNomiSportEPavimentazioni.put("sportPraticabili", getMapperFactory().getSportMapper().convertiInDTOLaLista(getRegistroSport().getListaSportPolisportiva()));
 		return mappaNomiSportEPavimentazioni;
 		
 	}
+	
 	
 	@RolesAllowed("ROLE_DIRETTORE")
 	@PostMapping("/riepilogoCreazioneImpianto")
