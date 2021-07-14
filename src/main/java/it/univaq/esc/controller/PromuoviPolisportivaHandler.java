@@ -117,18 +117,18 @@ public class PromuoviPolisportivaHandler {
 	@RolesAllowed("ROLE_DIRETTORE")
 	@PostMapping("/invioNotificheCreazioneNuovaStruttura")
 	@CrossOrigin
-	public ResponseEntity inviaNotificheCreazioneNuovaStruttura(@RequestBody String messaggioNotifica) {
+	public ResponseEntity inviaNotificheCreazioneNuovaStruttura(@RequestBody Map<String, String> mappaEmailDirettoreEMessaggioNotifica) {
 		for(UtentePolisportiva utente : registroUtentiPolisportiva.getListaUtentiPolisportiva()) {
-			creaNotificaCreazioneNuovaStrutturaConMessaggioPerSingoloUtente(messaggioNotifica, utente);
+			creaNotificaCreazioneNuovaStrutturaConMessaggioPerSingoloUtente(mappaEmailDirettoreEMessaggioNotifica, utente);
 		}
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
 	
-	private void creaNotificaCreazioneNuovaStrutturaConMessaggioPerSingoloUtente(String messaggioNotifica, UtentePolisportiva utenteDestinatario) {
-		UtentePolisportiva direttore = registroUtentiPolisportiva.getListaDegliUtentiCheHanno(TipoRuolo.DIRETTORE).get(0);
+	private void creaNotificaCreazioneNuovaStrutturaConMessaggioPerSingoloUtente(Map<String, String> mappaEmailDirettoreEMessaggioNotifica, UtentePolisportiva utenteDestinatario) {
+		UtentePolisportiva direttore = registroUtentiPolisportiva.trovaUtenteInBaseAllaSua(mappaEmailDirettoreEMessaggioNotifica.get("emailDirettore"));
 		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
 		notifica.impostaDatiNotifica(TipoNotifica.CREAZIONE_STRUTTURA, direttore, utenteDestinatario, nuovaStruttura);
-		notifica.modificaMessaggio(messaggioNotifica);
+		notifica.modificaMessaggio(mappaEmailDirettoreEMessaggioNotifica.get("messaggioNotifica"));
 		registroNotifiche.salvaNotifica(notifica);
 	}
 }
