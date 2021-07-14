@@ -57,6 +57,9 @@ public class CreaImpiantiDB {
 		 impiantoSpecsRepository.save(specificaImpianto1);
 		 impiantoSpecsRepository.save(specificaImpianto2);
 		 impiantoSpecsRepository.save(specificaImpianto3);
+		 impiantoSpecsRepository.save(specificaImpianto12);
+		 impiantoSpecsRepository.save(specificaImpianto13);
+		 impiantoSpecsRepository.save(specificaImpianto32);
 
 		List<ImpiantoSpecs> specificheImpianto1 = new ArrayList<ImpiantoSpecs>();
 		specificheImpianto1.add(specificaImpianto1);
