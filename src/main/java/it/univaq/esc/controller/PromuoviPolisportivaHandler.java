@@ -31,6 +31,7 @@ import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.notifiche.TipoNotifica;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
+import it.univaq.esc.model.utenti.TipoRuolo;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.utility.BeanUtil;
 import lombok.AccessLevel;
@@ -113,4 +114,21 @@ public class PromuoviPolisportivaHandler {
 		return messaggioNotifica;
 	}
 	
+	@RolesAllowed("ROLE_DIRETTORE")
+	@PostMapping("/invioNotificheCreazioneNuovaStruttura")
+	@CrossOrigin
+	public ResponseEntity inviaNotificheCreazioneNuovaStruttura(@RequestBody String messaggioNotifica) {
+		for(UtentePolisportiva utente : registroUtentiPolisportiva.getListaUtentiPolisportiva()) {
+			creaNotificaCreazioneNuovaStrutturaConMessaggioPerSingoloUtente(messaggioNotifica, utente);
+		}
+		return new ResponseEntity(HttpStatus.CREATED);
+	}
+	
+	private void creaNotificaCreazioneNuovaStrutturaConMessaggioPerSingoloUtente(String messaggioNotifica, UtentePolisportiva utenteDestinatario) {
+		UtentePolisportiva direttore = registroUtentiPolisportiva.getListaDegliUtentiCheHanno(TipoRuolo.DIRETTORE).get(0);
+		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
+		notifica.impostaDatiNotifica(TipoNotifica.CREAZIONE_STRUTTURA, direttore, utenteDestinatario, nuovaStruttura);
+		notifica.modificaMessaggio(messaggioNotifica);
+		registroNotifiche.salvaNotifica(notifica);
+	}
 }
