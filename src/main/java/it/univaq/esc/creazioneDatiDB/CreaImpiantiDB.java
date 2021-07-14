@@ -28,9 +28,10 @@ public class CreaImpiantiDB {
 	private ImpiantoSpecsRepository impiantoSpecsRepository;
 	private Map<String, Impianto> mappaImpianti = new HashMap<String, Impianto>();
 	
-	public CreaImpiantiDB(CreaSportsDB creaSportsDB, ImpiantoRepository impiantoRepository) {
+	public CreaImpiantiDB(CreaSportsDB creaSportsDB, ImpiantoRepository impiantoRepository, ImpiantoSpecsRepository impiantoSpecsRepository) {
 		setCreaSportsDB(creaSportsDB);
 		setImpiantoRepository(impiantoRepository);
+		setImpiantoSpecsRepository(impiantoSpecsRepository);
 	}
 	
 	public void creaImpianti() {
