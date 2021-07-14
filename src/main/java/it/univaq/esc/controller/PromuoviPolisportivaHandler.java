@@ -43,7 +43,6 @@ import lombok.Setter;
 @RequestMapping("/promuoviPolisportiva")
 @Getter(value = AccessLevel.PRIVATE)
 @Setter(value = AccessLevel.PRIVATE)
-@NoArgsConstructor
 public class PromuoviPolisportivaHandler {
 	
 	private MapperFactory mapperFactory;
@@ -87,7 +86,7 @@ public class PromuoviPolisportivaHandler {
 	}
 	
 	@RolesAllowed("ROLE_DIRETTORE")
-	@PostMapping("/riepilogoCreazioneStruttura")
+	@PostMapping("/riepilogoCreazioneImpianto")
 	@CrossOrigin
 	public ImpiantoDTO getRiepilogoCreazioneStruttura(@RequestBody ImpiantoDTO nuovaStruttura) {
 		Impianto nuovoImpianto = getMapperFactory().getImpiantoMapper().convertiDTOInImpianto(nuovaStruttura);
