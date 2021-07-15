@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Component
 @NoArgsConstructor
-public class NotificaCreazioneNuovaStrutturaState extends NotificaState {
+public class NotificaCreazioneNuovoImpiantoState extends NotificaState {
 
 	@Override
 	public String getMessaggioNotifica(NotificaService notificaDiCuiCostruireIlMessaggio) {

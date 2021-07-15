@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
-public class ImpiantoDTO {
+public class StrutturaPolisportivaDTO {
 
-    private int idImpianto;
+    private int idStruttura;
     private boolean indoor;
     private String pavimentazione;
     private List<SportDTO> sportPraticabili = new ArrayList<SportDTO>();

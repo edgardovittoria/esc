@@ -56,11 +56,16 @@ public abstract class MapperFactory {
 		return squadraMapper;		
 	}
 	
-	public ImpiantoMapper getImpiantoMapper() {
-		ImpiantoMapper impiantoMapper = BeanUtil.getBean(ImpiantoMapper.class);
-		impostaAttributiMapper(impiantoMapper);
+	public StrutturaPolisportivaMapper getStrutturaPolisportivaMapper(String tipoStruttura) {
+		switch (tipoStruttura) {
+		case "IMPIANTO":
+			ImpiantoMapper impiantoMapper = BeanUtil.getBean(ImpiantoMapper.class);
+			impostaAttributiMapper(impiantoMapper);
+			return impiantoMapper;
+		default:
+			return null;
+		}
 		
-		return impiantoMapper;
 	}
 	
 	

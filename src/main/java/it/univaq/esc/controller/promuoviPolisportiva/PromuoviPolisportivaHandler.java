@@ -1,4 +1,4 @@
-package it.univaq.esc.controller;
+package it.univaq.esc.controller.promuoviPolisportiva;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.dtoObjects.FormCreazioneStruttura;
-import it.univaq.esc.dtoObjects.ImpiantoDTO;
+import it.univaq.esc.dtoObjects.StrutturaPolisportivaDTO;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Pavimentazione;
@@ -48,18 +48,22 @@ public class PromuoviPolisportivaHandler {
 	
 	private MapperFactory mapperFactory;
 	private StrutturaPolisportiva nuovaStruttura;
+	private String tipoNuovaStruttura;
+	private CreazioneNuovaStrutturaState statoCreazioneNuovaStruttura;
+	private StatiCreazioneNuovaStrutturaFactory statiCreazioneNuovaStrutturaFactory;
 	private RegistroImpianti registroImpianti;
 	private ElementiPrenotazioneFactory elementiPrenotazioneFactory;
 	private RegistroNotifiche registroNotifiche;
 	private RegistroUtentiPolisportiva registroUtentiPolisportiva;
 	private RegistroSport registroSport;
 
-	public PromuoviPolisportivaHandler(RegistroImpianti registroImpianti, RegistroNotifiche registroNotifiche, RegistroUtentiPolisportiva registroUtentiPolisportiva, RegistroSport registroSport) {
+	public PromuoviPolisportivaHandler(RegistroImpianti registroImpianti, RegistroNotifiche registroNotifiche, RegistroUtentiPolisportiva registroUtentiPolisportiva, RegistroSport registroSport, StatiCreazioneNuovaStrutturaFactory statiCreazioneNuovaStrutturaFactory) {
 		impostaAttributiControllerDipendentiDa(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 		setRegistroImpianti(registroImpianti);
 		setRegistroNotifiche(registroNotifiche);
 		setRegistroUtentiPolisportiva(registroUtentiPolisportiva);
 		setRegistroSport(registroSport);
+		setStatiCreazioneNuovaStrutturaFactory(statiCreazioneNuovaStrutturaFactory);
 	}
 	
 	private void impostaAttributiControllerDipendentiDa(String modalitaPrenotazione) {
@@ -76,32 +80,35 @@ public class PromuoviPolisportivaHandler {
 	}
 	
 	@RolesAllowed("ROLE_DIRETTORE")
-	@GetMapping("/avviaCreazioneImpianto")
+	@GetMapping("/avviaCreazioneStruttura")
 	@CrossOrigin
-	public Map<String, Object> avviaCreazioneNuovoImpianto() {
-		Map<String, Object> mappaNomiSportEPavimentazioni = new HashMap<String, Object>();
-		mappaNomiSportEPavimentazioni.put("pavimentazioniDisponibili", Pavimentazione.getListaPavimentazioniComeStringhe());
-		mappaNomiSportEPavimentazioni.put("sportPraticabili", getMapperFactory().getSportMapper().convertiInDTOLaLista(getRegistroSport().getListaSportPolisportiva()));
-		return mappaNomiSportEPavimentazioni;
+	public Map<String, Object> avviaCreazioneNuovoImpianto(@RequestParam(name = "tipoNuovaStruttura") String tipoNuovaStruttura) {
+		impostaAttributiDipendentiDal(tipoNuovaStruttura);
+		Map<String, Object> mappaDatiCreazioneNuovaStruttura = statoCreazioneNuovaStruttura.getDatiPerCreazioneNuovaStruttura();
+		return mappaDatiCreazioneNuovaStruttura;
 		
+	}
+	
+	private void impostaAttributiDipendentiDal(String tipoNuovaStruttura) {
+		setTipoNuovaStruttura(tipoNuovaStruttura);
+		setStatoCreazioneNuovaStruttura(statiCreazioneNuovaStrutturaFactory.getStatoCreazioneNuovaStrutturaInBaseAl(tipoNuovaStruttura));
 	}
 	
 	
 	@RolesAllowed("ROLE_DIRETTORE")
-	@PostMapping("/riepilogoCreazioneImpianto")
+	@PostMapping("/riepilogoCreazioneStruttura")
 	@CrossOrigin
-	public ImpiantoDTO getRiepilogoCreazioneStruttura(@RequestBody ImpiantoDTO nuovaStruttura) {
-		Impianto nuovoImpianto = getMapperFactory().getImpiantoMapper().convertiDTOInImpianto(nuovaStruttura);
-		setNuovaStruttura(nuovoImpianto);
-		return nuovaStruttura;
-		
+	public StrutturaPolisportivaDTO getRiepilogoCreazioneStruttura(@RequestBody StrutturaPolisportivaDTO nuovaStrutturaDTO) {
+		StrutturaPolisportiva nuovaStrutturaPolisportiva = getMapperFactory().getStrutturaPolisportivaMapper(tipoNuovaStruttura).convertiDTOInStrutturaPolisportiva(nuovaStrutturaDTO);
+		setNuovaStruttura(nuovaStrutturaPolisportiva);
+		return nuovaStrutturaDTO;
 	}
 	
 	@RolesAllowed("ROLE_DIRETTORE")
-	@PostMapping("/confermaCreazioneImpianto")
+	@PostMapping("/confermaCreazioneStruttura")
 	@CrossOrigin
 	public ResponseEntity confermaCreazioneStruttura() {
-		getRegistroImpianti().aggiungiImpianto((Impianto) nuovaStruttura);
+		statoCreazioneNuovaStruttura.creaNuovaStrutturaConfermata(nuovaStruttura);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
 	
@@ -119,16 +126,10 @@ public class PromuoviPolisportivaHandler {
 	@CrossOrigin
 	public ResponseEntity inviaNotificheCreazioneNuovaStruttura(@RequestBody Map<String, String> mappaEmailDirettoreEMessaggioNotifica) {
 		for(UtentePolisportiva utente : registroUtentiPolisportiva.getListaUtentiPolisportiva()) {
-			creaNotificaCreazioneNuovaStrutturaConMessaggioPerSingoloUtente(mappaEmailDirettoreEMessaggioNotifica, utente);
+			statoCreazioneNuovaStruttura.creaNotificaCreazioneNuovaStrutturaConMessaggioPerSingoloUtente(mappaEmailDirettoreEMessaggioNotifica, utente, nuovaStruttura);
 		}
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
 	
-	private void creaNotificaCreazioneNuovaStrutturaConMessaggioPerSingoloUtente(Map<String, String> mappaEmailDirettoreEMessaggioNotifica, UtentePolisportiva utenteDestinatario) {
-		UtentePolisportiva direttore = registroUtentiPolisportiva.trovaUtenteInBaseAllaSua(mappaEmailDirettoreEMessaggioNotifica.get("emailDirettore"));
-		NotificaService notifica = getElementiPrenotazioneFactory().getNotifica(new Notifica());
-		notifica.impostaDatiNotifica(TipoNotifica.CREAZIONE_STRUTTURA, direttore, utenteDestinatario, nuovaStruttura);
-		notifica.modificaMessaggio(mappaEmailDirettoreEMessaggioNotifica.get("messaggioNotifica"));
-		registroNotifiche.salvaNotifica(notifica);
-	}
+	
 }

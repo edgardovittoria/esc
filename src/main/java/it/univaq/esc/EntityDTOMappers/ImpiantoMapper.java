@@ -7,49 +7,45 @@ import org.springframework.stereotype.Component;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
-import it.univaq.esc.dtoObjects.ImpiantoDTO;
+import it.univaq.esc.dtoObjects.StrutturaPolisportivaDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.StrutturaPolisportiva;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import lombok.NoArgsConstructor;
 
 @Component
 @Singleton
 @NoArgsConstructor
-public class ImpiantoMapper extends EntityDTOMapper{
+public class ImpiantoMapper extends StrutturaPolisportivaMapper{
 
 	
-
-	public ImpiantoDTO convertiInImpiantoDTO(Impianto impiantoDaConvertire) {
-		ImpiantoDTO impiantoDTO = new ImpiantoDTO();
-        impiantoDTO.setIdImpianto(impiantoDaConvertire.getIdNotificabile());
-        impiantoDTO.setIndoor(impiantoDaConvertire.isIndoor());
+	@Override
+	public StrutturaPolisportivaDTO convertiInStrutturaPolisportivaDTO(StrutturaPolisportiva strutturaPolisportiva) {
+		StrutturaPolisportivaDTO impiantoDTO = super.convertiInStrutturaPolisportivaDTO(strutturaPolisportiva);
+        Impianto impiantoDaConvertire = (Impianto) strutturaPolisportiva;
+		impiantoDTO.setIndoor(impiantoDaConvertire.isIndoor());
         impiantoDTO.setPavimentazione(impiantoDaConvertire.getTipoPavimentazione().toString());
         for(Sport sport : impiantoDaConvertire.getSportPraticabili()){
             SportDTO sportDTO = getMapperFactory().getSportMapper().convertiInSportDTO(sport);
             impiantoDTO.getSportPraticabili().add(sportDTO);
-        }
-        
-        for(Appuntamento appuntamento : impiantoDaConvertire.getListaAppuntamenti()){
-        	impostaMapperFactory(appuntamento.getModalitaPrenotazione());
-        	AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);
-            impiantoDTO.getAppuntamenti().add(appuntamentoDTO);
-        }
-        
+        }   
         return impiantoDTO;
 	}
 	
 	
 	
-	public Impianto convertiDTOInImpianto(ImpiantoDTO impiantoDTODaConvertire) {
+	@Override
+	public StrutturaPolisportiva convertiDTOInStrutturaPolisportiva(StrutturaPolisportivaDTO strutturaDTO) {
 		Impianto impianto = new Impianto();
-		impianto.setIndoor(impiantoDTODaConvertire.isIndoor());
-		impianto.setSpecificheImpianto(ottieniSpecificheImpiantoDa(impiantoDTODaConvertire.getPavimentazione(), impiantoDTODaConvertire.getSportPraticabili()));
+		impianto.setIndoor(strutturaDTO.isIndoor());
+		impianto.setSpecificheImpianto(ottieniSpecificheImpiantoDa(strutturaDTO.getPavimentazione(), strutturaDTO.getSportPraticabili()));
 		//TODO impostare gli appuntamenti del calendario impianto.
 		return impianto;
 	}
+	
 	
 	private List<ImpiantoSpecs> ottieniSpecificheImpiantoDa(String pavimentazione, List<SportDTO> sportDTO){
 		List<ImpiantoSpecs> specifiche = new ArrayList<ImpiantoSpecs>();
@@ -67,5 +63,9 @@ public class ImpiantoMapper extends EntityDTOMapper{
 		}
 		return nomiSport;
 	}
+
+
+
+	
 
 }

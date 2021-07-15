@@ -90,6 +90,13 @@ public class Impianto extends StrutturaPolisportiva{
 
 
 
+	@Override
+	public String getTipoStruttura() {
+		return TipoStrutturaPolisportiva.IMPIANTO.toString();
+	}
+
+
+
 	
 
 }

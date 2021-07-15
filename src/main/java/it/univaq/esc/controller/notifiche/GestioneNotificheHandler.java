@@ -80,10 +80,10 @@ public class GestioneNotificheHandler {
 	@CrossOrigin
 	public @ResponseBody List<NotificaDTO> getNotificheUtente(@RequestParam(name = "email") String email) {
 		UtentePolisportiva utente = getRegistroUtentiPolisportiva().trovaUtenteInBaseAllaSua(email);
-		return getNotificheDTOPerDestinatario(utente);
+		return getNotificheInFormatoDTODelloSpecifico(utente);
 	}
 
-	private List<NotificaDTO> getNotificheDTOPerDestinatario(UtentePolisportiva destinatario) {
+	private List<NotificaDTO> getNotificheInFormatoDTODelloSpecifico(UtentePolisportiva destinatario) {
 		List<NotificaDTO> notificheDtos = new ArrayList<NotificaDTO>();
 		for (NotificaService notifica : getRegistroNotifiche().getNotifichePerDestinatario(destinatario)) {
 			impostaMapperFactory(notifica.getModalitaNotifica());

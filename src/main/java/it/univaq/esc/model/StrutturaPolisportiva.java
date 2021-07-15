@@ -60,4 +60,6 @@ public abstract class StrutturaPolisportiva extends Notificabile{
 	public String getTipoEventoNotificabile() {
 		return TipoEventoNotificabile.CREAZIONE_STRUTTURA.toString();
 	}
+	
+	public abstract String getTipoStruttura();
 }

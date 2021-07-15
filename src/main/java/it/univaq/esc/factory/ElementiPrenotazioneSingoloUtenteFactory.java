@@ -10,7 +10,7 @@ import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneLezione
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneState;
 import it.univaq.esc.model.notifiche.Notifica;
 import it.univaq.esc.model.notifiche.NotificaCorsoState;
-import it.univaq.esc.model.notifiche.NotificaCreazioneNuovaStrutturaState;
+import it.univaq.esc.model.notifiche.NotificaCreazioneNuovoImpiantoState;
 import it.univaq.esc.model.notifiche.NotificaImpiantoState;
 import it.univaq.esc.model.notifiche.NotificaIstruttoreState;
 import it.univaq.esc.model.notifiche.NotificaService;
@@ -55,8 +55,8 @@ public class ElementiPrenotazioneSingoloUtenteFactory extends ElementiPrenotazio
 			return BeanUtil.getBean(NotificaCorsoState.class);
 		case "ISTRUTTORE_LEZIONE":
 			return BeanUtil.getBean(NotificaIstruttoreState.class);
-			case "CREAZIONE_STRUTTURA":
-			return BeanUtil.getBean(NotificaCreazioneNuovaStrutturaState.class);
+			case "CREAZIONE_IMPIANTO":
+			return BeanUtil.getBean(NotificaCreazioneNuovoImpiantoState.class);
 		default:
 			return null;
 		}

@@ -9,7 +9,7 @@ import java.util.Map;
 
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
-import it.univaq.esc.dtoObjects.ImpiantoDTO;
+import it.univaq.esc.dtoObjects.StrutturaPolisportivaDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
@@ -19,6 +19,7 @@ import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.TipoStrutturaPolisportiva;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
@@ -273,10 +274,10 @@ public abstract class EffettuaPrenotazioneState {
 	 * @return lista, in formato DTO, degli impianti disponibili sulla base di sport
 	 *         e orario.
 	 */
-	protected List<ImpiantoDTO> getListaDTOImpiantiPrenotabiliInBaseAMappa(
+	protected List<StrutturaPolisportivaDTO> getListaDTOImpiantiPrenotabiliInBaseAMappa(
 			Map<String, Object> datiInseritiInCompilazione) {
 		List<Impianto> listaImpiantiDisponibili = trovaImpiantiPrenotabiliInBaseAMappa(datiInseritiInCompilazione);
-		List<ImpiantoDTO> listaImpiantiDisponibiliInFormatoDTO = convertiInDTOGliImpiantiDella(
+		List<StrutturaPolisportivaDTO> listaImpiantiDisponibiliInFormatoDTO = convertiInDTOGliImpiantiDella(
 				listaImpiantiDisponibili);
 		return listaImpiantiDisponibiliInFormatoDTO;
 	}
@@ -307,10 +308,10 @@ public abstract class EffettuaPrenotazioneState {
 				listaImpianti);
 	}
 
-	private List<ImpiantoDTO> convertiInDTOGliImpiantiDella(List<Impianto> listaImpianti) {
-		List<ImpiantoDTO> listaImpiantiDTODisponibili = new ArrayList<ImpiantoDTO>();
+	private List<StrutturaPolisportivaDTO> convertiInDTOGliImpiantiDella(List<Impianto> listaImpianti) {
+		List<StrutturaPolisportivaDTO> listaImpiantiDTODisponibili = new ArrayList<StrutturaPolisportivaDTO>();
 		for (Impianto impianto : listaImpianti) {
-			ImpiantoDTO impiantoDTO = getMapperFactory().getImpiantoMapper().convertiInImpiantoDTO(impianto);
+			StrutturaPolisportivaDTO impiantoDTO = getMapperFactory().getStrutturaPolisportivaMapper(TipoStrutturaPolisportiva.IMPIANTO.toString()).convertiInStrutturaPolisportivaDTO(impianto);
 			listaImpiantiDTODisponibili.add(impiantoDTO);
 		}
 		return listaImpiantiDTODisponibili;

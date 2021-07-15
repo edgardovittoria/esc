@@ -137,7 +137,7 @@ public class RegistroNotifiche {
 	
 	public String getMessaggioNotificaPerCreazione(Notificabile nuovaStruttura) {
 		NotificaService notifica = getElementiPrenotazioneFactorySingoloUtente().getNotifica(new Notifica());
-		notifica.impostaDatiNotifica(TipoNotifica.CREAZIONE_STRUTTURA, null, null, nuovaStruttura);
+		notifica.impostaDatiNotifica(TipoNotifica.CREAZIONE_IMPIANTO, null, null, nuovaStruttura);
 		return notifica.getNotifica().getMessaggio();
 	}
 }
