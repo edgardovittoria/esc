@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,8 +39,8 @@ public class CostoPrenotabile {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Costo costo = new Costo();
-    @Column
-    private String tipoCosto;
+    @Enumerated(EnumType.STRING)
+    private TipoCostoPrenotabile tipoCosto;
 
 
     public void setProprieta(Map<String, Object> mappaProprietaDaImpostare){}
@@ -49,7 +51,7 @@ public class CostoPrenotabile {
 
     public Map<String, Costo> getMappaCosto(){
         Map<String, Costo> mappaCosto = new HashMap<String, Costo>();
-        mappaCosto.put(this.getTipoCosto(), this.getCosto());
+        mappaCosto.put(this.getTipoCosto().toString(), this.getCosto());
 
         return mappaCosto;
     }

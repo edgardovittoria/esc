@@ -26,6 +26,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import it.univaq.esc.model.TipoEventoNotificabile;
+import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 
 import lombok.Getter;
@@ -98,7 +99,7 @@ public class Prenotazione extends Notificabile {
 		return TipoEventoNotificabile.PRENOTAZIONE.toString();
 	}
 
-	public String getModalitaPrenotazione() {
+	public ModalitaPrenotazione getModalitaPrenotazione() {
 		return getListaAppuntamenti().get(0).getModalitaPrenotazione();
 	}
 

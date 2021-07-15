@@ -31,6 +31,7 @@ import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.StrutturaPolisportiva;
 import it.univaq.esc.model.TipoEventoNotificabile;
+import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
@@ -157,7 +158,7 @@ public abstract class Appuntamento extends Notificabile {
 		listaQuote.forEach((quota) -> assegna(quota));
 	}
 	
-	public String getModalitaPrenotazione() {
+	public ModalitaPrenotazione getModalitaPrenotazione() {
 		return getDescrizioneEventoPrenotato().getModalitaPrenotazione();
 	}
 

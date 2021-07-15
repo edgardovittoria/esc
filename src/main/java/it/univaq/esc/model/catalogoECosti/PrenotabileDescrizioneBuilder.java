@@ -46,12 +46,12 @@ public class PrenotabileDescrizioneBuilder {
 	}
     
     public PrenotabileDescrizioneBuilder impostaModalitaPrenotazioneComeSingoloUtente() {
-    	this.getPrenotabileDescrizione().setModalitaPrenotazione(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
+    	this.getPrenotabileDescrizione().setModalitaPrenotazione(ModalitaPrenotazione.SINGOLO_UTENTE);
     	return this;
     }
     
     public PrenotabileDescrizioneBuilder impostaModalitaPrenotazioneComeSquadra() {
-		this.getPrenotabileDescrizione().setModalitaPrenotazione(ModalitaPrenotazione.SQUADRA.toString());
+		this.getPrenotabileDescrizione().setModalitaPrenotazione(ModalitaPrenotazione.SQUADRA);
 		return this;
 	}
     
@@ -65,7 +65,7 @@ public class PrenotabileDescrizioneBuilder {
     public PrenotabileDescrizioneBuilder impostaCostoOrario(Costo costoDaImpostare){
         CostoPrenotabile costoOrario = new CostoPrenotabile();
         costoOrario.setCosto(costoDaImpostare);
-        costoOrario.setTipoCosto(TipoCostoPrenotabile.COSTO_ORARIO.toString());
+        costoOrario.setTipoCosto(TipoCostoPrenotabile.COSTO_ORARIO);
         this.getPrenotabileDescrizione().aggiungiCosto(costoOrario);
 
         return this;
@@ -74,7 +74,7 @@ public class PrenotabileDescrizioneBuilder {
     public PrenotabileDescrizioneBuilder impostaCostoUnaTantum(Costo costoDaImpostare){
         CostoPrenotabile costoUnaTantum = new CostoPrenotabile();
         costoUnaTantum.setCosto(costoDaImpostare);
-        costoUnaTantum.setTipoCosto(TipoCostoPrenotabile.COSTO_UNA_TANTUM.toString());
+        costoUnaTantum.setTipoCosto(TipoCostoPrenotabile.COSTO_UNA_TANTUM);
         this.getPrenotabileDescrizione().aggiungiCosto(costoUnaTantum);
 
         return this;
@@ -83,7 +83,7 @@ public class PrenotabileDescrizioneBuilder {
     public PrenotabileDescrizioneBuilder impostaCostoPavimentazione(Costo costoDaImpostare, String tipoPavimentazione){
         CostoPrenotabile costoPavimentazione = new CostoPrenotabilePavimentazione();
         costoPavimentazione.setCosto(costoDaImpostare);
-        costoPavimentazione.setTipoCosto(TipoCostoPrenotabile.COSTO_PAVIMENTAZIONE.toString());
+        costoPavimentazione.setTipoCosto(TipoCostoPrenotabile.COSTO_PAVIMENTAZIONE);
         Map<String, Object> mappaProprieta = new HashMap<String, Object>();
         mappaProprieta.put("tipoPavimentazione", tipoPavimentazione);
         costoPavimentazione.setProprieta(mappaProprieta);

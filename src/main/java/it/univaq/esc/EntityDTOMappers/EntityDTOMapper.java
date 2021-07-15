@@ -4,6 +4,7 @@ package it.univaq.esc.EntityDTOMappers;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
+import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.utility.BeanUtil;
@@ -23,7 +24,7 @@ public abstract class EntityDTOMapper {
 	private CatalogoPrenotabili catalogoPrenotabili;
 	private RegistroSquadre registroSquadre;
 	
-	protected void impostaMapperFactory(String modalitaPrenotazione) {
-		setMapperFactory(BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class));
+	protected void impostaMapperFactory(ModalitaPrenotazione modalitaPrenotazione) {
+		setMapperFactory(BeanUtil.getBean("MAPPER_" + modalitaPrenotazione.toString(), MapperFactory.class));
 	}
 }
