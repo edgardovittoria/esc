@@ -11,7 +11,7 @@ import it.univaq.esc.utility.BeanUtil;
 @Component
 @Singleton
 @NoArgsConstructor
-@DependsOn("BeanUtil")
+@DependsOn("beanUtil")
 public class StatiCreazioneNuovaStrutturaFactory {
 
 	public CreazioneNuovaStrutturaState getStatoCreazioneNuovaStrutturaInBaseAl(String tipoNuovaStruttura) {

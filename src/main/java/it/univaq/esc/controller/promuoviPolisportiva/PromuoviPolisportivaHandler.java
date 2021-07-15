@@ -1,7 +1,4 @@
 package it.univaq.esc.controller.promuoviPolisportiva;
-
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.security.RolesAllowed;
@@ -18,11 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
-import it.univaq.esc.dtoObjects.FormCreazioneStruttura;
 import it.univaq.esc.dtoObjects.StrutturaPolisportivaDTO;
-import it.univaq.esc.factory.ElementiPrenotazioneFactory;
-import it.univaq.esc.model.Impianto;
-import it.univaq.esc.model.Pavimentazione;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.StrutturaPolisportiva;
