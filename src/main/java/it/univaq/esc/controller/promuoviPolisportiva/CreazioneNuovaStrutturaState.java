@@ -22,7 +22,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PROTECTED)
-@DependsOn("BeanUtil")
+@DependsOn("beanUtil")
 public abstract class CreazioneNuovaStrutturaState {
 
 	private MapperFactory mapperFactory;

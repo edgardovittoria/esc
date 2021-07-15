@@ -45,7 +45,7 @@ import lombok.Setter;
 @RequestMapping("/promuoviPolisportiva")
 @Getter(value = AccessLevel.PRIVATE)
 @Setter(value = AccessLevel.PRIVATE)
-@DependsOn("BeanUtil")
+@DependsOn("beanUtil")
 public class PromuoviPolisportivaHandler {
 	
 	private MapperFactory mapperFactory;
