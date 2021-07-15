@@ -29,8 +29,9 @@ public class NotificaService {
 		setNotifica(notifica);
 
 	}
-	
-	public void impostaDatiNotifica(TipoNotifica tipoNotifica, UtentePolisportiva mittente, UtentePolisportiva destinatario, Notificabile evento) {
+
+	public void impostaDatiNotifica(TipoNotifica tipoNotifica, UtentePolisportiva mittente,
+			UtentePolisportiva destinatario, Notificabile evento) {
 		getNotifica().setTipoNotifica(tipoNotifica);
 		setStatoNotifica(tipoNotifica.toString());
 		getNotifica().setDestinatario(destinatario);
@@ -40,14 +41,14 @@ public class NotificaService {
 		getNotifica().setMessaggio(costruisciMessaggio());
 	}
 
-	
-
 	private String costruisciMessaggio() {
 		return getStatoNotifica().getMessaggioNotifica(this);
 	}
-	
+
 	public void modificaMessaggio(String nuovoMessaggio) {
-		getNotifica().setMessaggio(nuovoMessaggio);
+		if (!nuovoMessaggio.isEmpty()) {
+			getNotifica().setMessaggio(nuovoMessaggio);
+		}
 	}
 
 	public Integer getIdEvento() {
@@ -92,12 +93,11 @@ public class NotificaService {
 	public boolean isLetta() {
 		return getNotifica().isLetta();
 	}
-	
+
 	public void impostaComeLetta() {
 		getNotifica().setLetta(true);
 	}
 
-	
 	public void setStatoNotifica(String tipo) {
 		this.statoNotifica = getFactoryStatiNotifiche().getStatoNotifica(tipo);
 	}
@@ -105,8 +105,7 @@ public class NotificaService {
 	public Integer getIdNotifica() {
 		return getNotifica().getIdNotifica();
 	}
-	
-	
+
 	public boolean isSuoQuesto(Integer identificativo) {
 		return getIdNotifica() == identificativo;
 	}
