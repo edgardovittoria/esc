@@ -2,6 +2,8 @@ package it.univaq.esc.controller.promuoviPolisportiva;
 
 import java.util.Map;
 
+import org.springframework.context.annotation.DependsOn;
+
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.RegistroImpianti;
@@ -20,6 +22,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PROTECTED)
+@DependsOn("BeanUtil")
 public abstract class CreazioneNuovaStrutturaState {
 
 	private MapperFactory mapperFactory;
