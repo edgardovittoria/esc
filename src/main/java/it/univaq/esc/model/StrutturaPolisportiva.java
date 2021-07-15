@@ -23,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public abstract class StrutturaPolisportiva extends Notificabile{
+public abstract class StrutturaPolisportiva extends Notificabile {
 
 	@Transient
 	private Calendario calendarioAppuntamentiStruttura = new Calendario();
@@ -43,23 +43,23 @@ public abstract class StrutturaPolisportiva extends Notificabile{
 	public void segnaInCalendarioLaListaDi(List<Appuntamento> nuoviAppuntamenti) {
 		getCalendarioAppuntamentiStruttura().aggiungiListaDi(nuoviAppuntamenti);
 	}
-	
+
 	public boolean isEqual(StrutturaPolisportiva strutturaPolisportiva) {
 		return (getIdNotificabile() == strutturaPolisportiva.getIdNotificabile());
 	}
-	
+
 	public boolean isSuoQuesto(Integer idStruttura) {
-		return getIdNotificabile()==idStruttura;
+		return getIdNotificabile() == idStruttura;
 	}
-	
+
 	public boolean isStrutturaLiberaNell(OrarioAppuntamento orario) {
 		return !getCalendarioAppuntamentiStruttura().sovrapponeA(orario);
 	}
-	
+
 	@Override
 	public String getTipoEventoNotificabile() {
 		return TipoEventoNotificabile.CREAZIONE_STRUTTURA.toString();
 	}
-	
+
 	public abstract String getTipoStruttura();
 }

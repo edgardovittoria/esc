@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.security.RolesAllowed;
 
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,6 +45,7 @@ import lombok.Setter;
 @RequestMapping("/promuoviPolisportiva")
 @Getter(value = AccessLevel.PRIVATE)
 @Setter(value = AccessLevel.PRIVATE)
+@DependsOn("BeanUtil")
 public class PromuoviPolisportivaHandler {
 	
 	private MapperFactory mapperFactory;
@@ -52,7 +54,7 @@ public class PromuoviPolisportivaHandler {
 	private CreazioneNuovaStrutturaState statoCreazioneNuovaStruttura;
 	private StatiCreazioneNuovaStrutturaFactory statiCreazioneNuovaStrutturaFactory;
 	private RegistroImpianti registroImpianti;
-	private ElementiPrenotazioneFactory elementiPrenotazioneFactory;
+	//private ElementiPrenotazioneFactory elementiPrenotazioneFactory;
 	private RegistroNotifiche registroNotifiche;
 	private RegistroUtentiPolisportiva registroUtentiPolisportiva;
 	private RegistroSport registroSport;
@@ -67,13 +69,13 @@ public class PromuoviPolisportivaHandler {
 	}
 	
 	private void impostaAttributiControllerDipendentiDa(String modalitaPrenotazione) {
-		setElementiPrenotazioneFactory(this.chiedeAlContainerLaFactoryStatiRelativaAlla(modalitaPrenotazione));
+		//setElementiPrenotazioneFactory(this.chiedeAlContainerLaFactoryStatiRelativaAlla(modalitaPrenotazione));
 		setMapperFactory(chiedeAlContainerLaMapperFactoryiRelativaAlla(modalitaPrenotazione));
 	}
 
-	private ElementiPrenotazioneFactory chiedeAlContainerLaFactoryStatiRelativaAlla(String modalitaPrenotazione) {
-		return BeanUtil.getBean("ELEMENTI_PRENOTAZIONE_" + modalitaPrenotazione, ElementiPrenotazioneFactory.class);
-	}
+//	private ElementiPrenotazioneFactory chiedeAlContainerLaFactoryStatiRelativaAlla(String modalitaPrenotazione) {
+//		return BeanUtil.getBean("ELEMENTI_PRENOTAZIONE_" + modalitaPrenotazione, ElementiPrenotazioneFactory.class);
+//	}
 
 	private MapperFactory chiedeAlContainerLaMapperFactoryiRelativaAlla(String modalitaPrenotazione) {
 		return BeanUtil.getBean("MAPPER_" + modalitaPrenotazione, MapperFactory.class);
