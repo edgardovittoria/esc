@@ -76,7 +76,7 @@ public class AppuntamentoImpiantoSquadraMapper extends AppuntamentoMapper{
 		PrenotabileDescrizione descrizioneEventoPrenotabile = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						TipiPrenotazione.IMPIANTO.toString(), sportSelezionato,
-						ModalitaPrenotazione.SQUADRA.toString());
+						ModalitaPrenotazione.SQUADRA);
 
 		return descrizioneEventoPrenotabile;
 	}

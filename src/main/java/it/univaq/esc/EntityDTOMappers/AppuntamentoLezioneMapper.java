@@ -56,7 +56,7 @@ public class AppuntamentoLezioneMapper extends AppuntamentoMapper{
 		PrenotabileDescrizione descrizioneEventoPrenotabile = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
 						TipiPrenotazione.LEZIONE.toString(), sportSelezionato,
-						ModalitaPrenotazione.SINGOLO_UTENTE.toString());
+						ModalitaPrenotazione.SINGOLO_UTENTE);
 
 		return descrizioneEventoPrenotabile;
 	}

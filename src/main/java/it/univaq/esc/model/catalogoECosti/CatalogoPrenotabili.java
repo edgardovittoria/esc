@@ -73,9 +73,9 @@ public class CatalogoPrenotabili {
     	return null;
     }
     
-    public PrenotabileDescrizione getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(String tipoPrenotazione, Sport sport, String modalitaPrenotazione){
+    public PrenotabileDescrizione getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(String tipoPrenotazione, Sport sport, ModalitaPrenotazione modalitaPrenotazione){
         for(PrenotabileDescrizione desc : this.getCatalogoPrenotabili()){
-            if(desc.getSportAssociato().getNome().equals(sport.getNome()) && desc.getTipoPrenotazione().equals(tipoPrenotazione) && desc.getModalitaPrenotazione().equals(modalitaPrenotazione)){
+            if(desc.getSportAssociato().getNome().equals(sport.getNome()) && desc.getTipoPrenotazione().equals(tipoPrenotazione) && desc.getModalitaPrenotazione().isEqual(modalitaPrenotazione)){
                 return desc;
             }
         }
