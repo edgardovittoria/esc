@@ -1,13 +1,12 @@
 package it.univaq.esc.creazioneDatiDB;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.repository.SportRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Singleton

@@ -1,12 +1,5 @@
 package it.univaq.esc.creazioneDatiDB;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.ImpiantoSpecs;
@@ -15,8 +8,13 @@ import it.univaq.esc.model.Sport;
 import it.univaq.esc.repository.ImpiantoRepository;
 import it.univaq.esc.repository.ImpiantoSpecsRepository;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 @Singleton

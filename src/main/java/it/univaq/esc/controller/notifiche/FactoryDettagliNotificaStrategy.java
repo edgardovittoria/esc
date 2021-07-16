@@ -1,13 +1,12 @@
 package it.univaq.esc.controller.notifiche;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.utility.BeanUtil;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 @Component
 @Singleton
 @NoArgsConstructor

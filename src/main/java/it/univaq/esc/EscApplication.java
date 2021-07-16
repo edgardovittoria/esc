@@ -4,9 +4,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import it.univaq.esc.creazioneDatiDB.PopolaDB;
-import it.univaq.esc.utility.BeanUtil;
-
 
 @SpringBootApplication
 public class EscApplication implements CommandLineRunner {

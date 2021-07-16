@@ -1,16 +1,16 @@
 package it.univaq.esc.model.catalogoECosti.calcolatori;
 
-import java.time.LocalTime;
-import java.util.Map;
-
-import static java.time.temporal.ChronoUnit.MINUTES;
-
 import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.StrutturaPolisportiva;
 import it.univaq.esc.model.catalogoECosti.TipoCostoPrenotabile;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalTime;
+import java.util.Map;
+
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 @NoArgsConstructor
 public class CalcolatoreCostoBase extends CalcolatoreCosto {

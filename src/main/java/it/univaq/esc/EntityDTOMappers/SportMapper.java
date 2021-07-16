@@ -1,15 +1,13 @@
 package it.univaq.esc.EntityDTOMappers;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.SportDTO;
 import it.univaq.esc.model.Sport;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Singleton

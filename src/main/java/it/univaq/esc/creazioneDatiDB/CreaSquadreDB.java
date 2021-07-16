@@ -1,11 +1,10 @@
 package it.univaq.esc.creazioneDatiDB;
 
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.repository.SquadraRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @Singleton

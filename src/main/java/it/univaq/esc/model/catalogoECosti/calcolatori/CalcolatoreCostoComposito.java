@@ -1,8 +1,5 @@
 package it.univaq.esc.model.catalogoECosti.calcolatori;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Valuta;
 import it.univaq.esc.model.Valute;
@@ -10,6 +7,9 @@ import it.univaq.esc.model.prenotazioni.Appuntamento;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @NoArgsConstructor

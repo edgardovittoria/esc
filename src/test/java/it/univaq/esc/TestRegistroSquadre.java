@@ -1,16 +1,15 @@
 package it.univaq.esc;
 
-import static org.junit.Assert.assertEquals;
-
+import it.univaq.esc.model.utenti.RegistroSquadre;
+import it.univaq.esc.model.utenti.Squadra;
+import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import it.univaq.esc.model.utenti.RegistroSquadre;
-import it.univaq.esc.model.utenti.Squadra;
-import lombok.Getter;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,12 +1,11 @@
 package it.univaq.esc.model.utenti;
 
-import java.util.List;
-
-
 import it.univaq.esc.model.Sport;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 @Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE)
 public class UtentePolisportivaBuilder {
     

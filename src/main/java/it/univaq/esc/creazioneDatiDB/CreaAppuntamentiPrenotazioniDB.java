@@ -1,12 +1,5 @@
 package it.univaq.esc.creazioneDatiDB;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.Calendario;
@@ -23,8 +16,12 @@ import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Component
 @Singleton

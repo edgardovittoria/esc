@@ -1,10 +1,5 @@
 package it.univaq.esc.EntityDTOMappers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.AppuntamentoDTO;
 import it.univaq.esc.dtoObjects.SportDTO;
@@ -14,6 +9,10 @@ import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Singleton

@@ -1,16 +1,15 @@
 package it.univaq.esc.creazioneDatiDB;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportivaBuilder;
 import it.univaq.esc.repository.UtentePolisportivaRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Singleton

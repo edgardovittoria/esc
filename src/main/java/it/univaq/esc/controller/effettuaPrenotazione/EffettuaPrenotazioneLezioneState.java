@@ -1,41 +1,20 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.stereotype.Component;
-
 import it.univaq.esc.dtoObjects.FormPrenotabile;
-import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
-import it.univaq.esc.dtoObjects.IstruttoreSelezionato;
 import it.univaq.esc.dtoObjects.OrarioAppuntamentoDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
-import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
-import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
-import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
-import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
-import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
-import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
-import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
-import it.univaq.esc.model.prenotazioni.AppuntamentoLezione;
-import it.univaq.esc.model.prenotazioni.DatiFormPerAppuntamento;
-import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
-import it.univaq.esc.model.prenotazioni.Prenotazione;
-import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
-import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
-import it.univaq.esc.model.prenotazioni.RegistroQuotePartecipazione;
-import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
-import it.univaq.esc.model.notifiche.Notifica;
-import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
-import it.univaq.esc.model.notifiche.TipoNotifica;
+import it.univaq.esc.model.prenotazioni.*;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
-import it.univaq.esc.model.utenti.UtentePolisportiva;
+import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Stato del controller EffettuaPrenotazioneHandler che gestisce la specifica

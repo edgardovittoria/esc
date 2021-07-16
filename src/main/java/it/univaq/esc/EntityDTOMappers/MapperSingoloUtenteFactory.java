@@ -1,10 +1,9 @@
 package it.univaq.esc.EntityDTOMappers;
 
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.utility.BeanUtil;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component(value = "MAPPER_SINGOLO_UTENTE")
 @Singleton

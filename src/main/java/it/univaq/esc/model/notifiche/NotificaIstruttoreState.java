@@ -1,9 +1,7 @@
 package it.univaq.esc.model.notifiche;
 
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
-import it.univaq.esc.model.Sport;
+import org.springframework.stereotype.Component;
 
 @Component
 @Singleton

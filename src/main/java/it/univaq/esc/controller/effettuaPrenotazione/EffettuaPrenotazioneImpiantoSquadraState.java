@@ -1,52 +1,23 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.stereotype.Component;
-
-import it.univaq.esc.dtoObjects.AppuntamentoDTO;
-import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
-import it.univaq.esc.dtoObjects.FormPrenotabile;
-import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
-import it.univaq.esc.dtoObjects.OrarioAppuntamentoDTO;
-import it.univaq.esc.dtoObjects.PrenotazioneDTO;
-import it.univaq.esc.dtoObjects.SquadraDTO;
-import it.univaq.esc.model.Calendario;
+import it.univaq.esc.dtoObjects.*;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
-import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
-import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
-import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCosto;
-import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
-import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
-import it.univaq.esc.model.notifiche.Notifica;
-import it.univaq.esc.model.notifiche.NotificaService;
-import it.univaq.esc.model.notifiche.NotificaSquadra;
-import it.univaq.esc.model.notifiche.NotificaSquadraService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
-import it.univaq.esc.model.notifiche.TipoNotifica;
-import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
-import it.univaq.esc.model.prenotazioni.AppuntamentoImpiantoSquadra;
-import it.univaq.esc.model.prenotazioni.AppuntamentoSquadra;
-import it.univaq.esc.model.prenotazioni.DatiFormPerAppuntamento;
-import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
-import it.univaq.esc.model.prenotazioni.Prenotazione;
-import it.univaq.esc.model.prenotazioni.PrenotazioneSquadra;
-import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
-import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
-import it.univaq.esc.model.prenotazioni.RegistroQuotePartecipazione;
-import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.model.prenotazioni.*;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.Squadra;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 @DependsOn("beanUtil")

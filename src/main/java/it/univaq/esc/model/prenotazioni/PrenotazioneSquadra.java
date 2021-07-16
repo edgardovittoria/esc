@@ -1,14 +1,14 @@
 package it.univaq.esc.model.prenotazioni;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import it.univaq.esc.model.utenti.Squadra;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter(value = AccessLevel.PUBLIC) @Setter(value = AccessLevel.PUBLIC)

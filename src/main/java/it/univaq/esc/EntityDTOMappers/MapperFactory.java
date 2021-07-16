@@ -1,13 +1,12 @@
 package it.univaq.esc.EntityDTOMappers;
 
-import org.springframework.context.annotation.DependsOn;
-
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.utility.BeanUtil;
+import org.springframework.context.annotation.DependsOn;
 
 @DependsOn("beanUtil")
 public abstract class MapperFactory {

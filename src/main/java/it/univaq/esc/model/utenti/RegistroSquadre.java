@@ -1,10 +1,5 @@
 package it.univaq.esc.model.utenti;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.Sport;
@@ -14,6 +9,10 @@ import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.repository.SquadraRepository;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 @Component
 @Singleton
 @Getter @Setter 

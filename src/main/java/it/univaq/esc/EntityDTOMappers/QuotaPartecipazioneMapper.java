@@ -1,11 +1,10 @@
 package it.univaq.esc.EntityDTOMappers;
 
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.QuotaPartecipazioneDTO;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @Singleton

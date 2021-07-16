@@ -1,15 +1,14 @@
 package it.univaq.esc.model.utenti;
 
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.Transient;
-
 import it.univaq.esc.model.Calendario;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+import java.util.List;
 
 @Entity
 @Getter @Setter @NoArgsConstructor

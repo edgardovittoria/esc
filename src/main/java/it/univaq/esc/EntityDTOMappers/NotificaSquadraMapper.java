@@ -1,12 +1,11 @@
 package it.univaq.esc.EntityDTOMappers;
 
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.dtoObjects.NotificaDTO;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.NotificaSquadraService;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component(value = "MAPPER_NOTIFICA_SQUADRA")
 @Singleton

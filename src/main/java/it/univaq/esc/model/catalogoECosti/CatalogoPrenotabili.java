@@ -1,16 +1,14 @@
 package it.univaq.esc.model.catalogoECosti;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
-import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Sport;
 import it.univaq.esc.repository.PrenotabileDescrizioneRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Singleton

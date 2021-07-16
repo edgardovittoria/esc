@@ -1,26 +1,15 @@
 package it.univaq.esc.factory;
 
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneCorsoState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneImpiantoState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneLezioneState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneState;
-import it.univaq.esc.model.notifiche.Notifica;
-import it.univaq.esc.model.notifiche.NotificaCorsoState;
-import it.univaq.esc.model.notifiche.NotificaCreazioneNuovoImpiantoState;
-import it.univaq.esc.model.notifiche.NotificaImpiantoState;
-import it.univaq.esc.model.notifiche.NotificaIstruttoreState;
-import it.univaq.esc.model.notifiche.NotificaService;
-import it.univaq.esc.model.notifiche.NotificaState;
-import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.AppuntamentoCorso;
-import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
-import it.univaq.esc.model.prenotazioni.AppuntamentoLezione;
-import it.univaq.esc.model.prenotazioni.Prenotazione;
+import it.univaq.esc.model.notifiche.*;
+import it.univaq.esc.model.prenotazioni.*;
 import it.univaq.esc.utility.BeanUtil;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Component;
 
 @Component(value = "ELEMENTI_PRENOTAZIONE_SINGOLO_UTENTE")
 @Singleton

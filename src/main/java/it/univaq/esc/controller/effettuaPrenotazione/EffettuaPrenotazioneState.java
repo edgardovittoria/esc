@@ -1,28 +1,11 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
-import it.univaq.esc.dtoObjects.FormPrenotabile;
-import it.univaq.esc.dtoObjects.StrutturaPolisportivaDTO;
-import it.univaq.esc.dtoObjects.PrenotazioneDTO;
-import it.univaq.esc.dtoObjects.SportDTO;
-import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
+import it.univaq.esc.dtoObjects.*;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
-import it.univaq.esc.model.Calendario;
-import it.univaq.esc.model.Impianto;
-import it.univaq.esc.model.RegistroImpianti;
-import it.univaq.esc.model.RegistroSport;
-import it.univaq.esc.model.Sport;
-import it.univaq.esc.model.TipoStrutturaPolisportiva;
+import it.univaq.esc.model.*;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
-import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
@@ -34,6 +17,10 @@ import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Classe astratta che definisce l'interfaccia comune per gli stati del

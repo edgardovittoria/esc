@@ -1,16 +1,7 @@
 package it.univaq.esc.controller.promuoviPolisportiva;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
-import it.univaq.esc.model.Impianto;
-import it.univaq.esc.model.Pavimentazione;
-import it.univaq.esc.model.RegistroImpianti;
-import it.univaq.esc.model.RegistroSport;
-import it.univaq.esc.model.StrutturaPolisportiva;
+import it.univaq.esc.model.*;
 import it.univaq.esc.model.notifiche.Notifica;
 import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
@@ -20,6 +11,10 @@ import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @Singleton

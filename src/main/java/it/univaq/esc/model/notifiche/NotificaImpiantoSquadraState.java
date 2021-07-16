@@ -1,8 +1,7 @@
 package it.univaq.esc.model.notifiche;
 
-import org.springframework.stereotype.Component;
-
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @NoArgsConstructor

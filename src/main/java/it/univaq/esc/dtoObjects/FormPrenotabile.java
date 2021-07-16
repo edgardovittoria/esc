@@ -1,14 +1,12 @@
 package it.univaq.esc.dtoObjects;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Getter

@@ -1,17 +1,14 @@
 package it.univaq.esc.model.catalogoECosti;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-
-import java.util.Map;
-
-import org.springframework.stereotype.Component;
-
 import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Sport;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @NoArgsConstructor @Getter @Setter

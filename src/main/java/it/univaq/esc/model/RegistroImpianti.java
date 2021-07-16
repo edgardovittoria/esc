@@ -1,12 +1,5 @@
 package it.univaq.esc.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.validation.constraints.AssertFalse;
-
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
@@ -16,6 +9,10 @@ import it.univaq.esc.repository.ImpiantoSpecsRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Singleton

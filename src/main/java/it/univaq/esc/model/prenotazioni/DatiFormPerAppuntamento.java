@@ -1,10 +1,5 @@
 package it.univaq.esc.model.prenotazioni;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.utenti.Squadra;
@@ -12,6 +7,11 @@ import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter

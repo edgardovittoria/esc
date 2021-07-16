@@ -1,19 +1,14 @@
 package it.univaq.esc.model.prenotazioni;
 
 
-
-
-
-
-import java.util.ArrayList;
-import java.util.List;
+import it.univaq.esc.model.utenti.UtentePolisportiva;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-
-import it.univaq.esc.model.utenti.UtentePolisportiva;
-import lombok.NoArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

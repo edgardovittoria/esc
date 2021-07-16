@@ -1,19 +1,14 @@
 package it.univaq.esc.EntityDTOMappers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import it.univaq.esc.dtoObjects.AppuntamentoDTO;
-import it.univaq.esc.dtoObjects.CheckboxPendingSelezionato;
-import it.univaq.esc.dtoObjects.FormPrenotabile;
-import it.univaq.esc.dtoObjects.ImpiantoSelezionato;
-import it.univaq.esc.dtoObjects.OrarioAppuntamentoDTO;
-import it.univaq.esc.dtoObjects.QuotaPartecipazioneDTO;
+import it.univaq.esc.dtoObjects.*;
 import it.univaq.esc.model.Impianto;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.DatiFormPerAppuntamento;
 import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AppuntamentoMapper extends EntityDTOMapper {
 

@@ -1,21 +1,16 @@
 package it.univaq.esc;
 
+import it.univaq.esc.model.prenotazioni.*;
+import it.univaq.esc.repository.AppuntamentoRepository;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import it.univaq.esc.model.prenotazioni.Appuntamento;
-import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
-import it.univaq.esc.model.prenotazioni.Prenotazione;
-import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
-import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
-import it.univaq.esc.repository.AppuntamentoRepository;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

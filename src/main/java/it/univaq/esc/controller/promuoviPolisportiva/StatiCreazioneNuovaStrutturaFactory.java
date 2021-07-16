@@ -1,12 +1,10 @@
 package it.univaq.esc.controller.promuoviPolisportiva;
 
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.stereotype.Component;
-
-import lombok.NoArgsConstructor;
-
 import groovy.lang.Singleton;
 import it.univaq.esc.utility.BeanUtil;
+import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Component;
 
 @Component
 @Singleton

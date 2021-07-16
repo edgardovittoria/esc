@@ -1,18 +1,13 @@
 package it.univaq.esc.creazioneDatiDB;
 
-import org.springframework.stereotype.Component;
-
 import groovy.lang.Singleton;
-import it.univaq.esc.model.Costo;
-import it.univaq.esc.model.Pavimentazione;
-import it.univaq.esc.model.Sport;
-import it.univaq.esc.model.Valuta;
-import it.univaq.esc.model.Valute;
+import it.univaq.esc.model.*;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
 import it.univaq.esc.repository.ValutaRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @Singleton

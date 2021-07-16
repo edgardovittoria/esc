@@ -1,8 +1,7 @@
 package it.univaq.esc.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import it.univaq.esc.model.Costo;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CostoRepository extends JpaRepository<Costo, Integer>{
 

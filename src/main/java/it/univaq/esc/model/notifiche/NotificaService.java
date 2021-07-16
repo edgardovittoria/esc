@@ -1,8 +1,5 @@
 package it.univaq.esc.model.notifiche;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
-
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.Notificabile;
@@ -10,6 +7,8 @@ import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 @Service()
 @Scope("prototype")

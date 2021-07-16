@@ -1,21 +1,17 @@
 package it.univaq.esc.factory;
 
 
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.stereotype.Component;
 import groovy.lang.Singleton;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneImpiantoSquadraState;
 import it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneState;
-import it.univaq.esc.model.notifiche.Notifica;
-import it.univaq.esc.model.notifiche.NotificaImpiantoSquadraState;
-import it.univaq.esc.model.notifiche.NotificaService;
-import it.univaq.esc.model.notifiche.NotificaSquadraService;
-import it.univaq.esc.model.notifiche.NotificaState;
+import it.univaq.esc.model.notifiche.*;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpiantoSquadra;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
 import it.univaq.esc.model.prenotazioni.PrenotazioneSquadra;
 import it.univaq.esc.utility.BeanUtil;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Component;
 
 @Component(value = "ELEMENTI_PRENOTAZIONE_SQUADRA")
 @Singleton

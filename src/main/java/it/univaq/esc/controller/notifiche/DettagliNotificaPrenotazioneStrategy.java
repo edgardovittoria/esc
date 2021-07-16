@@ -1,9 +1,5 @@
 package it.univaq.esc.controller.notifiche;
 
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Component;
-
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.dtoObjects.NotificabileDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
@@ -14,6 +10,9 @@ import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 @Component
 @Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE) 
 public class DettagliNotificaPrenotazioneStrategy extends DettagliNotificaStrategy{

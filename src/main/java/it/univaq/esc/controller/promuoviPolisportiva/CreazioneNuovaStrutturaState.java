@@ -1,25 +1,21 @@
 package it.univaq.esc.controller.promuoviPolisportiva;
 
-import java.util.Map;
-
-import org.springframework.context.annotation.DependsOn;
-
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.StrutturaPolisportiva;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
-import it.univaq.esc.model.notifiche.Notifica;
-import it.univaq.esc.model.notifiche.NotificaService;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
-import it.univaq.esc.model.notifiche.TipoNotifica;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.utility.BeanUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.annotation.DependsOn;
+
+import java.util.Map;
 
 @Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PROTECTED)
 @DependsOn("beanUtil")

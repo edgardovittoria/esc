@@ -1,10 +1,10 @@
 package it.univaq.esc.model.utenti;
 
-import javax.persistence.Entity;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Entity;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
