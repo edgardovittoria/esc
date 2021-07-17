@@ -48,9 +48,9 @@ public class CreaAppuntamentiPrenotazioniDB {
 		
 		Sport tennis = creaSportsDB.getSportConNome("tennis");
 		
-		UtentePolisportiva sportivo1 = creaUtentiDB.getUtenteBy("poppins@bianconiglio.com");
-		UtentePolisportiva sportivo2 = creaUtentiDB.getUtenteBy("marsasso@boh.com");
-		UtentePolisportiva sportivo3 = creaUtentiDB.getUtenteBy("matita@boh.com");
+		UtentePolisportiva sportivo1 = creaUtentiDB.getUtenteBy("mario.rossi@gmail.com");
+		UtentePolisportiva sportivo2 = creaUtentiDB.getUtenteBy("giuseppe.flavio@gmail.com");
+		UtentePolisportiva sportivo3 = creaUtentiDB.getUtenteBy("giovanni.storti@gmail.com");
 		
 		Impianto impianto1 = creaImpiantiDB.getImpiantoBy("impianto1");
 		Impianto impianto3 = creaImpiantiDB.getImpiantoBy("impianto3");
