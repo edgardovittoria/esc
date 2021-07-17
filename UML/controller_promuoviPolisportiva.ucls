@@ -1,78 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="it.univaq.esc.controller.promuoviPolisportiva.StatiCreazioneNuovaStrutturaFactory" 
+  <class id="1" language="java" name="it.univaq.esc.controller.promuoviPolisportiva.CreazioneNuovoPrenotabileState" 
+    project="esc" 
+    file="/esc/src/main/java/it/univaq/esc/controller/promuoviPolisportiva/CreazioneNuovoPrenotabileState.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="446" y="424"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" 
+    name="it.univaq.esc.controller.promuoviPolisportiva.StatiCreazioneNuovoPrenotabileFactory" project="esc" 
+    file="/esc/src/main/java/it/univaq/esc/controller/promuoviPolisportiva/StatiCreazioneNuovoPrenotabileFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="54" y="262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="it.univaq.esc.controller.promuoviPolisportiva.StatiCreazioneNuovaStrutturaFactory" 
     project="esc" 
     file="/esc/src/main/java/it/univaq/esc/controller/promuoviPolisportiva/StatiCreazioneNuovaStrutturaFactory.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="585" y="578"/>    
+    <position height="-1" width="-1" x="1221" y="341"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="it.univaq.esc.controller.promuoviPolisportiva.PromuoviPolisportivaHandler" 
+  <class id="4" language="java" 
+    name="it.univaq.esc.controller.promuoviPolisportiva.CreazionePrenotabileDescrizioneCorsoState" project="esc" 
+    file="/esc/src/main/java/it/univaq/esc/controller/promuoviPolisportiva/CreazionePrenotabileDescrizioneCorsoState.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="427" y="653"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="it.univaq.esc.controller.promuoviPolisportiva.PromuoviPolisportivaHandler" 
     project="esc" 
     file="/esc/src/main/java/it/univaq/esc/controller/promuoviPolisportiva/PromuoviPolisportivaHandler.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="556" y="329"/>    
+    <position height="-1" width="-1" x="692" y="165"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="it.univaq.esc.controller.promuoviPolisportiva.CreazioneNuovaStrutturaState" 
+  <class id="6" language="java" name="it.univaq.esc.controller.promuoviPolisportiva.CreazioneNuovaStrutturaState" 
     project="esc" 
     file="/esc/src/main/java/it/univaq/esc/controller/promuoviPolisportiva/CreazioneNuovaStrutturaState.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1058" y="342"/>    
+    <position height="-1" width="-1" x="872" y="453"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="it.univaq.esc.controller.promuoviPolisportiva.CreazioneNuovoImpiantoState" 
+  <class id="7" language="java" name="it.univaq.esc.controller.promuoviPolisportiva.CreazioneNuovoImpiantoState" 
     project="esc" 
     file="/esc/src/main/java/it/univaq/esc/controller/promuoviPolisportiva/CreazioneNuovoImpiantoState.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1075" y="584"/>    
+    <position height="-1" width="-1" x="893" y="688"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <dependency id="5">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="3"/>  
-  </dependency>  
-  <dependency id="6">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="4"/>  
-  </dependency>  
-  <association id="7">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="8" name="statoCreazioneNuovaStruttura"/>      
-      <multiplicity id="9" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="10">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="11" name="statiCreazioneNuovaStrutturaFactory"/>      
-      <multiplicity id="12" minimum="0" maximum="1"/>    
+  <class id="8" language="java" name="it.univaq.esc.controller.effettuaPrenotazione.EffettuaPrenotazioneCorsoState" 
+    project="esc" 
+    file="/esc/src/main/java/it/univaq/esc/controller/effettuaPrenotazione/EffettuaPrenotazioneCorsoState.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="511" width="1381" x="-521" y="-177"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <association id="9">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="10" name="statoCreazioneNuovoPrenotabile"/>      
+      <multiplicity id="11" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="13">    
+  <dependency id="12">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="13">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <generalization id="14">    
     <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="TARGET" refId="1"/>  
   </generalization>  
+  <association id="15">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="16" name="promuoviPolisportivaHandler">        
+        <position height="17" width="144" x="400" y="96"/>      
+      </attribute>      
+      <multiplicity id="17" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="18">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="19">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <association id="20">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="21" name="statoCreazioneNuovaStruttura"/>      
+      <multiplicity id="22" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="23">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <association id="24">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="25" name="statiCreazioneNuovaStrutturaFactory">        
+        <position height="17" width="185" x="1025" y="260"/>      
+      </attribute>      
+      <multiplicity id="26" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="27">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="28" name="statiCreazioneNuovoPrenotabileFactory">        
+        <position height="17" width="197" x="223" y="238"/>      
+      </attribute>      
+      <multiplicity id="29" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

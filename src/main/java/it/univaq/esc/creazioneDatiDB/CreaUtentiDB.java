@@ -29,20 +29,20 @@ public class CreaUtentiDB {
 		listaSportPraticati1.add(creaSportsDB.getSportConNome("tennis"));
 		listaSportPraticati1.add(creaSportsDB.getSportConNome("calcetto"));
 		listaSportPraticati1.add(creaSportsDB.getSportConNome("pallavolo"));
-		UtentePolisportiva sportivo1 = new UtentePolisportivaBuilder("Gianni", "cognome", "poppins@bianconiglio.com",
-				"poppins").assegnaRuoloSportivo(listaSportPraticati1).build();
+		UtentePolisportiva sportivo1 = new UtentePolisportivaBuilder("Mario", "Rossi", "mario.rossi@gmail.com.com",
+				"mario").assegnaRuoloSportivo(listaSportPraticati1).build();
 
 		List<Sport> listaSportPraticati2 = new ArrayList<Sport>();
 		listaSportPraticati2.add(creaSportsDB.getSportConNome("tennis"));
 		listaSportPraticati2.add(creaSportsDB.getSportConNome("calcetto"));
-		UtentePolisportiva sportivo2 = new UtentePolisportivaBuilder("mariangelo", "sasso", "marsasso@boh.com", "sasso")
+		UtentePolisportiva sportivo2 = new UtentePolisportivaBuilder("Giuseppe", "Flavio", "giuseppe.flavio@gmail.com", "giuseppe")
 				.assegnaRuoloSportivo(listaSportPraticati2).assegnaRuoloIstruttore(listaSportPraticati1)
 				.assegnaRuoloManutentore().build();
 
 		List<Sport> listaSportPraticati3 = new ArrayList<Sport>();
 		listaSportPraticati3.add(creaSportsDB.getSportConNome("pallavolo"));
 		listaSportPraticati3.add(creaSportsDB.getSportConNome("calcetto"));
-		UtentePolisportiva sportivo3 = new UtentePolisportivaBuilder("tardigrado", "acqua", "matita@boh.com", "matita")
+		UtentePolisportiva sportivo3 = new UtentePolisportivaBuilder("Giovanni", "Storti", "giovanni.storti@gmail.com", "giovanni")
 				.assegnaRuoloSportivo(listaSportPraticati3).assegnaRuoloDirettorePolisportiva().build();
 
 		utentePolisportivaRepository.save(sportivoPrenotante);
