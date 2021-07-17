@@ -55,7 +55,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	private List<PrenotazioneDTO> trovaCorsiDisponibili() {
 		List<Prenotazione> corsiDisponibili = getRegistroPrenotazioni().filtraPrenotazioniPerTipo(
-				getRegistroPrenotazioni().getPrenotazioniRegistrate(), TipoPrenotazione.CORSO.toString());
+				getRegistroPrenotazioni().getPrenotazioniRegistrate(), TipoPrenotazione.CORSO);
 		List<PrenotazioneDTO> listaCorsiDisponibiliInFormatoDTO = convertiInDTOLaLista(corsiDisponibili);
 		return listaCorsiDisponibiliInFormatoDTO;
 	}
@@ -121,7 +121,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	private void impostaNelSistemaLeNotifichePerTuttiGliInvitatiAl(Prenotazione nuovoCorso) {
 		for (UtentePolisportiva invitato : ((AppuntamentoCorso) nuovoCorso.getListaAppuntamenti().get(0))
 				.getInvitati()) {
-			getRegistroNotifiche().impostaNotificaPerUtenteInvitatoAPrenotazioneImpianto(invitato, nuovoCorso);
+			getRegistroNotifiche().impostaNotificaPerUtenteInvitatoAPrenotazioneCorso(invitato, nuovoCorso);
 		}
 	}
 

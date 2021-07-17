@@ -73,11 +73,11 @@ public class RegistroPrenotazioni {
 	
 
 	public List<Prenotazione> filtraPrenotazioniPerTipo(List<Prenotazione> listaPrenotazioniDaFiltrare,
-			String tipoPrenotazione) {
+			TipoPrenotazione tipoPrenotazione) {
 
 		List<Prenotazione> prenotazioniFiltrate = new ArrayList<Prenotazione>();
 		for (Prenotazione prenotazione : listaPrenotazioniDaFiltrare) {
-			if (prenotazione.getTipoPrenotazione().equals(tipoPrenotazione)) {
+			if (prenotazione.getTipoPrenotazione().isEqual(tipoPrenotazione)) {
 				prenotazioniFiltrate.add(prenotazione);
 			}
 		}
@@ -85,11 +85,11 @@ public class RegistroPrenotazioni {
 	}
 
 	public List<Prenotazione> escludiPrenotazioniPerTipo(List<Prenotazione> listaPrenotazioniDaFiltrare,
-			String tipoPrenotazione) {
+			TipoPrenotazione tipoPrenotazione) {
 
 		List<Prenotazione> prenotazioniFiltrate = new ArrayList<Prenotazione>();
 		for (Prenotazione prenotazione : listaPrenotazioniDaFiltrare) {
-			if (!prenotazione.getTipoPrenotazione().equals(tipoPrenotazione)) {
+			if (!prenotazione.getTipoPrenotazione().isEqual(tipoPrenotazione)) {
 				prenotazioniFiltrate.add(prenotazione);
 			}
 		}

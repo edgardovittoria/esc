@@ -65,7 +65,7 @@ public class RegistroAppuntamenti {
 
 	}
 
-	public List<Appuntamento> getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(String tipoPrenotazione,
+	public List<Appuntamento> getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(TipoPrenotazione tipoPrenotazione,
 			UtentePolisportiva utentePerCuiTrovareAppuntamenti) {
 		List<Appuntamento> appuntamentiFiltrati = this.filtraAppuntamentiPerDataOra(this.getListaAppuntamenti(),
 				LocalDateTime.now());
@@ -82,7 +82,7 @@ public class RegistroAppuntamenti {
 		return appuntamentiFiltrati;
 	}
 
-	public List<Appuntamento> getAppuntamentiSottoscrivibiliSquadraPerTipo(String tipoPrenotazione,
+	public List<Appuntamento> getAppuntamentiSottoscrivibiliSquadraPerTipo(TipoPrenotazione tipoPrenotazione,
 			Squadra squadraPerCuiTrovareAppuntamenti) {
 		List<Appuntamento> appuntamentiFiltrati = this.filtraAppuntamentiPerDataOra(this.getListaAppuntamenti(),
 				LocalDateTime.now());
@@ -118,10 +118,10 @@ public class RegistroAppuntamenti {
 	}
 
 	private List<Appuntamento> filtraAppuntamentiPerTipoPrenotazione(List<Appuntamento> listaAppuntamentiDaFiltrare,
-			String tipoPrenotazione) {
+			TipoPrenotazione tipoPrenotazione) {
 		List<Appuntamento> appuntamentiFiltrati = new ArrayList<Appuntamento>();
 		for (Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
-			if (appuntamento.getTipoPrenotazione().equals(tipoPrenotazione)) {
+			if (appuntamento.getTipoPrenotazione().isEqual(tipoPrenotazione)) {
 				appuntamentiFiltrati.add(appuntamento);
 			}
 		}
@@ -256,7 +256,7 @@ public class RegistroAppuntamenti {
 	
 	private List<Appuntamento> getAppuntamentiLezionePer(UtentePolisportiva istruttore){
 		List<Appuntamento> listaLezioni = filtraAppuntamentiPerTipoPrenotazione(getListaAppuntamenti(),
-				TipoPrenotazione.LEZIONE.toString());
+				TipoPrenotazione.LEZIONE);
 		listaLezioni = filtraLezioniPerIstruttore((List<AppuntamentoLezione>) (List<?>) listaLezioni, istruttore);
 		return listaLezioni;
 	}
@@ -274,7 +274,7 @@ public class RegistroAppuntamenti {
 	
 	private List<Appuntamento> getAppuntamentiCorsoPer(UtentePolisportiva istruttore){
 		List<Appuntamento> listaLezioni = filtraAppuntamentiPerTipoPrenotazione(getListaAppuntamenti(),
-				TipoPrenotazione.CORSO.toString());
+				TipoPrenotazione.CORSO);
 		listaLezioni = filtraLezioniCorsoPerIstruttore((List<AppuntamentoCorso>) (List<?>) listaLezioni, istruttore);
 		return listaLezioni;
 	}

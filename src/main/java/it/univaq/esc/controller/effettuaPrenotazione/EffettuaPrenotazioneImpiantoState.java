@@ -171,7 +171,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 			UtentePolisportiva utentePerCuiCercareAppuntamentiSottoscrivibili) {
 		List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
 		for (Appuntamento appuntamento : this.getRegistroAppuntamenti()
-				.getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(TipoPrenotazione.IMPIANTO.toString(),
+				.getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(TipoPrenotazione.IMPIANTO,
 						utentePerCuiCercareAppuntamentiSottoscrivibili)) {
 			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione().toString())
 					.convertiInAppuntamentoDTO(appuntamento);
