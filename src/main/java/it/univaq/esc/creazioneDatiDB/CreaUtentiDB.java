@@ -29,7 +29,7 @@ public class CreaUtentiDB {
 		listaSportPraticati1.add(creaSportsDB.getSportConNome("tennis"));
 		listaSportPraticati1.add(creaSportsDB.getSportConNome("calcetto"));
 		listaSportPraticati1.add(creaSportsDB.getSportConNome("pallavolo"));
-		UtentePolisportiva sportivo1 = new UtentePolisportivaBuilder("Mario", "Rossi", "mario.rossi@gmail.com.com",
+		UtentePolisportiva sportivo1 = new UtentePolisportivaBuilder("Mario", "Rossi", "mario.rossi@gmail.com",
 				"mario").assegnaRuoloSportivo(listaSportPraticati1).build();
 
 		List<Sport> listaSportPraticati2 = new ArrayList<Sport>();

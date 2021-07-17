@@ -20,22 +20,22 @@ public class CreaSquadreDB {
 		squadra1.setNome("I Dugonghi");
 		squadra1.setSport(creaSportsDB.getSportConNome("calcetto"));
 		squadra1.aggiungiAmministratore(creaUtentiDB.getUtenteBy("matita@boh.com"));
-		squadra1.aggiungiMembro(creaUtentiDB.getUtenteBy("poppins@bianconiglio.com"));
-		squadra1.aggiungiMembro(creaUtentiDB.getUtenteBy("marsasso@boh.com"));
+		squadra1.aggiungiMembro(creaUtentiDB.getUtenteBy("mario.rossi@gmail.com"));
+		squadra1.aggiungiMembro(creaUtentiDB.getUtenteBy("giuseppe.flavio@gmail.com"));
 
 		Squadra squadra2 = new Squadra();
 		squadra2.setNome("Le Nutrie");
 		squadra2.setSport(creaSportsDB.getSportConNome("pallavolo"));
 		squadra2.aggiungiAmministratore(creaUtentiDB.getUtenteBy("pippofranco@bagaglino.com"));
-		squadra2.aggiungiMembro(creaUtentiDB.getUtenteBy("poppins@bianconiglio.com"));
-		squadra2.aggiungiMembro(creaUtentiDB.getUtenteBy("matita@boh.com"));
+		squadra2.aggiungiMembro(creaUtentiDB.getUtenteBy("mario.rossi@gmail.com"));
+		squadra2.aggiungiMembro(creaUtentiDB.getUtenteBy("giovanni.storti@gmail.com"));
 		
 		Squadra squadra3 = new Squadra();
 		squadra3.setNome("Le Strolaghe");
 		squadra3.setSport(creaSportsDB.getSportConNome("calcetto"));
 		squadra3.aggiungiAmministratore(creaUtentiDB.getUtenteBy("pippofranco@bagaglino.com"));
-		squadra3.aggiungiMembro(creaUtentiDB.getUtenteBy("poppins@bianconiglio.com"));
-		squadra3.aggiungiMembro(creaUtentiDB.getUtenteBy("marsasso@boh.com"));
+		squadra3.aggiungiMembro(creaUtentiDB.getUtenteBy("mario.rossi@gmail.com"));
+		squadra3.aggiungiMembro(creaUtentiDB.getUtenteBy("giuseppe.flavio@gmail.com"));
 
 		squadraRepository.save(squadra1);
 		squadraRepository.save(squadra2);
