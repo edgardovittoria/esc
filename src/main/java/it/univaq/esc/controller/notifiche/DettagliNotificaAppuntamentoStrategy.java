@@ -27,7 +27,7 @@ public class DettagliNotificaAppuntamentoStrategy extends DettagliNotificaStrate
 	@Override
 	public NotificabileDTO getDettagliNotifica(Integer idEvento) {
 		Appuntamento appuntamento = getRegistroAppuntamenti().getAppuntamentoById(idEvento);
-		AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);		
+		AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione().toString()).convertiInAppuntamentoDTO(appuntamento);		
 		return appDTO;
 	}
 	

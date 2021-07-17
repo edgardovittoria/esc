@@ -117,7 +117,7 @@ public abstract class Appuntamento extends Notificabile {
 		return getOrarioAppuntamento().sovrapponeA(dataAppuntamento, oraInizio, oraFine);
 	}
 
-	public String getTipoPrenotazione() {
+	public TipoPrenotazione getTipoPrenotazione() {
 		return getDescrizioneEventoPrenotato().getTipoPrenotazione();
 	}
 

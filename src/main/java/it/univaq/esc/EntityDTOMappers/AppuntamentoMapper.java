@@ -27,7 +27,7 @@ public abstract class AppuntamentoMapper extends EntityDTOMapper {
 			appuntamentoDTO.setManutentore(appuntamentoDaConvertire.getNominativoManutentore());
 		}
 		appuntamentoDTO.setModalitaPrenotazione(appuntamentoDaConvertire.getModalitaPrenotazione().toString());
-		appuntamentoDTO.setTipoPrenotazione(appuntamentoDaConvertire.getTipoPrenotazione());
+		appuntamentoDTO.setTipoPrenotazione(appuntamentoDaConvertire.getTipoPrenotazione().toString());
 		appuntamentoDTO.setPending(appuntamentoDaConvertire.isPending());
 		appuntamentoDTO.setConfermata(appuntamentoDaConvertire.isConfermato());
 		appuntamentoDTO.setCosto(appuntamentoDaConvertire.getCostoAppuntamento().getAmmontare());

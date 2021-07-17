@@ -10,7 +10,7 @@ import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.prenotazioni.Appuntamento;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
 import it.univaq.esc.model.prenotazioni.DatiFormPerAppuntamento;
-import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.model.prenotazioni.TipoPrenotazione;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -63,7 +63,7 @@ public class AppuntamentoImpiantoMapper extends AppuntamentoMapper {
 		Sport sportSelezionato = getRegistroSport().getSportByNome(nomeSportSelezionato);
 		PrenotabileDescrizione descrizioneEventoPrenotabile = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
-						TipiPrenotazione.IMPIANTO.toString(), sportSelezionato,
+						TipoPrenotazione.IMPIANTO.toString(), sportSelezionato,
 						ModalitaPrenotazione.SINGOLO_UTENTE);
 
 		return descrizioneEventoPrenotabile;

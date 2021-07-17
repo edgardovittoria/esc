@@ -76,9 +76,9 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	private AppuntamentoLezione getAppuntamentoPerOrarioImpostatoUsandoForm(OrarioAppuntamentoDTO orario,
 			FormPrenotabile formDati) {
 		AppuntamentoLezione appuntamento = (AppuntamentoLezione) getElementiPrenotazioneFactory()
-				.getAppuntamento(TipiPrenotazione.LEZIONE.toString());
+				.getAppuntamento(TipoPrenotazione.LEZIONE.toString());
 		DatiFormPerAppuntamento datiFormPerAppuntamento = getMapperFactory()
-				.getAppuntamentoMapper(TipiPrenotazione.LEZIONE.toString())
+				.getAppuntamentoMapper(TipoPrenotazione.LEZIONE.toString())
 				.getDatiFormPerAppuntamentoUsando(formDati, orario);
 		appuntamento.impostaDatiAppuntamentoDa(datiFormPerAppuntamento);
 		appuntamento.setCalcolatoreCosto(getElementiPrenotazioneFactory().getCalcolatoreCosto());

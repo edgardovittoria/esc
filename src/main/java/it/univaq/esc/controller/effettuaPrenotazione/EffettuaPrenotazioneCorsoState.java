@@ -56,7 +56,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	private List<PrenotazioneDTO> trovaCorsiDisponibili() {
 		List<Prenotazione> corsiDisponibili = getRegistroPrenotazioni().filtraPrenotazioniPerTipo(
-				getRegistroPrenotazioni().getPrenotazioniRegistrate(), TipiPrenotazione.CORSO.toString());
+				getRegistroPrenotazioni().getPrenotazioniRegistrate(), TipoPrenotazione.CORSO.toString());
 		List<PrenotazioneDTO> listaCorsiDisponibiliInFormatoDTO = convertiInDTOLaLista(corsiDisponibili);
 		return listaCorsiDisponibiliInFormatoDTO;
 	}
@@ -91,7 +91,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	private PrenotabileDescrizione creaPrenotabileDescrizioneCorso(FormPrenotabile formDati) {
 		PrenotabileDescrizione descrizioneCorso = getCatalogoPrenotabili().avviaCreazioneNuovoPrenotabile()
 				.impostaSport(getRegistroSport().getSportByNome(formDati.getSportSelezionato()))
-				.impostaTipoPrenotazione(TipiPrenotazione.CORSO.toString())
+				.impostaTipoPrenotazione(TipoPrenotazione.CORSO)
 				.impostaSogliaMassimaPartecipanti(formDati.getNumeroMassimoPartecipanti())
 				.impostaSogliaMinimaPartecipanti(formDati.getNumeroMinimoPartecipanti())
 				.impostaCostoUnaTantum(
@@ -114,9 +114,9 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	private AppuntamentoCorso getAppuntamentoPerOrarioImpostatoUsandoForm(OrarioAppuntamentoDTO orario,
 			FormPrenotabile formDati) {
 		AppuntamentoCorso appuntamento = (AppuntamentoCorso) getElementiPrenotazioneFactory()
-				.getAppuntamento(TipiPrenotazione.CORSO.toString());
+				.getAppuntamento(TipoPrenotazione.CORSO.toString());
 		DatiFormPerAppuntamento datiFormPerAppuntamento = getMapperFactory()
-				.getAppuntamentoMapper(TipiPrenotazione.CORSO.toString())
+				.getAppuntamentoMapper(TipoPrenotazione.CORSO.toString())
 				.getDatiFormPerAppuntamentoUsando(formDati, orario);
 		appuntamento.impostaDatiAppuntamentoDa(datiFormPerAppuntamento);
 		appuntamento.setCalcolatoreCosto(getElementiPrenotazioneFactory().getCalcolatoreCosto());
@@ -208,7 +208,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(
 			EffettuaPrenotazioneHandler controller) {
 		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState) getElementiPrenotazioneFactory()
-				.getStatoEffettuaPrenotazioneHandler(TipiPrenotazione.LEZIONE.toString()));
+				.getStatoEffettuaPrenotazioneHandler(TipoPrenotazione.LEZIONE.toString()));
 		getStatoControllerLezioni().setMapperFactory(getMapperFactory());
 
 		Map<String, Object> mappaDati = this.getStatoControllerLezioni()

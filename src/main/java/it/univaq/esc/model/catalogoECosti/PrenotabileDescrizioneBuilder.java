@@ -2,6 +2,7 @@ package it.univaq.esc.model.catalogoECosti;
 
 import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.prenotazioni.TipoPrenotazione;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public class PrenotabileDescrizioneBuilder {
 		return this;
 	}
     
-    public PrenotabileDescrizioneBuilder impostaTipoPrenotazione(String tipoPrenotazione) {
+    public PrenotabileDescrizioneBuilder impostaTipoPrenotazione(TipoPrenotazione tipoPrenotazione) {
     	this.getPrenotabileDescrizione().setTipoPrenotazione(tipoPrenotazione);
     	return this;
     }

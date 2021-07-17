@@ -13,7 +13,7 @@ public abstract class StrutturaPolisportivaMapper extends EntityDTOMapper{
 		
 		for(Appuntamento appuntamento : strutturaPolisportiva.getListaAppuntamenti()){
         	impostaMapperFactory(appuntamento.getModalitaPrenotazione());
-        	AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);
+        	AppuntamentoDTO appuntamentoDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione().toString()).convertiInAppuntamentoDTO(appuntamento);
             strutturaDTO.getAppuntamenti().add(appuntamentoDTO);
         }
         return strutturaDTO;

@@ -82,10 +82,10 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 	private AppuntamentoImpianto getAppuntamentoPerOrarioImpostatoUsandoForm(OrarioAppuntamentoDTO orario,
 			FormPrenotabile formDati) {
 		AppuntamentoImpianto appuntamento = (AppuntamentoImpianto) getElementiPrenotazioneFactory()
-				.getAppuntamento(TipiPrenotazione.IMPIANTO.toString());
+				.getAppuntamento(TipoPrenotazione.IMPIANTO.toString());
 
 		DatiFormPerAppuntamento datiFormPerAppuntamento = getMapperFactory()
-				.getAppuntamentoMapper(TipiPrenotazione.IMPIANTO.toString())
+				.getAppuntamentoMapper(TipoPrenotazione.IMPIANTO.toString())
 				.getDatiFormPerAppuntamentoUsando(formDati, orario);
 
 		appuntamento.impostaDatiAppuntamentoDa(datiFormPerAppuntamento);
@@ -171,9 +171,9 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 			UtentePolisportiva utentePerCuiCercareAppuntamentiSottoscrivibili) {
 		List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
 		for (Appuntamento appuntamento : this.getRegistroAppuntamenti()
-				.getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(TipiPrenotazione.IMPIANTO.toString(),
+				.getAppuntamentiSottoscrivibiliSingoloUtentePerTipo(TipoPrenotazione.IMPIANTO.toString(),
 						utentePerCuiCercareAppuntamentiSottoscrivibili)) {
-			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione())
+			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione().toString())
 					.convertiInAppuntamentoDTO(appuntamento);
 			listaAppuntamentiDTO.add(appDTO);
 		}
@@ -201,7 +201,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 
 			getRegistroAppuntamenti().aggiorna(appuntamento);
 			AppuntamentoDTO appuntamentoDTO = getMapperFactory()
-					.getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);
+					.getAppuntamentoMapper(appuntamento.getTipoPrenotazione().toString()).convertiInAppuntamentoDTO(appuntamento);
 			return appuntamentoDTO;
 
 		}

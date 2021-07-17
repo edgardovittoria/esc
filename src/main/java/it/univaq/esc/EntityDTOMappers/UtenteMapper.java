@@ -39,7 +39,7 @@ public class UtenteMapper extends EntityDTOMapper {
 			List<AppuntamentoDTO> appuntamentiSportivo = new ArrayList<AppuntamentoDTO>();
 			for (Appuntamento app : utenteDaConvertire.comeSportivo().getListaAppuntamenti()) {
 				impostaMapperFactory(app.getModalitaPrenotazione());
-				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione())
+				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione().toString())
 						.convertiInAppuntamentoDTO(app);
 				appuntamentiSportivo.add(appDTO);
 			}
@@ -56,7 +56,7 @@ public class UtenteMapper extends EntityDTOMapper {
 			List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
 			for (Appuntamento app : utenteDaConvertire.comeIstruttore().getLezioni()) {
 				impostaMapperFactory(app.getModalitaPrenotazione());
-				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione())
+				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione().toString())
 						.convertiInAppuntamentoDTO(app);
 				listaAppuntamentiDTO.add(appDTO);
 			}
@@ -70,7 +70,7 @@ public class UtenteMapper extends EntityDTOMapper {
 			List<AppuntamentoDTO> listaAppuntamentiManutentoreDTO = new ArrayList<AppuntamentoDTO>();
 			for (Appuntamento app : utenteDaConvertire.comeManutentore().getListaAppuntamenti()) {
 				impostaMapperFactory(app.getModalitaPrenotazione());
-				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione())
+				AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(app.getTipoPrenotazione().toString())
 						.convertiInAppuntamentoDTO(app);
 				listaAppuntamentiManutentoreDTO.add(appDTO);
 			}

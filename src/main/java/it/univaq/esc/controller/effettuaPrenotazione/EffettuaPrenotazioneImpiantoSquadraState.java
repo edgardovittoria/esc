@@ -48,8 +48,8 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 			Squadra squadraPerCuiCercareAppuntamentiSottoscrivibili) {
 		List<AppuntamentoDTO> listaAppuntamentiDTO = new ArrayList<AppuntamentoDTO>();
 		for (Appuntamento appuntamento : this.getRegistroAppuntamenti().getAppuntamentiSottoscrivibiliSquadraPerTipo(
-				TipiPrenotazione.IMPIANTO.toString(), squadraPerCuiCercareAppuntamentiSottoscrivibili)) {
-			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione())
+				TipoPrenotazione.IMPIANTO.toString(), squadraPerCuiCercareAppuntamentiSottoscrivibili)) {
+			AppuntamentoDTO appDTO = getMapperFactory().getAppuntamentoMapper(appuntamento.getTipoPrenotazione().toString())
 					.convertiInAppuntamentoDTO(appuntamento);
 			listaAppuntamentiDTO.add(appDTO);
 		}
@@ -78,10 +78,10 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 	private AppuntamentoImpiantoSquadra getAppuntamentoPerOrarioImpostatoUsandoForm(OrarioAppuntamentoDTO orario,
 			FormPrenotabile formDati) {
 		AppuntamentoImpiantoSquadra appuntamento = (AppuntamentoImpiantoSquadra) getElementiPrenotazioneFactory()
-				.getAppuntamento(TipiPrenotazione.IMPIANTO.toString());
+				.getAppuntamento(TipoPrenotazione.IMPIANTO.toString());
 
 		DatiFormPerAppuntamento datiFormPerAppuntamento = getMapperFactory()
-				.getAppuntamentoMapper(TipiPrenotazione.IMPIANTO.toString())
+				.getAppuntamentoMapper(TipoPrenotazione.IMPIANTO.toString())
 				.getDatiFormPerAppuntamentoUsando(formDati, orario);
 
 		appuntamento.impostaDatiAppuntamentoDa(datiFormPerAppuntamento);
@@ -161,7 +161,7 @@ public class EffettuaPrenotazioneImpiantoSquadraState extends EffettuaPrenotazio
 				appuntamento.siAggiungeAlCalendarioDella(squadraPartecipante);
 			}
 			AppuntamentoDTO appuntamentoDTO = getMapperFactory()
-					.getAppuntamentoMapper(appuntamento.getTipoPrenotazione()).convertiInAppuntamentoDTO(appuntamento);
+					.getAppuntamentoMapper(appuntamento.getTipoPrenotazione().toString()).convertiInAppuntamentoDTO(appuntamento);
 			return appuntamentoDTO;
 		}
 		return null;

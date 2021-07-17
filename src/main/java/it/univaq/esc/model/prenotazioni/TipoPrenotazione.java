@@ -1,6 +1,6 @@
 package it.univaq.esc.model.prenotazioni;
 
-public enum TipiPrenotazione {
+public enum TipoPrenotazione {
     
     IMPIANTO,
     LEZIONE,

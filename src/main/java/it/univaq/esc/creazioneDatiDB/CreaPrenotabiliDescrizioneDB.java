@@ -4,7 +4,7 @@ import groovy.lang.Singleton;
 import it.univaq.esc.model.*;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
-import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.model.prenotazioni.TipoPrenotazione;
 import it.univaq.esc.repository.ValutaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ public class CreaPrenotabiliDescrizioneDB {
 
 		PrenotabileDescrizione desc1 = listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
 				.impostaSport(tennis)
-				.impostaTipoPrenotazione(TipiPrenotazione.IMPIANTO.toString())
+				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(tennis.getNumeroGiocatoriPerIncontro())
 				.impostaSogliaMinimaPartecipanti(tennis.getNumeroGiocatoriPerIncontro())
 				.impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -44,7 +44,7 @@ public class CreaPrenotabiliDescrizioneDB {
 
 		PrenotabileDescrizione desc2 = listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
 				.impostaSport(calcetto)
-				.impostaTipoPrenotazione(TipiPrenotazione.IMPIANTO.toString())
+				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(calcetto.getNumeroGiocatoriPerIncontro())
 				.impostaSogliaMinimaPartecipanti(calcetto.getNumeroGiocatoriPerIncontro())
 				.impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -60,7 +60,7 @@ public class CreaPrenotabiliDescrizioneDB {
 
 		PrenotabileDescrizione desc3 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
 				.impostaSport(pallavolo)
-				.impostaTipoPrenotazione(TipiPrenotazione.IMPIANTO.toString())
+				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(pallavolo.getNumeroGiocatoriPerIncontro())
 				.impostaSogliaMinimaPartecipanti(pallavolo.getNumeroGiocatoriPerIncontro())
 				.impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -76,7 +76,7 @@ public class CreaPrenotabiliDescrizioneDB {
 
 		PrenotabileDescrizione desc4 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
 				.impostaSport(tennis)
-				.impostaTipoPrenotazione(TipiPrenotazione.IMPIANTO.toString())
+				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(tennis.getNumeroGiocatoriPerIncontro())
 				.impostaSogliaMinimaPartecipanti(tennis.getNumeroGiocatoriPerIncontro())
 				.impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -94,7 +94,7 @@ public class CreaPrenotabiliDescrizioneDB {
 
 		PrenotabileDescrizione desc5 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
 				.impostaSport(calcetto)
-				.impostaTipoPrenotazione(TipiPrenotazione.IMPIANTO.toString())
+				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(calcetto.getNumeroGiocatoriPerIncontro())
 				.impostaSogliaMinimaPartecipanti(calcetto.getNumeroGiocatoriPerIncontro())
 				.impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -110,7 +110,7 @@ public class CreaPrenotabiliDescrizioneDB {
 
 		PrenotabileDescrizione desc6 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
 				.impostaSport(pallavolo)
-				.impostaTipoPrenotazione(TipiPrenotazione.IMPIANTO.toString())
+				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(pallavolo.getNumeroGiocatoriPerIncontro())
 				.impostaSogliaMinimaPartecipanti(pallavolo.getNumeroGiocatoriPerIncontro())
 				.impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -126,7 +126,7 @@ public class CreaPrenotabiliDescrizioneDB {
 
 		PrenotabileDescrizione desc7 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
 				.impostaSport(tennis)
-				.impostaTipoPrenotazione(TipiPrenotazione.LEZIONE.toString())
+				.impostaTipoPrenotazione(TipoPrenotazione.LEZIONE)
 				.impostaSogliaMassimaPartecipanti(1)
 				.impostaSogliaMinimaPartecipanti(1)
 				.impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -144,7 +144,7 @@ public class CreaPrenotabiliDescrizioneDB {
 
 		PrenotabileDescrizione desc8 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
 				.impostaSport(calcetto)
-				.impostaTipoPrenotazione(TipiPrenotazione.LEZIONE.toString())
+				.impostaTipoPrenotazione(TipoPrenotazione.LEZIONE)
 				.impostaSogliaMassimaPartecipanti(5)
 				.impostaSogliaMinimaPartecipanti(1)
 				.impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))
@@ -160,7 +160,7 @@ public class CreaPrenotabiliDescrizioneDB {
 
 		PrenotabileDescrizione desc9 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
 				.impostaSport(pallavolo)
-				.impostaTipoPrenotazione(TipiPrenotazione.LEZIONE.toString())
+				.impostaTipoPrenotazione(TipoPrenotazione.LEZIONE)
 				.impostaSogliaMassimaPartecipanti(6)
 				.impostaSogliaMinimaPartecipanti(1)
 				.impostaCostoOrario(new Costo(Float.parseFloat("10"), valutaEuro))

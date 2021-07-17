@@ -12,7 +12,7 @@ import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoBase;
 import it.univaq.esc.model.catalogoECosti.calcolatori.CalcolatoreCostoComposito;
 import it.univaq.esc.model.prenotazioni.AppuntamentoImpianto;
 import it.univaq.esc.model.prenotazioni.Prenotazione;
-import it.univaq.esc.model.prenotazioni.TipiPrenotazione;
+import it.univaq.esc.model.prenotazioni.TipoPrenotazione;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import it.univaq.esc.repository.AppuntamentoRepository;
 import lombok.AccessLevel;
@@ -58,14 +58,14 @@ public class CreaAppuntamentiPrenotazioniDB {
 		
 		
 		AppuntamentoImpianto appuntamento1 = (AppuntamentoImpianto) elementiPrenotazioneFactory
-				.getAppuntamento(TipiPrenotazione.IMPIANTO.toString());
+				.getAppuntamento(TipoPrenotazione.IMPIANTO.toString());
 				LocalDate dataAppuntamento1 = LocalDate.of(2021, 5, 26);
 				LocalTime oraInizioAppuntamento1 = LocalTime.of(10, 30);
 				LocalTime oraFineAppuntamento1 = LocalTime.of(11, 30);
 		appuntamento1.impostaOrario(dataAppuntamento1, oraInizioAppuntamento1, oraFineAppuntamento1);
 		appuntamento1.setDescrizioneEventoPrenotato(listinoPrezziDescrizioniPolisportiva
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
-						TipiPrenotazione.IMPIANTO.toString(), tennis, ModalitaPrenotazione.SINGOLO_UTENTE));
+						TipoPrenotazione.IMPIANTO.toString(), tennis, ModalitaPrenotazione.SINGOLO_UTENTE));
 		appuntamento1.setPending(true);
 		appuntamento1.setStrutturaPrenotata(impianto1);
 		appuntamento1.setManutentore(sportivo2);
@@ -85,14 +85,14 @@ public class CreaAppuntamentiPrenotazioniDB {
 		impianto1.segnaInCalendarioGliAppuntamentiDel(calendarioSpecs1);
 
 		AppuntamentoImpianto appuntamento2 = (AppuntamentoImpianto) elementiPrenotazioneFactory
-				.getAppuntamento(TipiPrenotazione.IMPIANTO.toString());
+				.getAppuntamento(TipoPrenotazione.IMPIANTO.toString());
 				LocalDate dataAppuntamento2 = LocalDate.of(2021, 5, 21);
 				LocalTime oraInizioAppuntamento2 = LocalTime.of(17, 00);
 				LocalTime oraFineAppuntamento2 = LocalTime.of(19, 00);
 		appuntamento2.impostaOrario(dataAppuntamento2, oraInizioAppuntamento2, oraFineAppuntamento2);
 		appuntamento2.setDescrizioneEventoPrenotato(this.listinoPrezziDescrizioniPolisportiva
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
-						TipiPrenotazione.IMPIANTO.toString(), tennis, ModalitaPrenotazione.SINGOLO_UTENTE));
+						TipoPrenotazione.IMPIANTO.toString(), tennis, ModalitaPrenotazione.SINGOLO_UTENTE));
 		appuntamento2.setPending(true);
 		appuntamento2.setStrutturaPrenotata(impianto3);
 		appuntamento2.setManutentore(sportivo2);

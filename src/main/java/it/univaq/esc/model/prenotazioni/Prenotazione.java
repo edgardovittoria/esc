@@ -46,7 +46,7 @@ public class Prenotazione extends Notificabile {
 		appuntamento.setPrenotazione(this);
 	}
 
-	public String getTipoPrenotazione() {
+	public TipoPrenotazione getTipoPrenotazione() {
 
 		return this.getListaAppuntamenti().get(0).getTipoPrenotazione();
 	}

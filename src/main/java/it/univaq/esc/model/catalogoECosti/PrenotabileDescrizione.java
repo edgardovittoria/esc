@@ -2,6 +2,7 @@ package it.univaq.esc.model.catalogoECosti;
 
 import it.univaq.esc.model.Costo;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.prenotazioni.TipoPrenotazione;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,8 +20,8 @@ import java.util.Map;
 public class PrenotabileDescrizione {
     @Id
     private String descrizione;
-    @Column
-    private String tipoPrenotazione;
+    @Enumerated(EnumType.STRING)
+    private TipoPrenotazione tipoPrenotazione;
     @Enumerated(EnumType.STRING)
     private ModalitaPrenotazione modalitaPrenotazione;
     @ManyToOne

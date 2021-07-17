@@ -153,7 +153,7 @@ public class RegistroAppuntamenti {
 	public List<Appuntamento> escludiAppuntamentiDiCorsi(List<Appuntamento> listaAppuntamentiDaFiltrare) {
 		List<Appuntamento> appuntamentiNonCorsi = new ArrayList<Appuntamento>();
 		for (Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
-			if (!appuntamento.getTipoPrenotazione().equals(TipiPrenotazione.CORSO.toString())) {
+			if (!appuntamento.getTipoPrenotazione().equals(TipoPrenotazione.CORSO.toString())) {
 				appuntamentiNonCorsi.add(appuntamento);
 			}
 		}
@@ -164,7 +164,7 @@ public class RegistroAppuntamenti {
 	public List<Appuntamento> filtraAppuntamentiDiCorsi(List<Appuntamento> listaAppuntamentiDaFiltrare) {
 		List<Appuntamento> appuntamentiCorsi = new ArrayList<Appuntamento>();
 		for (Appuntamento appuntamento : listaAppuntamentiDaFiltrare) {
-			if (appuntamento.getTipoPrenotazione().equals(TipiPrenotazione.CORSO.toString())) {
+			if (appuntamento.getTipoPrenotazione().equals(TipoPrenotazione.CORSO.toString())) {
 				appuntamentiCorsi.add(appuntamento);
 			}
 		}
@@ -256,7 +256,7 @@ public class RegistroAppuntamenti {
 	
 	private List<Appuntamento> getAppuntamentiLezionePer(UtentePolisportiva istruttore){
 		List<Appuntamento> listaLezioni = filtraAppuntamentiPerTipoPrenotazione(getListaAppuntamenti(),
-				TipiPrenotazione.LEZIONE.toString());
+				TipoPrenotazione.LEZIONE.toString());
 		listaLezioni = filtraLezioniPerIstruttore((List<AppuntamentoLezione>) (List<?>) listaLezioni, istruttore);
 		return listaLezioni;
 	}
@@ -274,7 +274,7 @@ public class RegistroAppuntamenti {
 	
 	private List<Appuntamento> getAppuntamentiCorsoPer(UtentePolisportiva istruttore){
 		List<Appuntamento> listaLezioni = filtraAppuntamentiPerTipoPrenotazione(getListaAppuntamenti(),
-				TipiPrenotazione.CORSO.toString());
+				TipoPrenotazione.CORSO.toString());
 		listaLezioni = filtraLezioniCorsoPerIstruttore((List<AppuntamentoCorso>) (List<?>) listaLezioni, istruttore);
 		return listaLezioni;
 	}
