@@ -64,7 +64,7 @@ public class PromuoviPolisportivaHandler {
 	@RolesAllowed("ROLE_DIRETTORE")
 	@GetMapping("/avviaCreazioneStruttura")
 	@CrossOrigin
-	public Map<String, Object> avviaCreazioneNuovoImpianto(@RequestParam(name = "tipoNuovaStruttura") String tipoNuovaStruttura) {
+	public Map<String, Object> avviaCreazioneStruttura(@RequestParam(name = "tipoNuovaStruttura") String tipoNuovaStruttura) {
 		impostaAttributiDipendentiDal(tipoNuovaStruttura);
 		Map<String, Object> mappaDatiCreazioneNuovaStruttura = statoCreazioneNuovaStruttura.getDatiPerCreazioneNuovaStruttura();
 		return mappaDatiCreazioneNuovaStruttura;
@@ -98,7 +98,7 @@ public class PromuoviPolisportivaHandler {
 	@RolesAllowed("ROLE_DIRETTORE")
 	@GetMapping("/messaggioNotificaCreazioneStruttura")
 	@CrossOrigin
-	public String getMessaggioNotificaCreazioneStruttura() {
+	public String creaMessaggioNotificaCreazioneStruttura() {
 		String messaggioNotifica = registroNotifiche.getMessaggioNotificaPerCreazione(nuovaStruttura);
 		return messaggioNotifica;
 	}
