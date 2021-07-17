@@ -65,7 +65,7 @@ public class CreaAppuntamentiPrenotazioniDB {
 		appuntamento1.impostaOrario(dataAppuntamento1, oraInizioAppuntamento1, oraFineAppuntamento1);
 		appuntamento1.setDescrizioneEventoPrenotato(listinoPrezziDescrizioniPolisportiva
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
-						TipoPrenotazione.IMPIANTO.toString(), tennis, ModalitaPrenotazione.SINGOLO_UTENTE));
+						TipoPrenotazione.IMPIANTO, tennis, ModalitaPrenotazione.SINGOLO_UTENTE));
 		appuntamento1.setPending(true);
 		appuntamento1.setStrutturaPrenotata(impianto1);
 		appuntamento1.setManutentore(sportivo2);
@@ -92,7 +92,7 @@ public class CreaAppuntamentiPrenotazioniDB {
 		appuntamento2.impostaOrario(dataAppuntamento2, oraInizioAppuntamento2, oraFineAppuntamento2);
 		appuntamento2.setDescrizioneEventoPrenotato(this.listinoPrezziDescrizioniPolisportiva
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
-						TipoPrenotazione.IMPIANTO.toString(), tennis, ModalitaPrenotazione.SINGOLO_UTENTE));
+						TipoPrenotazione.IMPIANTO, tennis, ModalitaPrenotazione.SINGOLO_UTENTE));
 		appuntamento2.setPending(true);
 		appuntamento2.setStrutturaPrenotata(impianto3);
 		appuntamento2.setManutentore(sportivo2);

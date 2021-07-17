@@ -54,7 +54,7 @@ public class AppuntamentoLezioneMapper extends AppuntamentoMapper{
 		Sport sportSelezionato = getRegistroSport().getSportByNome(nomeSportSelezionato);
 		PrenotabileDescrizione descrizioneEventoPrenotabile = getCatalogoPrenotabili()
 				.getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(
-						TipoPrenotazione.LEZIONE.toString(), sportSelezionato,
+						TipoPrenotazione.LEZIONE, sportSelezionato,
 						ModalitaPrenotazione.SINGOLO_UTENTE);
 
 		return descrizioneEventoPrenotabile;

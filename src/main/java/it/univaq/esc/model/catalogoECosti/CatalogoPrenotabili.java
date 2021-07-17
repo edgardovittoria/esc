@@ -2,6 +2,7 @@ package it.univaq.esc.model.catalogoECosti;
 
 import groovy.lang.Singleton;
 import it.univaq.esc.model.Sport;
+import it.univaq.esc.model.prenotazioni.TipoPrenotazione;
 import it.univaq.esc.repository.PrenotabileDescrizioneRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -71,9 +72,9 @@ public class CatalogoPrenotabili {
     	return null;
     }
     
-    public PrenotabileDescrizione getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(String tipoPrenotazione, Sport sport, ModalitaPrenotazione modalitaPrenotazione){
+    public PrenotabileDescrizione getPrenotabileDescrizioneByTipoPrenotazioneESportEModalitaPrenotazione(TipoPrenotazione tipoPrenotazione, Sport sport, ModalitaPrenotazione modalitaPrenotazione){
         for(PrenotabileDescrizione desc : this.getCatalogoPrenotabili()){
-            if(desc.getSportAssociato().getNome().equals(sport.getNome()) && desc.getTipoPrenotazione().equals(tipoPrenotazione) && desc.getModalitaPrenotazione().isEqual(modalitaPrenotazione)){
+            if(desc.getSportAssociato().getNome().equals(sport.getNome()) && desc.getTipoPrenotazione().isEqual(tipoPrenotazione) && desc.getModalitaPrenotazione().isEqual(modalitaPrenotazione)){
                 return desc;
             }
         }
