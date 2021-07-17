@@ -1,11 +1,13 @@
 package it.univaq.esc.controller.promuoviPolisportiva;
 
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
+import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.StrutturaPolisportivaDTO;
 import it.univaq.esc.model.RegistroImpianti;
 import it.univaq.esc.model.RegistroSport;
 import it.univaq.esc.model.StrutturaPolisportiva;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
+import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
@@ -29,23 +31,26 @@ import java.util.Map;
 public class PromuoviPolisportivaHandler {
 	
 	private MapperFactory mapperFactory;
+	private StatiCreazioneNuovoPrenotabileFactory statiCreazioneNuovoPrenotabileFactory;
 	private StrutturaPolisportiva nuovaStruttura;
 	private String tipoNuovaStruttura;
 	private CreazioneNuovaStrutturaState statoCreazioneNuovaStruttura;
 	private StatiCreazioneNuovaStrutturaFactory statiCreazioneNuovaStrutturaFactory;
+	private CreazioneNuovoPrenotabileState statoCreazioneNuovoPrenotabile;
 	private RegistroImpianti registroImpianti;
 	//private ElementiPrenotazioneFactory elementiPrenotazioneFactory;
 	private RegistroNotifiche registroNotifiche;
 	private RegistroUtentiPolisportiva registroUtentiPolisportiva;
 	private RegistroSport registroSport;
 
-	public PromuoviPolisportivaHandler(RegistroImpianti registroImpianti, RegistroNotifiche registroNotifiche, RegistroUtentiPolisportiva registroUtentiPolisportiva, RegistroSport registroSport, StatiCreazioneNuovaStrutturaFactory statiCreazioneNuovaStrutturaFactory) {
+	public PromuoviPolisportivaHandler(RegistroImpianti registroImpianti, RegistroNotifiche registroNotifiche, RegistroUtentiPolisportiva registroUtentiPolisportiva, RegistroSport registroSport, StatiCreazioneNuovaStrutturaFactory statiCreazioneNuovaStrutturaFactory, StatiCreazioneNuovoPrenotabileFactory statiCreazioneNuovoPrenotabileFactory) {
 		impostaAttributiControllerDipendentiDa(ModalitaPrenotazione.SINGOLO_UTENTE.toString());
 		setRegistroImpianti(registroImpianti);
 		setRegistroNotifiche(registroNotifiche);
 		setRegistroUtentiPolisportiva(registroUtentiPolisportiva);
 		setRegistroSport(registroSport);
 		setStatiCreazioneNuovaStrutturaFactory(statiCreazioneNuovaStrutturaFactory);
+		setStatiCreazioneNuovoPrenotabileFactory(statiCreazioneNuovoPrenotabileFactory);
 	}
 	
 	private void impostaAttributiControllerDipendentiDa(String modalitaPrenotazione) {
@@ -114,4 +119,12 @@ public class PromuoviPolisportivaHandler {
 	}
 	
 	
+	@RolesAllowed("ROLE_DIRETTORE")
+	@PostMapping("/creazioneNuovoPrenotabile")
+	@CrossOrigin
+	public PrenotabileDescrizione creaNuovoPrenotabileDa(FormPrenotabile formDati) {
+		setStatoCreazioneNuovoPrenotabile(getStatiCreazioneNuovoPrenotabileFactory().getStatoCreazioneNuovoPrenotabileInBaseAl(formDati.getTipoPrenotazione()));
+		PrenotabileDescrizione nuovoPrenotabile = getStatoCreazioneNuovoPrenotabile().creaNuovoPrenotabile(formDati);
+		return nuovoPrenotabile;
+	}
 }

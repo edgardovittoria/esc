@@ -1,5 +1,6 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
+import it.univaq.esc.controller.promuoviPolisportiva.PromuoviPolisportivaHandler;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.OrarioAppuntamentoDTO;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
@@ -29,20 +30,18 @@ import java.util.Map;
 public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 	private PrenotabileDescrizione prenotabileDescrizioneCorso;
-
-	/**
-	 * Stato
-	 */
+	private PromuoviPolisportivaHandler promuoviPolisportivaHandler;
 	private EffettuaPrenotazioneLezioneState statoControllerLezioni;
 
 	public EffettuaPrenotazioneCorsoState(RegistroNotifiche registroNotifiche, RegistroSport registroSport,
 			RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtentiPolisportiva,
 			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
 			CatalogoPrenotabili catalogoPrenotabili, EffettuaPrenotazioneLezioneState effettuaPrenotazioneLezioneState,
-			RegistroSquadre registroSquadre, RegistroQuotePartecipazione registroQuotePartecipazione) {
+			RegistroSquadre registroSquadre, RegistroQuotePartecipazione registroQuotePartecipazione, PromuoviPolisportivaHandler promuoviPolisportivaHandler) {
 
 		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti,
 				registroPrenotazioni, catalogoPrenotabili, registroSquadre, registroQuotePartecipazione);
+		setPromuoviPolisportivaHandler(promuoviPolisportivaHandler);
 
 	}
 
@@ -75,7 +74,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati,
 			EffettuaPrenotazioneHandler controller) {
 
-		setPrenotabileDescrizioneCorso(creaPrenotabileDescrizioneCorso(formDati));
+		setPrenotabileDescrizioneCorso(getPromuoviPolisportivaHandler().creaNuovoPrenotabileDa(formDati));
 
 		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
 			impostaAppuntamentoCorsoRelativoAOrarioNellaPrenotazione(controller.getPrenotazioneInAtto(), orario,
@@ -86,23 +85,6 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 
 		return prenDTO;
 
-	}
-
-	private PrenotabileDescrizione creaPrenotabileDescrizioneCorso(FormPrenotabile formDati) {
-		PrenotabileDescrizione descrizioneCorso = getCatalogoPrenotabili().avviaCreazioneNuovoPrenotabile()
-				.impostaSport(getRegistroSport().getSportByNome(formDati.getSportSelezionato()))
-				.impostaTipoPrenotazione(TipoPrenotazione.CORSO)
-				.impostaSogliaMassimaPartecipanti(formDati.getNumeroMassimoPartecipanti())
-				.impostaSogliaMinimaPartecipanti(formDati.getNumeroMinimoPartecipanti())
-				.impostaCostoUnaTantum(
-						new Costo(formDati.getCostoPerPartecipante(), new Valuta(Valute.EUR)))
-				.impostaModalitaPrenotazioneComeSingoloUtente()
-				.impostaDescrizione(formDati.getNomeEvento())
-				.build();
-		getCatalogoPrenotabili().aggiungiPrenotabileACatalogo(descrizioneCorso);
-		getCatalogoPrenotabili().salvaPrenotabileDescrizioneSulDatabase(descrizioneCorso);
-
-		return descrizioneCorso;
 	}
 
 	private void impostaAppuntamentoCorsoRelativoAOrarioNellaPrenotazione(Prenotazione prenotazioneInAtto,
