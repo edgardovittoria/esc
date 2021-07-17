@@ -19,7 +19,7 @@ public class CreaSquadreDB {
 		Squadra squadra1 = new Squadra();
 		squadra1.setNome("I Dugonghi");
 		squadra1.setSport(creaSportsDB.getSportConNome("calcetto"));
-		squadra1.aggiungiAmministratore(creaUtentiDB.getUtenteBy("matita@boh.com"));
+		squadra1.aggiungiAmministratore(creaUtentiDB.getUtenteBy("giovanni.storti@gmail.com"));
 		squadra1.aggiungiMembro(creaUtentiDB.getUtenteBy("mario.rossi@gmail.com"));
 		squadra1.aggiungiMembro(creaUtentiDB.getUtenteBy("giuseppe.flavio@gmail.com"));
 
