@@ -3,6 +3,7 @@ package it.univaq.esc.model.notifiche;
 import it.univaq.esc.factory.ElementiPrenotazioneFactory;
 import it.univaq.esc.model.catalogoECosti.ModalitaPrenotazione;
 import it.univaq.esc.model.prenotazioni.Notificabile;
+import it.univaq.esc.model.prenotazioni.TipoPrenotazione;
 import it.univaq.esc.model.utenti.UtentePolisportiva;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -65,8 +66,8 @@ public class NotificaService {
 	}
 
 	public String getTipoPrenotazioneEvento() {
-		String tipoPrenotazioneEvento = (String) getEvento().getInfo().get("tipoPrenotazione");
-		return tipoPrenotazioneEvento;
+		TipoPrenotazione tipoPrenotazioneEvento = (TipoPrenotazione) getEvento().getInfo().get("tipoPrenotazione");
+		return tipoPrenotazioneEvento.toString();
 	}
 
 	public Notificabile getEvento() {
