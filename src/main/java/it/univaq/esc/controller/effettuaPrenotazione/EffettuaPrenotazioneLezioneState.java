@@ -46,7 +46,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 	public Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(
 			EffettuaPrenotazioneHandler controller) {
 		Map<String, Object> mappaValori = new HashMap<String, Object>();
-		mappaValori.put("sportPraticabili", this.getSportPraticabiliNellaPolisportivaInFormatoDTO());
+		mappaValori.put("sportPraticabili", getListaInFormatoDTODegliSportCheHannoIstruttori());
 
 		return mappaValori;
 	}

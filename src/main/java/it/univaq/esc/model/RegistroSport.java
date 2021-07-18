@@ -1,10 +1,14 @@
 package it.univaq.esc.model;
 
 import groovy.lang.Singleton;
+import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
 import it.univaq.esc.repository.SportRepository;
+import javassist.scopedpool.ScopedClassPoolRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -49,7 +53,7 @@ public class RegistroSport {
 	public void aggiungiSportAllaPolisportiva(Sport sportDaAggiungere) {
 		boolean alreadyPresent = false;
 		for (Sport sport : this.getListaSportPolisportiva()) {
-			if (sport.getNome().equals(sportDaAggiungere.getNome())) {
+			if (sport.isEqual(sportDaAggiungere)) {
 				alreadyPresent = true;
 				break;
 
@@ -75,5 +79,16 @@ public class RegistroSport {
 			}
 		}
 		return null;
+	}
+	
+	
+	public List<Sport> getListaSportCheHannoIstruttori(RegistroUtentiPolisportiva registroUtentiPolisportiva){
+		List<Sport> sportCheHannoIstruttori = new ArrayList<Sport>();
+		for(Sport sport : listaSportPolisportiva) {
+			if(!registroUtentiPolisportiva.getListaDegliIstruttoriDello(sport).isEmpty()) {
+				sportCheHannoIstruttori.add(sport);
+			}
+		}
+		return sportCheHannoIstruttori;
 	}
 }

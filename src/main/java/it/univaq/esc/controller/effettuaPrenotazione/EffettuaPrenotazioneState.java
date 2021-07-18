@@ -178,6 +178,12 @@ public abstract class EffettuaPrenotazioneState {
 		return listaSportPraticabiliDTO;
 	}
 
+	protected List<SportDTO> getListaInFormatoDTODegliSportCheHannoIstruttori(){
+		List<Sport> listaSportCheHannoIstruttori = this.getRegistroSport().getListaSportCheHannoIstruttori(registroUtenti);
+		List<SportDTO> listaSportDTOCHeHannoIstruttori = convertiInDTOGliSportDella(listaSportCheHannoIstruttori);
+		return listaSportDTOCHeHannoIstruttori;
+	}
+	
 	/**
 	 * Metodo di utilità. Restituisce tutti gli utenti registrati nel sistema della
 	 * polisportiva che sono SPORTIVI, in formato DTO.
