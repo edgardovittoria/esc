@@ -4,7 +4,10 @@ package it.univaq.esc.model.catalogoECosti;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import it.univaq.esc.model.Costo;
 import lombok.Getter;
@@ -15,7 +18,10 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class PacchettoLezioniScontato extends PrenotabileDescrizione{
 
+	@Column
 	private Integer numeroLezioni;
+	@ManyToOne
+	@JoinColumn
 	private PrenotabileDescrizione descrizioneLezione;
 	
 	@Override

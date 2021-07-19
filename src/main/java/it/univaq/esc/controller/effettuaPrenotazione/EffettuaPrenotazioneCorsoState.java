@@ -42,6 +42,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		super(registroNotifiche, registroSport, registroImpianti, registroUtentiPolisportiva, registroAppuntamenti,
 				registroPrenotazioni, catalogoPrenotabili, registroSquadre, registroQuotePartecipazione);
 		setPromuoviPolisportivaHandler(promuoviPolisportivaHandler);
+		setStatoControllerLezioni(effettuaPrenotazioneLezioneState);
 
 	}
 
@@ -190,8 +191,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	@Override
 	public Map<String, Object> getDatiOpzioniPerPrenotazioneInModalitaDirettore(
 			EffettuaPrenotazioneHandler controller) {
-		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState) getElementiPrenotazioneFactory()
-				.getStatoEffettuaPrenotazioneHandler(TipoPrenotazione.LEZIONE.toString()));
+//		setStatoControllerLezioni((EffettuaPrenotazioneLezioneState) getElementiPrenotazioneFactory()
+//				.getStatoEffettuaPrenotazioneHandler(TipoPrenotazione.LEZIONE.toString()));
 		getStatoControllerLezioni().setMapperFactory(getMapperFactory());
 
 		Map<String, Object> mappaDati = this.getStatoControllerLezioni()

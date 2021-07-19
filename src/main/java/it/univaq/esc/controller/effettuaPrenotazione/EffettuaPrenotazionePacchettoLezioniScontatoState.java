@@ -15,25 +15,32 @@ import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.RegistroQuotePartecipazione;
 import it.univaq.esc.model.utenti.RegistroSquadre;
 import it.univaq.esc.model.utenti.RegistroUtentiPolisportiva;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 @Component
+@Getter(value = AccessLevel.PRIVATE) @Setter(value = AccessLevel.PRIVATE)
 public class EffettuaPrenotazionePacchettoLezioniScontatoState extends EffettuaPrenotazioneState{
 
+	private EffettuaPrenotazioneState effettuaPrenotazioneLezioneState;
+	
 	public EffettuaPrenotazionePacchettoLezioniScontatoState(RegistroNotifiche registroNotifiche,
 			RegistroSport registroSport, RegistroImpianti registroImpianti, RegistroUtentiPolisportiva registroUtenti,
 			RegistroAppuntamenti registroAppuntamenti, RegistroPrenotazioni registroPrenotazioni,
 			CatalogoPrenotabili catalogoPrenotabili, RegistroSquadre registroSquadre,
-			RegistroQuotePartecipazione registroQuotePartecipazione) {
+			RegistroQuotePartecipazione registroQuotePartecipazione, EffettuaPrenotazioneLezioneState effettuaPrenotazioneLezioneState) {
 		super(registroNotifiche, registroSport, registroImpianti, registroUtenti, registroAppuntamenti, registroPrenotazioni,
 				catalogoPrenotabili, registroSquadre, registroQuotePartecipazione);
+		
+		setEffettuaPrenotazioneLezioneState(effettuaPrenotazioneLezioneState);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public Map<String, Object> getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(
 			EffettuaPrenotazioneHandler effettuaPrenotazioneHandler) {
-		// TODO Auto-generated method stub
-		return null;
+		return getEffettuaPrenotazioneLezioneState().getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(effettuaPrenotazioneHandler);
 	}
 
 	@Override
