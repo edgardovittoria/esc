@@ -98,6 +98,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 		List<AppuntamentoLezione> listaAppuntamentiLezioni = (List<AppuntamentoLezione>) (List<?>) controller.getPrenotazioneInAtto().getListaAppuntamenti();
 		for (AppuntamentoLezione nuovoAppuntamentoLezione : listaAppuntamentiLezioni) {
 			confermaAppuntamentoConCreazioneQuotePartecipazioneSeRaggiuntoNumeroPartecipantiNecessario(nuovoAppuntamentoLezione);
+			getRegistroAppuntamenti().aggiorna(nuovoAppuntamentoLezione);
 			aggiornaCalendariImpiantoIstruttoreSportivoPrenotanteConIl(nuovoAppuntamentoLezione);
 			getRegistroNotifiche().impostaNotificaPerIstruttoreAssociatoANuovaLezione(nuovoAppuntamentoLezione.getIstruttore(), nuovoAppuntamentoLezione);
 		}
