@@ -122,7 +122,7 @@ public class PromuoviPolisportivaHandler {
 	@RolesAllowed("ROLE_DIRETTORE")
 	@PostMapping("/creazioneNuovoPrenotabile")
 	@CrossOrigin
-	public String creaNuovoPrenotabileDa(@RequestBody FormPrenotabile formDati) {
+	public @ResponseBody String creaNuovoPrenotabileDa(@RequestBody FormPrenotabile formDati) {
 		setStatoCreazioneNuovoPrenotabile(getStatiCreazioneNuovoPrenotabileFactory().getStatoCreazioneNuovoPrenotabileInBaseAl(formDati.getTipoPrenotazione()));
 		PrenotabileDescrizione nuovoPrenotabile = getStatoCreazioneNuovoPrenotabile().creaNuovoPrenotabile(formDati);
 		return nuovoPrenotabile.getDescrizione();
