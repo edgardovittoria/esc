@@ -29,7 +29,7 @@ public class CreazionePacchettoLezioniScontatoState extends CreazioneNuovoPrenot
 
 	@Override
 	public PrenotabileDescrizione creaNuovoPrenotabile(FormPrenotabile formDati) {
-		PrenotabileDescrizione pacchettoLezioni = getCatalogoPrenotabili().avviaCreazioneNuovoPrenotabile()
+		PrenotabileDescrizione pacchettoLezioni = getCatalogoPrenotabili().avviaCreazioneNuovoPrenotabile(TipoPrenotazione.PACCHETTO_LEZIONI.toString())
 				.impostaTipoPrenotazione(TipoPrenotazione.PACCHETTO_LEZIONI)
 				.impostaNumeroDatePacchettoLezioni(formDati.getNumeroDate())
 				.impostaCostoScontoPercentuale(

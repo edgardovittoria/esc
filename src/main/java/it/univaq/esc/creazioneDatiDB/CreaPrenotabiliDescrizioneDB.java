@@ -26,7 +26,7 @@ public class CreaPrenotabiliDescrizioneDB {
 		Sport pallavolo = creaSportsDB.getSportConNome("pallavolo");
 		Sport calcetto = creaSportsDB.getSportConNome("calcetto");
 
-		PrenotabileDescrizione desc1 = listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
+		PrenotabileDescrizione desc1 = listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile(TipoPrenotazione.IMPIANTO.toString())
 				.impostaSport(tennis)
 				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(tennis.getNumeroGiocatoriPerIncontro())
@@ -42,7 +42,7 @@ public class CreaPrenotabiliDescrizioneDB {
 		listinoPrezziDescrizioniPolisportiva.aggiungiPrenotabileACatalogo(desc1);
 		listinoPrezziDescrizioniPolisportiva.salvaPrenotabileDescrizioneSulDatabase(desc1);
 
-		PrenotabileDescrizione desc2 = listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
+		PrenotabileDescrizione desc2 = listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile(TipoPrenotazione.IMPIANTO.toString())
 				.impostaSport(calcetto)
 				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(calcetto.getNumeroGiocatoriPerIncontro())
@@ -58,7 +58,7 @@ public class CreaPrenotabiliDescrizioneDB {
 		listinoPrezziDescrizioniPolisportiva.aggiungiPrenotabileACatalogo(desc2);
 		listinoPrezziDescrizioniPolisportiva.salvaPrenotabileDescrizioneSulDatabase(desc2);
 
-		PrenotabileDescrizione desc3 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
+		PrenotabileDescrizione desc3 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile(TipoPrenotazione.IMPIANTO.toString())
 				.impostaSport(pallavolo)
 				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(pallavolo.getNumeroGiocatoriPerIncontro())
@@ -74,7 +74,7 @@ public class CreaPrenotabiliDescrizioneDB {
 		listinoPrezziDescrizioniPolisportiva.aggiungiPrenotabileACatalogo(desc3);
 		listinoPrezziDescrizioniPolisportiva.salvaPrenotabileDescrizioneSulDatabase(desc3);
 
-		PrenotabileDescrizione desc4 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
+		PrenotabileDescrizione desc4 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile(TipoPrenotazione.IMPIANTO.toString())
 				.impostaSport(tennis)
 				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(tennis.getNumeroGiocatoriPerIncontro())
@@ -92,7 +92,7 @@ public class CreaPrenotabiliDescrizioneDB {
 		listinoPrezziDescrizioniPolisportiva.aggiungiPrenotabileACatalogo(desc4);
 		listinoPrezziDescrizioniPolisportiva.salvaPrenotabileDescrizioneSulDatabase(desc4);
 
-		PrenotabileDescrizione desc5 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
+		PrenotabileDescrizione desc5 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile(TipoPrenotazione.IMPIANTO.toString())
 				.impostaSport(calcetto)
 				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(calcetto.getNumeroGiocatoriPerIncontro())
@@ -108,7 +108,7 @@ public class CreaPrenotabiliDescrizioneDB {
 		listinoPrezziDescrizioniPolisportiva.aggiungiPrenotabileACatalogo(desc5);
 		listinoPrezziDescrizioniPolisportiva.salvaPrenotabileDescrizioneSulDatabase(desc5);
 
-		PrenotabileDescrizione desc6 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
+		PrenotabileDescrizione desc6 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile(TipoPrenotazione.IMPIANTO.toString())
 				.impostaSport(pallavolo)
 				.impostaTipoPrenotazione(TipoPrenotazione.IMPIANTO)
 				.impostaSogliaMassimaPartecipanti(pallavolo.getNumeroGiocatoriPerIncontro())
@@ -124,7 +124,7 @@ public class CreaPrenotabiliDescrizioneDB {
 		listinoPrezziDescrizioniPolisportiva.aggiungiPrenotabileACatalogo(desc6);
 		listinoPrezziDescrizioniPolisportiva.salvaPrenotabileDescrizioneSulDatabase(desc6);
 
-		PrenotabileDescrizione desc7 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
+		PrenotabileDescrizione desc7 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile(TipoPrenotazione.LEZIONE.toString())
 				.impostaSport(tennis)
 				.impostaTipoPrenotazione(TipoPrenotazione.LEZIONE)
 				.impostaSogliaMassimaPartecipanti(1)
@@ -142,7 +142,7 @@ public class CreaPrenotabiliDescrizioneDB {
 		listinoPrezziDescrizioniPolisportiva.aggiungiPrenotabileACatalogo(desc7);
 		listinoPrezziDescrizioniPolisportiva.salvaPrenotabileDescrizioneSulDatabase(desc7);
 
-		PrenotabileDescrizione desc8 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
+		PrenotabileDescrizione desc8 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile(TipoPrenotazione.LEZIONE.toString())
 				.impostaSport(calcetto)
 				.impostaTipoPrenotazione(TipoPrenotazione.LEZIONE)
 				.impostaSogliaMassimaPartecipanti(5)
@@ -158,7 +158,7 @@ public class CreaPrenotabiliDescrizioneDB {
 		listinoPrezziDescrizioniPolisportiva.aggiungiPrenotabileACatalogo(desc8);
 		listinoPrezziDescrizioniPolisportiva.salvaPrenotabileDescrizioneSulDatabase(desc8);
 
-		PrenotabileDescrizione desc9 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile()
+		PrenotabileDescrizione desc9 = this.listinoPrezziDescrizioniPolisportiva.avviaCreazioneNuovoPrenotabile(TipoPrenotazione.LEZIONE.toString())
 				.impostaSport(pallavolo)
 				.impostaTipoPrenotazione(TipoPrenotazione.LEZIONE)
 				.impostaSogliaMassimaPartecipanti(6)

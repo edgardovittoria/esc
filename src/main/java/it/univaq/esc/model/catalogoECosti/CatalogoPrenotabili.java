@@ -54,8 +54,8 @@ public class CatalogoPrenotabili {
     	getPrenotabileDescrizioneRepository().delete(prenotabileDescrizione);
     }
 
-    public PrenotabileDescrizioneBuilder avviaCreazioneNuovoPrenotabile() {
-    	 return getPrenotabileDescrizioneBuilder().creaNuovaDescrizione();
+    public PrenotabileDescrizioneBuilder avviaCreazioneNuovoPrenotabile(String tipoPrenotazione) {
+    	 return getPrenotabileDescrizioneBuilder().creaNuovaDescrizione(tipoPrenotazione);
     }
     
 
