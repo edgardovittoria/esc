@@ -153,6 +153,7 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 		confermaAppuntamentiConCreazioneQuotePartecipazioneSeRaggiuntoNumeroMinimoPartecipanti(listaAppuntamentiCorso,
 				isPartecipanteAggiunto);
 		salvaModificheAlla(listaAppuntamentiCorso);
+		getRegistroQuotePartecipazione().salva(listaAppuntamentiCorso.get(0).getQuotePartecipazione());
 		aggiornaCalendarioNuovoPartecipanteConGliAppuntamentiDelCorso(nuovoPartecipante, listaAppuntamentiCorso);
 
 		PrenotazioneDTO prenotazioneDTO = getMapperFactory().getPrenotazioneMapper()

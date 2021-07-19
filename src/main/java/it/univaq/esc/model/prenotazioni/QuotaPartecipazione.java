@@ -43,4 +43,11 @@ public class QuotaPartecipazione {
     	setSportivoAssociato(utenteAssociato);
     	setCosto(importo);
     }
+    
+    public boolean isEqual(QuotaPartecipazione quotaDaConfrontare) {
+    	if(getIdQuotaPartecipazione() == quotaDaConfrontare.getIdQuotaPartecipazione()) {
+    		return true;
+    	}
+    	return false;
+    }
 }

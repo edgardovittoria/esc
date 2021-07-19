@@ -99,6 +99,7 @@ public class EffettuaPrenotazioneLezioneState extends EffettuaPrenotazioneState 
 		for (AppuntamentoLezione nuovoAppuntamentoLezione : listaAppuntamentiLezioni) {
 			confermaAppuntamentoConCreazioneQuotePartecipazioneSeRaggiuntoNumeroPartecipantiNecessario(nuovoAppuntamentoLezione);
 			getRegistroAppuntamenti().aggiorna(nuovoAppuntamentoLezione);
+			getRegistroQuotePartecipazione().salva(nuovoAppuntamentoLezione.getQuotePartecipazione());
 			aggiornaCalendariImpiantoIstruttoreSportivoPrenotanteConIl(nuovoAppuntamentoLezione);
 			getRegistroNotifiche().impostaNotificaPerIstruttoreAssociatoANuovaLezione(nuovoAppuntamentoLezione.getIstruttore(), nuovoAppuntamentoLezione);
 		}

@@ -19,26 +19,52 @@ public class RegistroQuotePartecipazione {
 	private List<QuotaPartecipazione> listaQuotaPartecipazione = new ArrayList<QuotaPartecipazione>();
 	private RegistroUtentiPolisportiva registroUtentiPolisportiva;
 	private QuotaPartecipazioneRepository quotaPartecipazioneRepository;
-	
-	public RegistroQuotePartecipazione(QuotaPartecipazioneRepository quotaPartecipazioneRepository, RegistroUtentiPolisportiva registroUtentiPolisportiva) {
+
+	public RegistroQuotePartecipazione(QuotaPartecipazioneRepository quotaPartecipazioneRepository,
+			RegistroUtentiPolisportiva registroUtentiPolisportiva) {
 		setQuotaPartecipazioneRepository(quotaPartecipazioneRepository);
 		setRegistroUtentiPolisportiva(registroUtentiPolisportiva);
 		popola();
 	}
-	
-	
+
 	private void popola() {
 		setListaQuotaPartecipazione(quotaPartecipazioneRepository.findAll());
-		for(QuotaPartecipazione quotaPartecipazione : listaQuotaPartecipazione) {
-			UtentePolisportiva utente = registroUtentiPolisportiva.trovaUtenteInBaseAllaSua(quotaPartecipazione.getSportivoAssociato().getEmail());
+		for (QuotaPartecipazione quotaPartecipazione : listaQuotaPartecipazione) {
+			UtentePolisportiva utente = registroUtentiPolisportiva
+					.trovaUtenteInBaseAllaSua(quotaPartecipazione.getSportivoAssociato().getEmail());
 			quotaPartecipazione.setSportivoAssociato(utente);
 		}
 	}
+
 	
+	public void salva(List<QuotaPartecipazione> nuovaListaQuotePartecipazione) {
+		for(QuotaPartecipazione quotaPartecipazione : nuovaListaQuotePartecipazione) {
+			salva(quotaPartecipazione);
+		}
+	}
+	
+	public void salva(QuotaPartecipazione nuovaQuota) {
+		if(!isGiaPresenteNelRegistroLa(nuovaQuota)) {
+			listaQuotaPartecipazione.add(nuovaQuota);
+		}	
+	}
+
+	private boolean isGiaPresenteNelRegistroLa(QuotaPartecipazione nuovaQuota) {
+		boolean giaPresente = false;
+		for (QuotaPartecipazione quota : listaQuotaPartecipazione) {
+			if (quota.isEqual(nuovaQuota)) {
+				giaPresente = true;
+				break;
+			}
+		}
+		return giaPresente;
+	}
+
+
 	public Integer getUltimoIdQuote() {
 		Integer ultimoId = 0;
-		for(QuotaPartecipazione quotaPartecipazione : listaQuotaPartecipazione) {
-			if(quotaPartecipazione.getIdQuotaPartecipazione()>ultimoId) {
+		for (QuotaPartecipazione quotaPartecipazione : listaQuotaPartecipazione) {
+			if (quotaPartecipazione.getIdQuotaPartecipazione() > ultimoId) {
 				ultimoId = quotaPartecipazione.getIdQuotaPartecipazione();
 			}
 		}

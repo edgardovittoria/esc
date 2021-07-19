@@ -7,6 +7,7 @@ import it.univaq.esc.model.*;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.notifiche.RegistroNotifiche;
 import it.univaq.esc.model.prenotazioni.OrarioAppuntamento;
+import it.univaq.esc.model.prenotazioni.QuotaPartecipazione;
 import it.univaq.esc.model.prenotazioni.RegistroAppuntamenti;
 import it.univaq.esc.model.prenotazioni.RegistroPrenotazioni;
 import it.univaq.esc.model.prenotazioni.RegistroQuotePartecipazione;
@@ -357,7 +358,7 @@ public abstract class EffettuaPrenotazioneState {
 		return this.getRegistroUtenti().filtraListaIstruttoriPerSportInsegnato(listaIstruttori, sportPerCuiFiltrare);
 
 	}
-
+	
 	protected OrarioAppuntamento creaOrarioAppuntamentoDa(Map<String, String> mappaOrario) {
 		OrarioAppuntamento orarioAppuntamento = new OrarioAppuntamento();
 		orarioAppuntamento.imposta(mappaOrario.get("oraInizio"), mappaOrario.get("oraFine"));

@@ -108,6 +108,8 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 				.getPrenotazioneInAtto().getListaAppuntamenti();
 		for (AppuntamentoImpianto nuovoAppuntamento : appuntamentiPrenotazioneInAtto) {
 			confermaAppuntamentoConCreazioneQuotePartecipazioneSeRaggiuntoNumeroPartecipantiNecessario(nuovoAppuntamento);
+			getRegistroAppuntamenti().aggiorna(nuovoAppuntamento);
+			getRegistroQuotePartecipazione().salva(nuovoAppuntamento.getQuotePartecipazione());
 			aggiornaCalendariImpiantoEUtentePrenotanteConIl(nuovoAppuntamento);
 		}
 		impostaNotifichePerGliUtentiInvitatiAllaPrenotazioneInAtto(appuntamentiPrenotazioneInAtto.get(0).getInvitati(),
@@ -200,6 +202,7 @@ public class EffettuaPrenotazioneImpiantoState extends EffettuaPrenotazioneState
 			}
 
 			getRegistroAppuntamenti().aggiorna(appuntamento);
+			getRegistroQuotePartecipazione().salva(appuntamento.getQuotePartecipazione());
 			AppuntamentoDTO appuntamentoDTO = getMapperFactory()
 					.getAppuntamentoMapper(appuntamento.getTipoPrenotazione().toString()).convertiInAppuntamentoDTO(appuntamento);
 			return appuntamentoDTO;
