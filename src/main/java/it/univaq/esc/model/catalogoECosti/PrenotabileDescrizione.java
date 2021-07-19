@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter @Setter @NoArgsConstructor
 public class PrenotabileDescrizione {
     @Id

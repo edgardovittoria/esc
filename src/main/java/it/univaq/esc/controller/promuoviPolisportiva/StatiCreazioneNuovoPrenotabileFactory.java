@@ -18,6 +18,8 @@ public class StatiCreazioneNuovoPrenotabileFactory {
 		switch (tipoPrenotazione) {
 		case "CORSO":
 			 return BeanUtil.getBean(CreazionePrenotabileDescrizioneCorsoState.class);
+			 case "PACCHETTO_LEZIONI":
+				 return BeanUtil.getBean(CreazionePacchettoLezioniScontatoState.class);
 		default:
 			return BeanUtil.getBean(CreazionePrenotabileDescrizioneCorsoState.class);
 		}

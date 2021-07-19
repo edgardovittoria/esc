@@ -40,6 +40,10 @@ public class FormPrenotabile {
 
 	private Float costoPerPartecipante;
 	
+	private Float scontoPercentuale;
+	
+	private Integer numeroDate;
+	
 	private String nomeEvento;
 	
 	private String tipoPrenotazione;

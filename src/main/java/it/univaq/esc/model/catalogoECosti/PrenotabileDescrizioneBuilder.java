@@ -58,6 +58,7 @@ public class PrenotabileDescrizioneBuilder {
     	
     	return this;
     }
+   
     
     
     public PrenotabileDescrizioneBuilder impostaCostoOrario(Costo costoDaImpostare){
@@ -76,6 +77,19 @@ public class PrenotabileDescrizioneBuilder {
         this.getPrenotabileDescrizione().aggiungiCosto(costoUnaTantum);
 
         return this;
+    }
+    
+    public PrenotabileDescrizioneBuilder impostaCostoScontoPercentuale(Costo costoDaImpostare) {
+    	CostoPrenotabile costoScontoPercentuale = new CostoPrenotabile();
+    	costoScontoPercentuale.setCosto(costoDaImpostare);
+    	costoScontoPercentuale.setTipoCosto(TipoCostoPrenotabile.COSTO_SCONTO_PERCENTUALE);
+    	getPrenotabileDescrizione().aggiungiCosto(costoScontoPercentuale);
+    	return this;
+    }
+    
+    public PrenotabileDescrizioneBuilder impostaNumeroDatePacchettoLezioni(Integer numeroDate) {
+    	((PacchettoLezioniScontato)getPrenotabileDescrizione()).setNumeroLezioni(numeroDate);
+    	return this;
     }
 
     public PrenotabileDescrizioneBuilder impostaCostoPavimentazione(Costo costoDaImpostare, String tipoPavimentazione){

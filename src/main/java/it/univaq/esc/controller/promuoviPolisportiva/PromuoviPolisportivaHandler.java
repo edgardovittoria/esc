@@ -127,4 +127,6 @@ public class PromuoviPolisportivaHandler {
 		PrenotabileDescrizione nuovoPrenotabile = getStatoCreazioneNuovoPrenotabile().creaNuovoPrenotabile(formDati);
 		return nuovoPrenotabile;
 	}
+	
+	
 }

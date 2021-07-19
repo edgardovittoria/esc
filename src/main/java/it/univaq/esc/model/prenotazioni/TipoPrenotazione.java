@@ -4,7 +4,8 @@ public enum TipoPrenotazione {
     
     IMPIANTO,
     LEZIONE,
-    CORSO;
+    CORSO,
+    PACCHETTO_LEZIONI;
 	
 	public boolean isEqual(TipoPrenotazione tipoPrenotazioneDaConfrontare) {
 		if(tipoPrenotazioneDaConfrontare.toString().equals(this.toString())) {
