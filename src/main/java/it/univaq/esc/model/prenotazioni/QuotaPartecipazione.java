@@ -31,7 +31,7 @@ public class QuotaPartecipazione {
     	setIdQuotaPartecipazione(lastIdQuote+1);
     }
     
-    public QuotaPartecipazione(Integer lastIdQuote ,boolean pagata, Costo costo, UtentePolisportiva sportivoDaAssociareAllaQuota) {
+    public QuotaPartecipazione(Integer lastIdQuote, boolean pagata, Costo costo, UtentePolisportiva sportivoDaAssociareAllaQuota) {
         this.setPagata(pagata);
         this.setCosto(costo);
         this.setSportivoAssociato(sportivoDaAssociareAllaQuota);

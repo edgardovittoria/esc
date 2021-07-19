@@ -226,9 +226,9 @@ public class EffettuaPrenotazioneHandler {
 
 		assegnaManutentoriAgliAppuntamentiDellaPrenotazioneInAtto();
 		aggiornaCalendariDeiManutentoriAssegnati();
-		registraNelSistemaLaPrenotazioneInAtto();
 		this.getStato().aggiornaElementiLegatiAllaPrenotazioneConfermata(this);
-
+		registraNelSistemaLaPrenotazioneInAtto();
+		
 		PrenotazioneDTO prenDTO = getMapperFactory().getPrenotazioneMapper()
 				.convertiInPrenotazioneDTO(getPrenotazioneInAtto());
 
