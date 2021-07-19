@@ -75,7 +75,8 @@ public class EffettuaPrenotazioneCorsoState extends EffettuaPrenotazioneState {
 	public PrenotazioneDTO impostaPrenotazioneConDatiDellaFormPerRiepilogo(FormPrenotabile formDati,
 			EffettuaPrenotazioneHandler controller) {
 
-		setPrenotabileDescrizioneCorso(getPromuoviPolisportivaHandler().creaNuovoPrenotabileDa(formDati));
+		String descrizioneNuovoCorso = getPromuoviPolisportivaHandler().creaNuovoPrenotabileDa(formDati);
+		setPrenotabileDescrizioneCorso(getCatalogoPrenotabili().trovaPrenotabileDescrizioneDalla(descrizioneNuovoCorso));
 
 		for (OrarioAppuntamentoDTO orario : formDati.getOrariSelezionati()) {
 			impostaAppuntamentoCorsoRelativoAOrarioNellaPrenotazione(controller.getPrenotazioneInAtto(), orario,
