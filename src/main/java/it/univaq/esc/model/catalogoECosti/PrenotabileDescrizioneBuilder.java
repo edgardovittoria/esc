@@ -12,101 +12,103 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@NoArgsConstructor @Getter @Setter
+@NoArgsConstructor
+@Getter
+@Setter
 public class PrenotabileDescrizioneBuilder {
-    
-    private PrenotabileDescrizione prenotabileDescrizione;
 
+	private PrenotabileDescrizione prenotabileDescrizione;
 
-    public PrenotabileDescrizioneBuilder creaNuovaDescrizione(){
-        this.setPrenotabileDescrizione(new PrenotabileDescrizione());
-        return this;
-    }
+	public PrenotabileDescrizioneBuilder creaNuovaDescrizione(String tipoPrenotazione) {
+		if (tipoPrenotazione.equals(TipoPrenotazione.PACCHETTO_LEZIONI.toString())) {
+			setPrenotabileDescrizione(new PacchettoLezioniScontato());
+		} else {
+			this.setPrenotabileDescrizione(new PrenotabileDescrizione());
+		}
+		return this;
+	}
 
-    public PrenotabileDescrizioneBuilder impostaSport(Sport sportDaImpostare) {
+	public PrenotabileDescrizioneBuilder impostaSport(Sport sportDaImpostare) {
 		this.getPrenotabileDescrizione().setSportAssociato(sportDaImpostare);
 		return this;
 	}
-    
-    public PrenotabileDescrizioneBuilder impostaTipoPrenotazione(TipoPrenotazione tipoPrenotazione) {
-    	this.getPrenotabileDescrizione().setTipoPrenotazione(tipoPrenotazione);
-    	return this;
-    }
-    
-    public PrenotabileDescrizioneBuilder impostaSogliaMinimaPartecipanti(Integer numeroMinimoPartecipanti) {
-    	this.getPrenotabileDescrizione().setMinimoNumeroPartecipanti(numeroMinimoPartecipanti);
-    	return this;
+
+	public PrenotabileDescrizioneBuilder impostaTipoPrenotazione(TipoPrenotazione tipoPrenotazione) {
+		this.getPrenotabileDescrizione().setTipoPrenotazione(tipoPrenotazione);
+		return this;
 	}
-    
-    public PrenotabileDescrizioneBuilder impostaSogliaMassimaPartecipanti(Integer numeroMassimoPartecipanti) {
+
+	public PrenotabileDescrizioneBuilder impostaSogliaMinimaPartecipanti(Integer numeroMinimoPartecipanti) {
+		this.getPrenotabileDescrizione().setMinimoNumeroPartecipanti(numeroMinimoPartecipanti);
+		return this;
+	}
+
+	public PrenotabileDescrizioneBuilder impostaSogliaMassimaPartecipanti(Integer numeroMassimoPartecipanti) {
 		this.getPrenotabileDescrizione().setMassimoNumeroPartecipanti(numeroMassimoPartecipanti);
 		return this;
 	}
-    
-    public PrenotabileDescrizioneBuilder impostaModalitaPrenotazioneComeSingoloUtente() {
-    	this.getPrenotabileDescrizione().setModalitaPrenotazione(ModalitaPrenotazione.SINGOLO_UTENTE);
-    	return this;
-    }
-    
-    public PrenotabileDescrizioneBuilder impostaModalitaPrenotazioneComeSquadra() {
+
+	public PrenotabileDescrizioneBuilder impostaModalitaPrenotazioneComeSingoloUtente() {
+		this.getPrenotabileDescrizione().setModalitaPrenotazione(ModalitaPrenotazione.SINGOLO_UTENTE);
+		return this;
+	}
+
+	public PrenotabileDescrizioneBuilder impostaModalitaPrenotazioneComeSquadra() {
 		this.getPrenotabileDescrizione().setModalitaPrenotazione(ModalitaPrenotazione.SQUADRA);
 		return this;
 	}
-    
-    public PrenotabileDescrizioneBuilder impostaDescrizione(String descrizioneEvento) {
-    	getPrenotabileDescrizione().setDescrizione(descrizioneEvento);
-    	
-    	return this;
-    }
-   
-    
-    
-    public PrenotabileDescrizioneBuilder impostaCostoOrario(Costo costoDaImpostare){
-        CostoPrenotabile costoOrario = new CostoPrenotabile();
-        costoOrario.setCosto(costoDaImpostare);
-        costoOrario.setTipoCosto(TipoCostoPrenotabile.COSTO_ORARIO);
-        this.getPrenotabileDescrizione().aggiungiCosto(costoOrario);
 
-        return this;
-    }
+	public PrenotabileDescrizioneBuilder impostaDescrizione(String descrizioneEvento) {
+		getPrenotabileDescrizione().setDescrizione(descrizioneEvento);
 
-    public PrenotabileDescrizioneBuilder impostaCostoUnaTantum(Costo costoDaImpostare){
-        CostoPrenotabile costoUnaTantum = new CostoPrenotabile();
-        costoUnaTantum.setCosto(costoDaImpostare);
-        costoUnaTantum.setTipoCosto(TipoCostoPrenotabile.COSTO_UNA_TANTUM);
-        this.getPrenotabileDescrizione().aggiungiCosto(costoUnaTantum);
+		return this;
+	}
 
-        return this;
-    }
-    
-    public PrenotabileDescrizioneBuilder impostaCostoScontoPercentuale(Costo costoDaImpostare) {
-    	CostoPrenotabile costoScontoPercentuale = new CostoPrenotabile();
-    	costoScontoPercentuale.setCosto(costoDaImpostare);
-    	costoScontoPercentuale.setTipoCosto(TipoCostoPrenotabile.COSTO_SCONTO_PERCENTUALE);
-    	getPrenotabileDescrizione().aggiungiCosto(costoScontoPercentuale);
-    	return this;
-    }
-    
-    public PrenotabileDescrizioneBuilder impostaNumeroDatePacchettoLezioni(Integer numeroDate) {
-    	((PacchettoLezioniScontato)getPrenotabileDescrizione()).setNumeroLezioni(numeroDate);
-    	return this;
-    }
+	public PrenotabileDescrizioneBuilder impostaCostoOrario(Costo costoDaImpostare) {
+		CostoPrenotabile costoOrario = new CostoPrenotabile();
+		costoOrario.setCosto(costoDaImpostare);
+		costoOrario.setTipoCosto(TipoCostoPrenotabile.COSTO_ORARIO);
+		this.getPrenotabileDescrizione().aggiungiCosto(costoOrario);
 
-    public PrenotabileDescrizioneBuilder impostaCostoPavimentazione(Costo costoDaImpostare, String tipoPavimentazione){
-        CostoPrenotabile costoPavimentazione = new CostoPrenotabilePavimentazione();
-        costoPavimentazione.setCosto(costoDaImpostare);
-        costoPavimentazione.setTipoCosto(TipoCostoPrenotabile.COSTO_PAVIMENTAZIONE);
-        Map<String, Object> mappaProprieta = new HashMap<String, Object>();
-        mappaProprieta.put("tipoPavimentazione", tipoPavimentazione);
-        costoPavimentazione.setProprieta(mappaProprieta);
-        this.getPrenotabileDescrizione().aggiungiCosto(costoPavimentazione);
+		return this;
+	}
 
-        return this;
-    }
+	public PrenotabileDescrizioneBuilder impostaCostoUnaTantum(Costo costoDaImpostare) {
+		CostoPrenotabile costoUnaTantum = new CostoPrenotabile();
+		costoUnaTantum.setCosto(costoDaImpostare);
+		costoUnaTantum.setTipoCosto(TipoCostoPrenotabile.COSTO_UNA_TANTUM);
+		this.getPrenotabileDescrizione().aggiungiCosto(costoUnaTantum);
 
-    public PrenotabileDescrizione build(){
-        return this.getPrenotabileDescrizione();
-    }
+		return this;
+	}
 
+	public PrenotabileDescrizioneBuilder impostaCostoScontoPercentuale(Costo costoDaImpostare) {
+		CostoPrenotabile costoScontoPercentuale = new CostoPrenotabile();
+		costoScontoPercentuale.setCosto(costoDaImpostare);
+		costoScontoPercentuale.setTipoCosto(TipoCostoPrenotabile.COSTO_SCONTO_PERCENTUALE);
+		getPrenotabileDescrizione().aggiungiCosto(costoScontoPercentuale);
+		return this;
+	}
+
+	public PrenotabileDescrizioneBuilder impostaNumeroDatePacchettoLezioni(Integer numeroDate) {
+		((PacchettoLezioniScontato) getPrenotabileDescrizione()).setNumeroLezioni(numeroDate);
+		return this;
+	}
+
+	public PrenotabileDescrizioneBuilder impostaCostoPavimentazione(Costo costoDaImpostare, String tipoPavimentazione) {
+		CostoPrenotabile costoPavimentazione = new CostoPrenotabilePavimentazione();
+		costoPavimentazione.setCosto(costoDaImpostare);
+		costoPavimentazione.setTipoCosto(TipoCostoPrenotabile.COSTO_PAVIMENTAZIONE);
+		Map<String, Object> mappaProprieta = new HashMap<String, Object>();
+		mappaProprieta.put("tipoPavimentazione", tipoPavimentazione);
+		costoPavimentazione.setProprieta(mappaProprieta);
+		this.getPrenotabileDescrizione().aggiungiCosto(costoPavimentazione);
+
+		return this;
+	}
+
+	public PrenotabileDescrizione build() {
+		return this.getPrenotabileDescrizione();
+	}
 
 }
