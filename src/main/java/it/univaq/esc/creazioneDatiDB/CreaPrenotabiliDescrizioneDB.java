@@ -21,6 +21,8 @@ public class CreaPrenotabiliDescrizioneDB {
 	public void creaPrenotabiliDescrizione() {
 		Valuta valutaEuro = new Valuta(Valute.EUR);
 		valutaRepository.save(valutaEuro);
+		Valuta valutaPercentuale = new Valuta(Valute.PERCENTUALE);
+		valutaRepository.save(valutaPercentuale);
 
 		Sport tennis = creaSportsDB.getSportConNome("tennis");
 		Sport pallavolo = creaSportsDB.getSportConNome("pallavolo");
