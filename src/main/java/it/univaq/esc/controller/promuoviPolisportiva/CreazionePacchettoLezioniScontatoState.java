@@ -33,7 +33,7 @@ public class CreazionePacchettoLezioniScontatoState extends CreazioneNuovoPrenot
 				.impostaTipoPrenotazione(TipoPrenotazione.PACCHETTO_LEZIONI)
 				.impostaNumeroDatePacchettoLezioni(formDati.getNumeroDate())
 				.impostaCostoScontoPercentuale(
-						new Costo(formDati.getScontoPercentuale(), new Valuta(Valute.EUR)))
+						new Costo(formDati.getScontoPercentuale(), new Valuta(Valute.PERCENTUALE)))
 				.impostaModalitaPrenotazioneComeSingoloUtente()
 				.impostaDescrizione(formDati.getNomeEvento())
 				.build();
