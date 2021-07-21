@@ -152,16 +152,14 @@ public class EffettuaPrenotazioneHandler {
 	 */
 	// @PreAuthorize("hasRole('ROLE_DIRETTORE')")
 	@RolesAllowed("ROLE_DIRETTORE")
-	@GetMapping("/avviaNuovaPrenotazioneEventoDirettore")
+	@PostMapping("/avviaNuovaPrenotazioneEventoDirettore")
 	@CrossOrigin
 	public @ResponseBody Map<String, Object> avviaNuovaPrenotazioneEventoDirettore(
-			@RequestParam(name = "email") String emailDirettore,
-			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione,
-			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
+			@RequestBody DatiAvviaPrenotazione datiAvviaPrenotazione) {
 
-		UtentePolisportiva direttore = this.getRegistroUtenti().trovaUtenteInBaseAllaSua(emailDirettore);
-		impostaAttributiControllerDipendentiDa(modalitaPrenotazione, tipoPrenotazione);
-		this.inizializzaNuovaPrenotazione(direttore, modalitaPrenotazione, null);
+		UtentePolisportiva direttore = this.getRegistroUtenti().trovaUtenteInBaseAllaSua(datiAvviaPrenotazione.getEmail());
+		impostaAttributiControllerDipendentiDa(datiAvviaPrenotazione.getModalitaPrenotazione(), datiAvviaPrenotazione.getTipoPrenotazione());
+		this.inizializzaNuovaPrenotazione(direttore, datiAvviaPrenotazione.getModalitaPrenotazione(), null);
 
 		return this.getStato().getDatiOpzioniPerPrenotazioneInModalitaDirettore(this);
 	}
