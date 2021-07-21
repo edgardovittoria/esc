@@ -16,7 +16,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
-public class PacchettoLezioniScontato extends PrenotabileDescrizione{
+public class PrenotabileDescrizioneConNumeroDate extends PrenotabileDescrizione{
 
 	@Column
 	private Integer numeroLezioni;

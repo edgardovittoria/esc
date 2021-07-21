@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Component(value = "PRENOTABILE_DESCRIZIONE_BUILDER")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -19,12 +19,8 @@ public class PrenotabileDescrizioneBuilder {
 
 	private PrenotabileDescrizione prenotabileDescrizione;
 
-	public PrenotabileDescrizioneBuilder creaNuovaDescrizione(String tipoPrenotazione) {
-		if (tipoPrenotazione.equals(TipoPrenotazione.PACCHETTO_LEZIONI.toString())) {
-			setPrenotabileDescrizione(new PacchettoLezioniScontato());
-		} else {
-			this.setPrenotabileDescrizione(new PrenotabileDescrizione());
-		}
+	public PrenotabileDescrizioneBuilder creaNuovaDescrizione() {
+			setPrenotabileDescrizione(new PrenotabileDescrizione());
 		return this;
 	}
 
@@ -90,10 +86,6 @@ public class PrenotabileDescrizioneBuilder {
 		return this;
 	}
 
-	public PrenotabileDescrizioneBuilder impostaNumeroDatePacchettoLezioni(Integer numeroDate) {
-		((PacchettoLezioniScontato) getPrenotabileDescrizione()).setNumeroLezioni(numeroDate);
-		return this;
-	}
 
 	public PrenotabileDescrizioneBuilder impostaCostoPavimentazione(Costo costoDaImpostare, String tipoPavimentazione) {
 		CostoPrenotabile costoPavimentazione = new CostoPrenotabilePavimentazione();

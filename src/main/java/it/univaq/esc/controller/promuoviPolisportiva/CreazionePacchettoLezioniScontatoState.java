@@ -10,6 +10,8 @@ import it.univaq.esc.model.Valuta;
 import it.univaq.esc.model.Valute;
 import it.univaq.esc.model.catalogoECosti.CatalogoPrenotabili;
 import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizione;
+import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizioneConNumeroDate;
+import it.univaq.esc.model.catalogoECosti.PrenotabileDescrizioneConNumeroDateBuilder;
 import it.univaq.esc.model.prenotazioni.TipoPrenotazione;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,9 +31,9 @@ public class CreazionePacchettoLezioniScontatoState extends CreazioneNuovoPrenot
 
 	@Override
 	public PrenotabileDescrizione creaNuovoPrenotabile(FormPrenotabile formDati) {
-		PrenotabileDescrizione pacchettoLezioni = getCatalogoPrenotabili().avviaCreazioneNuovoPrenotabile(TipoPrenotazione.PACCHETTO_LEZIONI.toString())
-				.impostaTipoPrenotazione(TipoPrenotazione.PACCHETTO_LEZIONI)
+		PrenotabileDescrizione pacchettoLezioni = ((PrenotabileDescrizioneConNumeroDateBuilder)getCatalogoPrenotabili().avviaCreazioneNuovoPrenotabile(TipoPrenotazione.PACCHETTO_LEZIONI.toString()))
 				.impostaNumeroDatePacchettoLezioni(formDati.getNumeroDate())
+				.impostaTipoPrenotazione(TipoPrenotazione.PACCHETTO_LEZIONI)
 				.impostaCostoScontoPercentuale(
 						new Costo(formDati.getScontoPercentuale(), new Valuta(Valute.PERCENTUALE)))
 				.impostaModalitaPrenotazioneComeSingoloUtente()
