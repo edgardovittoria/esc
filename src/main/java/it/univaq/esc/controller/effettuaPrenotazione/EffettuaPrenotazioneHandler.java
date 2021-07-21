@@ -1,6 +1,7 @@
 package it.univaq.esc.controller.effettuaPrenotazione;
 
 import it.univaq.esc.EntityDTOMappers.MapperFactory;
+import it.univaq.esc.dtoObjects.DatiAvviaPrenotazione;
 import it.univaq.esc.dtoObjects.FormPrenotabile;
 import it.univaq.esc.dtoObjects.PrenotazioneDTO;
 import it.univaq.esc.dtoObjects.UtentePolisportivaDTO;
@@ -118,20 +119,16 @@ public class EffettuaPrenotazioneHandler {
 	 * @param tipoPrenotazione        tipologia di prenotazione selezionata
 	 * @return mappa di dati per la fase di compilazione della prenotazione.
 	 */
-	@GetMapping("/avviaNuovaPrenotazione")
+	@PostMapping("/avviaNuovaPrenotazione")
 	@CrossOrigin
 	public @ResponseBody Map<String, Object> avviaNuovaPrenotazione(
-			@RequestParam(name = "email") String emailSportivoPrenotante,
-			@RequestParam(name = "idSquadra") Integer idSquadra,
-			@RequestParam(name = "tipoPrenotazione") String tipoPrenotazione,
-			@RequestParam(name = "modalitaPrenotazione") String modalitaPrenotazione) {
+		@RequestBody DatiAvviaPrenotazione datiAvviaPrenotazione) {
 
-		
 		UtentePolisportiva sportivoPrenotante = this.getRegistroUtenti()
-				.trovaUtenteInBaseAllaSua(emailSportivoPrenotante);
+				.trovaUtenteInBaseAllaSua(datiAvviaPrenotazione.getEmail());
 		if (!sportivoPrenotante.comeSportivo().isMoroso()) {
-			impostaAttributiControllerDipendentiDa(modalitaPrenotazione, tipoPrenotazione);
-			this.inizializzaNuovaPrenotazione(sportivoPrenotante, modalitaPrenotazione, idSquadra);
+			impostaAttributiControllerDipendentiDa(datiAvviaPrenotazione.getModalitaPrenotazione(), datiAvviaPrenotazione.getTipoPrenotazione());
+			this.inizializzaNuovaPrenotazione(sportivoPrenotante, datiAvviaPrenotazione.getModalitaPrenotazione(), datiAvviaPrenotazione.getIdSquadra());
 			return this.getStato().getDatiInizialiPerLeOpzioniDiPrenotazioneSfruttandoIl(this);
 		} else {
 			/*
