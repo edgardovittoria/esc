@@ -23,7 +23,8 @@ public class CreazionePrenotabileDescrizioneCorsoState  extends CreazioneNuovoPr
 
 	@Override
 	public PrenotabileDescrizione creaNuovoPrenotabile(FormPrenotabile formDati) {
-		PrenotabileDescrizione descrizioneCorso = getCatalogoPrenotabili().avviaCreazioneNuovoPrenotabile(TipoPrenotazione.CORSO.toString())
+		PrenotabileDescrizione descrizioneCorso = getCatalogoPrenotabili()
+				.avviaCreazioneNuovoPrenotabile(TipoPrenotazione.CORSO.toString())
 				.impostaSport(getRegistroSport().getSportByNome(formDati.getSportSelezionato()))
 				.impostaTipoPrenotazione(TipoPrenotazione.CORSO)
 				.impostaSogliaMassimaPartecipanti(formDati.getNumeroMassimoPartecipanti())

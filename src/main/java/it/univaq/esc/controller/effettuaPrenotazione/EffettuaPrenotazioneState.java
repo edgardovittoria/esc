@@ -36,7 +36,7 @@ import java.util.Map;
  * @author esc
  *
  */
-@Getter(value = AccessLevel.PUBLIC)
+@Getter(value = AccessLevel.PROTECTED)
 @Setter(value = AccessLevel.PRIVATE)
 public abstract class EffettuaPrenotazioneState {
 

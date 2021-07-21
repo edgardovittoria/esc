@@ -274,17 +274,7 @@ public class EffettuaPrenotazioneHandler {
 		return this.getStato().getDatiOpzioniPrenotazioneAggiornatiInBaseAllaMappa(dati);
 	}
 
-	/*
-	 * TODO Verificare se questo metodo è effettivamente usato, ma meglio sarebbe
-	 * eliminarlo.
-	 */
-	@GetMapping("/istruttoriDisponibili")
-	@CrossOrigin
-	public @ResponseBody List<UtentePolisportivaDTO> getListaIstruttoriPerSport(
-			@RequestParam(name = "sport") String sport) {
-		return this.getStato().getListaDTODegliIstruttoriCheInsegnanoLo(sport);
-	}
-
+	
 	/**
 	 * Aggiunge l'utente ad un evento preesistente, associandogli una relativa quota
 	 * di prenotazione

@@ -24,10 +24,13 @@ public class CalcolatoreCostoComposito extends CalcolatoreCosto{
     public void aggiungiStrategiaCosto(CalcolatoreCosto calcolatoreCosto){
         this.getStrategieCosto().add(calcolatoreCosto);
     }
+    
+    /**
+     * Applica il costo minore tra quelli applicabili all'appuntamento.
+     */
     @Override
     public Costo calcolaCosto(Appuntamento appuntamento) {
-    	Valuta valuta = new Valuta(Valute.EUR);
-        Costo costo = new Costo(Float.parseFloat("2000"), valuta);
+    	Costo costo = getStrategieCosto().get(0).calcolaCosto(appuntamento);
         for(CalcolatoreCosto strategia : this.getStrategieCosto()){
             if(strategia.calcolaCosto(appuntamento).isMinoreDi(costo)){
                 costo = strategia.calcolaCosto(appuntamento);

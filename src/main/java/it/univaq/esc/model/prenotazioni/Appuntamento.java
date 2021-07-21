@@ -130,7 +130,7 @@ public abstract class Appuntamento extends Notificabile {
 	public void calcolaCosto() {
 		setCostoAppuntamento(getCalcolatoreCosto().calcolaCosto(this));
 	}
-
+	
 	public void assegna(QuotaPartecipazione quota) {
 		if (quota != null && !esisteGiaQuotaAssociataAllo(quota.getSportivoAssociato())) {
 			this.getQuotePartecipazione().add(quota);
