@@ -16,18 +16,18 @@ import java.util.List;
 
 @Component
 @Singleton
-@Getter @Setter
+@Getter @Setter(value = AccessLevel.PRIVATE)
 @DependsOn("beanUtil")
 public class CatalogoPrenotabili {
     
-	@Setter(value = AccessLevel.PRIVATE)
     private List<PrenotabileDescrizione> catalogoPrenotabili;
-
-    @Setter(value = AccessLevel.PRIVATE)
     private PrenotabileDescrizioneRepository prenotabileDescrizioneRepository;
+    private FactoryPrenotabileDescrizioneBuilder factoryPrenotabileDescrizioneBuilder;
+    
 
-    CatalogoPrenotabili(PrenotabileDescrizioneRepository prenotabileDescrizioneRepository){
+    CatalogoPrenotabili(PrenotabileDescrizioneRepository prenotabileDescrizioneRepository, FactoryPrenotabileDescrizioneBuilder factoryPrenotabileDescrizioneBuilder){
         this.setPrenotabileDescrizioneRepository(prenotabileDescrizioneRepository);
+        setFactoryPrenotabileDescrizioneBuilder(factoryPrenotabileDescrizioneBuilder);
         popola();
     }
 
@@ -55,7 +55,7 @@ public class CatalogoPrenotabili {
     }
 
     public PrenotabileDescrizioneBuilder avviaCreazioneNuovoPrenotabile(String tipoPrenotazione) {
-    	 return creaPrenotabileDescrizioneBuilderInBaseAl(tipoPrenotazione).creaNuovaDescrizione();
+    	 return getFactoryPrenotabileDescrizioneBuilder().creaPrenotabileDescrizioneBuilderInBaseAl(tipoPrenotazione).creaNuovaDescrizione();
     }
     
 
@@ -79,14 +79,5 @@ public class CatalogoPrenotabili {
             }
         }
         return null;
-    }
-
-    public PrenotabileDescrizioneBuilder creaPrenotabileDescrizioneBuilderInBaseAl(String tipoPrenotazione) {
-    	switch (tipoPrenotazione) {
-		case "PACCHETTO_LEZIONI":
-			return BeanUtil.getBean("PRENOTABILE_DESCRIZIONE_CON_NUMERO_DATE_BUILDER", PrenotabileDescrizioneBuilder.class);
-		default:
-			return BeanUtil.getBean("PRENOTABILE_DESCRIZIONE_BUILDER", PrenotabileDescrizioneBuilder.class);
-		}
     }
 }
