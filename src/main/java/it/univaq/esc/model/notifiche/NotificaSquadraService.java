@@ -36,9 +36,9 @@ public class NotificaSquadraService extends NotificaService{
 	
 	public void impostaDatiNotificaSquadra(TipoNotifica tipoNotifica, UtentePolisportiva mittente,
 			UtentePolisportiva destinatario, Notificabile evento, Squadra squadraDelMittente, Squadra squadraDelDestinatario) {
-		super.impostaDatiNotifica(tipoNotifica, mittente, destinatario, evento);
-		setSquadraDelMittente(squadraDelMittente);
-		setSquadraDelDestinatario(squadraDelDestinatario);
+				setSquadraDelMittente(squadraDelMittente);
+				setSquadraDelDestinatario(squadraDelDestinatario);
+				super.impostaDatiNotifica(tipoNotifica, mittente, destinatario, evento);
 	}
 	
 	private void setSquadraDelMittente(Squadra squadraDelMittente) {

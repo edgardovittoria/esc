@@ -52,7 +52,7 @@ public class CatalogoPrenotabili {
     	}
     	getCatalogoPrenotabili().remove(indiceDaCancellare);
     	getPrenotabileDescrizioneRepository().delete(prenotabileDescrizione);
-    }
+    } 
 
     public PrenotabileDescrizioneBuilder avviaCreazioneNuovoPrenotabile(String tipoPrenotazione) {
     	 return getFactoryPrenotabileDescrizioneBuilder().creaPrenotabileDescrizioneBuilderInBaseAl(tipoPrenotazione).creaNuovaDescrizione();
